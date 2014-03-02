@@ -39,7 +39,11 @@ Maintainer: David Torres Irribarra <dti@berkeley.edu> and Rebecca Freund <rlfreu
 	Wright, B. D., \& Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
 }
 
-\keyword{ IRT, Item Response Models, Rasch Model }
+\keyword{Wright Map}
+\keyword{IRT}
+\keyword{Item Response Models}
+\keyword{Rasch Model}
+
 \seealso{
 
 }

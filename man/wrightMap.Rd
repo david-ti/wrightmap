@@ -21,103 +21,99 @@ wrightMap(x, \dots)
 
 \arguments{
 
-wrightMap parameters:	
-    \item{thetas}{
-%%     ~~Describe \code{thetas} here~~
+wrightMap parameters: 
+  \item{thetas}{
+    a vector, matrix or data frame of person parameter estimates.
 }
   \item{thresholds}{
-%%     ~~Describe \code{thresholds} here~~
+    matrix or data frame of item parameter estimates.
 }
   \item{use.hist}{
-%%     ~~Describe \code{use.hist} here~~
+    logical. If \code{TRUE} (default), the person distribution is represented using a histogram. If \code{FALSE} a density is used.
 }
   \item{main.title}{
-%%     ~~Describe \code{main.title} here~~
+  title of the Wright Map.
 }
   \item{axis.logits}{
-%%     ~~Describe \code{axis.logits} here~~
+  title of the y-axis on the items side.
 }
   \item{axis.persons}{
-%%     ~~Describe \code{axis.persons} here~~
+  title of the y-axis on the person side.
 }
   \item{axis.items}{
-%%     ~~Describe \code{axis.items} here~~
+  title of the x-axis on the item side.
 }
   \item{label.items}{
-%%     ~~Describe \code{label.items} here~~
+  a vector of strings containing the labels identifying the items.
 }
   \item{label.items.rows}{
-%%     ~~Describe \code{label.items.rows} here~~
+  an integer indicating the number of rows used to display the item labels. Can take values 1 (default), 2 and 3. Useful when item labels are overlaping.
 }
   \item{label.items.srt}{
-%%     ~~Describe \code{label.items.srt} here~~
+  angle of rotation for item labels. It only works if \code{label.item.rows} is set to 1.
 }
   \item{label.items.ticks}{
-%%     ~~Describe \code{label.items.ticks} here~~
+  logical. If \code{TRUE} (default), ticks are drawn in the x-axis of the item side.
 }
   \item{show.thr.lab}{
-%%     ~~Describe \code{show.thr.lab} here~~
+  logical. If \code{TRUE} (default), the Wirght Map will show labels for the item thresholds.
 }
   \item{show.thr.sym}{
-%%     ~~Describe \code{show.thr.sym} here~~
+  logical. If \code{TRUE} (default), the Wirght Map will show symbols for the item thresholds.
 }
   \item{thr.lab.text}{
-%%     ~~Describe \code{thr.lab.text} here~~
+  a matrix containing the labels to display for each threshold. In the matrix each row represents an item and each column represents a level.
 }
   \item{thr.lab.col}{
-%%     ~~Describe \code{thr.lab.col} here~~
+  a matrix containing the color to display for each threshold label. In the matrix each row represents an item and each column represents a level.
 }
   \item{thr.lab.pos}{
-%%     ~~Describe \code{thr.lab.pos} here~~
+  an integer, vector or matrix containing the position in which to display the label for each threshold label. Values of 1, 2, 3 and 4, respectively indicate positions below, to the left of, above and to the right of the specified coordinates.
 }
   \item{thr.lab.font}{
-%%     ~~Describe \code{thr.lab.font} here~~
+  an integer, vector or matrix which specifies which font to use for threshold labels. 1 corresponds to plain text , 2 to bold face (the default), 3 to italic and 4 to bold italic. 
 }
   \item{thr.lab.cex}{
-%%     ~~Describe \code{thr.lab.cex} here~~
+  an integer, vector or matrix of numerical values giving the amount by which the threshold labels should be magnified relative to the default.
 }
   \item{thr.sym.pch}{
-%%     ~~Describe \code{thr.sym.pch} here~~
+  an integer, vector or matrix of integer specifying a symbol or a single character to be used to represent the item thresholds.
 }
   \item{thr.sym.col.fg}{
-%%     ~~Describe \code{thr.sym.col.fg} here~~
+  an integer, vector or matrix of numerical values indicating the foreground color to be used in the thresholds labels.
 }
   \item{thr.sym.col.bg}{
-%%     ~~Describe \code{thr.sym.col.bg} here~~
+  an integer, vector or matrix of numerical values indicating the background color to be used in the thresholds labels.
 }
   \item{thr.sym.cex}{
-%%     ~~Describe \code{thr.sym.cex} here~~
+  an integer, vector or matrix of numerical values giving the amount by which the threshold symbols should be magnified relative to the default.
 }
   \item{thr.sym.lwd}{
-%%     ~~Describe \code{thr.sym.lwd} here~~
+  an integer, vector or matrix of positive numbers specifying the width of the lines used in the threshold symbols.
 }
   \item{dim.names}{
-%%     ~~Describe \code{dim.names} here~~
+  a string or a vector of strings containing the names of each one of the dimensions.
 }
   \item{dim.color}{
-%%     ~~Describe \code{dim.color} here~~
+  a numerical value or vector indicating the colors to be used for representing the density curves for each dimension. It only works when \code{use.hist} is set to \code{FALSE}.
 }
   \item{dim.lab.side}{
-%%     ~~Describe \code{dim.lab.side} here~~
+  an integer specifyng in which side to plot the dimension names. Values of 1, 2, 3 (default) and 4, respectively indicate positions below, to the left of, above and to the right of the person distributions.
 }
   \item{dim.lab.adj}{
-%%     ~~Describe \code{dim.lab.adj} here~~
+  a numerical value adjusting the position of the dimension names.
 }
   \item{hist.nclass}{
-%%     ~~Describe \code{hist.nclass} here~~
+  See \code{\link{hist}}). Algorithm used to generate the brakes when \code{use.hist} is \code{TRUE}. Accepts ``FD'' / ``Freedman-Diaconis'' (default), ``Scott'' and ``Sturges''.
 }
   \item{min.logit.pad}{
-%%     ~~Describe \code{min.logit.pad} here~~
+  numeric value indicating how much of the lower end of the logit scale should be included in the plot.
 }
   \item{max.logit.pad}{
-%%     ~~Describe \code{max.logit.pad} here~~
+  numeric value indicating how much of the upper end of the logit scale should be included in the plot.
 }
   \item{item.prop}{
-%%     ~~Describe \code{item.prop} here~~
-}
-
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+  numeric value greater than 0 and smaller than 1 indicating the proportion of the plot to be allocated to the item part of the Wright Map.
 }
 
 Additional parameters when creating a Wright Map from a CQmodel object:
@@ -131,36 +127,85 @@ Parameters for creating a WrightMap directly from ConQuest output files:
   \item{p.est}{ Conquest person parameters file (EAPs, MLEs, etc.). }
 
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
+
 \references{
-%% ~put references to the literature/web site here ~
+  Wilson, M. (2005). Constructing measures: An item response modeling approach. 
+  Wright, B. D., \& Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
 }
 \author{David Torres Irribarra and Rebecca Freund}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+
+# Plotting results of a unidimensional Rasch Model
+
+## Mock results
+  uni.proficiency <- rnorm(1000, mean =  -0.5, sd = 1)
+  difficulties  <- sort( rnorm( 20))
+
+## Default map
+wrightMap( uni.proficiency, difficulties)
+
+## Histogram version
+wrightMap( uni.proficiency, difficulties, use.hist = TRUE)
+
+# Plotting results of a multidimensional Rasch Model
+
+## Mock results
+  multi.proficiency <- data.frame(
+    d1 = rnorm(1000, mean =  -0.5, sd = 1)
+    d2 = rnorm(1000, mean =   0.0, sd = 1)
+    d3 = rnorm(1000, mean =  +0.5, sd = 1))
+
+  difficulties  <- sort( rnorm( 20))
+
+wrightMap( multi.proficiency, difficulties)
+
+# Plotting results of a unidimensional Rating Scale Model
+
+## Mock results
+  uni.proficiency <- rnorm(1000, mean =  -0.5, sd = 1)
+
+  items.loc <- sort( rnorm( 20))
+  thresholds <- data.frame(
+    l1 = items.loc - 0.5
+    l2 = items.loc - 0.25
+    l3 = items.loc + 0.25
+    l4 = items.loc + 0.5)
+
+wrightMap( uni.proficiency, thresholds)
+
+## Setting up labels, colors and symbols
+
+  thresholds.labels <- data.frame(
+    l1 = paste('Lev',rep(1,20),sep = '')
+    l2 = paste('Lev',rep(2,20),sep = '')
+    l3 = paste('Lev',rep(3,20),sep = '')
+    l4 = paste('Lev',rep(4,20),sep = ''))
+
+  thresholds.colors <- data.frame(
+    l1 = rep(  'green',20)
+    l2 = rep(    'red',20)
+    l3 = rep( 'yellow',20)
+    l4 = rep(   'blue',20))
+
+  thresholds.symbols <- data.frame(
+    l1 = rep( 15,20)
+    l2 = rep( 16,20)
+    l3 = rep( 17,20)
+    l4 = rep( 18,20))
+
+wrightMap( uni.proficiency, thresholds
+  , thr.lab.text = thresholds.labels
+  , thr.lab.col = thresholds.colors
+  , thr.sym.pch = thresholds.symbols
+  )
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{Wright Map}
+\keyword{IRT}
+\keyword{Item Response Models}
+\keyword{Rasch Model}
+
