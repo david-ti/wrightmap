@@ -20,7 +20,7 @@ thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.
 thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3),
 thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = "black", 
 dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, 
-max.logit.pad = 0.25, item.prop = 0.2)
+max.logit.pad = 0.25, item.prop = 0.2,\dots)
 \method{wrightMap}{CQmodel}(thetas, tables = NULL, label.items = NULL, main.title = NULL,
 thr.lab.text = NULL, dim.names = NULL, \dots)
 \method{plot}{CQmodel}(x, \dots)
