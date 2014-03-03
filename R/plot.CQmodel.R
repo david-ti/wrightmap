@@ -1,4 +1,4 @@
 plot.CQmodel <-
-function(model, ...) {
-	wrightMap(model, ...)
+function(x, ...) {
+	wrightMap(x, ...)
 }

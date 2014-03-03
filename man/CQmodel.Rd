@@ -6,14 +6,14 @@
 \title{ConQuest Output Processing}
 \description{The CQmodel function reads ConQuest item parameter and person parameter output files and converts them into a list of data frames for more convenient data processing.}
 \usage{
-CQmodel(show = NULL, p.est = NULL, p.type = NULL)
+CQmodel(p.est = NULL, show = NULL, p.type = NULL)
 \method{print}{CQmodel}(x,\dots)
 \method{print}{SOE}(x,\dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{show}{ ConQuest show file. }
   \item{p.est}{ Conquest person parameters file (EAPs, MLEs, etc.). }
+  \item{show}{ ConQuest show file. }
   \item{p.type}{ Type of person parameter estimate (EAP, MLE or WLE). If not specified, will try to determine from the extension of the p.est file. }
   \item{x}{ Object that determines whihc function to call }
   \item{...}{Additional arguments}
@@ -82,5 +82,5 @@ Additional items:
 \examples{
 	
 ## Multidimensional polytomous model
-\dontrun{CQmodel("ex2.shw","ex2.eap")}
+\dontrun{CQmodel("ex2.eap","ex2.shw")}
 }

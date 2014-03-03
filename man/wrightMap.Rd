@@ -32,10 +32,10 @@ thr.lab.text = NULL, dim.names = NULL, \dots)
 
 wrightMap parameters: 
   \item{thetas}{
-    a vector, matrix or data frame of person parameter estimates.
+    a vector, matrix or data frame of person parameter estimates. Can also be a character string specifying a ConQuest output file of person parameter estimates, or a CQmodel object.
 }
   \item{thresholds}{
-    matrix or data frame of item parameter estimates.
+    matrix or data frame of item parameter estimates. Can also be a character string specifying a ConQuest show file.
 }
   \item{use.hist}{
     logical. If \code{TRUE} (default), the person distribution is represented using a histogram. If \code{FALSE} a density is used.
@@ -126,18 +126,17 @@ wrightMap parameters:
 }
 
 
-Additional parameters when creating a Wright Map from a CQmodel object:
-
-  \item{model}{ CQmodel object containing both item and person parameters. }
-  \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for a table called item. }
+ 
   
 Parameters for creating a WrightMap directly from ConQuest output files:
 
-  \item{x}{ Object that determines which function to call }
-  \item{show}{ ConQuest show file. }
-  \item{p.est}{ Conquest person parameters file (EAPs, MLEs, etc.). }
+ \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for a table called item. }
   \item{p.type}{ Type of person parameter file }
-  \item{...}{Additional arguments}
+  \item{...}{ Additional arguments to pass to wrightMap}
+  
+ wrightMap can also be called by passing a CQmodel object to plot:
+ 
+ \item{x}{ CQmodel object to pass to plot}
 
 
 }

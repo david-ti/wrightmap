@@ -1,4 +1,4 @@
 wrightMap <-
-function(x, ...) {
+function(thetas, ...) {
     UseMethod("wrightMap")
 }

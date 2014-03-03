@@ -1,6 +1,8 @@
 wrightMap.CQmodel <-
-function(model, tables = NULL, label.items = NULL, main.title = NULL, thr.lab.text = NULL, dim.names = NULL, 
+function(thetas, tables = NULL, label.items = NULL, main.title = NULL, thr.lab.text = NULL, dim.names = NULL, 
 	...) {
+		
+	model <- thetas
 	
 	p.est <- model$p.est
 	columns.at <- grep("^est", names(p.est), perl = TRUE)

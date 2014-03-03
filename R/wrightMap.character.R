@@ -1,5 +1,5 @@
 wrightMap.character <-
-function(show, p.est, p.type = NULL, ...) {
-    model <- CQmodel(show, p.est, p.type)
+function(thetas, thresholds, p.type = NULL, ...) {
+    model <- CQmodel(thetas, thresholds, p.type)
     wrightMap(model, ...)
 }
