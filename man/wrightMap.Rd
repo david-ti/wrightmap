@@ -150,7 +150,9 @@ wrightMap( uni.proficiency, difficulties)
 wrightMap( uni.proficiency, difficulties, use.hist = FALSE)
 
 ## Generating a Wirght Map from Conquest output
-wrightMap(ex2.shw, ex2.eap)
+model1 <- CQmodel("ex2.shw","ex2.eap")
+wrightMap(model1)
+wrightMap("ex2.shw", "ex2.eap")
 
 # Plotting results of a multidimensional Rasch Model
 
