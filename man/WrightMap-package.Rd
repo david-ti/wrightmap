@@ -6,7 +6,7 @@
 Wright Map: IRT Item-Person Map
 }
 \description{
-This package allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps, to display unidimensional and multidimensional assessment results. These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch Family.
+This package allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps to display unidimensional and multidimensional assessment results.These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch Family.
 
 Additionally, the package contains the \code{CQmodel} function, which reads output files created using ConQuest software and creates a set of data frames for easy data manipulation, bundled in a CQmodel object. The wrightMap function can take a CQmodel object as input or it can be used to create Wright Maps directly from data frames of person and item parameters.
 }
@@ -20,19 +20,17 @@ License: \tab BSD_3_clause | LICENSE \cr
 }
 The wrightMap function relies on two main inputs: (a) \code{thetas}: a vector or matrix of respondent proficiences, and (b) \code{thresholds}: a vector or matrix of item thresholds. In the simplest case, say for a unidimensional Rasch model, \code{thetas} can be a vector of person proficiencies and \code{thresholds} a vector of item difficulties. 
 
-To plot multiple dimensions of person proficiency, simply provide them as a matrix where the results for each dimension are stored in a different column, such that for a 3-dimensional model with 1,000 persons, \code{theta} is a matrix of 1000 rows and 3 columns. 
+To plot multiple dimensions of person proficiency, simply provide them as a matrix were the results for each dimension is stored in a different column, such that for a 3-dimensional model with 1,000 persons, \code{theta} is a matrix of 1000 rows and 3 columns. 
 
-To plot polytomous items, the thresholds for each level must be passed to the functions through the \code{thresholds} matrix, where each row represents an item and each column represents a level. For instance, if the results of a Rating Scale model with 5 response categories and 10 items is being plotted, the \code{thresholds} matrix will have 10 rows and 4 columns (column one represents the thresholds between the 1 and 2 response category, column 2 the thresholds between categories 2 and 3, etc.).
+To plot polytomous items, the thresholds for each level must be passed to the functions through the \code{thresholds} matrix, where each row represents an item and each column represents a level. For instance, if the results of a Rating Scale model with 5 response categories and 10 items is being plotted, the \code{thresholds} matrix will have 10 rows and 4 columns ( column one represents the thresholds between the 1 and 2 response category, column 2 the threshold between categories 2 and 3, etc.).
 
-The CQmodel function takes as its inputs a ConQuest show file and/or a ConQuest person parameter estimates file. It reads the files and converts all the contents into a list of data frames and other variables, collectively bundled as a CQmodel object. These data frames can then be manipulated or used to create plots.
-
-The wrightMap function can take a CQmodel object as its input and look for the appropriate item and person parameters for plotting. Alternatively, if wrightMap is directly passed the \code{.shw} and \code{.eap/.mle/.wle} output files from a Conquest analysis, it will use them to silently create a CQmodel object and then use that to generate a Wright Map.
+Alternatively, wrightMap can read directly the \code{.shw} and \code{.eap/.mle/.wle} output files from a Conquest analysis, and will automatically generate the \code{thetas} and \code{thresholds} matrices.
 
 }
 \author{
 David Torres Irribarra and Rebecca Freund
 
-Maintainer: David Torres Irribarra <dti@berkeley.edu>
+Maintainer: David Torres Irribarra <dti@berkeley.edu> and Rebecca Freund <rlfreund@berkeley.edu>
 }
 \references{
 	Andrich, D. (1978). A rating formulation for ordered response categories. \emph{Psychometrika}, \emph{43}(4), 561--573. 
@@ -46,9 +44,6 @@ Maintainer: David Torres Irribarra <dti@berkeley.edu>
 \keyword{Item Response Models}
 \keyword{Rasch Model}
 
-\seealso{
-
-}
 \examples{
 
 # Plotting results of a unidimensional Rasch Model
@@ -64,7 +59,7 @@ wrightMap( uni.proficiency, difficulties)
 wrightMap( uni.proficiency, difficulties, use.hist = FALSE)
 
 ## Generating a Wirght Map from Conquest output
-wrightMap(ex2.shw, ex2.eap)
+\dontrun{wrightMap("ex2.shw", "ex2.eap")}
 
 # Plotting results of a multidimensional Rasch Model
 

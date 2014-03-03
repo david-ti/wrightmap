@@ -123,7 +123,7 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     dev.new(width = 9, height = 5)
     par(oma = c(0, 5, 0, 5))
     
-    layout(matrix(layout.wm, nr = 1), width = c(rep(item.prop/nD, nD), rep((1 - item.prop)/item.side, item.side)), height = 0.8)
+    layout(matrix(layout.wm, nrow = 1), widths = c(rep(item.prop/nD, nD), rep((1 - item.prop)/item.side, item.side)), heights = 0.8)
     
     ## Generating Person Side
     

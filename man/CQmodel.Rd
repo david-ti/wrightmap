@@ -15,6 +15,8 @@ CQmodel(show = NULL, p.est = NULL, p.type = NULL)
   \item{show}{ ConQuest show file. }
   \item{p.est}{ Conquest person parameters file (EAPs, MLEs, etc.). }
   \item{p.type}{ Type of person parameter estimate (EAP, MLE or WLE). If not specified, will try to determine from the extension of the p.est file. }
+  \item{x}{ Object that determines whihc function to call }
+  \item{...}{Additional arguments}
 }
 
 \value{
@@ -80,5 +82,5 @@ Additional items:
 \examples{
 	
 ## Multidimensional polytomous model
-CQmodel("ex2.shw","ex2.eap")
+\dontrun{CQmodel("ex2.shw","ex2.eap")}
 }

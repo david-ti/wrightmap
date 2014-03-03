@@ -12,8 +12,17 @@ This function allows the easy generation of `Wright Maps' (named after Ben Wrigh
 }
 \usage{
 wrightMap(x, \dots)
-\method{wrightMap}{default}(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = "black", dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.2)
-\method{wrightMap}{CQmodel}(model, tables = NULL, label.items = NULL, main.title = NULL, thr.lab.text = NULL, dim.names = NULL, \dots)
+\method{wrightMap}{default}(thetas, thresholds, use.hist = TRUE, 
+main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", 
+axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, 
+label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL,
+thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, 
+thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3),
+thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = "black", 
+dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, 
+max.logit.pad = 0.25, item.prop = 0.2)
+\method{wrightMap}{CQmodel}(model, tables = NULL, label.items = NULL, main.title = NULL,
+thr.lab.text = NULL, dim.names = NULL, \dots)
 \method{plot}{CQmodel}(model, \dots)
 \method{wrightMap}{character}(show, p.est, p.type = NULL, \dots)
 
@@ -116,15 +125,20 @@ wrightMap parameters:
   numeric value greater than 0 and smaller than 1 indicating the proportion of the plot to be allocated to the item part of the Wright Map.
 }
 
+
 Additional parameters when creating a Wright Map from a CQmodel object:
 
   \item{model}{ CQmodel object containing both item and person parameters. }
-  \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for a table called $item. }
+  \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for a table called item. }
   
 Parameters for creating a WrightMap directly from ConQuest output files:
 
+  \item{x}{ Object that determines which function to call }
   \item{show}{ ConQuest show file. }
   \item{p.est}{ Conquest person parameters file (EAPs, MLEs, etc.). }
+  \item{p.type}{ Type of person parameter file }
+  \item{...}{Additional arguments}
+
 
 }
 
@@ -150,9 +164,9 @@ wrightMap( uni.proficiency, difficulties)
 wrightMap( uni.proficiency, difficulties, use.hist = FALSE)
 
 ## Generating a Wirght Map from Conquest output
-model1 <- CQmodel("ex2.shw","ex2.eap")
-wrightMap(model1)
-wrightMap("ex2.shw", "ex2.eap")
+\dontrun{model1 <- CQmodel("ex2.shw","ex2.eap")}
+\dontrun{wrightMap(model1)}
+\dontrun{wrightMap("ex2.shw", "ex2.eap")}
 
 # Plotting results of a multidimensional Rasch Model
 
