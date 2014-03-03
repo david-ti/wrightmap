@@ -1,7 +1,8 @@
 citHeader("To cite WrightMap in publications, please use:")
 
 citEntry(entry = "Manual",
-  author = "David Torres Irribarra and Rebecca Freund",
+  author = personList(as.person("David Torres Irribarra"),
+                             as.person("Rebecca Freund"))
   title = "Wright Map: IRT item-person map with ConQuest integration",
   year = "2014",
   url = "http://github.com/david-ti/wrightmap"

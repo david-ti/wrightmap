@@ -80,9 +80,9 @@ wrightMap( multi.proficiency, difficulties)
 
 	items.loc <- sort( rnorm( 20))
 	thresholds <- data.frame(
-		l1 = items.loc - 0.5
-		l2 = items.loc - 0.25
-		l3 = items.loc + 0.25
+		l1 = items.loc - 0.5 ,
+		l2 = items.loc - 0.25,
+		l3 = items.loc + 0.25,
 		l4 = items.loc + 0.5)
 
 wrightMap( uni.proficiency, thresholds)
