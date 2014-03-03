@@ -23,7 +23,7 @@ dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25,
 max.logit.pad = 0.25, item.prop = 0.2)
 \method{wrightMap}{CQmodel}(thetas, tables = NULL, label.items = NULL, main.title = NULL,
 thr.lab.text = NULL, dim.names = NULL, \dots)
-\method{plot}{CQmodel}(thetas, \dots)
+\method{plot}{CQmodel}(x, \dots)
 \method{wrightMap}{character}(thetas, thresholds, p.type = NULL, \dots)
 
 }
