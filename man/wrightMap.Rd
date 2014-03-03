@@ -163,9 +163,9 @@ wrightMap( uni.proficiency, difficulties)
 wrightMap( uni.proficiency, difficulties, use.hist = FALSE)
 
 ## Generating a Wirght Map from Conquest output
-\dontrun{model1 <- CQmodel("ex2.shw","ex2.eap")}
+\dontrun{model1 <- CQmodel("ex2.eap","ex2.shw")}
 \dontrun{wrightMap(model1)}
-\dontrun{wrightMap("ex2.shw", "ex2.eap")}
+\dontrun{wrightMap("ex2.eap", "ex2.shw")}
 
 # Plotting results of a multidimensional Rasch Model
 
