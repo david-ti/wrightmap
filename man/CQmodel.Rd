@@ -16,11 +16,9 @@ CQmodel(show = NULL, p.est = NULL, p.type = NULL)
   \item{p.est}{ Conquest person parameters file (EAPs, MLEs, etc.). }
   \item{p.type}{ Type of person parameter estimate (EAP, MLE or WLE). If not specified, will try to determine from the extension of the p.est file. }
 }
-\details{
 
-}
 \value{
-An object of type CQmodel. Usually contains:
+CQmodel returns an object of type CQmodel. Usually contains:
 Tables:
 \item{RMP}{ A list of data frames containing the response model parameter estimates. One data frame is created for each table in the output. Each data frame contains parameter estimates, errors, and fit information.}
 \item{GIN}{ A matrix containing the item thresholds (if included in the ConQuest output). The rows are items and the columns are steps.}
@@ -75,21 +73,10 @@ Additional items:
 \item{dimensions}{ Dimension names }
 \item{p.est.type}{}
 
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+\author{Rebecca Freund and David Torres Irribarra}
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,
