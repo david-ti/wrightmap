@@ -78,10 +78,9 @@ Additional items:
 
 
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
+	
+## Multidimensional polytomous model
+CQmodel("ex2.shw","ex2.eap")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
