@@ -130,7 +130,7 @@ wrightMap parameters:
   
 Parameters for creating a WrightMap directly from ConQuest output files:
 
- \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for a table called item. }
+ \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for tables called item and item*step. }
   \item{p.type}{ Type of person parameter file }
   \item{...}{ Additional arguments to pass to wrightMap}
   
