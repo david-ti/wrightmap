@@ -11,7 +11,7 @@ wrightMap: item-person maps
 This function allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps to display unidimensional and multidimensional assessment results.These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch Family.
 }
 \usage{
-wrightMap(x, \dots)
+wrightMap(thetas, \dots)
 \method{wrightMap}{default}(thetas, thresholds, use.hist = TRUE, 
 main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", 
 axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, 
@@ -21,10 +21,10 @@ thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0,
 thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = "black", 
 dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, 
 max.logit.pad = 0.25, item.prop = 0.2)
-\method{wrightMap}{CQmodel}(model, tables = NULL, label.items = NULL, main.title = NULL,
+\method{wrightMap}{CQmodel}(thetas, tables = NULL, label.items = NULL, main.title = NULL,
 thr.lab.text = NULL, dim.names = NULL, \dots)
-\method{plot}{CQmodel}(model, \dots)
-\method{wrightMap}{character}(show, p.est, p.type = NULL, \dots)
+\method{plot}{CQmodel}(thetas, \dots)
+\method{wrightMap}{character}(thetas, thresholds, p.type = NULL, \dots)
 
 }
 
