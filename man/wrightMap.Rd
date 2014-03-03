@@ -5,10 +5,10 @@
 \alias{wrightMap.character}
 \alias{plot.CQmodel}
 \title{
-%%  ~~function to do ... ~~
+wrightMap: item-person maps
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps to display unidimensional and multidimensional assessment results.These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch Family.
 }
 \usage{
 wrightMap(x, \dots)

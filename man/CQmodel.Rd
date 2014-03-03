@@ -72,7 +72,7 @@ Additional items:
 \item{nDim}{ Number of dimensions }
 \item{dimensions}{ Dimension names }
 \item{p.est.type}{}
-
+}
 
 \author{Rebecca Freund and David Torres Irribarra}
 
@@ -82,7 +82,3 @@ Additional items:
 ## Multidimensional polytomous model
 CQmodel("ex2.shw","ex2.eap")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
