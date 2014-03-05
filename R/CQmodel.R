@@ -244,7 +244,9 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		additive.parts = unlist(strsplit(SOE$equation, "[+|-]"))
 		parts = strsplit(additive.parts, "\\*")
 		if(imported) {
-			model$RMP <- RMP(model$RMP,"Parameters")
+			params <- RMP(model$RMP,"Parameters")
+			model$RMP <- list()
+			model$RMP$item <- params
 			}
 		else {
 			RMP.tables <- breakup(model$RMP, grep("TERM ", model$RMP), additive.parts)
@@ -342,7 +344,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		model$nDim = floor(length(p.est)/colperdim)
 
-		if (is.null(model$dimensions)) 
+		if (is.null(model$dimensions) || length(model$dimensions != model$nDim)) 
 			model$dimensions <- paste("d", c(1:model$nDim), sep = "")
 
 		if (p.type == "EAP") {
