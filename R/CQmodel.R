@@ -16,33 +16,27 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 	RMP <- function(table, parts) {
 
-
-		print(table)
 		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
 		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
 
-				titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
+		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
 		titles[parts == "step"] <- "step"
-
 		titles <- unlist(titles)
+
 		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)
 		out = gsub("[\\(\\)\\*,]", " ", out)
 		out = trim(out)
 		out <- split.right(out, sum(RMP.lengths))
 
-		print(titles)
-
 		out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
 		if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
-		print(out)
+		
 		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
 		if (imported) {
 			left.table[2] <- paste(left.table[[1]], left.table[[2]])
 			left.table <- left.table[2]
 		}
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
-
-		print(cbind(left.table, right.table))
 
 		cbind(left.table, right.table)
 
