@@ -20,7 +20,7 @@ function(x, ...) {
 	catnull(x$reg.coef, "Regression coefficients: $reg.coef\n")
 	catnull(x$variances, "Variances: $variances\n")
 	catnull(x$cor.matrix, "Correlation matrix: $cor.matrix\n")
-	catnull(x$cov.matrix, "Covariance matrix: $cor.matrix\n")
+	catnull(x$cov.matrix, "Covariance matrix: $cov.matrix\n")
 	catnull(x$rel.coef, "Reliabilities: $rel.coef\n")
 	catnull(x$GIN, "GIN tables: $GIN\n")
 	catnull(x$p.est, paste(x$p.est.type, " table: $p.est\n", sep = ""))

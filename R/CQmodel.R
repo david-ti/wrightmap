@@ -15,23 +15,27 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 	}
 
 	RMP <- function(table, parts) {
-		RMP.lengths = c(11, 8, 8, 6, 6, 6, 8, 6, 5, 7)
+		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
 		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
-
-		out = grep("^ +[0-9]", table, value = TRUE)
+		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)
 		out = gsub("[\\(\\)\\*,]", " ", out)
-
+		out = trim(out)
 		out <- split.right(out, sum(RMP.lengths))
+		
 
 		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
 		titles[parts == "step"] <- "step"
 
 		titles <- unlist(titles)
-
 		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
+		if(imported) {
+			left.table[2] <- paste(left.table[[1]],left.table[[2]])
+			left.table <- left.table[2]
+		}
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
 
 		cbind(left.table, right.table)
+
 	}
 
 	split.right <- function(table, right) {
@@ -107,6 +111,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 	rename <- function(titles) {
 		titles[titles == "SUMMARY OF THE ESTIMATION"] <- "SOE"
 		titles[titles == "TABLES OF RESPONSE MODEL PARAMETER ESTIMATES"] <- "RMP"
+		titles[grepl("^IMPORTED MODEL", titles)] <- "RMP"
 		titles[titles == "TABLES OF POPULATION MODEL PARAMETER ESTIMATES"] <- "PMP"
 		titles[grepl("MAP OF .+ AND RESPONSE MODEL PARAMETER ESTIMATES", titles)] <- "MRM"
 		titles[grepl("MAP OF .+ AND THRESHOLDS", titles)] <- "MTH"
@@ -138,7 +143,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		titles[titles == "Deviance Change"] <- "deviance.change"
 
 		titles[titles == "REGRESSION COEFFICIENTS"] <- "reg.coef"
-		titles[titles == "COVARIANCE/CORRELATION MATRIX"] <- "cov.cor"
+		titles[grepl("COVARIANCE/CORRELATION MATRIX",titles)] <- "cov.cor"
 		titles[titles == "RELIABILITY COEFFICIENTS"] <- "rel.coef"
 
 		titles
@@ -148,10 +153,25 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 	model <- list()
 	if (!(is.null(show))) {
 		#ptm <- proc.time()
-		
 		shw <- readLines(show)
 		shw.starts = grep("^\f==", shw)
-		shw.titles = rename(shw[shw.starts + 2])
+		if(length(shw.starts) == 0) {
+			shw.starts = grep("^==", shw)
+			shw.starts = shw.starts[(shw.starts + 3) %in% shw.starts]
+			CQV = 3
+		}
+		else {
+			CQV = 2
+			}
+		titles = shw[shw.starts + 2]
+		if(length(grep("^IMPORTED MODEL",titles)) == 0) {
+			imported = FALSE
+		}
+		else {
+			imported = TRUE
+		}
+		shw.titles = rename(titles)
+	
 
 		model <- breakup(shw, shw.starts, shw.titles)
 
@@ -168,8 +188,10 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		m <- regexpr(date.pattern, title.date)
 		model$run.details <- list()
 		#class(model$run.details) <- "details"
-		model$run.details$date <- strptime(regmatches(title.date, m), format = "%a %b %d %H:%M %Y")
+		date.string <- regmatches(title.date, m)
+		model$run.details$date <- strptime(date.string, format = "%a %b %d %H:%M %Y")
 		model$title <- trim(paste(unlist(regmatches(title.date, m, invert = TRUE)), collapse = ""))
+		
 
 		file.at <- grep("The Data File: ", model$SOE)
 		file.line <- model$SOE[file.at]
@@ -221,18 +243,27 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		additive.parts = unlist(strsplit(SOE$equation, "[+|-]"))
 		parts = strsplit(additive.parts, "\\*")
-		RMP.tables <- breakup(model$RMP, grep("TERM ", model$RMP), additive.parts)
-		model$RMP = mapply(RMP, RMP.tables, parts, SIMPLIFY = FALSE)
-		model$run.details$names <- mapply(get.names, parts[parts == additive.parts], model$RMP[parts == additive.parts])
+		if(imported) {
+			model$RMP <- RMP(model$RMP,"Parameters")
+			}
+		else {
+			RMP.tables <- breakup(model$RMP, grep("TERM ", model$RMP), additive.parts)
+			model$RMP = mapply(RMP, RMP.tables, parts, SIMPLIFY = FALSE)
+			model$run.details$names <- mapply(get.names, parts[parts == additive.parts], model$RMP[parts == additive.parts])
+			}
 
 		##########PMP###########
-		
 
-		PMP.starts <- grep("^===+$", model$PMP)
+		PMP.starts <- grep("^====+", model$PMP)
+		PMP.heads <- grep(date.string,model$PMP)
+		PMP.starts <- PMP.starts[!(PMP.starts + 1) %in% PMP.heads]
 		PMP.titles <- rename(trim(paste(model$PMP[PMP.starts + 1], model$PMP[PMP.starts + 2], sep = "")))
 		PMP <- breakup(model$PMP, PMP.starts, PMP.titles)
-
-		PMP$variances = as.numeric(unlist(strsplit(grep("Variance", PMP$cov.cor, value = TRUE), "\\s+"))[-1])
+		variance.line = grep("Variance", PMP$cov.cor, value = TRUE)
+		m <- gregexpr("[0-9]+\\.[0-9]+(?![0-9])(?![\\s]*\\))",variance.line,perl=TRUE)
+		PMP$variances <- as.numeric(unlist(regmatches(variance.line,m)))
+		m <- gregexpr("[0-9\\.]+(?=[\\s]*\\))",variance.line,perl=TRUE)
+		errors <- as.numeric(unlist(regmatches(variance.line,m)))
 		PMP$nDim = length(PMP$variances)
 		PMP$dimensions = "Main dimension"
 		if (PMP$nDim > 1) {
@@ -246,6 +277,9 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 			PMP$cov.matrix <- PMP$cov.cor
 			PMP$cov.matrix[lower.tri(PMP$cov.matrix)] = t(PMP$cov.matrix)[lower.tri(t(PMP$cov.matrix))]
 			diag(PMP$cov.matrix) <- PMP$variances
+		}
+		if(length(errors) > 0) {
+			PMP$variances <- cbind(PMP$variances,errors)
 		}
 		PMP$cov.cor <- NULL
 
