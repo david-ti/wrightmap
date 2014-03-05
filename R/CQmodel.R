@@ -1,5 +1,4 @@
-CQmodel <-
-function(p.est = NULL, show = NULL, p.type = NULL) {
+CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 	############Helper functions############
 	
@@ -21,15 +20,15 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		out = gsub("[\\(\\)\\*,]", " ", out)
 		out = trim(out)
 		out <- split.right(out, sum(RMP.lengths))
-		
+
 
 		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
 		titles[parts == "step"] <- "step"
 
 		titles <- unlist(titles)
 		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
-		if(imported) {
-			left.table[2] <- paste(left.table[[1]],left.table[[2]])
+		if (imported) {
+			left.table[2] <- paste(left.table[[1]], left.table[[2]])
 			left.table <- left.table[2]
 		}
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
@@ -37,6 +36,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		cbind(left.table, right.table)
 
 	}
+
 
 	split.right <- function(table, right) {
 		left = nchar(table[1]) - right
@@ -51,8 +51,27 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		write(as.matrix(list), tf)
 		tf
 	}
+	
+		make.GIN <- function(table) {
+		if (length(table) == 5) {
+			#return("boo")
+			items <- as.vector(unlist(unique(table[5])))
+			#print(length(items))
+			out <- mapply(by.item,items,c(1:length(items)), list(table[4]), list(table[2]), list(max(table[1])),SIMPLIFY=FALSE)
+			return(t(as.data.frame(out)))
+		} else {
+			pieces <- as.character(unlist(unique(table[5])))
+			return(mapply(break.GIN, pieces, list(table),SIMPLIFY=FALSE))
+		}
+	}
 
-	by.item <- function(item, ids, values, how.long) {
+	break.GIN <- function(piece, table) {
+		table <- table[table[5] == piece,]
+		#print(make.GIN(table[-c(3, 4, 5)]))
+		return(make.GIN(table[-c(3, 4, 5)]))
+	}
+
+	by.item <- function(name,item, ids, values, how.long) {
 
 		vals <- values[ids == item]
 		if (length(vals) < how.long) {
@@ -143,7 +162,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		titles[titles == "Deviance Change"] <- "deviance.change"
 
 		titles[titles == "REGRESSION COEFFICIENTS"] <- "reg.coef"
-		titles[grepl("COVARIANCE/CORRELATION MATRIX",titles)] <- "cov.cor"
+		titles[grepl("COVARIANCE/CORRELATION MATRIX", titles)] <- "cov.cor"
 		titles[titles == "RELIABILITY COEFFICIENTS"] <- "rel.coef"
 
 		titles
@@ -155,23 +174,21 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		#ptm <- proc.time()
 		shw <- readLines(show)
 		shw.starts = grep("^\f==", shw)
-		if(length(shw.starts) == 0) {
+		if (length(shw.starts) == 0) {
 			shw.starts = grep("^==", shw)
 			shw.starts = shw.starts[(shw.starts + 3) %in% shw.starts]
 			CQV = 3
-		}
-		else {
+		} else {
 			CQV = 2
-			}
-		titles = shw[shw.starts + 2]
-		if(length(grep("^IMPORTED MODEL",titles)) == 0) {
-			imported = FALSE
 		}
-		else {
+		titles = shw[shw.starts + 2]
+		if (length(grep("^IMPORTED MODEL", titles)) == 0) {
+			imported = FALSE
+		} else {
 			imported = TRUE
 		}
 		shw.titles = rename(titles)
-	
+
 
 		model <- breakup(shw, shw.starts, shw.titles)
 
@@ -191,7 +208,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		date.string <- regmatches(title.date, m)
 		model$run.details$date <- strptime(date.string, format = "%a %b %d %H:%M %Y")
 		model$title <- trim(paste(unlist(regmatches(title.date, m, invert = TRUE)), collapse = ""))
-		
+
 
 		file.at <- grep("The Data File: ", model$SOE)
 		file.line <- model$SOE[file.at]
@@ -243,29 +260,29 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		additive.parts = unlist(strsplit(SOE$equation, "[+|-]"))
 		parts = strsplit(additive.parts, "\\*")
-		if(imported) {
-			params <- RMP(model$RMP,"Parameters")
+		if (imported) {
+			params <- RMP(model$RMP, "Parameters")
 			model$RMP <- list()
 			model$RMP$item <- params
-			}
-		else {
+		} else {
 			RMP.tables <- breakup(model$RMP, grep("TERM ", model$RMP), additive.parts)
 			model$RMP = mapply(RMP, RMP.tables, parts, SIMPLIFY = FALSE)
 			model$run.details$names <- mapply(get.names, parts[parts == additive.parts], model$RMP[parts == additive.parts])
-			}
+		}
+		
 
 		##########PMP###########
-
+		
 		PMP.starts <- grep("^====+", model$PMP)
-		PMP.heads <- grep(date.string,model$PMP)
+		PMP.heads <- grep(date.string, model$PMP)
 		PMP.starts <- PMP.starts[!(PMP.starts + 1) %in% PMP.heads]
 		PMP.titles <- rename(trim(paste(model$PMP[PMP.starts + 1], model$PMP[PMP.starts + 2], sep = "")))
 		PMP <- breakup(model$PMP, PMP.starts, PMP.titles)
 		variance.line = grep("Variance", PMP$cov.cor, value = TRUE)
-		m <- gregexpr("[0-9]+\\.[0-9]+(?![0-9])(?![\\s]*\\))",variance.line,perl=TRUE)
-		PMP$variances <- as.numeric(unlist(regmatches(variance.line,m)))
-		m <- gregexpr("[0-9\\.]+(?=[\\s]*\\))",variance.line,perl=TRUE)
-		errors <- as.numeric(unlist(regmatches(variance.line,m)))
+		m <- gregexpr("[0-9]+\\.[0-9]+(?![0-9])(?![\\s]*\\))", variance.line, perl = TRUE)
+		PMP$variances <- as.numeric(unlist(regmatches(variance.line, m)))
+		m <- gregexpr("[0-9\\.]+(?=[\\s]*\\))", variance.line, perl = TRUE)
+		errors <- as.numeric(unlist(regmatches(variance.line, m)))
 		PMP$nDim = length(PMP$variances)
 		PMP$dimensions = "Main dimension"
 		if (PMP$nDim > 1) {
@@ -280,8 +297,8 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 			PMP$cov.matrix[lower.tri(PMP$cov.matrix)] = t(PMP$cov.matrix)[lower.tri(t(PMP$cov.matrix))]
 			diag(PMP$cov.matrix) <- PMP$variances
 		}
-		if(length(errors) > 0) {
-			PMP$variances <- cbind(PMP$variances,errors)
+		if (length(errors) > 0) {
+			PMP$variances <- cbind(PMP$variances, errors)
 		}
 		PMP$cov.cor <- NULL
 
@@ -312,15 +329,15 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		if (!is.null(model$GIN)) {
 
 			GIN <- model$GIN[7:(length(model$GIN) - 1)]
-			GIN <- gsub("^[0-9]+\\.", "", GIN)
-			GIN <- gsub("\t", " ", GIN)
-			GIN <- read.table(tempify(GIN), col.names = c("thrId", "thrVal", "item", "itemId", "itemLab"))
-			#return(GIN.tables)
-			items <- as.vector(unique(GIN$itemLab))
 
-			model$GIN <- lapply(c(1:length(items)), by.item, GIN$itemId, GIN$thrVal, max(GIN$thrId))
-			names(model$GIN) <- items
-			model$GIN <- t(as.data.frame(model$GIN))
+			GIN <- gsub("\t\\s*", "BREAKHERE", GIN)
+			GIN <- gsub("\\s+", "_", GIN)
+			GIN <- gsub("BREAKHERE", " ", GIN)
+			GIN <- gsub("^[0-9\\.]+\\.", "", GIN)
+			GIN <- read.table(tempify(GIN))
+
+			model$GIN <- make.GIN(GIN)
+			
 
 		}
 		#return(proc.time()-ptm)
@@ -328,12 +345,15 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 	}
 
+
+
 	#######Person Parameters#############
 	
 	if (!is.null(p.est)) {
 
 		if (is.null(p.type)) {
-			p.type <- toupper(unlist(strsplit(p.est, "[.]"))[-1])
+			eaps <- unlist(strsplit(p.est, "[.]"))
+			p.type <- toupper(eaps[length(eaps)])
 		}
 
 		p.est <- na.omit(read.table(p.est, stringsAsFactors = FALSE, fill = TRUE))
