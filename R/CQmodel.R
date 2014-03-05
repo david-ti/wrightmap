@@ -13,6 +13,12 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		shw[m_sec1:m_sec2]
 	}
 
+
+		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
+		titles[parts == "step"] <- "step"
+
+		titles <- unlist(titles)
+
 	RMP <- function(table, parts) {
 		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
 		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
@@ -21,11 +27,9 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		out = trim(out)
 		out <- split.right(out, sum(RMP.lengths))
 
+		out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
+		if (length(titles)>2){} out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
 
-		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
-		titles[parts == "step"] <- "step"
-
-		titles <- unlist(titles)
 		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
 		if (imported) {
 			left.table[2] <- paste(left.table[[1]], left.table[[2]])
@@ -42,7 +46,7 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		left = nchar(table[1]) - right
 		tf <- tempfile()
 		write(table, tf)
-		out <- read.fwf(tf, c(left, right))
+		out <- read.fwf(tf, c(left, right), stringsAsFactors=FALSE)
 		out
 	}
 
