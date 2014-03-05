@@ -28,8 +28,8 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		out = trim(out)
 		out <- split.right(out, sum(RMP.lengths))
 
-		out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
-		if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
+		# out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
+		# if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
 		
 		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
 		if (imported) {
