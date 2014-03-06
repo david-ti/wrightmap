@@ -17,32 +17,117 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 	RMP <- function(table, parts) {
 
 
-		print(table)
+
 		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
 		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
 
-				titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
+		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
 		titles[parts == "step"] <- "step"
-
 		titles <- unlist(titles)
+
+
+		left.side.titles <- strsplit(table[5], "ESTIMATE")[[1]][1]
+
+		parts.search <- parts
+
+		parts.search[parts == 'step'] <- '(step|category)'
+
+		line.seps <- numeric()
+
+		for (i in 1:length(parts)) {
+
+			temp.col.seps <- numeric()
+
+			if (gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2 > 0){
+
+				temp.col.seps[1] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
+				#print(temp.col.seps)
+
+				if (i > 1){
+
+					# temp.col.seps[1] <- temp.col.seps[1] 
+					# print(temp.col.seps)
+	
+					if(parts[i] != 'step' & parts[i] != 'category'){
+	
+						first.line <- substr(table[7], 1, temp.col.seps[1]+2)
+						#print(first.line)
+	
+						number.col <- (nchar(first.line) - gregexpr("[0-9]+\\s+?$",first.line)[[1]][1] ) 
+						#print(number.col)
+	
+						temp.col.seps[2] <- number.col
+						temp.col.seps[1] <- temp.col.seps[1] - temp.col.seps[2] - sum(line.seps)
+						
+						#print(temp.col.seps)
+	
+					}else{
+
+						temp.col.seps[1] <- temp.col.seps[1] - sum(line.seps)
+
+					}
+
+
+
+				}
+
+
+
+			}
+
+
+
+			if (i == 1){
+	
+				line.seps <- temp.col.seps
+	
+			}else{
+	
+				line.seps <- c(line.seps, temp.col.seps)
+	
+			}
+	
+
+		}
+
+		if (length(line.seps)==0){
+
+			line.seps <- nchar(left.side.titles)
+
+		} else{
+
+			line.seps <- c(line.seps,nchar(left.side.titles) - max(line.seps))
+
+		}
+
+		if (all(parts == 'step') & length(parts) == 1) {line.seps <- nchar(left.side.titles)}
+
+		#line.seps
+
+
 		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)
 		out = gsub("[\\(\\)\\*,]", " ", out)
 		out = trim(out)
 		out <- split.right(out, sum(RMP.lengths))
 
-		print(titles)
+		# out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
+		# if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
+		if ( (all(parts == 'step') & length(parts) == 1) | imported) {
 
-		out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
-		if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
-		print(out)
-		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
-		if (imported) {
-			left.table[2] <- paste(left.table[[1]], left.table[[2]])
-			left.table <- left.table[2]
+			left.table <- matrix(apply(out[1],1,function (x) gsub("^\\s+|\\s+$", "", x)), ncol=1)			
+			colnames(left.table) <- parts
+
+		}else{
+			left.table <- read.fwf(tempify(out[1]), line.seps, col.names = titles, stringsAsFactors = FALSE)
+			left.table[sapply(left.table, is.character)] <- sapply(left.table[sapply(left.table, is.character)],function (x) gsub("^\\s+|\\s+$", "", x))
+
 		}
+		#left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
+		# if (imported) {
+		# 	left.table[2] <- paste(left.table[[1]], left.table[[2]])
+		# 	left.table <- left.table[2]
+		# }
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
-
-		print(cbind(left.table, right.table))
 
 		cbind(left.table, right.table)
 
@@ -65,10 +150,13 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 	
 		make.GIN <- function(table) {
 		if (length(table) == 5) {
-			#return("boo")
 			items <- as.vector(unlist(unique(table[5])))
+			if(class(items) != "character")
+				items <- paste("Item",items,sep="_")
+			#print(items)
 			#print(length(items))
 			out <- mapply(by.item,items,c(1:length(items)), list(table[4]), list(table[2]), list(max(table[1])),SIMPLIFY=FALSE)
+			#print(as.data.frame(out))
 			return(t(as.data.frame(out)))
 		} else {
 			pieces <- as.character(unlist(unique(table[5])))
@@ -341,14 +429,15 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 			GIN <- model$GIN[7:(length(model$GIN) - 1)]
 
-			GIN <- gsub("\t\\s*", "BREAKHERE", GIN)
-			GIN <- gsub("\\s+", "_", GIN)
-			GIN <- gsub("BREAKHERE", " ", GIN)
+			GIN <- gsub("\\s*\t\\s*", "\t", GIN)
+			GIN <- gsub(" +","_",GIN)
 			GIN <- gsub("^[0-9\\.]+\\.", "", GIN)
-			GIN <- read.table(tempify(GIN))
+			GIN <- read.delim(tempify(GIN),header=FALSE)
+			
+			GIN <- GIN[colSums(!is.na(GIN))!=0]
+			#print(GIN)
 
 			model$GIN <- make.GIN(GIN)
-			
 
 		}
 		#return(proc.time()-ptm)
