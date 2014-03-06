@@ -84,10 +84,13 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 	
 		make.GIN <- function(table) {
 		if (length(table) == 5) {
-			#return("boo")
 			items <- as.vector(unlist(unique(table[5])))
+			if(class(items) != "character")
+				items <- paste("Item",items,sep="_")
+			#print(items)
 			#print(length(items))
 			out <- mapply(by.item,items,c(1:length(items)), list(table[4]), list(table[2]), list(max(table[1])),SIMPLIFY=FALSE)
+			#print(as.data.frame(out))
 			return(t(as.data.frame(out)))
 		} else {
 			pieces <- as.character(unlist(unique(table[5])))
@@ -360,14 +363,15 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 			GIN <- model$GIN[7:(length(model$GIN) - 1)]
 
-			GIN <- gsub("\t\\s*", "BREAKHERE", GIN)
-			GIN <- gsub("\\s+", "_", GIN)
-			GIN <- gsub("BREAKHERE", " ", GIN)
+			GIN <- gsub("\\s*\t\\s*", "\t", GIN)
+			GIN <- gsub(" +","_",GIN)
 			GIN <- gsub("^[0-9\\.]+\\.", "", GIN)
-			GIN <- read.table(tempify(GIN))
+			GIN <- read.delim(tempify(GIN),header=FALSE)
+			
+			GIN <- GIN[colSums(!is.na(GIN))!=0]
+			#print(GIN)
 
 			model$GIN <- make.GIN(GIN)
-			
 
 		}
 		#return(proc.time()-ptm)
