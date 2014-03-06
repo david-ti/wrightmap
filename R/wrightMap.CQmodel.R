@@ -51,7 +51,7 @@ wrightMap.CQmodel <- function(thetas, tables = NULL, label.items = NULL, main.ti
 				throlds = RMP[[tables]]$est
 				if(is.null(label.items)) {
 				label.items = unlist(RMP[[tables]][2])
-				print(label.items)
+				#print(label.items)
 				}
 			} else {
 				cross.name <- tables[grep("\\*", tables)]
