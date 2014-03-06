@@ -119,6 +119,8 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		}else{
 			left.table <- read.fwf(tempify(out[1]), line.seps, col.names = titles, stringsAsFactors = FALSE)
+			left.table[sapply(left.table, is.character)] <- sapply(left.table[sapply(left.table, is.character)],function (x) gsub("^\\s+|\\s+$", "", x))
+
 		}
 		#left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
 		# if (imported) {
