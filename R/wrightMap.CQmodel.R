@@ -10,12 +10,23 @@ function(thetas, tables = NULL, label.items = NULL, main.title = NULL, thr.lab.t
 
 	step.table <- NULL
 	if (!is.null(model$GIN) && is.null(tables)) {
-		throlds <- model$GIN
+		if(class(model$GIN) == "matrix")
+			throlds <- model$GIN
+		else {
+			names <- names(model$GIN)
+			steps <- c(1:ncol(model$GIN[[1]]))
+			if(length(steps) > 1)
+				names <- c(outer(steps,names,paste))
+			throlds <- do.call(cbind,model$GIN)
+			colnames(throlds) <- names
+			thr.lab.text <- as.data.frame(matrix(rep(names, each=nrow(throlds)), nrow = nrow(throlds)))
+			#print(thr.lab.text)
+		}
 		#print(throlds)
 		if (is.null(main.title)) 
 			main.title <- "Wright Map (thresholds)"
 		if (is.null(label.items)) 
-			label.items <- row.names(model$GIN)
+			label.items <- row.names(throlds)
 	} else {
 		RMP <- model$RMP
 		if (!is.null(tables)) {
