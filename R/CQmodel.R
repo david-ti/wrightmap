@@ -27,6 +27,10 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		for (i in 1:length(parts)) {
 
 			line.seps[i] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
+			if (i > 1){
+
+				line.seps[i] <- line.seps[i] - line.seps[i-1]
+			}
 
 		}
 
