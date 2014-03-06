@@ -16,6 +16,16 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 	RMP <- function(table, parts) {
 
+
+
+		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
+		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
+
+		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
+		titles[parts == "step"] <- "step"
+		titles <- unlist(titles)
+
+
 		left.side.titles <- strsplit(table[5], "ESTIMATE")[[1]][1]
 
 		parts.search <- parts
@@ -26,19 +36,57 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		for (i in 1:length(parts)) {
 
+			temp.col.seps <- numeric()
+
 			if (gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2 > 0){
 
-				line.seps[i] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
-				
+				temp.col.seps[1] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
+				#print(temp.col.seps)
+
 				if (i > 1){
 
-				line.seps[i] <- line.seps[i] - line.seps[i-1]
+					# temp.col.seps[1] <- temp.col.seps[1] 
+					# print(temp.col.seps)
+	
+					if(parts[i] != 'step' & parts[i] != 'category'){
+	
+						first.line <- substr(table[7], 1, temp.col.seps[1]+2)
+						#print(first.line)
+	
+						number.col <- (nchar(first.line) - gregexpr("[0-9]+\\s+?$",first.line)[[1]][1] ) 
+						#print(number.col)
+	
+						temp.col.seps[2] <- number.col
+						temp.col.seps[1] <- temp.col.seps[1] - temp.col.seps[2] - tail(line.seps,1)
+						
+						#print(temp.col.seps)
+	
+					}else{
+
+						temp.col.seps[1] <- temp.col.seps[1] - tail(line.seps,1)
+
+					}
+
+
+
 				}
 
 
 
 			}
 
+
+
+			if (i == 1){
+	
+				line.seps <- temp.col.seps
+	
+			}else{
+	
+				line.seps <- c(line.seps, temp.col.seps)
+	
+			}
+	
 
 		}
 
@@ -52,15 +100,10 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		}
 
-
 		if (all(parts == 'step') & length(parts) == 1) {line.seps <- nchar(left.side.titles)}
 
-		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
-		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
+		#line.seps
 
-		titles <- as.list(as.data.frame(rbind(paste("n_", parts, sep = ""), parts), stringsAsFactors = FALSE))
-		titles[parts == "step"] <- "step"
-		titles <- unlist(titles)
 
 		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)
 		out = gsub("[\\(\\)\\*,]", " ", out)
