@@ -16,6 +16,24 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 	RMP <- function(table, parts) {
 
+		left.side.titles <- strsplit(table[5], "ESTIMATE")[[1]][1]
+
+		parts.search <- parts
+
+		parts.search[parts == 'step'] <- '(step|category)'
+
+		line.seps <- numeric()
+
+		for (i in 1:length(parts)) {
+
+			line.seps[i] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
+
+		}
+
+		line.seps <- c(line.seps,nchar(left.side.titles) - max(line.seps))
+
+		if (all(parts == 'step') & length(parts) == 1) {line.seps <- nchar(left.side.titles)}
+
 		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
 		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
 
@@ -30,8 +48,15 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		# out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
 		# if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
-		
-		left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
+		if (all(parts == 'step') & length(parts) == 1){
+
+			left.table <- out[1]
+			colnames(left.table) <- titles
+
+		}else{
+			left.table <- read.fwf(tempify(out[1]), line.seps, col.names = titles, stringsAsFactors = FALSE)
+		}
+		#left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
 		if (imported) {
 			left.table[2] <- paste(left.table[[1]], left.table[[2]])
 			left.table <- left.table[2]
