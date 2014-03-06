@@ -26,15 +26,32 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		for (i in 1:length(parts)) {
 
-			line.seps[i] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
-			if (i > 1){
+			if (gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2 > 0){
+
+				line.seps[i] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
+				
+				if (i > 1){
 
 				line.seps[i] <- line.seps[i] - line.seps[i-1]
+				}
+
+
+
 			}
+
 
 		}
 
-		line.seps <- c(line.seps,nchar(left.side.titles) - max(line.seps))
+		if (length(line.seps)==0){
+
+			line.seps <- nchar(left.side.titles)
+
+		} else{
+
+			line.seps <- c(line.seps,nchar(left.side.titles) - max(line.seps))
+
+		}
+
 
 		if (all(parts == 'step') & length(parts) == 1) {line.seps <- nchar(left.side.titles)}
 
@@ -52,19 +69,19 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		# out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
 		# if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
-		if (all(parts == 'step') & length(parts) == 1){
+		if ( (all(parts == 'step') & length(parts) == 1) | imported) {
 
-			left.table <- out[1]
-			colnames(left.table) <- titles
+			left.table <- matrix(apply(out[1],1,function (x) gsub("^\\s+|\\s+$", "", x)), ncol=1)			
+			colnames(left.table) <- parts
 
 		}else{
 			left.table <- read.fwf(tempify(out[1]), line.seps, col.names = titles, stringsAsFactors = FALSE)
 		}
 		#left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
-		if (imported) {
-			left.table[2] <- paste(left.table[[1]], left.table[[2]])
-			left.table <- left.table[2]
-		}
+		# if (imported) {
+		# 	left.table[2] <- paste(left.table[[1]], left.table[[2]])
+		# 	left.table <- left.table[2]
+		# }
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
 
 		cbind(left.table, right.table)
