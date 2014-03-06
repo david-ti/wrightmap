@@ -49,6 +49,10 @@ wrightMap.CQmodel <- function(thetas, tables = NULL, label.items = NULL, main.ti
 		if (!is.null(tables)) {
 			if (length(tables) == 1) {
 				throlds = RMP[[tables]]$est
+				if(is.null(label.items)) {
+				label.items = unlist(RMP[[tables]][2])
+				print(label.items)
+				}
 			} else {
 				cross.name <- tables[grep("\\*", tables)]
 				cross.parts <- unlist(strsplit(cross.name, "\\*"))
@@ -112,11 +116,12 @@ if (is.null(main.title))
 			if (is.null(main.title)) 
 				main.title <- "Wright Map"
 		}
-		if (is.null(label.items)) 
+		if (is.null(label.items)) {
 			label.items <- model$run.details$names[[item.name]]
 		if (item.name == "step") 
 			#print(label.items)
 			label.items <- label.items[label.items != 0]
+			}
 		#print(label.items)
 		
 	}
