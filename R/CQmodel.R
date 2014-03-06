@@ -57,13 +57,13 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 						#print(number.col)
 	
 						temp.col.seps[2] <- number.col
-						temp.col.seps[1] <- temp.col.seps[1] - temp.col.seps[2] - tail(line.seps,1)
+						temp.col.seps[1] <- temp.col.seps[1] - temp.col.seps[2] - sum(line.seps)
 						
 						#print(temp.col.seps)
 	
 					}else{
 
-						temp.col.seps[1] <- temp.col.seps[1] - tail(line.seps,1)
+						temp.col.seps[1] <- temp.col.seps[1] - sum(line.seps)
 
 					}
 
