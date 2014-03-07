@@ -32,7 +32,7 @@ wrightMap.CQmodel <- function(thetas, tables = NULL, type = "default", label.ite
 	thetas <- p.est[columns.at]
 
 
-	if (!is.null(model$GIN) && is.null(tables)%% (type != "deltas")) {
+	if (!is.null(model$GIN) && is.null(tables) && (type != "deltas")) {
 		throlds <- unpack.GIN(model$GIN)
 		names <- unpack.names(model$GIN)
 		colnames(throlds) <- names
