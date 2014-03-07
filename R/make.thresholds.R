@@ -99,7 +99,7 @@ apply.thresholds = function(parameter.matrix
                             , design.matrix="normal"
                             , theta.interval = c(-10, 10)   ) {
 
-  print("apply")
+
   threshold.matrix <- t(mapply(get.thresholds,as.data.frame(t(parameter.matrix)),t(design.matrix)))
   
   return(threshold.matrix)
