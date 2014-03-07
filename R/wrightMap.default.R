@@ -190,8 +190,13 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     if (label.items.rows == 1) {
         
-        
-        text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = c(0.5, 2), xpd = TRUE, cex = 0.9)
+        if (label.items.srt != 0){ 
+            text.adj = c(1.1,1.1)
+        } else {
+            text.adj = c(0.5, 2)
+        }
+
+        text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = 0.9)
         
         
         if (label.items.ticks == TRUE) {
