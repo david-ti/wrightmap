@@ -164,9 +164,15 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     if (show.thr.lab == TRUE) {
         
-        pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-        pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
-        text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, font = thr.lab.font)
+        if (show.thr.sym == TRUE){
+            pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
+            pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+            text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, font = thr.lab.font)
+        } else{
+
+            text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
+
+        }
         
     }
     
