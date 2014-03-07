@@ -36,15 +36,16 @@ wrightMap.CQmodel <- function(thetas, tables = NULL, type = "default", label.ite
 		throlds <- unpack.GIN(model$GIN)
 		names <- unpack.names(model$GIN)
 		colnames(throlds) <- names
-		
+
 
 		if (is.null(main.title)) 
 			main.title <- "Wright Map (thresholds)"
-				message("Using GIN table for thresholds parameters")
+		message("Using GIN table for thresholds parameters")
 	} else {
 		RMP <- model$RMP
 		if (!is.null(tables) && (length(tables) == 1)) {
 			item.name = tables
+			step.table.name = "Thereisnosteptable"
 		} else {
 			if (!is.null(tables)) {
 				step.table.name <- tables[grep("\\*", tables)]
@@ -54,44 +55,45 @@ wrightMap.CQmodel <- function(thetas, tables = NULL, type = "default", label.ite
 				step.table.name <- "item*step"
 				item.name <- "item"
 			}
-			if (!is.null(RMP[[step.table.name]])) {
-				if (type != "thresholds") {
-					throlds <- make.deltas(model, item.table = item.name, step.table = step.table.name)
-					if (is.null(main.title)) 
-						main.title <- "Wright Map (Deltas)"
-					message("Using ", item.name, " and ", step.table.name, " tables to create delta parameters")
-				} else {
-					throlds <- make.thresholds(model, item.table = item.name, step.table = step.table.name)
-					if (is.null(main.title)) 
-						main.title <- "Wright Map (Thresholds)"
-					message("Using ", item.name, " and ", step.table.name, " tables to create threshold parameters")
-				}
-
-				
+		}
+		if (!is.null(RMP[[step.table.name]])) {
+			if (type != "thresholds") {
+				throlds <- make.deltas(model, item.table = item.name, step.table = step.table.name)
+				if (is.null(main.title)) 
+					main.title <- "Wright Map (Deltas)"
+				message("Using ", item.name, " and ", step.table.name, " tables to create delta parameters")
 			} else {
-				throlds <- RMP[[item.name]]$est
+				throlds <- make.thresholds(model, item.table = item.name, step.table = step.table.name)
+				if (is.null(main.title)) 
+					main.title <- "Wright Map (Thresholds)"
+				message("Using ", item.name, " and ", step.table.name, " tables to create threshold parameters")
+			}
+
+
+		} else {
+			throlds <- RMP[[item.name]]$est
 			if (is.null(thr.lab.text)) 
 				thr.lab.text <- ""
 			if (is.null(main.title)) 
 				main.title <- "Wright Map"
 			message("Using ", item.name, " table for dichotomous item parameters")
-			}
 		}
-		
+
+
 		#print(label.items)
 		
 	}
-	
+
 	if (is.null(label.items)) {
-			label.items <- rownames(throlds)
-					}
-	
+		label.items <- rownames(throlds)
+	}
+
 	if (is.null(thr.lab.text)) {
-		if(!is.null(colnames(throlds)))
+		if (!is.null(colnames(throlds))) 
 
 
-				thr.lab.text <- as.data.frame(matrix(rep(colnames(throlds), each = nrow(throlds)), nrow = nrow(throlds)))
-}
+		thr.lab.text <- as.data.frame(matrix(rep(colnames(throlds), each = nrow(throlds)), nrow = nrow(throlds)))
+	}
 
 	if (is.null(dim.names)) 
 		dim.names <- model$dimensions

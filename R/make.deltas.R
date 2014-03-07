@@ -14,6 +14,7 @@ make.deltas.CQmodel <- function(item.params, item.table = "item", step.table = "
 	step.name <- cross.parts[cross.parts != item.name]
 	item.table <- RMP[[item.table]]
 	throlds = item.table$est
+	throlds <- throlds[!is.na(throlds)]
 	step.table = RMP[[step.table]]
 
 	if (step.name == "step") 
@@ -25,7 +26,7 @@ make.deltas.CQmodel <- function(item.params, item.table = "item", step.table = "
 	
 	steps <- reshape(step.table[c(item.col, step.col, "est")], direction = "wide", timevar = step.col, idvar = item.col)
 	steps <- steps[colSums(!is.na(steps)) != 0]
-	
+	steps <- steps[rowSums(!is.na(steps)) > 1,]
 	throlds <- make.deltas(throlds,steps)
 	
 	item.names <- unlist(item.table[item.name])
@@ -41,13 +42,15 @@ make.deltas.CQmodel <- function(item.params, item.table = "item", step.table = "
 }
 
 make.deltas.default <- function(item.params, step.params, ...) {
+	#print(item.params)
+	#print(step.params)
 	throlds <- item.params
 	steps <- step.params
 	
 	item.nums <- 1:length(throlds)
 	full.steps <- matrix(nrow = max(item.nums), ncol = ncol(steps))
 	full.steps[,2] <- 0
-	
+
 	full.steps[item.nums %in% unlist(steps[1]),] <- as.matrix(steps)
 	
 	steps <- full.steps[,-1]
