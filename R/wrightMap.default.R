@@ -57,10 +57,11 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
             
         } else {
             # print( distInfo)
+            print(attr(distInfo, "dim.color"))
             plot(c(min(distInfo[, 1]), max(distInfo[, 3])), c(min(distInfo[, 2]), max(distInfo[, 4])), ylim = yRange, xlim = c(max(distInfo[, 4]), 0), 
                 type = "n", axes = FALSE, ylab = "", xlab = "", cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, col = attr(distInfo, "dim.color"))
             
-            rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3])
+            rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3], col = attr(distInfo, "dim.color"))
             
         }
         
