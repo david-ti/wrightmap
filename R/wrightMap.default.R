@@ -1,5 +1,5 @@
 wrightMap.default <-
-function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = "black", dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.2,return.thresholds = TRUE,...) {
+function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.2,return.thresholds = TRUE,...) {
     
     
     ## Helper Functions
@@ -57,10 +57,11 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
             
         } else {
             # print( distInfo)
+            print(attr(distInfo, "dim.color"))
             plot(c(min(distInfo[, 1]), max(distInfo[, 3])), c(min(distInfo[, 2]), max(distInfo[, 4])), ylim = yRange, xlim = c(max(distInfo[, 4]), 0), 
                 type = "n", axes = FALSE, ylab = "", xlab = "", cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, col = attr(distInfo, "dim.color"))
             
-            rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3])
+            rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3], col = attr(distInfo, "dim.color"))
             
         }
         
@@ -98,6 +99,13 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     item.side <- round((nD * (1 - item.prop))/item.prop)
     layout.wm <- c(seq(1:nD), rep(nD + 1, item.side))
+
+    if ( is.null(dim.color)){
+
+        if ( use.hist) { dim.color <- "white"}
+        if (!use.hist) { dim.color <- "black"}
+
+    } 
     
     # Creating default matrices if info not provided
     
@@ -164,9 +172,15 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     if (show.thr.lab == TRUE) {
         
-        pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-        pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
-        text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, font = thr.lab.font)
+        if (show.thr.sym == TRUE){
+            pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
+            pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+            text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, font = thr.lab.font)
+        } else{
+
+            text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
+
+        }
         
     }
     
@@ -176,8 +190,13 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     if (label.items.rows == 1) {
         
-        
-        text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = c(0.5, 2), xpd = TRUE, cex = 0.9)
+        if (label.items.srt != 0){ 
+            text.adj = c(1.1,1.1)
+        } else {
+            text.adj = c(0.5, 2)
+        }
+
+        text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = 0.9)
         
         
         if (label.items.ticks == TRUE) {
