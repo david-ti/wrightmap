@@ -21,4 +21,4 @@ Description: The wrightMap function creates Wright Maps based on person estimate
 
 License: BSD 2 clause
 
-Acknowledgments: Ronli Diakow & Beth Ayers
+Acknowledgments: Our thanks to Ronli Diakow & Beth Ayers for all their feedback and help.
