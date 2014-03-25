@@ -17,12 +17,14 @@ make.deltas.CQmodel <- function(item.params, item.table = NULL, interactions = N
 			stop("Please specify an item.table as well as the interactions and/or step.table")
 		tables <- names(RMP)
 		interactions.at <- grep("\\*", tables)
+		if(length(interactions.at) > 0) {
 		interactions <- tables[interactions.at]
-		single.tables <- tables[-interactions.at]
-		item.table <- single.tables[1]
-		if (length(single.tables) == 2) 
-			step.table <- single.tables[2]
-		else if (length(single.tables) > 2) 
+		tables <- tables[-interactions.at]
+		}
+		item.table <- tables[1]
+		if (length(tables) == 2) 
+			step.table <- tables[2]
+		else if (length(tables) > 2) 
 			stop("Please specify tables")
 	}
 
