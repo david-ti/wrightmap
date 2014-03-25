@@ -30,8 +30,8 @@ make.deltas.CQmodel <- function(item.params, item.table = NULL, interactions = N
 
 	if (is.null(item.sign)) {
 		item.sign <- ifelse(grepl(paste("-", item.table, sep = ""), eqn), -1, 1)
-		print(item.table)
-		print(eqn)
+		#print(item.table)
+		#print(eqn)
 	}
 	item.name <- item.table
 	item.table <- RMP[[item.table]]
@@ -120,9 +120,9 @@ throlds <- item.params
 
 		crosses <- full.steps[, -1]
 	} else crosses <- 0
-	print(inter.sign)
-	print(item.sign)
-	print(step.sign)
+	#print(inter.sign)
+	#print(item.sign)
+	#print(step.sign)
 	throlds <- crosses * inter.sign + throlds * item.sign + steps * step.sign
 	throlds <- throlds[rowSums(!is.na(throlds)) != 0, ]
 
