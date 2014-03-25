@@ -359,6 +359,8 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		additive.parts = unlist(strsplit(SOE$equation, "[+|-]"))
 		parts = strsplit(additive.parts, "\\*")
+		model$additive.parts <- additive.parts
+		model$parts <- parts
 		if (imported) {
 			params <- RMP(model$RMP, "Parameters")
 			model$RMP <- list()
