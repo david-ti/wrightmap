@@ -26,10 +26,12 @@ make.deltas.CQmodel <- function(item.params, item.table = NULL, interactions = N
 			stop("Please specify tables")
 	}
 
-	eqn <- item.params$eqn
+	eqn <- item.params$equation
 
 	if (is.null(item.sign)) {
 		item.sign <- ifelse(grepl(paste("-", item.table, sep = ""), eqn), -1, 1)
+		print(item.table)
+		print(eqn)
 	}
 	item.name <- item.table
 	item.table <- RMP[[item.table]]
