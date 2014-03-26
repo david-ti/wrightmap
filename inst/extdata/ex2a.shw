@@ -1,0 +1,276 @@
+================================================================================
+Partial Credit Model: What happened last night             Tue Mar 04 23:42 2014
+SUMMARY OF THE ESTIMATION
+===========================================================Build: Mar 23 2012===
+
+Estimation method was: Gauss-Hermite Quadrature with 15 nodes
+Assumed population distribution was: Gaussian
+Constraint was: DEFAULT
+The Data File: ex2a.dat
+The format:  name 2-7 responses 10-17
+No case weights
+The regression model:
+Grouping Variables:
+The item model: item+item*step
+Slopes are fixed
+Sample size: 515
+Final Deviance:     8490.92696
+Total number of estimated parameters: 22
+The number of iterations: 51
+Termination criteria:  Max iterations=1000, Parameter Change= 0.00010
+                       Deviance Change= 0.00010
+Iterations terminated because the deviance convergence criteria was reached
+Random number generation seed:    1.00000
+Number of nodes used when drawing PVs: 2000
+Number of nodes used when computing fit: 200
+Number of plausible values to draw: 5
+Maximum number of iterations without a deviance improvement: 100
+Maximum number of Newton steps in M-step: 10
+Value for obtaining finite MLEs for zero/perfects:    0.30000
+
+================================================================================
+================================================================================
+Partial Credit Model: What happened last night             Tue Mar 04 23:42 2014
+TABLES OF RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+TERM 1: item
+--------------------------------------------------------------------------------------------------------------
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+     item           ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------------
+ 1   Earth shape     -0.727   0.061    1.00 ( 0.88, 1.12) -0.0   1.00 ( 0.90, 1.10) -0.1                      
+ 2   Earth pictu..    0.770   0.094    1.13 ( 0.88, 1.12)  1.9   1.11 ( 0.90, 1.10)  2.0                      
+ 3   Falling off      0.606   0.085    0.95 ( 0.88, 1.12) -0.8   0.95 ( 0.85, 1.15) -0.7                      
+ 4   What is Sun      0.192   0.071    0.97 ( 0.88, 1.12) -0.5   0.97 ( 0.89, 1.11) -0.5                      
+ 5   Moonshine       -0.151   0.048    1.02 ( 0.88, 1.12)  0.3   1.02 ( 0.90, 1.10)  0.3                      
+ 6   Moon and ni..    0.113   0.065    0.87 ( 0.88, 1.12) -2.1   0.89 ( 0.90, 1.10) -2.3                      
+ 7   Night and d..   -0.219   0.046    1.03 ( 0.88, 1.12)  0.4   1.04 ( 0.90, 1.10)  0.7                      
+ 8   Breathe on ..   -0.583*  0.045    1.26 ( 0.88, 1.12)  3.9   1.11 ( 0.89, 1.11)  1.8                      
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.982
+Chi-square test of parameter equality =     300.72,  df = 7,  Sig Level = 0.000
+^ Empirical standard errors have been used
+================================================================================
+TERM 2: item*step
+----------------------------------------------------------------------------------------------------------------------------
+          VARIABLES                                       UNWEIGHTED FIT             WEIGHTED FIT
+------------------------------                        -----------------------   -----------------------
+     item         category         ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+----------------------------------------------------------------------------------------------------------------------------
+ 1   Earth shape      0                               1.05 ( 0.88, 1.12)  0.8   1.04 ( 0.88, 1.12)  0.7                     
+ 1   Earth shape      1             -0.234   0.097    0.97 ( 0.88, 1.12) -0.5   0.98 ( 0.94, 1.06) -0.6                     
+ 1   Earth shape      2              0.234*           0.97 ( 0.88, 1.12) -0.5   0.96 ( 0.93, 1.07) -1.3                     
+ 2   Earth pictu..    0                               1.05 ( 0.88, 1.12)  0.8   1.00 ( 0.92, 1.08) -0.0                     
+ 2   Earth pictu..    1             -1.420   0.135    1.01 ( 0.88, 1.12)  0.1   1.01 ( 0.95, 1.05)  0.3                     
+ 2   Earth pictu..    2             -0.514   0.150    1.24 ( 0.88, 1.12)  3.5   1.13 ( 0.91, 1.09)  2.5                     
+ 2   Earth pictu..    3              1.934*           1.29 ( 0.88, 1.12)  4.2   1.01 ( 0.47, 1.53)  0.1                     
+ 3   Falling off      0                               0.84 ( 0.88, 1.12) -2.6   0.89 ( 0.89, 1.11) -2.1                     
+ 3   Falling off      1             -2.022   0.122    0.95 ( 0.88, 1.12) -0.9   0.95 ( 0.94, 1.06) -1.8                     
+ 3   Falling off      2              1.363   0.186    1.17 ( 0.88, 1.12)  2.6   1.03 ( 0.75, 1.25)  0.3                     
+ 3   Falling off      3              0.659*           0.60 ( 0.88, 1.12) -7.5   1.01 ( 0.58, 1.42)  0.1                     
+ 4   What is Sun      0                               1.03 ( 0.88, 1.12)  0.5   1.01 ( 0.92, 1.08)  0.2                     
+ 4   What is Sun      1             -1.151   0.096    1.00 ( 0.88, 1.12)  0.1   1.00 ( 0.97, 1.03)  0.2                     
+ 4   What is Sun      2              1.151*           0.80 ( 0.88, 1.12) -3.5   0.95 ( 0.83, 1.17) -0.6                     
+ 5   Moonshine        0                               1.07 ( 0.88, 1.12)  1.0   1.07 ( 0.91, 1.09)  1.5                     
+ 5   Moonshine        1              0.308   0.126    0.97 ( 0.88, 1.12) -0.4   1.00 ( 0.85, 1.15)  0.0                     
+ 5   Moonshine        2             -0.331   0.151    1.12 ( 0.88, 1.12)  1.8   1.02 ( 0.88, 1.12)  0.4                     
+ 5   Moonshine        3              0.023*           0.82 ( 0.88, 1.12) -3.1   0.93 ( 0.90, 1.10) -1.4                     
+ 6   Moon and ni..    0                               0.92 ( 0.88, 1.12) -1.3   0.93 ( 0.92, 1.08) -1.8                     
+ 6   Moon and ni..    1             -0.748   0.094    0.97 ( 0.88, 1.12) -0.4   0.98 ( 0.97, 1.03) -1.6                     
+ 6   Moon and ni..    2              0.748*           0.75 ( 0.88, 1.12) -4.4   0.90 ( 0.87, 1.13) -1.5                     
+ 7   Night and d..    0                               1.04 ( 0.88, 1.12)  0.6   1.02 ( 0.91, 1.09)  0.4                     
+ 7   Night and d..    1              0.376   0.122    0.99 ( 0.88, 1.12) -0.1   1.01 ( 0.85, 1.15)  0.1                     
+ 7   Night and d..    2              0.144   0.162    0.98 ( 0.88, 1.12) -0.3   1.00 ( 0.83, 1.17) -0.0                     
+ 7   Night and d..    3             -0.520*           1.01 ( 0.88, 1.12)  0.2   1.01 ( 0.90, 1.10)  0.2                     
+ 8   Breathe on ..    0                               1.23 ( 0.88, 1.12)  3.4   1.04 ( 0.89, 1.11)  0.8                     
+ 8   Breathe on ..    1              1.240   0.164    1.28 ( 0.88, 1.12)  4.1   1.03 ( 0.75, 1.25)  0.3                     
+ 8   Breathe on ..    2              1.735   0.368    1.11 ( 0.88, 1.12)  1.6   1.01 ( 0.36, 1.64)  0.1                     
+ 8   Breathe on ..    3             -2.975*           1.23 ( 0.88, 1.12)  3.5   1.12 ( 0.89, 1.11)  2.1                     
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+================================================================================
+================================================================================
+Partial Credit Model: What happened last night             Tue Mar 04 23:42 2014
+TABLES OF POPULATION MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+REGRESSION COEFFICIENTS
+
+
+
+Regression Variable
+
+CONSTANT                  -0.320 ( 0.041)      
+-----------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+===============================================
+CONDITIONAL COVARIANCE/CORRELATION MATRIX
+
+
+
+Dimension
+
+Dimension_1                                
+-------------------------------------------
+Variance                   0.526  ( 0.057) 
+-------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+
+===========================================
+                        
+RELIABILITY COEFFICIENTS
+------------------------
+                        
+Dimension: (Dimension_1)                                                        
+-----------------------
+ MLE Person separation RELIABILITY:   0.711                                     
+ WLE Person separation RELIABILITY:   0.689                                     
+ EAP/PV RELIABILITY:                  0.735                                     
+------------------------
+================================================================================
+Partial Credit Model: What happened last night             Tue Mar 04 23:42 2014
+MAP OF LATENT DISTRIBUTIONS AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+             Terms in the Model (excl Step terms)
+
+                               +item
+----------------------------------------------------
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+   2            |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+               X|                                  |
+               X|                                  |
+               X|                                  |
+   1           X|                                  |
+              XX|                                  |
+              XX|2                                 |
+            XXXX|                                  |
+            XXXX|3                                 |
+            XXXX|                                  |
+         XXXXXXX|                                  |
+           XXXXX|                                  |
+           XXXXX|4                                 |
+           XXXXX|6                                 |
+   0     XXXXXXX|                                  |
+         XXXXXXX|                                  |
+      XXXXXXXXXX|5 7                               |
+        XXXXXXXX|                                  |
+      XXXXXXXXXX|                                  |
+         XXXXXXX|                                  |
+        XXXXXXXX|8                                 |
+        XXXXXXXX|                                  |
+         XXXXXXX|1                                 |
+         XXXXXXX|                                  |
+          XXXXXX|                                  |
+  -1         XXX|                                  |
+            XXXX|                                  |
+            XXXX|                                  |
+              XX|                                  |
+               X|                                  |
+              XX|                                  |
+               X|                                  |
+               X|                                  |
+                |                                  |
+               X|                                  |
+  -2           X|                                  |
+                |                                  |
+               X|                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+  -3            |                                  |
+                |                                  |
+                |                                  |
+====================================================
+Each 'X' represents 3.4 cases
+
+====================================================
+================================================================================
+Partial Credit Model: What happened last night             Tue Mar 04 23:42 2014
+MAP OF LATENT DISTRIBUTIONS AND THRESHOLDS
+===========================================================Build: Mar 23 2012===
+                               Generalised-Item Thresholds
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                |2.3
+                |
+                |
+                |
+                |
+                |
+   2            |3.3
+                |
+                |
+                |
+                |
+                |4.2
+                |
+               X|3.2
+               X|
+               X|
+   1           X|6.2
+              XX|
+              XX|
+            XXXX|
+            XXXX|
+            XXXX|
+         XXXXXXX|2.2 5.3
+           XXXXX|
+           XXXXX|7.3
+           XXXXX|
+   0     XXXXXXX|
+         XXXXXXX|
+      XXXXXXXXXX|1.2 7.2
+        XXXXXXXX|5.2
+      XXXXXXXXXX|
+         XXXXXXX|8.2 8.3
+        XXXXXXXX|
+        XXXXXXXX|5.1 7.1 8.1
+         XXXXXXX|
+         XXXXXXX|6.1
+          XXXXXX|2.1
+  -1         XXX|4.1
+            XXXX|
+            XXXX|
+              XX|1.1
+               X|3.1
+              XX|
+               X|
+               X|
+                |
+               X|
+  -2           X|
+                |
+               X|
+                |
+                |
+                |
+                |
+                |
+                |
+                |
+  -3            |
+                |
+                |
+============================================================================================================================================================================================================================================================================================================
+Each 'X' represents 3.4 cases
+The labels for thresholds show the levels of
+    item, and category, respectively
+
+============================================================================================================================================================================================================================================================================================================
