@@ -39,10 +39,14 @@ make.deltas.CQmodel <- function(item.params, item.table = NULL, interactions = N
 	item.table <- RMP[[item.table]]
 	throlds = item.table$est
 	throlds <- throlds[!is.na(throlds)]
+	
+		item.names <- unlist(item.table[item.name])
+	
+	if (item.name == "step") 
+		item.names <- item.names[item.names != 0]
 
-	if (is.null(step.table) && is.null(interactions)) 
-		return(throlds)
-
+	if (!is.null(step.table) || !is.null(interactions)) {
+	
 	if (!is.null(step.table)) {
 		if (is.null(step.sign)) {
 			step.sign <- ifelse(grepl(paste("-", step.table, sep = ""), eqn), -1, 1)
@@ -80,17 +84,22 @@ make.deltas.CQmodel <- function(item.params, item.table = NULL, interactions = N
 		inter.sign <- 1
 	}
 	throlds <- make.deltas(throlds, crosses, steps, item.sign, step.sign, inter.sign)
-
-	item.names <- unlist(item.table[item.name])
+	
 	if (!is.null(step.table)) 
 		step.names <- unlist(step.table[step.name])
 	else step.names <- unique(unlist(interactions[step.name]))
-	if (item.name == "step") 
-		item.names <- item.names[item.names != 0]
 	if (step.name == "step") 
 		step.names <- step.names[step.names != 0]
-	rownames(throlds) <- item.names
 	colnames(throlds) <- step.names
+	rownames(throlds) <- item.names
+	}
+	else
+		names(throlds) <- item.names
+
+
+	
+	
+	
 
 	message("Using ", item.name, ifelse(!is.null(interactions), paste(" and", inter.name), ""), ifelse(!is.null(step.table), paste(" and", 
 		step.name), ""), " tables to create delta parameters")
