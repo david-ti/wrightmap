@@ -65,7 +65,7 @@ wrightMap.CQmodel <- function(thetas, item.table = NULL, interactions = NULL, st
 	}
 
 	if (is.null(label.items)) {
-		if(class(throlds)) == "matrix"
+		if(class(throlds) == "matrix")
 		label.items <- rownames(throlds)
 		else
 		label.items <- names(throlds)
