@@ -127,20 +127,12 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     # Generating Full Map
     
-<<<<<<< HEAD
-    
-    # dev.new(width = 9, height = 5)
-    par(pty='m')
-    par(oma = c(0, 5, 0, 5))
-    
-    layout(matrix(layout.wm, nrow = 1), widths = c(rep(item.prop/nD, nD), rep((1 - item.prop)/item.side, item.side)), heights = 0.8, respect = TRUE)
-=======
+
     if(new.quartz)
     	dev.new(width = 9, height = 5)
     par(oma = c(0, 5, 0, 5))
     
     layout(matrix(layout.wm, nrow = 1), widths = c(rep((1 - item.prop)/nD, nD), rep(item.prop/item.side, item.side)), heights = 0.8)
->>>>>>> dev
     
     ## Generating Person Side
     
