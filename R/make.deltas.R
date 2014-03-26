@@ -35,7 +35,7 @@ make.deltas.CQmodel <- function(item.params, item.table = NULL, interactions = N
 		#print(item.table)
 		#print(eqn)
 	}
-	item.name <- item.table
+	item.name <- ifelse(item.params$imported,"Parameters",item.table)
 	item.table <- RMP[[item.table]]
 	throlds = item.table$est
 	throlds <- throlds[!is.na(throlds)]

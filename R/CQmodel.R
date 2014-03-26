@@ -286,6 +286,7 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		} else {
 			imported = TRUE
 		}
+		model$imported <- imported
 		shw.titles = rename(titles)
 
 
