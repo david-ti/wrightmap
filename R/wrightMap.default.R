@@ -1,5 +1,5 @@
 wrightMap.default <-
-function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.2,return.thresholds = TRUE,...) {
+function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.8,return.thresholds = TRUE,new.quartz= FALSE,...) {
     
     
     ## Helper Functions
@@ -97,7 +97,7 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     yRange <- c(min.l, max.l)
     xRange <- c(1, 0)
     
-    item.side <- round((nD * (1 - item.prop))/item.prop)
+    item.side <- round((nD * item.prop)/(1 - item.prop))
     layout.wm <- c(seq(1:nD), rep(nD + 1, item.side))
 
     if ( is.null(dim.color)){
@@ -127,12 +127,20 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     
     # Generating Full Map
     
+<<<<<<< HEAD
     
     # dev.new(width = 9, height = 5)
     par(pty='m')
     par(oma = c(0, 5, 0, 5))
     
     layout(matrix(layout.wm, nrow = 1), widths = c(rep(item.prop/nD, nD), rep((1 - item.prop)/item.side, item.side)), heights = 0.8, respect = TRUE)
+=======
+    if(new.quartz)
+    	dev.new(width = 9, height = 5)
+    par(oma = c(0, 5, 0, 5))
+    
+    layout(matrix(layout.wm, nrow = 1), widths = c(rep((1 - item.prop)/nD, nD), rep(item.prop/item.side, item.side)), heights = 0.8)
+>>>>>>> dev
     
     ## Generating Person Side
     
