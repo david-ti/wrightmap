@@ -234,7 +234,7 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 		titles[grepl("MAP OF .+ AND RESPONSE MODEL PARAMETER ESTIMATES", titles)] <- "MRM"
 		titles[grepl("MAP OF .+ AND THRESHOLDS", titles)] <- "MTH"
 		titles[titles == "TABLES OF GIN Thresholds"] <- "GIN"
-
+		titles[titles == "TABLES OF GIN Item Parameters"] <- "GIN.deltas"
 		titles[titles == "Estimation method was"] <- "method"
 		titles[titles == "Assumed population distribution was"] <- "distribution"
 		titles[titles == "Constraint was"] <- "constraint"
@@ -429,10 +429,8 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		########GIN#########
 		
-		if (!is.null(model$GIN)) {
-			#print(model$GIN)
-
-			GIN <- model$GIN[7:(length(model$GIN))]
+		do.GIN <- function(GIN) {
+			GIN <- GIN[7:(length(GIN))]
 			GIN <- GIN[-grep("===",GIN)]
 
 			GIN <- gsub("\\s*\t\\s*", "\t", GIN)
@@ -441,11 +439,15 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 			GIN <- read.delim(tempify(GIN),header=FALSE)
 			
 			GIN <- GIN[colSums(!is.na(GIN))!=0]
-
-			model$GIN <- make.GIN(GIN)
-			
-			
-
+			return(make.GIN(GIN))
+		}
+		
+		if (!is.null(model$GIN)) {
+			model$GIN <- do.GIN(model$GIN)
+		}
+		
+		if(!is.null(model$GIN.deltas)) {
+			model$GIN.deltas <- do.GIN(model$GIN.deltas)
 		}
 		#return(proc.time()-ptm)
 		class(model) <- "CQmodel"
