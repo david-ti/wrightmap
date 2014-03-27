@@ -433,7 +433,7 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 			#print(model$GIN)
 
 			GIN <- model$GIN[7:(length(model$GIN))]
-			GIN <- GIN[-grep("^==",GIN)]
+			GIN <- GIN[-grep("===",GIN)]
 
 			GIN <- gsub("\\s*\t\\s*", "\t", GIN)
 			GIN <- gsub(" +","_",GIN)
@@ -441,10 +441,9 @@ CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
 			GIN <- read.delim(tempify(GIN),header=FALSE)
 			
 			GIN <- GIN[colSums(!is.na(GIN))!=0]
-			
-			#print(GIN)
 
 			model$GIN <- make.GIN(GIN)
+			
 			
 
 		}
