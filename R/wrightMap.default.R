@@ -1,5 +1,5 @@
 wrightMap.default <-
-function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.8,return.thresholds = TRUE,new.quartz= FALSE,...) {
+function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
     
     
     ## Helper Functions
@@ -91,8 +91,17 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     min.theta <- quantile(thetas, probs = c(0.01), na.rm = TRUE)
     max.theta <- quantile(thetas, probs = c(0.99), na.rm = TRUE)
     
-    min.l <- min(c(min.theta, thr), na.rm = TRUE) - min.logit.pad
-    max.l <- max(c(max.theta, thr), na.rm = TRUE) + max.logit.pad
+    if (is.null(min.l)){
+
+        min.l <- min(c(min.theta, thr), na.rm = TRUE) - min.logit.pad
+
+    }
+
+    if (is.null(max.l)){
+
+		max.l <- max(c(max.theta, thr), na.rm = TRUE) + max.logit.pad
+
+    }
     
     yRange <- c(min.l, max.l)
     xRange <- c(1, 0)
