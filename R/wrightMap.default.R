@@ -1,10 +1,10 @@
 wrightMap.default <-
-function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.8,return.thresholds = TRUE,new.quartz= FALSE,...) {
+function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, item.prop = 0.8,return.thresholds = TRUE,new.quartz= FALSE,...) {
     
     
     ## Helper Functions
     
-    theta.dens <- function(thetas, use.hist, hist.nclass) {
+    theta.dens <- function(thetas, use.hist, breaks) {
         
         if (use.hist == FALSE) {
             
@@ -26,7 +26,7 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
             
         } else {
             
-            densList <- apply(thetas, 2, hist, plot = FALSE, nclass = hist.nclass)
+            densList <- apply(thetas, 2, hist, plot = FALSE, breaks = breaks)
             
             
             densExt <- function(densElem) {
@@ -139,7 +139,7 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     par(mar = c(5, 0.1, 4, 0) + 0.1)
     par(mgp = c(2.7, 1, 0))
     
-    distInfo <- theta.dens(thetas, use.hist, hist.nclass)
+    distInfo <- theta.dens(thetas, use.hist, breaks)
     
     for (i in 1:nD) {
         
