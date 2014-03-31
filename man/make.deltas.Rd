@@ -1,4 +1,5 @@
 \name{make.deltas}
+\alias{make.deltas}
 \alias{make.deltas.default}
 \alias{make.deltas.CQmodel}
 \alias{make.deltas.character}
@@ -11,11 +12,14 @@ This function takes as its input a CQmodel object or the name of a ConQuest show
 }
 \usage{
 make.deltas(item.params, ...)
-}
 \method{make.deltas}{character}(item.params, ...)
-\method{make.deltas}{CQmodel}(item.params, item.table = NULL, interactions = NULL, step.table = NULL, item.sign = NULL, inter.sign = NULL, 
+\method{make.deltas}{CQmodel}(item.params, item.table = NULL, interactions = NULL, 
+step.table = NULL, item.sign = NULL, inter.sign = NULL, 
 	step.sign = NULL, ...)
-\method{make.deltas}{default}(item.params, cross.params = 0, step.params = 0, item.sign = 1, step.sign = 1, inter.sign = 1, ...)
+\method{make.deltas}{default}(item.params, cross.params = 0, step.params = 0, 
+item.sign = 1, step.sign = 1, inter.sign = 1, ...)
+}
+
 \arguments{
   \item{item.params}{
 The item parameters. Can either be a vector, a CQmodel object, or a path to a ConQuest show file}
@@ -26,7 +30,7 @@ The item parameters. Can either be a vector, a CQmodel object, or a path to a Co
 \item{inter.sign}{Can be 1 or -1. Indicates whether the interaction parameters should be added or subtracted.}
 \item{step.sign}{Can be 1 or -1. Indicates whether the step parameters should be added or subtracted.}
 \item{cross.params}{If item.params is a vector, use this parameter to pass a matrix of interaction parameters.}
-\item{step.param}{If item.params is a vector, use this parameter to pass a matrix of step parameters.}
+\item{step.params}{If item.params is a vector, use this parameter to pass a matrix of step parameters.}
   \item{\dots}{Additional parameters
 }
 }
@@ -49,13 +53,17 @@ Rebecca Freund & David Torres Irribarra
 }
 \examples{
 fpath <- system.file("extdata", package="WrightMap")
-model1 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.eap")) # Partial credit model
+
+# Partial credit model
+model1 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.shw")) 
 make.deltas(model1)
 
-model2 <- CQmodel(file.path(fpath,"ex2b.eap"), file.path(fpath,"ex2b-2.shw")) # Rating scale model
+# Rating scale model
+model2 <- CQmodel(file.path(fpath,"ex2b.eap"), file.path(fpath,"ex2b-2.shw")) 
 make.deltas(model2)
 
-model3 <- CQmodel(file.path(fpath,"ex4a.mle"), file.path(fpath,"ex4a.shw")) # Raters, criteria, topics
+# Raters, criteria, topics
+model3 <- CQmodel(file.path(fpath,"ex4a.mle"), file.path(fpath,"ex4a.shw")) 
 make.deltas(model3, item.table = "rater")
 make.deltas(model3, item.table = "rater", interactions = "rater*topic", step.table = "topic")
 }

@@ -13,7 +13,7 @@ Item Fit Graphs
 
 \method{fitgraph}{default}(fitEst, fitLB, fitUB, itemLabels, mainTitle = "Fit Plot", 
 pch = 18, fitColours = c("gray70", "gray60", "gray50", "gray40", "gray0"), 
-xlab = "Items", cex = 1.25)
+xlab = "Items", cex = 1.25, ...)
 \method{fitgraph}{CQmodel}(fitEst, table = NULL, type = "W", itemLabels = NULL, ...)
 \method{fitgraph}{character}(fitEst, ...)
 }
@@ -49,6 +49,10 @@ fitgraph arguments:
 	Size of the x-axis label.
 }
 
+  \item{\dots}{
+	Additional parameters.
+}
+
 Argument to use when passing a CQmodel object:
 
   \item{table}{
@@ -57,11 +61,6 @@ Argument to use when passing a CQmodel object:
 
   \item{type}{
 	Type of fit estimate that will be used, it can be \code{W} for Weighted Fit (i.e. Infit, the default), or \code{U} for Unweighted Fit (i.e. Outfit). 
-}
-
-
-  \item{\dots}{
-	Additional parameters passed to CQmodel.
 }
 
 }

@@ -20,7 +20,7 @@ axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt 
   thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), 
   thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, 
   dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, 
-  hist.nclass = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, 
+  breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, 
   max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...)
 \method{wrightMap}{CQmodel}(thetas, item.table = NULL, interactions = NULL, 
 step.table = NULL, type = "default", label.items = NULL, main.title = NULL, 
@@ -115,8 +115,8 @@ wrightMap parameters:
   \item{dim.lab.adj}{
   a numerical value adjusting the position of the dimension names.
 }
-  \item{hist.nclass}{
-  See \code{\link{hist}}). Algorithm used to generate the brakes when \code{use.hist} is \code{TRUE}. Accepts ``FD'' / ``Freedman-Diaconis'' (default), ``Scott'' and ``Sturges''.
+  \item{breaks}{
+  See \code{\link{hist}}). This argument is passed directly to hist, so it will accept all the options detailed that functions' manual.
 }
   \item{min.logit.pad}{
   numeric value indicating how much of the lower end of the logit scale should be included in the plot.

@@ -1,5 +1,5 @@
 \name{make.thresholds}
-
+\alias{make.thresholds}
 \alias{make.thresholds.default}
 \alias{make.thresholds.CQmodel}
 \alias{make.thresholds.character}
@@ -10,10 +10,12 @@ Calculate Thurstonian thresholds.
 This function accepts a matrix of delta parameters and converts them to thresholds (using a threshold of .5). It can also take as input a CQmodel object or a filename of a ConQuest show file.}
 \usage{
 make.thresholds(item.params, ...)
-}
 \method{make.thresholds}{character}(item.params,design.matrix="normal",...)
-\method{make.thresholds}{CQmodel}(item.params,item.table = NULL,interactions = NULL,step.table = NULL,design.matrix = "normal",...)
-\method{make.thresholds}{default}(item.params,design.matrix = "normal", theta.interval=c(-10,10),...)
+\method{make.thresholds}{CQmodel}(item.params,item.table = NULL, 
+interactions = NULL,step.table = NULL,design.matrix = "normal",...)
+\method{make.thresholds}{default}(item.params,design.matrix = "normal", 
+theta.interval=c(-10,10),...)
+}
 
 \arguments{
   \item{item.params}{The item parameters. Can either be a matrix, a CQmodel object, or a path to a ConQuest show file}
@@ -41,9 +43,12 @@ Daniel Coulter Furr, Rebecca Freund, & David Torres Irribarra
  \code{\link{wrightMap}}
 }
 \examples{
-fpath <- system.file("extdata", package="WrightMap")}
-model1 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.eap")) # Partial credit model
+fpath <- system.file("extdata", package="WrightMap")
+
+# Partial credit model
+model1 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.shw")) 
 deltas <- make.deltas(model1)
 make.thresholds(deltas)
 make.thresholds(model1)
+}
 
