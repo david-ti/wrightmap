@@ -69,7 +69,7 @@ Additional items:
 \item{parameters}{ The number of parameters }
 \item{title}{ The run title }
 \item{reg.coef}{ Regression coefficients }
-\item{reg.coef}{ Reliability coefficients }
+\item{rel.coef}{ Reliability coefficients }
 \item{variances}{}
 \item{nDim}{ Number of dimensions }
 \item{dimensions}{ Dimension names }
@@ -81,6 +81,30 @@ Additional items:
 
 \examples{
 	
-## Multidimensional polytomous model
-\dontrun{CQmodel("ex2.eap","ex2.shw")}
+fpath <- system.file("extdata", package="WrightMap")
+
+model1 <- CQmodel(p.est = file.path(fpath,"ex2.eap"), show = file.path(fpath,"ex2.shw")) # Partial credit model
+model1 #Shows what tables are available
+
+model1$SOE #Summary of estimation
+model1$equation # Model specification
+model1$reg.coef # Regression coefficients
+model1$rel.coef # Reliability coefficients
+model1$variances # Variances
+
+names(model1$RMP) # Names of parameter tables
+head(model1$RMP$item) #Item parameters
+head(model1$RMP$"item*step") #Item by step parameters
+
+model2 <- CQmodel(file.path(fpath,"ex4a.mle"), file.path(fpath,"ex4a.shw")) # Complex model
+model2$equation # Model specification
+names(model2$RMP) # Names of parameter tables
+head(model2$RMP$"rater*topic*criteria*step") #An interaction table
+
+model1$GIN #Item thresholds
+model2$GIN #Item thresholds
+
+head(model1$p.est)  ##EAPs
+head(model2$p.est)  ##MLEs
+
 }

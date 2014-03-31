@@ -249,6 +249,27 @@ wrightMap( uni.proficiency, thresholds
   , thr.lab.col = thresholds.colors
   , thr.sym.pch = thresholds.symbols
   )
+  
+    ####ConQuest integration###
+  
+  	fpath <- system.file("extdata", package="WrightMap")
+
+	model1 <- CQmodel(p.est = file.path(fpath,"ex2.eap"), show = file.path(fpath,"ex2.shw")) # Partial credit model
+	wrightMap(model1) # Using GIN tables (partial credit model)
+	
+	model2 <- CQmodel("ex2a.eap", "ex2a.shw")
+	wrightMap(model2, label.items.row = 2) # Making deltas if there are no GIN tables (partial credit model)
+	wrightMap(model2, type = "thresholds", label.items.row = 2) # Making thresholds if there are no GIN tables (partial credit model)
+	
+	model3 <- CQmodel("ex2b.eap", "ex2b-2.shw")
+	wrightMap(model3, label.items.row = 2) # Rating scale model
+	
+	model4 <- CQmodel(file.path(fpath,"ex4a.mle"), file.path(fpath,"ex4a.shw")) # Complex model
+	wrightMap(model4, min.logit.pad = -29, use.hist = FALSE)
+	wrightMap(model4, item.table = "rater")
+	wrightMap(model4, item.table = "rater", interactions = "rater*topic", step.table = "topic")
+	
+	wrightMap("ex2a.eap", "ex2a.shw", label.items.row = 3) ### Skip CQmodel
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
