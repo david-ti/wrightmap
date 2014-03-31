@@ -33,7 +33,8 @@ fitgraph.default <- function( fitEst, fitLB, fitUB, itemLabels
 					 , pch    = 18
 	                 , fitColours = c('gray70','gray60','gray50','gray40','gray0')
 	                 , xlab = "Items"
-	                 , cex = 1.25 )
+	                 , cex = 1.25
+	                 ,... )
 {
 
 	nI <- length(fitEst)

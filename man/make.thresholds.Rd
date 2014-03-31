@@ -1,64 +1,49 @@
 \name{make.thresholds}
-\alias{make.thresholds}
+
 \alias{make.thresholds.default}
 \alias{make.thresholds.CQmodel}
 \alias{make.thresholds.character}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Calculate Thurstonian thresholds.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
-}
+This function accepts a matrix of delta parameters and converts them to thresholds (using a threshold of .5). It can also take as input a CQmodel object or a filename of a ConQuest show file.}
 \usage{
 make.thresholds(item.params, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+\method{make.thresholds}{character}(item.params,design.matrix="normal",...)
+\method{make.thresholds}{CQmodel}(item.params,item.table = NULL,interactions = NULL,step.table = NULL,design.matrix = "normal",...)
+\method{make.thresholds}{default}(item.params,design.matrix = "normal", theta.interval=c(-10,10),...)
+
 \arguments{
-  \item{item.params}{
-%%     ~~Describe \code{item.params} here~~
-}
+  \item{item.params}{The item parameters. Can either be a matrix, a CQmodel object, or a path to a ConQuest show file}
+  \item{design.matrix}{Can be "normal" or "ConQuest". Note that for a CQmodel object or ConQuest file, should be normal, NOT ConQuest.}
+\item{item.table}{If item.params is a CQmodel object or a path to a ConQuest show file, item.table is the name of the items table. Commonly "item" but can be any string representing the name of a table in the ConQuest show file. This identifies what variable will form the rows of the thresholds matrix. If not specified, will be the first variable mentioned in the model equation.}
+\item{interactions}{If item.params is a CQmodel object or a path to a ConQuest show file, item.table is the name of the table with the interactions (if present). Commonly "item*step" but can be any string containing "*" that is the name of a table in the ConQuest show file. Should be the product of the item.table variable and the step.table variable (if present). If not specified, will be the product term of the model equation.}
+\item{step.table}{If item.params is a CQmodel object or a path to a ConQuest show file, step.table is the name of the steps table (if present). Commonly "step" but can be any string representing the name of a table in the ConQuest show file. This identifies what variable will form the columns of the thresholds matrix. If not specified, will be the second variable mentioned in the model equation.}
+\item{theta.interval}{If item.params is a matrix, theta.interval specifies over what interval to search for the parameters.}
+
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Additional parameters.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+A matrix of threshold parameters.
 }
 \author{
-%%  ~~who you are~~
+Daniel Coulter Furr, Rebecca Freund, & David Torres Irribarra
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+ \code{\link{make.deltas}}
+ \code{\link{CQmodel}}
+ \code{\link{wrightMap}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+fpath <- system.file("extdata", package="WrightMap")}
+model1 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.eap")) # Partial credit model
+deltas <- make.deltas(model1)
+make.thresholds(deltas)
+make.thresholds(model1)
 
-## The function is currently defined as
-function (item.params, ...) 
-{
-    UseMethod("make.thresholds")
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

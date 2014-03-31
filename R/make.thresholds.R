@@ -14,7 +14,7 @@ make.thresholds.CQmodel <- function(item.params,item.table = NULL,interactions =
 }
 
 
-make.thresholds.default <- function(item.params,design.matrix = "normal", theta.interval=c(-10,10)) {
+make.thresholds.default <- function(item.params,design.matrix = "normal", theta.interval=c(-10,10),...) {
 	#print("default")
 	
 	# Provides a predicted probability of a given response for a polytomous
