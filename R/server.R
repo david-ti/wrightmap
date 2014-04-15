@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
   	
   	
     
-      wrightMap( CQmodel(input$eap$datapath,input$shw$datapath,"EAP"),
+      wrightMap( CQmodel(input$eap$datapath,input$shw$datapath,"EAP"),throld = input$throld,
                show.thr.lab = FALSE,
                thr.sym.cex = input$cex)
     
