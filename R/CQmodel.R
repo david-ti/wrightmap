@@ -1,4 +1,5 @@
-CQmodel <- function(p.est = NULL, show = NULL, p.type = NULL) {
+CQmodel <-
+function(p.est = NULL, show = NULL, p.type = NULL) {
 
 	############Helper functions############
 	

@@ -6,7 +6,7 @@
 Wright Map: IRT Item-Person Map
 }
 \description{
-This package allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps to display unidimensional and multidimensional assessment results.These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch Family.
+This package allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps to display unidimensional and multidimensional assessment results. These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch Family.
 
 Additionally, the package contains the \code{CQmodel} function, which reads output files created using ConQuest software and creates a set of data frames for easy data manipulation, bundled in a CQmodel object. The wrightMap function can take a CQmodel object as input or it can be used to create Wright Maps directly from data frames of person and item parameters.
 }
@@ -14,9 +14,9 @@ Additionally, the package contains the \code{CQmodel} function, which reads outp
 \tabular{ll}{
 Package: \tab WrightMap\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-03-02\cr
-License: \tab BSD_3_clause | LICENSE \cr
+Version: \tab 1.1\cr
+Date: \tab 2014-03-28\cr
+License: \tab BSD_2_clause | LICENSE \cr
 }
 The wrightMap function relies on two main inputs: (a) \code{thetas}: a vector or matrix of respondent proficiences, and (b) \code{thresholds}: a vector or matrix of item thresholds. In the simplest case, say for a unidimensional Rasch model, \code{thetas} can be a vector of person proficiencies and \code{thresholds} a vector of item difficulties. 
 

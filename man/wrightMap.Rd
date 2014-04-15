@@ -14,23 +14,26 @@ This function allows the easy generation of `Wright Maps' (named after Ben Wrigh
 wrightMap(thetas, \dots)
 \method{wrightMap}{default}(thetas, thresholds, use.hist = TRUE, 
 main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", 
-axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, 
-label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL,
-thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, 
-thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3),
-thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = "black", 
-dim.lab.side = 3, dim.lab.adj = 0.5, hist.nclass = "FD", min.logit.pad = 0.25, 
-max.logit.pad = 0.25, item.prop = 0.2,\dots)
-\method{wrightMap}{CQmodel}(thetas, tables = NULL, label.items = NULL, main.title = NULL,
+axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0,
+ label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL,
+  thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, 
+  thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), 
+  thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, 
+  dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, 
+  breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, 
+  max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...)
+\method{wrightMap}{CQmodel}(thetas, item.table = NULL, interactions = NULL, 
+step.table = NULL, type = "default", label.items = NULL, main.title = NULL, 
 thr.lab.text = NULL, dim.names = NULL, \dots)
 \method{plot}{CQmodel}(x, \dots)
 \method{wrightMap}{character}(thetas, thresholds, p.type = NULL, \dots)
 
 }
-
+%- maybe also 'usage' for other objects documented here.
 \arguments{
 
 wrightMap parameters: 
+
   \item{thetas}{
     a vector, matrix or data frame of person parameter estimates. Can also be a character string specifying a ConQuest output file of person parameter estimates, or a CQmodel object.
 }
@@ -112,8 +115,8 @@ wrightMap parameters:
   \item{dim.lab.adj}{
   a numerical value adjusting the position of the dimension names.
 }
-  \item{hist.nclass}{
-  See \code{\link{hist}}). Algorithm used to generate the brakes when \code{use.hist} is \code{TRUE}. Accepts ``FD'' / ``Freedman-Diaconis'' (default), ``Scott'' and ``Sturges''.
+  \item{breaks}{
+  See \code{\link{hist}}). This argument is passed directly to hist, so it will accept all the options detailed that functions' manual.
 }
   \item{min.logit.pad}{
   numeric value indicating how much of the lower end of the logit scale should be included in the plot.
@@ -121,30 +124,58 @@ wrightMap parameters:
   \item{max.logit.pad}{
   numeric value indicating how much of the upper end of the logit scale should be included in the plot.
 }
+  \item{min.l}{
+  numeric value for fixing the lower end of the logit scale. It overrides the automatic detection of the range and the \code{min.logit.pad} correction.
+}
+  \item{max.l}{
+  numeric value for fixing the upper end of the logit scale. It overrides the automatic detection of the range and the \code{max.logit.pad} correction.
+}
   \item{item.prop}{
   numeric value greater than 0 and smaller than 1 indicating the proportion of the plot to be allocated to the item part of the Wright Map.
 }
+  \item{return.thresholds}{
+  logical. Determines whether the to return or not the numeric values used to position the parameters on the item side of the Wright Map. Enabled by default.
+  }
+  \item{new.quartz}{
+  logical. Determines whether the wrightMap will be created on a new graphical device or if it will reuse one already open. By default is set to \code{FALSE} to avoid creating new devices.
+}
+  \item{\dots}{
+  Additional arguments to pass to wrightMap.
+}
 
-
- 
-  
 Parameters for creating a WrightMap directly from ConQuest output files:
 
- \item{tables}{ Name of RMP table(s) to use for the item parameters. If no table is specified, the function will use the GIN table if present, or look for tables called item and item*step. }
-  \item{p.type}{ Type of person parameter file }
-  \item{...}{ Additional arguments to pass to wrightMap}
+  \item{item.table}{
+  Name of RMP table to use for the main effect of the item parameters.
+}
+  \item{interactions}{
+  Name of RMP interaction table to use in addition to \code{item.table}.
+}
+  \item{step.table}{
+  Name of RMP table to use in addition to \code{item.table}.
+}
+  \item{type}{
+  Indicates wether to use \code{thresholds} or \code{deltas} for generating the Wright Map.
+}
+  \item{p.type}{
+  Type of person parameter file
+}
   
  wrightMap can also be called by passing a CQmodel object to plot:
  
  \item{x}{ CQmodel object to pass to plot}
 
 
+
 }
+\details{
+Note that the \code{item.table}, \code{interactions}, and \code{step.table} parameters must be the exact name of specific RMP tables, and you can't specify an interactions table or a step table without also specifying an item table (although JUST an item table is fine). If your model equation is more complicated, you will have to either use a GIN table or specify in the function call which tables to use for what. A model of the form item + item * step + booklet, for example, will not run unless there is a GIN table or you have defined at least the item.table.}
 
 \references{
   Wilson, M. (2005). Constructing measures: An item response modeling approach. 
   Wright, B. D., \& Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
 }
+
 \author{David Torres Irribarra and Rebecca Freund}
 
 
@@ -218,12 +249,39 @@ wrightMap( uni.proficiency, thresholds
   , thr.lab.col = thresholds.colors
   , thr.sym.pch = thresholds.symbols
   )
+  
+    ####ConQuest integration###
+  
+  	fpath <- system.file("extdata", package="WrightMap")
+
+ # Partial credit model
+	model1 <- CQmodel(p.est = file.path(fpath,"ex2.eap"), show = file.path(fpath,"ex2.shw"))
+	wrightMap(model1) # Using GIN tables (partial credit model)
+	
+	model2 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.shw"))
+	
+  # Making deltas if there are no GIN tables (partial credit model)
+  wrightMap(model2, label.items.row = 2) 
+
+  # Making thresholds if there are no GIN tables (partial credit model)
+	wrightMap(model2, type = "thresholds", label.items.row = 2) 
+	
+	model3 <- CQmodel(file.path(fpath,"ex2b.eap"), file.path(fpath,"ex2b-2.shw"))
+	wrightMap(model3, label.items.row = 2) # Rating scale model
+	
+  # Complex model
+	model4 <- CQmodel(file.path(fpath,"ex4a.mle"), file.path(fpath,"ex4a.shw")) 
+	wrightMap(model4, min.logit.pad = -29, use.hist = FALSE)
+	wrightMap(model4, item.table = "rater")
+	wrightMap(model4, item.table = "rater", interactions = "rater*topic", 
+  step.table = "topic")
+	
+  ### Skip CQmodel
+	wrightMap(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.shw"), 
+  label.items.row = 3) 
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{Wright Map}
-\keyword{IRT}
-\keyword{Item Response Models}
-\keyword{Rasch Model}
+\keyword{hplot}
 

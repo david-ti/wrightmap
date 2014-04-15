@@ -1,4 +1,5 @@
-wrightMap.CQmodel <- function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type = "default", label.items = NULL, main.title = NULL, 
+wrightMap.CQmodel <-
+function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type = "default", label.items = NULL, main.title = NULL, 
 	thr.lab.text = NULL, dim.names = NULL, ...) {
 
 	unpack.GIN <- function(GIN) {
