@@ -1,6 +1,6 @@
 wrightMap.CQmodel <-
 function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type = "default", label.items = NULL, main.title = NULL, 
-	thr.lab.text = NULL, dim.names = NULL, throld = .5,...) {
+	thr.lab.text = NULL, dim.names = NULL, throld = .5,alpha = 1,...) {
 
 	unpack.GIN <- function(GIN) {
 		if (class(GIN) == "matrix") 
@@ -53,7 +53,7 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type
 					main.title <- "Wright Map (Deltas)"
 				
 		} else {
-			throlds <- make.thresholds(model, item.table = item.table, interactions = interactions, step.table = step.table,throld = throld)
+			throlds <- make.thresholds(model, item.table = item.table, interactions = interactions, step.table = step.table,throld = throld,alpha = alpha)
 			if (is.null(main.title)) 
 				main.title <- "Wright Map (Thresholds)"
 		}
