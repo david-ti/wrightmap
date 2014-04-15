@@ -31,4 +31,5 @@ shinyServer(function(input, output) {
                thr.sym.cex = input$cex)
     
   })
+  output$command <- renderPrint(cat("wrightMap(model1,type = \"thresholds\",throld = ",input$throld,", show.thr.lab = ",input$show.thr.lab, ", use.hist = ",input$use.hist,", thr.sym.cex = ",input$cex,sep=""))
 })
