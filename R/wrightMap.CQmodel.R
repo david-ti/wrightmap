@@ -34,7 +34,7 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type
 	thetas <- p.est[columns.at]
 
 
-	if (!is.null(model$GIN) && is.null(item.table) && (type != "deltas")) {
+	if (FALSE && !is.null(model$GIN) && is.null(item.table) && (type != "deltas")) {
 		throlds <- unpack.GIN(model$GIN)
 		names <- unpack.names(model$GIN)
 		colnames(throlds) <- names

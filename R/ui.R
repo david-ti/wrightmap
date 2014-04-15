@@ -10,6 +10,7 @@ shinyUI(pageWithSidebar(
   sidebarPanel(
     fileInput('eap', 'Choose Person Estimates File'),
     fileInput('shw', 'Choose Show File'),
+    sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01),
     sliderInput("cex", 
                 "cex:", 
                 min = 1,
