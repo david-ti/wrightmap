@@ -1,5 +1,5 @@
 make.thresholds.default <-
-function(item.params,design.matrix = "normal", theta.interval=c(-10,10),...) {
+function(item.params,design.matrix = "normal", theta.interval=c(-10,10),throld = .5...) {
 	#print("default")
 	
 	# Provides a predicted probability of a given response for a polytomous
@@ -24,7 +24,7 @@ minimize.fun = function(theta, response, design.matrix, parameters) {
     predictions[x] = predicted.prob(theta, x, design.matrix, parameters)
   }
   total = sum(predictions, na.rm=TRUE)
-  sq.err = (total - .5)^2
+  sq.err = (total - throld)^2
   return(sq.err)
 }
 
