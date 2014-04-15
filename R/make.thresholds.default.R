@@ -1,14 +1,15 @@
 make.thresholds.default <-
-function(item.params,design.matrix = "normal", theta.interval=c(-10,10),throld = .5,...) {
+function(item.params,design.matrix = "normal", theta.interval=c(-10,10),throld = .5, alpha = 1,...) {
 	#print("default")
 	
 	# Provides a predicted probability of a given response for a polytomous
 # item. Mostly used in other functions.
+
 predicted.prob = function(theta, response, design.matrix, parameters) {
-  numerator = exp(theta*(response-1) + sum(parameters*design.matrix[response,]))
+  numerator = exp(  alpha * (theta*(response-1) + sum(parameters*design.matrix[response,]) ) )
   denominator = 0
   for(k in 1:nrow(design.matrix)) {
-    denominator = denominator + exp(theta*(k-1) + sum(parameters*design.matrix[k,]))
+    denominator = denominator + exp(alpha * (theta*(k-1) + sum(parameters*design.matrix[k,])))
   }
   return(numerator/denominator)
 }
