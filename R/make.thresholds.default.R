@@ -1,5 +1,5 @@
 make.thresholds.default <-
-function(item.params,design.matrix = "normal", theta.interval=c(-10,10),throld = .5...) {
+function(item.params,design.matrix = "normal", theta.interval=c(-10,10),throld = .5,...) {
 	#print("default")
 	
 	# Provides a predicted probability of a given response for a polytomous
