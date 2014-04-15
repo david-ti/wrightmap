@@ -11,8 +11,10 @@ shinyUI(pageWithSidebar(
     fileInput('eap', 'Choose Person Estimates File'),
     fileInput('shw', 'Choose Show File'),
     sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01),
+    checkboxInput('use.hist', 'Histogram?', TRUE),
+    checkboxInput('show.thr.lab', 'Show Threshold Labels', FALSE),
     sliderInput("cex", 
-                "cex:", 
+                "Symbol size", 
                 min = 1,
                 max = 5, 
                 value = 2.5, step = .1)
