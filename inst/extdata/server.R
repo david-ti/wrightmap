@@ -17,7 +17,7 @@ shinyServer(function(input, output) {
   
   
   
-  output$model <- renderPrint(CQmodel(input$eap$datapath,input$shw$datapath,"EAP"))
+  model <- reactive({CQmodel(input$eap$datapath,input$shw$datapath,input$p.type)})
   output$wmap <- renderPlot({
   	
   	if(is.null(input$eap) || is.null(input$shw))
@@ -26,10 +26,10 @@ shinyServer(function(input, output) {
   	
   	
     
-      wrightMap( CQmodel(input$eap$datapath,input$shw$datapath,"EAP"),throld = input$throld,type="thresholds",
+      wrightMap( model,throld = input$throld,type="thresholds",
                show.thr.lab = input$show.thr.lab, use.hist = input$use.hist,
                thr.sym.cex = input$cex)
     
   })
-  output$command <- renderPrint(cat("wrightMap(model1,type = \"thresholds\",throld = ",input$throld,", show.thr.lab = ",input$show.thr.lab, ", use.hist = ",input$use.hist,", thr.sym.cex = ",input$cex,sep=""))
+  output$command <- renderPrint(cat("wrightMap(",input$eap$name,",",input$shw$name,",type = \"thresholds\",throld = ",input$throld,", show.thr.lab = ",input$show.thr.lab, ", use.hist = ",input$use.hist,", thr.sym.cex = ",input$cex,sep=""))
 })
