@@ -10,9 +10,12 @@ shinyUI(pageWithSidebar(
   sidebarPanel(
     fileInput('eap', 'Choose Person Estimates File'),
     fileInput('shw', 'Choose Show File'),
+    selectInput("p.type", "Person estimates type:", 
+                choices = c("EAP", "MLE", "WLE")),
     sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01),
     checkboxInput('use.hist', 'Histogram?', TRUE),
     checkboxInput('show.thr.lab', 'Show Threshold Labels', FALSE),
+
     sliderInput("cex", 
                 "Symbol size", 
                 min = 1,
