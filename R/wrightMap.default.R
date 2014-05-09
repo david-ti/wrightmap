@@ -138,15 +138,17 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
 
     if(new.quartz)
     	dev.new(width = 9, height = 5)
-    par(oma = c(0, 5, 0, 5))
+    op <- par("oma","mar","mgp")
+    
+    par(oma = op$oma + c(0,5,0,5))
     
     layout(matrix(layout.wm, nrow = 1), widths = c(rep((1 - item.prop)/nD, nD), rep(item.prop/item.side, item.side)), heights = 0.8)
     
     ## Generating Person Side
     
     
-    par(mar = c(5, 0.1, 4, 0) + 0.1)
-    par(mgp = c(2.7, 1, 0))
+    par(mar = c(op$mar[1],0.2,op$mar[3],.1))
+    par(mgp = c(op$mar[1] - 2.4, 1, 0))
     
     distInfo <- theta.dens(thetas, use.hist, breaks)
     
@@ -266,6 +268,7 @@ function(thetas, thresholds, use.hist = TRUE, main.title = "Wright Map", axis.lo
     mtext(axis.persons, side = 2, line = 1, outer = TRUE, cex = 0.9, font = 3)
     par(oma = c(0, 0, 3, 0))
     mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
+    par(op)
     if(return.thresholds) {
     return(thresholds)
     }
