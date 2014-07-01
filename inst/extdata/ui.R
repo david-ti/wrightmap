@@ -22,8 +22,12 @@ shinyUI(pageWithSidebar(
     			wellPanel(
     				checkboxInput('table', 'Show table options', FALSE),
     				conditionalPanel(condition='input.table',
-    					selectInput("type","Parameter type:", choices = c("Thresholds" = "thresholds","Deltas" = "deltas")),
-    					sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
+    					selectInput("type","Parameter type:", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas")),
+    					sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01),
+    					uiOutput("item.table"),
+    					uiOutput("step.table"),
+    					uiOutput("interactions.table")
+    					
     				)
     			)
     		)
