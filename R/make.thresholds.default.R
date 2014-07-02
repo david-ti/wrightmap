@@ -87,7 +87,9 @@ apply.thresholds = function(parameter.matrix
                             , theta.interval = c(-10, 10), slope = slope   ) {
 
 
-  threshold.matrix <- t(mapply(get.thresholds,as.data.frame(t(parameter.matrix)),t(design.matrix),slope = slope))
+  threshold.matrix <- as.matrix(mapply(get.thresholds,as.data.frame(t(parameter.matrix)),t(design.matrix),slope = slope))
+  if(NCOL(threshold.matrix) > 1)
+  	threshold.matrix <- t(threshold.matrix)
   
   return(threshold.matrix)
   
