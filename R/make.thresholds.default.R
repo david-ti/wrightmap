@@ -5,11 +5,11 @@ function(item.params,design.matrix = "normal", theta.interval=c(-10,10),throld =
 	# Provides a predicted probability of a given response for a polytomous
 # item. Mostly used in other functions.
 
-predicted.prob = function(theta, response, design.matrix, parameters) {
-  numerator = exp(  alpha * (theta*(response-1) + sum(parameters*design.matrix[response,]) ) )
+predicted.prob = function(theta, response, design.matrix, parameters, slope) {
+  numerator = exp(  slope * (theta*(response-1) + sum(parameters*design.matrix[response,]) ) )
   denominator = 0
   for(k in 1:nrow(design.matrix)) {
-    denominator = denominator + exp(alpha * (theta*(k-1) + sum(parameters*design.matrix[k,])))
+    denominator = denominator + exp(slope * (theta*(k-1) + sum(parameters*design.matrix[k,])))
   }
   return(numerator/denominator)
 }
@@ -17,12 +17,12 @@ predicted.prob = function(theta, response, design.matrix, parameters) {
 # The function passed to R's 'optimize' function. Finds the cumulative
 # predicted probability of a response, then returns (predict P - .5)^2.
 # Minimizing this function finds the Thurstone threshold.
-minimize.fun = function(theta, response, design.matrix, parameters) {
+minimize.fun = function(theta, response, design.matrix, parameters, slope) {
   max.score = nrow(design.matrix)
   categories = max.score:response
   predictions = rep(NA, times=max.score)
   for(x in categories) {
-    predictions[x] = predicted.prob(theta, x, design.matrix, parameters)
+    predictions[x] = predicted.prob(theta, x, design.matrix, parameters,slope)
   }
   total = sum(predictions, na.rm=TRUE)
   sq.err = (total - throld)^2
@@ -34,7 +34,7 @@ minimize.fun = function(theta, response, design.matrix, parameters) {
 # 'minimize.fun' for each threshold for the item.
 get.thresholds = function(parameters
                           , design.matrix = "normal"
-                          , theta.interval = c(-10, 10)  ) {
+                          , theta.interval = c(-10, 10), slope  ) {
 #print(parameters)
 #print("get")
 max.length <- length(parameters)
@@ -69,7 +69,7 @@ max.length <- length(parameters)
     opti = optimize(minimize.fun, interval=theta.interval 
              , response = response
              , design.matrix = design.matrix
-             , parameters = parameters   )
+             , parameters = parameters, slope = slope   )
     thresholds[response-1] = opti$minimum
     if(opti$objective > 10^(-5)) message(paste("objective = ", opti$objective))
   }
@@ -84,16 +84,16 @@ max.length <- length(parameters)
 # single choice for all items or a list of matrices, one for each item.
 apply.thresholds = function(parameter.matrix
                             , design.matrix="normal"
-                            , theta.interval = c(-10, 10)   ) {
+                            , theta.interval = c(-10, 10), slope = slope   ) {
 
 
-  threshold.matrix <- t(mapply(get.thresholds,as.data.frame(t(parameter.matrix)),t(design.matrix)))
+  threshold.matrix <- t(mapply(get.thresholds,as.data.frame(t(parameter.matrix)),t(design.matrix),slope = slope))
   
   return(threshold.matrix)
   
 }
 
-return(apply.thresholds(item.params,design.matrix,theta.interval))
+return(apply.thresholds(item.params,design.matrix,theta.interval,alpha))
 
 	
 }

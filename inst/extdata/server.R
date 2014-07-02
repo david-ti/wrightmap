@@ -21,46 +21,68 @@ shinyServer(function(input, output) {
   
   
   output$wmap <- renderPlot({
-  	
-  	if(is.null(input$eap) || is.null(input$shw))
-  		return(NULL)
-  		
   	if(input$autotitle)
-  		main.title <- NULL
-  	else
-  		main.title <- input$title
-
-  	
-  	if(is.null(input$item.table) || input$item.table == "default") 
-  		item.table <- NULL
-  	else
-  		item.table <- input$item.table
-  		
-  	if(is.null(input$step.table) || input$step.table == "default") 
-  		step.table <- NULL
-  	else
-  		step.table <- input$step.table
-  		
-  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
-  		interactions.table <- NULL
-  	else
-  		interactions.table <- input$interactions.table
-  		
-    
-      wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,type=input$type,main.title = main.title,
-               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-               thr.sym.cex = input$cex)
+	  		main.title <- NULL
+	  	else
+	  		main.title <- input$title
+	  		
+  	if(input$datatype == "CQ") {
+	  	if(is.null(input$eap) || is.null(input$shw))
+	  		return(NULL)
+	  		
+	  	if(is.null(input$item.table) || input$item.table == "default") 
+	  		item.table <- NULL
+	  	else
+	  		item.table <- input$item.table
+	  		
+	  	if(is.null(input$step.table) || input$step.table == "default") 
+	  		step.table <- NULL
+	  	else
+	  		step.table <- input$step.table
+	  		
+	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
+	  		interactions.table <- NULL
+	  	else
+	  		interactions.table <- input$interactions.table
+	  		
+	    
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,type=input$type,main.title = main.title,
+	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
+	               thr.sym.cex = input$cex))
+	 }
+	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
+	 	print(input$thetas)
+	 	if(!exists(input$thetas,mode="numeric") || !exists(input$thresholds,mode="numeric"))
+	 		return()
+	 	if(input$slopes != "" && exists(input$slopes,mode="numeric"))
+	 		slopes = get(input$slopes)
+	 	else
+	 		slopes = 1
+	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = input$throld,type = input$type,main.title=main.title,show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
+	               thr.sym.cex = input$cex)
+	 }
     
   })
   
-  start.text <- reactive({paste("wrightMap(\"",input$eap$name,"\",\"",input$shw$name,"\"",sep="")})
+  thetas.text <- reactive({
+  	if(input$datatype == "CQ")
+  		return(paste("\"",input$eap$name,"\"",sep=""))
+  	if(input$datatype == "R")
+  		return(input$thetas)
+  	})
+  	  thresholds.text <- reactive({
+  	if(input$datatype == "CQ")
+  		return(paste(",\"",input$shw$name,"\"",sep=""))
+  	if(input$datatype == "R")
+  		return(paste(",",input$thresholds,sep=""))
+  	})
   item.table.text <- reactive({
   	if(is.null(input$item.table) || input$item.table == "default")
   		return("")
   	return(paste(",item.table = ",input$item.table,sep=""))
   })
     interactions.text <- reactive({
-  	if(is.null(input$interactions) || input$interactions.table == "default")
+  	if(is.null(input$interactions.table) || input$interactions.table == "default")
   		return("")
   	return(paste(",interactions = ",input$interactions.table,sep=""))
   })
@@ -104,7 +126,10 @@ shinyServer(function(input, output) {
   		return("")
   	return(paste(",thr.sym.cex =",input$cex))
   })
-  output$command <- renderPrint(cat(start.text(),item.table.text(),interactions.text(),step.table.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),")",sep=""))
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),")",sep=""))
+  
+  output$tryme <-
+  	renderPrint(cat(get(input$try.object)))
   
   tables <- reactive({
   	names(model1()$RMP)
