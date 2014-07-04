@@ -51,14 +51,18 @@ shinyServer(function(input, output) {
 	               thr.sym.cex = input$cex))
 	 }
 	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
-	 	print(input$thetas)
+	 	#print(input$thetas)
 	 	if(!exists(input$thetas,mode="numeric") || !exists(input$thresholds,mode="numeric"))
 	 		return()
 	 	if(input$slopes != "" && exists(input$slopes,mode="numeric"))
 	 		slopes = get(input$slopes)
 	 	else
 	 		slopes = 1
-	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = input$throld,type = input$type,main.title=main.title,show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
+	 	if(input$type == "deltas")
+	 		throld = NULL
+	 	else
+	 		throld = input$throld
+	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make.from,main.title=main.title,show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
 	               thr.sym.cex = input$cex)
 	 }
     

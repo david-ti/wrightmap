@@ -7,22 +7,25 @@ shinyUI(pageWithSidebar(
   
   # Sidebar with a slider input for number of observations
   sidebarPanel(
-    selectInput("type","Parameter type:", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas")),
-    sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01),
 	wellPanel(
     	checkboxInput('files', 'Show input options', TRUE),
   		conditionalPanel(condition='input.files',
   			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
   			conditionalPanel(condition = "input.datatype == 'R'",
-  				textInput('thetas',"Name of thetas object"),
-  				textInput('thresholds',"Name of thresholds object"),
+  				radioButtons('make.from',"Input item parameters",choices = c("Deltas","Thresholds")),
+  				textInput('thetas',"Name of person parameters object"),
+  				textInput('thresholds',"Name of item parameters object"),
   				textInput('slopes',"Name of slopes object (if not specified, assumed all are 1)")
   			),
   			conditionalPanel(condition="input.datatype == 'CQ'",
     			fileInput('eap', 'Choose Person Estimates File'),
     			fileInput('shw', 'Choose Show File'),
     			selectInput("p.type", "Person estimates type:", choices = c("EAP", "MLE", "WLE"))
-    		)
+    		),
+    		conditionalPanel(condition = "input.datatype == 'CQ' || make.from = 'deltas'",
+    			selectInput("type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))),
+    		conditionalPanel(condition = "type!=deltas",
+    			sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01))
     	)
     ),
     conditionalPanel(condition="input.datatype == 'CQ'",
