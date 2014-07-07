@@ -18,14 +18,39 @@ shinyServer(function(input, output) {
   
   
   model1 <- reactive({CQmodel(input$eap$datapath,input$shw$datapath,input$p.type)})
-  
-  
-  output$wmap <- renderPlot({
+  main.title <- reactive({
   	if(input$autotitle)
-	  		main.title <- NULL
-	  	else
-	  		main.title <- input$title
-	  		
+  		return()
+  	input$title
+  })
+  
+  thr.sym.pch <- reactive({
+  	symby <- input$sym_by
+  	if(symby == "all")
+  		return(as.integer(input$sym))
+  	if(symby == "step") {
+  		step_pch <- unlist(lapply(1:length(stepnames()), function(i) {
+  			as.integer(input[[paste("sym",i,sep="_")]])
+  		}))
+  		return(rep(step_pch,each=length(itemnames())))
+  	}
+  	if(symby == "item") {
+  		item_pch <- unlist(lapply(1:length(itemnames()), function(i) {
+  			as.integer(input[[paste("sym",i,sep="_")]])
+  		}))
+  		return(item_pch)
+  	}
+  })
+  
+ # output$bugprint <- renderPrint({
+  	# thr.sym.pch()
+
+  # })
+  
+  
+  wmap <- reactive({
+  	
+  		  		
   	if(input$datatype == "CQ") {
 	  	if(is.null(input$eap) || is.null(input$shw))
 	  		return(NULL)
@@ -46,9 +71,9 @@ shinyServer(function(input, output) {
 	  		interactions.table <- input$interactions.table
 	  		
 	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,type=input$type,main.title = main.title,
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,type=input$which_type,main.title = main.title(),
 	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-	               thr.sym.cex = input$cex))
+	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch()))
 	 }
 	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
 	 	#print(input$thetas)
@@ -58,14 +83,56 @@ shinyServer(function(input, output) {
 	 		slopes = get(input$slopes)
 	 	else
 	 		slopes = 1
-	 	if(input$type == "deltas")
+	 	if(input$which_type == "deltas")
 	 		throld = NULL
 	 	else
 	 		throld = input$throld
-	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make.from,main.title=main.title,show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-	               thr.sym.cex = input$cex)
+	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
+	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch())
 	 }
-    
+
+  	
+  })
+  
+  wmap_bare <- reactive({
+  	
+  		  		
+  	if(input$datatype == "CQ") {
+	  	if(is.null(input$eap) || is.null(input$shw))
+	  		return(NULL)
+	  		
+	  	if(is.null(input$item.table) || input$item.table == "default") 
+	  		item.table <- NULL
+	  	else
+	  		item.table <- input$item.table
+	  		
+	  	if(is.null(input$step.table) || input$step.table == "default") 
+	  		step.table <- NULL
+	  	else
+	  		step.table <- input$step.table
+	  		
+	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
+	  		interactions.table <- NULL
+	  	else
+	  		interactions.table <- input$interactions.table
+	  		
+	    
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, type=input$which_type))
+	 }
+	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
+	 	#print(input$thetas)
+	 	if(!exists(input$thetas,mode="numeric") || !exists(input$thresholds,mode="numeric"))
+	 		return()
+	 	
+	 	wrightMap(get(input$thetas),get(input$thresholds))
+	 }
+
+  	
+  })
+
+  
+  output$wmap <- renderPlot({
+  	    wmap()
   })
   
   thetas.text <- reactive({
@@ -79,6 +146,13 @@ shinyServer(function(input, output) {
   		return(paste(",\"",input$shw$name,"\"",sep=""))
   	if(input$datatype == "R")
   		return(paste(",",input$thresholds,sep=""))
+  	})
+  	
+  	make.from.text <- reactive({
+  		if(input$datatype == "CQ")
+  			return("")
+  		if(input$datatype == "R")
+  			return(paste(",make.from = ",input$make_from,sep=""))
   	})
   item.table.text <- reactive({
   	if(is.null(input$item.table) || input$item.table == "default")
@@ -96,9 +170,9 @@ shinyServer(function(input, output) {
   	return(paste(",step.table = ",input$step.table,sep=""))
   })
   type.text <- reactive({
-  	if(input$type == "default")
+  	if(input$which_type == "default")
   		return("")
-  	return(paste(",type = \"",input$type,"\"",sep=""))
+  	return(paste(",type = \"",input$which_type,"\"",sep=""))
   	})
   throld.text <- reactive({
   	if(input$throld == .5)
@@ -130,10 +204,13 @@ shinyServer(function(input, output) {
   		return("")
   	return(paste(",thr.sym.cex =",input$cex))
   })
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),")",sep=""))
+  thr.sym.pch.text <- reactive({
+  	if(thr.sym.pch() == 23)
+  		return("")
+  	return(paste(",thr.sym.pch =",thr.sym.pch()))
+  })
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),")",sep=""))
   
-  output$tryme <-
-  	renderPrint(cat(get(input$try.object)))
   
   tables <- reactive({
   	names(model1()$RMP)
@@ -193,6 +270,34 @@ shinyServer(function(input, output) {
     selectInput("interactions.table", "Choose interactions table", 
                         choices  = c("default",interactions()),
                         selected = "default")
+  })
+  
+  stepnames <- reactive({
+  	dimnames(wmap_bare())[[2]]
+  	})
+  	
+  	itemnames <- reactive({
+  	dimnames(wmap_bare())[[1]]
+  	})
+  
+  sym_choices <- c("Diamond" = 23,"Circle" = 21, "Square" = 22, "Triangle" = 24)
+  
+  
+  output$sym_pickers <- renderUI({
+  	symby <- input$sym_by
+  	steps <- stepnames()
+  	items <- itemnames()
+  	if(symby == "all")
+  		return(selectInput("sym","Choose symbol",choices = sym_choices))
+  	else if(symby == "step") {
+  			lapply(1:length(steps),function(i) {
+  				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for step",steps[i]),choices = sym_choices)
+  			})
+  		}
+  	else if(symby == "item")
+  		lapply(1:length(items),function(i) {
+  				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for item",items[i]),choices = sym_choices)
+  			})
   })
   
   
