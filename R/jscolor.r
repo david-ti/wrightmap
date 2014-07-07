@@ -5,7 +5,7 @@
 #' @param id The id used to refer to the table input$id or output$id
 #'   
 #' @export
-fpath <- system.file("extdata", package="WrightMap")
+fpath <- system.file(package="WrightMap")
 
 jscolorInput <- function(id) {
     tagList(        
