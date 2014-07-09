@@ -1,19 +1,7 @@
 library(shiny)
 
 
-# Define server logic required to generate and plot a random distribution
-shinyServer(function(input, output) {
-  
-  
-  # Expression that generates a plot of the distribution. The expression
-  # is wrapped in a call to renderPlot to indicate that:
-  #
-  #  1) It is "reactive" and therefore should be automatically 
-  #     re-executed when inputs change
-  #  2) Its output type is a plot 
-  #
-  
-
+shinyServer(function(input, output,session) {
   
   
   
@@ -25,6 +13,8 @@ shinyServer(function(input, output) {
   })
   
   thr.sym.pch <- reactive({
+  	if(is.null(wmap_bare()))
+  		return()
   	symby <- input$sym_by
   	if(symby == "all")
   		return(as.integer(input$sym))
@@ -40,6 +30,28 @@ shinyServer(function(input, output) {
   		}))
   		return(item_pch)
   	}
+  	return()
+  })
+  
+    thr.sym.col <- reactive({
+  	if(is.null(wmap_bare()))
+  		return()
+  	colby <- input$color_by
+  	if(colby == "all")
+  		return(input$col)
+  	if(colby == "step") {
+  		step_col <- unlist(lapply(1:length(stepnames()), function(i) {
+  			input[[paste("col",i,sep="_")]]
+  		}))
+  		return(rep(step_col,each=length(itemnames())))
+  	}
+  	if(colby == "item") {
+  		item_col <- unlist(lapply(1:length(itemnames()), function(i) {
+  			input[[paste("col",i,sep="_")]]
+  		}))
+  		return(item_col)
+  	}
+  	return()
   })
   
  # output$bugprint <- renderPrint({
@@ -71,9 +83,9 @@ shinyServer(function(input, output) {
 	  		interactions.table <- input$interactions.table
 	  		
 	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,type=input$which_type,main.title = main.title(),
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
 	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch()))
+	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
 	 }
 	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
 	 	#print(input$thetas)
@@ -88,13 +100,13 @@ shinyServer(function(input, output) {
 	 	else
 	 		throld = input$throld
 	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch())
+	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col(),axis.persons = input$axis.persons,axis.items = input$axis.items)
 	 }
 
   	
   })
   
-  wmap_bare <- reactive({
+  wmap_bare <- renderPlot({
   	
   		  		
   	if(input$datatype == "CQ") {
@@ -117,7 +129,7 @@ shinyServer(function(input, output) {
 	  		interactions.table <- input$interactions.table
 	  		
 	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, type=input$which_type))
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, item.type=input$which_type))
 	 }
 	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
 	 	#print(input$thetas)
@@ -172,7 +184,7 @@ shinyServer(function(input, output) {
   type.text <- reactive({
   	if(input$which_type == "default")
   		return("")
-  	return(paste(",type = \"",input$which_type,"\"",sep=""))
+  	return(paste(",item.type = \"",input$which_type,"\"",sep=""))
   	})
   throld.text <- reactive({
   	if(input$throld == .5)
@@ -205,11 +217,19 @@ shinyServer(function(input, output) {
   	return(paste(",thr.sym.cex =",input$cex))
   })
   thr.sym.pch.text <- reactive({
-  	if(thr.sym.pch() == 23)
+  	pchs <- thr.sym.pch()
+  	if(is.null(wmap_bare()) || is.null(pchs) || pchs == 23)
   		return("")
-  	return(paste(",thr.sym.pch =",thr.sym.pch()))
+  	return(paste(",thr.sym.pch =",list(pchs)))
   })
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),")",sep=""))
+  
+  thr.sym.col.text <- reactive({
+  	cols <- thr.sym.col()
+  	if(is.null(cols) || cols == rgb(0, 0, 0, 0.3))
+  		return("")
+  	return(paste(",thr.sym.col.bg =",list(cols)))
+  })
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
   
   
   tables <- reactive({
@@ -299,6 +319,26 @@ shinyServer(function(input, output) {
   				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for item",items[i]),choices = sym_choices)
   			})
   })
+    
+  col_choices <- c("gray"= rgb(0, 0, 0, 0.3),"red"= rgb(1, 0, 0, 0.7),"green"= rgb(0, 1, 0, 0.7),"blue"= rgb(0, 0, 1, 0.7))
+  
+  output$color_pickers <- renderUI({
+  	colby <- input$color_by
+  	steps <- stepnames()
+  	items <- itemnames()
+  	if(colby == "all")
+  		return(selectInput("col","Choose color",choices = col_choices))
+  	else if(colby == "step") {
+  			lapply(1:length(steps),function(i) {
+  				selectInput(paste("col",i,sep="_"),paste("Choose color for step",steps[i]),choices = col_choices)
+  			})
+  		}
+  	else if(colby == "item")
+  		lapply(1:length(items),function(i) {
+  				selectInput(paste("col",i,sep="_"),paste("Choose color for item",items[i]),choices = col_choices)
+  			})
+  })
+  
   
   
 })

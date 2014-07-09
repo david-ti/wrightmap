@@ -1,5 +1,5 @@
 wrightMap.CQmodel <-
-function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type = "default", label.items = NULL, main.title = NULL, 
+function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item.type = "default", label.items = NULL, main.title = NULL, 
 	thr.lab.text = NULL, dim.names = NULL, throld = .5,...) {
 
 	unpack.GIN <- function(GIN) {
@@ -34,7 +34,7 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type
 	thetas <- p.est[columns.at]
 
 
-	if (throld == .5 && !is.null(model$GIN) && is.null(item.table) && (type != "deltas")) {
+	if (throld == .5 && !is.null(model$GIN) && is.null(item.table) && (item.type != "deltas")) {
 		#print("false")
 		throlds <- unpack.GIN(model$GIN)
 		names <- unpack.names(model$GIN)
@@ -47,7 +47,7 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, type
 	} else {
 		RMP <- model$RMP
 
-		if (type != "thresholds") {
+		if (item.type != "thresholds") {
 			throlds <- make.deltas(model, item.table = item.table, interactions = interactions, step.table = step.table)
 				if (is.null(main.title)) 
 					main.title <- "Wright Map (Deltas)"

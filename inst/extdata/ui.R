@@ -1,14 +1,15 @@
 library(shiny)
 
 # Define UI for application that plots random distributions 
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
   # Application title
-  headerPanel("Wright Map"),
+  titlePanel("Wright Map"),
   
   # Sidebar with a slider input for number of observations
+  sidebarLayout(
   sidebarPanel(
   	wellPanel(
-    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","General display options" = "disp","Item display options" = "item.disp"))
+    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Text options" = "labels","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
     	),
   		conditionalPanel(condition="input.showPane=='files'",
   			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
@@ -35,16 +36,20 @@ shinyUI(pageWithSidebar(
     		)
     		
     	),
-		conditionalPanel(condition="input.showPane == 'disp'",
+		conditionalPanel(condition="input.showPane == 'labels'",
 			checkboxInput('autotitle',"Create title automatically",TRUE),
 			conditionalPanel(condition = "!input.autotitle",
 				textInput('title',"Title")
 			),
-			checkboxInput('use.hist', 'Histogram?', TRUE)
-    	),
-    	conditionalPanel(condition="input.showPane=='item.disp'",
-    		checkboxInput('show.thr.lab', 'Show Threshold Labels', TRUE),
+			checkboxInput('show.thr.lab', 'Show Threshold Labels', TRUE),
 			textInput('axis.logits',"Logit axis label","Logits"),
+			textInput('axis.persons',"Respondents axis label","Respondents"),
+			textInput('axis.items',"Items axis label","Items")
+    	),
+    	conditionalPanel(condition="input.showPane=='person.disp'",
+    		checkboxInput('use.hist', 'Histogram?', TRUE)
+    	),
+    	conditionalPanel(condition="input.showPane=='sym.disp'",
 		    sliderInput(
 		    				"cex", 
 		                	"Symbol size", 
@@ -54,7 +59,12 @@ shinyUI(pageWithSidebar(
 		    ),
 		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","item")),
 		    uiOutput("sym_pickers")
+		),
+		conditionalPanel(condition="input.showPane=='color.disp'",
+		    selectInput('color_by',"Choose colors by",choices = c("all","step","item")),
+		    uiOutput("color_pickers")
 		)
+		
   ),
   
   # Show a plot of the generated distribution
@@ -67,4 +77,4 @@ shinyUI(pageWithSidebar(
     verbatimTextOutput("command")
     #,verbatimTextOutput("bugprint")
   )
-))
+)))
