@@ -70,11 +70,17 @@ shinyUI(fluidPage(
   # Show a plot of the generated distribution
   mainPanel(
   #textOutput("model"),
-    plotOutput("wmap"),
-    conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
-    	sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
-    ),
-    verbatimTextOutput("command")
-    #,verbatimTextOutput("bugprint")
+  	tabsetPanel(type = "tabs",
+    	tabPanel("Wright map",
+    		plotOutput("wmap"),
+    		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
+    			sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
+    		),
+    		verbatimTextOutput("command")
+    	),
+    	tabPanel("Fit plot",
+    		plotOutput("fitPlot")
+    	)
+    )
   )
 )))

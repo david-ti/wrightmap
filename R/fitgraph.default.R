@@ -10,7 +10,7 @@ function( fitEst, fitLB, fitUB, itemLabels
 
 	nI <- length(fitEst)
 	item <- c(1:nI)
-	dev.new()
+	#dev.new()
 	plot( fitEst ~ item
 		, type = "n"
 		, axes = FALSE
