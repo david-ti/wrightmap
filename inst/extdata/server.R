@@ -84,7 +84,7 @@ shinyServer(function(input, output,session) {
 	  		
 	    
 	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
-	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
+	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,axis.persons = input$axis.persons,axis.items = input$axis.items,
 	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
 	 }
 	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
@@ -106,7 +106,7 @@ shinyServer(function(input, output,session) {
   	
   })
   
-  wmap_bare <- renderPlot({
+  wmap_bare <- reactive({
   	
   		  		
   	if(input$datatype == "CQ") {
@@ -194,7 +194,7 @@ shinyServer(function(input, output,session) {
   main.title.text <- reactive({
   	if(input$autotitle)
   		return("")
-  	return(paste(",main.title = ",input$title,sep=""))
+  	return(paste(",main.title = \"",input$title,"\"",sep=""))
   })
   use.hist.text <- reactive({
   	if(input$use.hist)
@@ -204,7 +204,17 @@ shinyServer(function(input, output,session) {
   axis.logits.text <- reactive({
   	if(input$axis.logits == "Logits")
   		return("")
-  	return(paste(",axis.logits =",input$axis.logits))
+  	return(paste(",axis.logits = \"",input$axis.logits,"\"",sep=""))
+  })
+    axis.persons.text <- reactive({
+  	if(input$axis.persons == "Respondents")
+  		return("")
+  	return(paste(",axis.persons = \"",input$axis.persons,"\"",sep=""))
+  })
+    axis.items.text <- reactive({
+  	if(input$axis.items == "Items")
+  		return("")
+  	return(paste(",axis.items = \"",input$axis.items,"\"",sep=""))
   })
   show.thr.lab.text <- reactive({
   	if(input$show.thr.lab)
@@ -227,9 +237,10 @@ shinyServer(function(input, output,session) {
   	cols <- thr.sym.col()
   	if(is.null(cols) || cols == rgb(0, 0, 0, 0.3))
   		return("")
-  	return(paste(",thr.sym.col.bg =",list(cols)))
+  		quote.cols <- paste("\"",cols,"\"",sep="")
+  	return(paste(",thr.sym.col.bg =",list(quote.cols)))
   })
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
   
   
   tables <- reactive({
@@ -337,6 +348,12 @@ shinyServer(function(input, output,session) {
   		lapply(1:length(items),function(i) {
   				selectInput(paste("col",i,sep="_"),paste("Choose color for item",items[i]),choices = col_choices)
   			})
+  })
+  
+  #########
+  
+  output$fitPlot <- renderPlot({
+  	return(fitgraph(model1()))
   })
   
   
