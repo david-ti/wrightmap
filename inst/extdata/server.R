@@ -352,10 +352,14 @@ shinyServer(function(input, output,session) {
   
   #########
   
-  output$fitPlot <- renderPlot({
-  	return(fitgraph(model1()))
+  
+  output$fitPlot.ui <- renderUI({
+  	plotOutput("fitPlot",width = paste0(input$width,"%"))
   })
   
+  output$fitPlot <- renderPlot({
+  	fitgraph(model1())
+  })
   
   
 })

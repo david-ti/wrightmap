@@ -79,7 +79,9 @@ shinyUI(fluidPage(
     		verbatimTextOutput("command")
     	),
     	tabPanel("Fit plot",
-    		plotOutput("fitPlot")
+    		uiOutput("fitPlot.ui"),
+    		sliderInput("width","Plot width",min = 1, max = 100, value = 100, step = 1)
+    		
     	)
     )
   )
