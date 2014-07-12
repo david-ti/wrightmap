@@ -98,11 +98,24 @@ shinyServer(function(input, output,session) {
   #############
   
   stepnames <- reactive({
-  	dimnames(wmap_bare())[[2]]
+  	#return(dimnames(wmap_bare())[[2]])
+  	#if(is.null(wmap_bare()))
+  	#	return()
+  	wm <- wmap_bare()
+  	steps <- dimnames(wm)[[2]]
+  	if(is.null(steps))
+  		steps <- c(1:NCOL(wm))
+  	return(steps)
   	})
   	
   	itemnames <- reactive({
-  	dimnames(wmap_bare())[[1]]
+  		wm <- wmap_bare()
+  	items <- dimnames(wm)[[1]]
+  	if(is.null(items))
+  		items <- names(wm)
+  	if(is.null(items))
+  		items <- c(1:NROW(wm))
+  	return(items)
   	})
   
   sym_choices <- c("Diamond" = 23,"Circle" = 21, "Square" = 22, "Triangle" = 24)
@@ -202,11 +215,16 @@ shinyServer(function(input, output,session) {
   })
   
   label.items <- reactive({
-  	if(input$autolabel)
+  	lab_i <- input$label_items
+  	num_i <- length(itemnames())
+  	if(lab_i == "default")
   		return(NULL)
-  labels <- unlist(lapply(1:length(itemnames()), function(i) {
+  	if(lab_i == "num")
+  		return(1:num_i)
+  labels <- unlist(lapply(1:num_i, function(i) {
   			input[[paste("lab",i,sep="_")]]
   		}))
+  	return(labels)
   })
   
  # output$bugprint <- renderPrint({
@@ -218,47 +236,64 @@ shinyServer(function(input, output,session) {
   
   wmap <- reactive({
   	
-  		  		
+  	#on.exit(dev.off)	
+  	args<- list()
   	if(input$datatype == "CQ") {
 	  	if(is.null(input$eap) || is.null(input$shw))
-	  		return(NULL)
+	  		return()
+	  	
+	  	args <- c(args,"thetas" = list(model1()),"throld" = input$throld,"item.type" = input$which_type)
 	  		
-	  	if(is.null(input$item.table) || input$item.table == "default") 
-	  		item.table <- NULL
-	  	else
-	  		item.table <- input$item.table
+	  	if(!is.null(input$item.table) && input$item.table != "default") 
+	  		args <- c(args,"item.table"= input$item.table)
 	  		
-	  	if(is.null(input$step.table) || input$step.table == "default") 
-	  		step.table <- NULL
-	  	else
-	  		step.table <- input$step.table
+	  	if(!is.null(input$step.table) && input$step.table != "default") 
+	  		args <- c(args,"step.table"= input$step.table)
 	  		
-	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
-	  		interactions.table <- NULL
-	  	else
-	  		interactions.table <- input$interactions.table
+	  	if(!is.null(input$interactions.table) && input$interactions.table != "default") 
+	  		args <- c(args,"interactions"= input$interactions.table)
+	  	
+	 }
+	 else if(input$datatype == "R") {
+	 	#cat("here")
+	 	#print(input$thetas)
+	 	if(input$thetas == "" || input$thresholds == "" || !exists(input$thetas) || !exists(input$thresholds))
+	 		return()
+	 	args <- 	c(args,"thetas" = list(get(input$thetas)), "thresholds" = list(get(input$thresholds)),"make.from" = input$make_from)
+	 	
+	 	if(input$slopes != "" && exists(input$slopes))
+	 		args <- c(args,"alpha" = list(get(input$slopes)))
+	 		
+	 	if(input$which_type == "throld")
+	 		args <- c(args,"throld" = input$throld)
+	 	
+	 }
+	 
+	 args <- c(args,"main.title" = main.title(),"show.thr.lab" = input$show.thr.lab, "use.hist" = input$use.hist, "axis.logits" = input$axis.logits,"axis.persons" = input$axis.persons,"axis.items" = input$axis.items,"label.items" = list(label.items()),"label.items.rows" = input$label_items_rows,"label.items.srt" = input$label.items.srt,"label.items.ticks" = input$label.items.ticks,
+	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()))
 	  		
 	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
-	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,axis.persons = input$axis.persons,axis.items = input$axis.items,label.items = label.items(),
-	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
-	 }
-	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
-	 	cat("here")
-	 	#print(input$thetas)
-	 	if(!exists(input$thetas) || !exists(input$thresholds))
-	 		return()
-	 	if(input$slopes != "" && exists(input$slopes))
-	 		slopes = get(input$slopes)
-	 	else
-	 		slopes = 1
-	 	if(input$which_type == "deltas")
-	 		throld = NULL
-	 	else
-	 		throld = input$throld
-	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col(),axis.persons = input$axis.persons,axis.items = input$axis.items)
-	 }
+	      # return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
+	               # show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,axis.persons = input$axis.persons,axis.items = input$axis.items,label.items = label.items(),label.items.rows = input$label_items_rows,label.items.srt = input$label.items.srt,label.items.ticks = input$label.items.ticks,
+	               # thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
+	 
+	 # if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
+	 	# #cat("here")
+	 	# #print(input$thetas)
+	 	# if(!exists(input$thetas) || !exists(input$thresholds))
+	 		# return()
+	 	# if(input$slopes != "" && exists(input$slopes))
+	 		# slopes = get(input$slopes)
+	 	# else
+	 		# slopes = 1
+	 	# if(input$which_type == "deltas")
+	 		# throld = NULL
+	 	# else
+	 		# throld = input$throld
+	 	# wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,label.items = label.items(),label.items.rows = input$label_items_rows,label.items.srt = input$label.items.srt,label.items.ticks = input$label.items.ticks,thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col(),axis.persons = input$axis.persons,axis.items = input$axis.items)
+	 # }
+	 #cat(args)
+	 return(do.call(wrightMap,args))
 
   	
   })
@@ -267,7 +302,7 @@ shinyServer(function(input, output,session) {
   
   wmap_bare <- reactive({
   	
-  		  		
+  	#on.exit(try(dev.off()))
   	if(input$datatype == "CQ") {
 	  	if(is.null(input$eap) || is.null(input$shw))
 	  		return(NULL)
@@ -322,9 +357,9 @@ shinyServer(function(input, output,session) {
   	})
   	
   	make.from.text <- reactive({
-  		if(input$datatype == "CQ" || is.null(input$make.from) || input$make.from == "deltas")
+  		if(input$datatype == "CQ" || is.null(input$make_from) || input$make_from == "deltas")
   			return("")
-  		return(",make.from = thresholds")
+  		return(",make.from = \"throlds\"")
   	})
   item.table.text <- reactive({
   	if(is.null(input$item.table) || input$item.table == "default")
@@ -381,8 +416,17 @@ shinyServer(function(input, output,session) {
   	labs <- label.items()
   	if(is.null(labs))
   		return("")
-  	quote.labs <- paste("\"",labs,"\"",sep="")
-  	return(paste(",label.items =",list(quote.labs)))
+  	return(paste(",label.items =",list(labs)))
+  })
+  label.items.rows.text <- reactive({
+  	if(input$label_items_rows == 1)
+  		return("")
+  	return(paste(",label.items.rows =",input$label_items_rows))
+  })
+  label.items.srt.text <- reactive({
+  	if(input$label_items_rows > 1 || input$label.items.srt == 0)
+  		return("")
+  	return(paste(",label.items.srt =",input$label.items.srt))
   })
   show.thr.lab.text <- reactive({
   	if(input$show.thr.lab)
@@ -396,8 +440,9 @@ shinyServer(function(input, output,session) {
   })
   thr.sym.pch.text <- reactive({
   	pchs <- thr.sym.pch()
-  	if(is.null(wmap_bare()) || is.null(pchs) || (input$sym_by == "all" && pchs == 23))
-  		return("")
+  	#return()
+  	if(length(pchs) == 0 || (input$sym_by == "all" && pchs == 23))
+  			return("")
   	return(paste(",thr.sym.pch =",list(pchs)))
   })
   
@@ -410,7 +455,7 @@ shinyServer(function(input, output,session) {
   	return(paste(",thr.sym.col.bg =",list(cols)))
   })
   
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
   
   ##########
   
