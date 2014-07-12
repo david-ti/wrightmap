@@ -41,51 +41,51 @@ function(item.params, item.table = NULL, interactions = NULL, step.table = NULL,
 
 	if (!is.null(step.table) || !is.null(interactions)) {
 	
-	if (!is.null(step.table)) {
-		if (is.null(step.sign)) {
-			step.sign <- ifelse(grepl(paste("-", step.table, sep = ""), eqn), -1, 1)
+		if (!is.null(step.table)) {
+			if (is.null(step.sign)) {
+				step.sign <- ifelse(grepl(paste("-", step.table, sep = ""), eqn), -1, 1)
+			}
+			step.name <- step.table
+			step.table <- RMP[[step.table]]
+			steps <- step.table$est
+			steps <- steps[!is.na(steps)]
+		} else {
+			cross.parts <- unlist(strsplit(interactions, "\\*"))
+			step.name <- cross.parts[cross.parts != item.name]
+			steps <- 0
+			step.sign <- 1
 		}
-		step.name <- step.table
-		step.table <- RMP[[step.table]]
-		steps <- step.table$est
-		steps <- steps[!is.na(steps)]
-	} else {
-		cross.parts <- unlist(strsplit(interactions, "\\*"))
-		step.name <- cross.parts[cross.parts != item.name]
-		steps <- 0
-		step.sign <- 1
-	}
 
 
-	if (!is.null(interactions)) {
-		if (is.null(inter.sign)) {
-			inter.sign <- ifelse(grepl(paste("-", interactions, sep = ""), eqn), -1, 1)
+		if (!is.null(interactions)) {
+			if (is.null(inter.sign)) {
+				inter.sign <- ifelse(grepl(paste("-", interactions, sep = ""), eqn), -1, 1)
+			}
+			inter.name <- interactions
+			interactions <- RMP[[interactions]]
+			if (step.name == "step") 
+				step.col = "step"
+			else step.col = paste("n", step.name, sep = "_")
+			if (item.name == "step") 
+				item.col = "step"
+			else item.col = paste("n", item.name, sep = "_")
+
+			crosses <- reshape(interactions[c(item.col, step.col, "est")], direction = "wide", timevar = step.col, idvar = item.col)
+			crosses <- crosses[colSums(!is.na(crosses)) != 0]
+			crosses <- crosses[rowSums(!is.na(crosses)) > 1, ]
+		} else {
+			crosses <- 0
+			inter.sign <- 1
 		}
-		inter.name <- interactions
-		interactions <- RMP[[interactions]]
-		if (step.name == "step") 
-			step.col = "step"
-		else step.col = paste("n", step.name, sep = "_")
-		if (item.name == "step") 
-			item.col = "step"
-		else item.col = paste("n", item.name, sep = "_")
-
-		crosses <- reshape(interactions[c(item.col, step.col, "est")], direction = "wide", timevar = step.col, idvar = item.col)
-		crosses <- crosses[colSums(!is.na(crosses)) != 0]
-		crosses <- crosses[rowSums(!is.na(crosses)) > 1, ]
-	} else {
-		crosses <- 0
-		inter.sign <- 1
-	}
-	throlds <- make.deltas(throlds, crosses, steps, item.sign, step.sign, inter.sign)
+		throlds <- make.deltas(throlds, crosses, steps, item.sign, step.sign, inter.sign)
 	
-	if (!is.null(step.table)) 
-		step.names <- unlist(step.table[step.name])
-	else step.names <- unique(unlist(interactions[step.name]))
-	if (step.name == "step") 
-		step.names <- step.names[step.names != 0]
-	colnames(throlds) <- step.names
-	rownames(throlds) <- item.names
+		if (!is.null(step.table)) 
+			step.names <- unlist(step.table[step.name])
+		else step.names <- unique(unlist(interactions[step.name]))
+		if (step.name == "step") 
+			step.names <- step.names[step.names != 0]
+		colnames(throlds) <- step.names
+		rownames(throlds) <- item.names
 	}
 	else
 		names(throlds) <- item.names

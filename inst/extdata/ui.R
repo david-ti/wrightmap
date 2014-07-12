@@ -32,7 +32,7 @@ shinyUI(fluidPage(
 	    			uiOutput("interactions.table")
 	    		),
 	    		conditionalPanel(condition = "input.datatype == 'R'",
-	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds"),selected = "deltas",inline = TRUE)),
+	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds" = "throlds"),selected = "throlds",inline = TRUE)),
 	    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
 	    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
 	    		)
@@ -53,8 +53,13 @@ shinyUI(fluidPage(
 			textInput('axis.items',"Items axis label","Items")
     	),
     	conditionalPanel(condition = "input.showPane=='label.items'",
-    		checkboxInput('autolabel',"Create item labels automatically",value = TRUE),
-    		conditionalPanel(condition = "!input.autolabel",
+    		selectInput("label_items_rows","Rows of item labels",choices = c(1,2,3)),
+    		checkboxInput("label.items.ticks","Tick marks",value = TRUE),
+    		conditionalPanel(condition = "input.label_items_rows == 1",
+    			sliderInput("label.items.srt","Rotate item labels",min = 0,max= 90,value = 0,step = 5)),
+    		selectInput("label_items","Label items:",choices = c("Default" = "default","Numbers" = "num","Custom" = "custom")),
+    		#checkboxInput('autolabel',"Create item labels automatically",value = TRUE),
+    		conditionalPanel(condition = "input.label_items == 'custom'",
     			uiOutput("item.labels"))
     	),
     	conditionalPanel(condition="input.showPane=='person.disp'",
@@ -68,7 +73,7 @@ shinyUI(fluidPage(
 		               	max = 5, 
 		                	value = 1.2, step = .1
 		    ),
-		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","item")),
+		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","item"),selected="all"),
 		    uiOutput("sym_pickers")
 		),
 		conditionalPanel(condition="input.showPane=='color.disp'",
