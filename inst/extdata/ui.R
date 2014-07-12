@@ -9,12 +9,11 @@ shinyUI(fluidPage(
   sidebarLayout(
   sidebarPanel(
   	wellPanel(
-    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Text options" = "labels","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
+    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
     	),
   		conditionalPanel(condition="input.showPane=='files'",
   			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
   			conditionalPanel(condition = "input.datatype == 'R'",
-  				radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds"),inline = TRUE),
   				textInput('thetas',"Name of person parameters object"),
   				textInput('thresholds',"Name of item parameters object"),
   				textInput('slopes',"Name of slopes object (if not specified, assumed all are 1)")
@@ -26,17 +25,24 @@ shinyUI(fluidPage(
     		)
     	),
     	conditionalPanel(condition = "input.showPane == 'data'",
-    		conditionalPanel(condition = "input.datatype == 'CQ'",
-    			uiOutput("item.table"),
-    			uiOutput("step.table"),
-    			uiOutput("interactions.table")
-    		),
-    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
-    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
-    		)
+    		conditionalPanel(condition = "input.selectedTab == 'wmap'",
+	    		conditionalPanel(condition = "input.datatype == 'CQ'",
+	    			uiOutput("item.table"),
+	    			uiOutput("step.table"),
+	    			uiOutput("interactions.table")
+	    		),
+	    		conditionalPanel(condition = "input.datatype == 'R'",
+	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds"),selected = "deltas",inline = TRUE)),
+	    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
+	    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
+	    		)
+	    	),
+	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
+	    		selectInput("fit.table","Graph which table?",choices = c("Please select files" = "none"))
+	    	)
     		
     	),
-		conditionalPanel(condition="input.showPane == 'labels'",
+		conditionalPanel(condition="input.showPane == 'labels' && input.selectedTab == 'wmap'",
 			checkboxInput('autotitle',"Create title automatically",TRUE),
 			conditionalPanel(condition = "!input.autotitle",
 				textInput('title',"Title")
@@ -45,6 +51,11 @@ shinyUI(fluidPage(
 			textInput('axis.logits',"Logit axis label","Logits"),
 			textInput('axis.persons',"Respondents axis label","Respondents"),
 			textInput('axis.items',"Items axis label","Items")
+    	),
+    	conditionalPanel(condition = "input.showPane=='label.items'",
+    		checkboxInput('autolabel',"Create item labels automatically",value = TRUE),
+    		conditionalPanel(condition = "!input.autolabel",
+    			uiOutput("item.labels"))
     	),
     	conditionalPanel(condition="input.showPane=='person.disp'",
     		checkboxInput('use.hist', 'Histogram?', TRUE)
@@ -76,13 +87,15 @@ shinyUI(fluidPage(
     		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
     			sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
     		),
-    		verbatimTextOutput("command")
+    		verbatimTextOutput("command"),
+    		value = "wmap"
     	),
     	tabPanel("Fit plot",
     		uiOutput("fitPlot.ui"),
-    		sliderInput("width","Plot width",min = 1, max = 100, value = 100, step = 1)
-    		
-    	)
+    		sliderInput("width","Plot width",min = 1, max = 100, value = 100, step = 1),
+    		value = "fitgraph"
+    	),
+    	id = "selectedTab"
     )
   )
 )))

@@ -3,247 +3,31 @@ library(shiny)
 
 shinyServer(function(input, output,session) {
   
-  
+	observe({
+    	if(input$selectedTab == "wmap")
+    		panelChoices <- c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    	else if(input$selectedTab == "fitgraph")
+    		panelChoices <- c("File options" = "files","Data options" = "data")
+		
+		updateRadioButtons(session, "showPane", choices = panelChoices)
+# 
+#     # Can also set the label and select an item
+#     updateRadioButtons(session, "inRadio2",
+#       label = paste("Radio label", x),
+#       choices = r_options,
+#       selected = sprintf("option-%d-2", x)
+#     )
+   })
+
+####  
   
   model1 <- reactive({CQmodel(input$eap$datapath,input$shw$datapath,input$p.type)})
-  main.title <- reactive({
-  	if(input$autotitle)
-  		return()
-  	input$title
-  })
-  
-  thr.sym.pch <- reactive({
-  	if(is.null(wmap_bare()))
-  		return()
-  	symby <- input$sym_by
-  	if(symby == "all")
-  		return(as.integer(input$sym))
-  	if(symby == "step") {
-  		step_pch <- unlist(lapply(1:length(stepnames()), function(i) {
-  			as.integer(input[[paste("sym",i,sep="_")]])
-  		}))
-  		return(rep(step_pch,each=length(itemnames())))
-  	}
-  	if(symby == "item") {
-  		item_pch <- unlist(lapply(1:length(itemnames()), function(i) {
-  			as.integer(input[[paste("sym",i,sep="_")]])
-  		}))
-  		return(item_pch)
-  	}
-  	return()
-  })
-  
-    thr.sym.col <- reactive({
-  	if(is.null(wmap_bare()))
-  		return()
-  	colby <- input$color_by
-  	if(colby == "all")
-  		return(input$col)
-  	if(colby == "step") {
-  		step_col <- unlist(lapply(1:length(stepnames()), function(i) {
-  			input[[paste("col",i,sep="_")]]
-  		}))
-  		return(rep(step_col,each=length(itemnames())))
-  	}
-  	if(colby == "item") {
-  		item_col <- unlist(lapply(1:length(itemnames()), function(i) {
-  			input[[paste("col",i,sep="_")]]
-  		}))
-  		return(item_col)
-  	}
-  	return()
-  })
-  
- # output$bugprint <- renderPrint({
-  	# thr.sym.pch()
-
-  # })
   
   
-  wmap <- reactive({
-  	
-  		  		
-  	if(input$datatype == "CQ") {
-	  	if(is.null(input$eap) || is.null(input$shw))
-	  		return(NULL)
-	  		
-	  	if(is.null(input$item.table) || input$item.table == "default") 
-	  		item.table <- NULL
-	  	else
-	  		item.table <- input$item.table
-	  		
-	  	if(is.null(input$step.table) || input$step.table == "default") 
-	  		step.table <- NULL
-	  	else
-	  		step.table <- input$step.table
-	  		
-	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
-	  		interactions.table <- NULL
-	  	else
-	  		interactions.table <- input$interactions.table
-	  		
-	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
-	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,axis.persons = input$axis.persons,axis.items = input$axis.items,
-	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
-	 }
-	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
-	 	#print(input$thetas)
-	 	if(!exists(input$thetas,mode="numeric") || !exists(input$thresholds,mode="numeric"))
-	 		return()
-	 	if(input$slopes != "" && exists(input$slopes,mode="numeric"))
-	 		slopes = get(input$slopes)
-	 	else
-	 		slopes = 1
-	 	if(input$which_type == "deltas")
-	 		throld = NULL
-	 	else
-	 		throld = input$throld
-	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
-	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col(),axis.persons = input$axis.persons,axis.items = input$axis.items)
-	 }
-
-  	
-  })
-  
-  wmap_bare <- reactive({
-  	
-  		  		
-  	if(input$datatype == "CQ") {
-	  	if(is.null(input$eap) || is.null(input$shw))
-	  		return(NULL)
-	  		
-	  	if(is.null(input$item.table) || input$item.table == "default") 
-	  		item.table <- NULL
-	  	else
-	  		item.table <- input$item.table
-	  		
-	  	if(is.null(input$step.table) || input$step.table == "default") 
-	  		step.table <- NULL
-	  	else
-	  		step.table <- input$step.table
-	  		
-	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
-	  		interactions.table <- NULL
-	  	else
-	  		interactions.table <- input$interactions.table
-	  		
-	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, item.type=input$which_type))
-	 }
-	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
-	 	#print(input$thetas)
-	 	if(!exists(input$thetas,mode="numeric") || !exists(input$thresholds,mode="numeric"))
-	 		return()
-	 	
-	 	wrightMap(get(input$thetas),get(input$thresholds))
-	 }
-
-  	
-  })
-
-  
-  output$wmap <- renderPlot({
-  	    wmap()
-  })
-  
-  thetas.text <- reactive({
-  	if(input$datatype == "CQ")
-  		return(paste("\"",input$eap$name,"\"",sep=""))
-  	if(input$datatype == "R")
-  		return(input$thetas)
-  	})
-  	  thresholds.text <- reactive({
-  	if(input$datatype == "CQ")
-  		return(paste(",\"",input$shw$name,"\"",sep=""))
-  	if(input$datatype == "R")
-  		return(paste(",",input$thresholds,sep=""))
-  	})
-  	
-  	make.from.text <- reactive({
-  		if(input$datatype == "CQ")
-  			return("")
-  		if(input$datatype == "R")
-  			return(paste(",make.from = ",input$make_from,sep=""))
-  	})
-  item.table.text <- reactive({
-  	if(is.null(input$item.table) || input$item.table == "default")
-  		return("")
-  	return(paste(",item.table = ",input$item.table,sep=""))
-  })
-    interactions.text <- reactive({
-  	if(is.null(input$interactions.table) || input$interactions.table == "default")
-  		return("")
-  	return(paste(",interactions = ",input$interactions.table,sep=""))
-  })
-    step.table.text <- reactive({
-  	if(is.null(input$step.table) || input$step.table == "default")
-  		return("")
-  	return(paste(",step.table = ",input$step.table,sep=""))
-  })
-  type.text <- reactive({
-  	if(input$which_type == "default")
-  		return("")
-  	return(paste(",item.type = \"",input$which_type,"\"",sep=""))
-  	})
-  throld.text <- reactive({
-  	if(input$throld == .5)
-  		return("")
-  	return(paste(",throld = ",input$throld,sep=""))
-  })
-  main.title.text <- reactive({
-  	if(input$autotitle)
-  		return("")
-  	return(paste(",main.title = \"",input$title,"\"",sep=""))
-  })
-  use.hist.text <- reactive({
-  	if(input$use.hist)
-  		return("")
-  	return(",use.hist = FALSE")
-  })
-  axis.logits.text <- reactive({
-  	if(input$axis.logits == "Logits")
-  		return("")
-  	return(paste(",axis.logits = \"",input$axis.logits,"\"",sep=""))
-  })
-    axis.persons.text <- reactive({
-  	if(input$axis.persons == "Respondents")
-  		return("")
-  	return(paste(",axis.persons = \"",input$axis.persons,"\"",sep=""))
-  })
-    axis.items.text <- reactive({
-  	if(input$axis.items == "Items")
-  		return("")
-  	return(paste(",axis.items = \"",input$axis.items,"\"",sep=""))
-  })
-  show.thr.lab.text <- reactive({
-  	if(input$show.thr.lab)
-  		return("")
-  	return(",show.thr.lab = FALSE")
-  })
-  thr.sym.cex.text <- reactive({
-  	if(abs(input$cex-1.2) < .09)
-  		return("")
-  	return(paste(",thr.sym.cex =",input$cex))
-  })
-  thr.sym.pch.text <- reactive({
-  	pchs <- thr.sym.pch()
-  	if(is.null(wmap_bare()) || is.null(pchs) || pchs == 23)
-  		return("")
-  	return(paste(",thr.sym.pch =",list(pchs)))
-  })
-  
-  thr.sym.col.text <- reactive({
-  	cols <- thr.sym.col()
-  	if(is.null(cols) || cols == rgb(0, 0, 0, 0.3))
-  		return("")
-  		quote.cols <- paste("\"",cols,"\"",sep="")
-  	return(paste(",thr.sym.col.bg =",list(quote.cols)))
-  })
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
-  
+  #######
   
   tables <- reactive({
+  	#return(c("a","b"))
   	names(model1()$RMP)
   })
   
@@ -303,6 +87,16 @@ shinyServer(function(input, output,session) {
                         selected = "default")
   })
   
+  observe({
+  	if(is.null(input$eap) || is.null(input$shw))
+     	fitTables <- c("Please select files" = "none")
+     else
+     	fitTables <- tables()
+     updateSelectInput(session, "fit.table",choices = fitTables)
+  })
+  
+  #############
+  
   stepnames <- reactive({
   	dimnames(wmap_bare())[[2]]
   	})
@@ -350,15 +144,290 @@ shinyServer(function(input, output,session) {
   			})
   })
   
+  output$item.labels <- renderUI({
+  	items <- itemnames()
+  	lapply(1:length(items),function(i) {
+  				textInput(paste("lab",i,sep="_"),paste("Choose label for item",items[i]))
+  			})
+  })
+  
+  #########
+
+  main.title <- reactive({
+  	if(input$autotitle)
+  		return()
+  	input$title
+  })
+  
+  thr.sym.pch <- reactive({
+  	if(is.null(wmap_bare()))
+  		return()
+  	symby <- input$sym_by
+  	if(symby == "all")
+  		return(as.integer(input$sym))
+  	if(symby == "step") {
+  		step_pch <- unlist(lapply(1:length(stepnames()), function(i) {
+  			as.integer(input[[paste("sym",i,sep="_")]])
+  		}))
+  		return(rep(step_pch,each=length(itemnames())))
+  	}
+  	if(symby == "item") {
+  		item_pch <- unlist(lapply(1:length(itemnames()), function(i) {
+  			as.integer(input[[paste("sym",i,sep="_")]])
+  		}))
+  		return(item_pch)
+  	}
+  	return()
+  })
+  
+    thr.sym.col <- reactive({
+  	if(is.null(wmap_bare()))
+  		return()
+  	colby <- input$color_by
+  	if(colby == "all")
+  		return(input$col)
+  	if(colby == "step") {
+  		step_col <- unlist(lapply(1:length(stepnames()), function(i) {
+  			input[[paste("col",i,sep="_")]]
+  		}))
+  		return(rep(step_col,each=length(itemnames())))
+  	}
+  	if(colby == "item") {
+  		item_col <- unlist(lapply(1:length(itemnames()), function(i) {
+  			input[[paste("col",i,sep="_")]]
+  		}))
+  		return(item_col)
+  	}
+  	return()
+  })
+  
+  label.items <- reactive({
+  	if(input$autolabel)
+  		return(NULL)
+  labels <- unlist(lapply(1:length(itemnames()), function(i) {
+  			input[[paste("lab",i,sep="_")]]
+  		}))
+  })
+  
+ # output$bugprint <- renderPrint({
+  	# thr.sym.pch()
+
+  # })
+  
+  ##########
+  
+  wmap <- reactive({
+  	
+  		  		
+  	if(input$datatype == "CQ") {
+	  	if(is.null(input$eap) || is.null(input$shw))
+	  		return(NULL)
+	  		
+	  	if(is.null(input$item.table) || input$item.table == "default") 
+	  		item.table <- NULL
+	  	else
+	  		item.table <- input$item.table
+	  		
+	  	if(is.null(input$step.table) || input$step.table == "default") 
+	  		step.table <- NULL
+	  	else
+	  		step.table <- input$step.table
+	  		
+	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
+	  		interactions.table <- NULL
+	  	else
+	  		interactions.table <- input$interactions.table
+	  		
+	    
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
+	               show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,axis.persons = input$axis.persons,axis.items = input$axis.items,label.items = label.items(),
+	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
+	 }
+	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
+	 	cat("here")
+	 	#print(input$thetas)
+	 	if(!exists(input$thetas) || !exists(input$thresholds))
+	 		return()
+	 	if(input$slopes != "" && exists(input$slopes))
+	 		slopes = get(input$slopes)
+	 	else
+	 		slopes = 1
+	 	if(input$which_type == "deltas")
+	 		throld = NULL
+	 	else
+	 		throld = input$throld
+	 	wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,
+	               thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col(),axis.persons = input$axis.persons,axis.items = input$axis.items)
+	 }
+
+  	
+  })
+  
+  ##########
+  
+  wmap_bare <- reactive({
+  	
+  		  		
+  	if(input$datatype == "CQ") {
+	  	if(is.null(input$eap) || is.null(input$shw))
+	  		return(NULL)
+	  		
+	  	if(is.null(input$item.table) || input$item.table == "default") 
+	  		item.table <- NULL
+	  	else
+	  		item.table <- input$item.table
+	  		
+	  	if(is.null(input$step.table) || input$step.table == "default") 
+	  		step.table <- NULL
+	  	else
+	  		step.table <- input$step.table
+	  		
+	  	if(is.null(input$interactions.table) || input$interactions.table == "default") 
+	  		interactions.table <- NULL
+	  	else
+	  		interactions.table <- input$interactions.table
+	  		
+	    
+	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, item.type=input$which_type))
+	 }
+	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
+	 	#print(input$thetas)
+	 	if(!exists(input$thetas) || !exists(input$thresholds))
+	 		return()
+	 	
+	 	wrightMap(get(input$thetas),get(input$thresholds))
+	 }
+
+  	
+  })
+
+  ##########
+  output$wmap <- renderPlot({
+  	    wmap()
+  })
+  
   #########
   
+  thetas.text <- reactive({
+  	if(input$datatype == "CQ")
+  		return(paste("\"",input$eap$name,"\"",sep=""))
+  	if(input$datatype == "R")
+  		return(input$thetas)
+  	})
+  	  thresholds.text <- reactive({
+  	if(input$datatype == "CQ")
+  		return(paste(",\"",input$shw$name,"\"",sep=""))
+  	if(input$datatype == "R")
+  		return(paste(",",input$thresholds,sep=""))
+  	})
+  	
+  	make.from.text <- reactive({
+  		if(input$datatype == "CQ" || is.null(input$make.from) || input$make.from == "deltas")
+  			return("")
+  		return(",make.from = thresholds")
+  	})
+  item.table.text <- reactive({
+  	if(is.null(input$item.table) || input$item.table == "default")
+  		return("")
+  	return(paste(",item.table = ",input$item.table,sep=""))
+  })
+    interactions.text <- reactive({
+  	if(is.null(input$interactions.table) || input$interactions.table == "default")
+  		return("")
+  	return(paste(",interactions = ",input$interactions.table,sep=""))
+  })
+    step.table.text <- reactive({
+  	if(is.null(input$step.table) || input$step.table == "default")
+  		return("")
+  	return(paste(",step.table = ",input$step.table,sep=""))
+  })
+  type.text <- reactive({
+  	if(input$which_type == "default")
+  		return("")
+  	return(paste(",item.type = \"",input$which_type,"\"",sep=""))
+  	})
+  throld.text <- reactive({
+  	if(input$throld == .5)
+  		return("")
+  	return(paste(",throld = ",input$throld,sep=""))
+  })
+  main.title.text <- reactive({
+  	if(input$autotitle)
+  		return("")
+  	return(paste(",main.title = \"",input$title,"\"",sep=""))
+  })
+  use.hist.text <- reactive({
+  	if(input$use.hist)
+  		return("")
+  	return(",use.hist = FALSE")
+  })
+  axis.logits.text <- reactive({
+  	if(input$axis.logits == "Logits")
+  		return("")
+  	return(paste(",axis.logits = \"",input$axis.logits,"\"",sep=""))
+  })
+    axis.persons.text <- reactive({
+  	if(input$axis.persons == "Respondents")
+  		return("")
+  	return(paste(",axis.persons = \"",input$axis.persons,"\"",sep=""))
+  })
+    axis.items.text <- reactive({
+  	if(input$axis.items == "Items")
+  		return("")
+  	return(paste(",axis.items = \"",input$axis.items,"\"",sep=""))
+  })
+  
+  label.items.text <- reactive({
+  	labs <- label.items()
+  	if(is.null(labs))
+  		return("")
+  	quote.labs <- paste("\"",labs,"\"",sep="")
+  	return(paste(",label.items =",list(quote.labs)))
+  })
+  show.thr.lab.text <- reactive({
+  	if(input$show.thr.lab)
+  		return("")
+  	return(",show.thr.lab = FALSE")
+  })
+  thr.sym.cex.text <- reactive({
+  	if(abs(input$cex-1.2) < .09)
+  		return("")
+  	return(paste(",thr.sym.cex =",input$cex))
+  })
+  thr.sym.pch.text <- reactive({
+  	pchs <- thr.sym.pch()
+  	if(is.null(wmap_bare()) || is.null(pchs) || (input$sym_by == "all" && pchs == 23))
+  		return("")
+  	return(paste(",thr.sym.pch =",list(pchs)))
+  })
+  
+  thr.sym.col.text <- reactive({
+  	cols <- thr.sym.col()
+  	if(is.null(cols) || (input$color_by =="all" && cols == rgb(0, 0, 0, 0.3)))
+  		return("")
+  	if(length(cols == 1))
+  		cols <- paste("\"",cols,"\"",sep="")
+  	return(paste(",thr.sym.col.bg =",list(cols)))
+  })
+  
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  
+  ##########
+  
+    
   
   output$fitPlot.ui <- renderUI({
   	plotOutput("fitPlot",width = paste0(input$width,"%"))
   })
   
   output$fitPlot <- renderPlot({
-  	fitgraph(model1())
+  	if(is.null(input$eap) || is.null(input$shw))
+  		return("")
+  	if(input$fit.table == "none")
+  		fit.table <- NULL
+  	else
+  		fit.table <- input$fit.table
+  	fitgraph(model1(),table = input$fit.table)
   })
   
   
