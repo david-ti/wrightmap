@@ -76,6 +76,9 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     if(!is.null(throld)) {
     	thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = throld, alpha = alpha, make.from = make.from, c.params = c.params)
     }
+    else if(any(c.params != 0)) {
+    	thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = .5, alpha = alpha, make.from = make.from, c.params = c.params)
+    }
     
     thetas <- as.matrix(thetas)
     thr <- as.matrix(thresholds)
