@@ -6,8 +6,12 @@ shinyServer(function(input, output,session) {
 	observe({
     	if(input$selectedTab == "wmap")
     		panelChoices <- c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
-    	else if(input$selectedTab == "fitgraph")
-    		panelChoices <- c("File options" = "files","Data options" = "data")
+    	else if(input$selectedTab == "fitgraph") {
+    		if(input$datatype == "CQ")
+    			panelChoices <- c("File options" = "files","Data options" = "data")
+    		else if(input$datatype == "R")
+    			panelChoices <- c("File options")
+    		}
 		
 		updateRadioButtons(session, "showPane", choices = panelChoices)
 # 
@@ -257,15 +261,20 @@ shinyServer(function(input, output,session) {
 	 else if(input$datatype == "R") {
 	 	#cat("here")
 	 	#print(input$thetas)
-	 	if(input$thetas == "" || input$thresholds == "" || !exists(input$thetas) || !exists(input$thresholds))
+	 	if(input$thetas == "" || input$thresholds == "" || !exists(input$thetas) || !exists(input$thresholds) || (input$slopes != "" && !exists(input$slopes)))
 	 		return()
 	 	args <- 	c(args,"thetas" = list(get(input$thetas)), "thresholds" = list(get(input$thresholds)),"make.from" = input$make_from)
 	 	
 	 	if(input$slopes != "" && exists(input$slopes))
 	 		args <- c(args,"alpha" = list(get(input$slopes)))
 	 		
-	 	if(input$which_type == "throld")
+	 	if(input$c.params != "" && exists(input$c.params))
+	 		args <- c(args,"c.params"= list(get(input$c.params)))
+	 		
+	 	if(input$make_from == "thresholds" || input$which_type == "thresholds") {
+	 		#cat("throlds")
 	 		args <- c(args,"throld" = input$throld)
+	 		}
 	 	
 	 }
 	 
@@ -273,26 +282,6 @@ shinyServer(function(input, output,session) {
 	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()))
 	  		
 	    
-	      # return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, throld = input$throld,item.type=input$which_type,main.title = main.title(),
-	               # show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,axis.persons = input$axis.persons,axis.items = input$axis.items,label.items = label.items(),label.items.rows = input$label_items_rows,label.items.srt = input$label.items.srt,label.items.ticks = input$label.items.ticks,
-	               # thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col()))
-	 
-	 # if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
-	 	# #cat("here")
-	 	# #print(input$thetas)
-	 	# if(!exists(input$thetas) || !exists(input$thresholds))
-	 		# return()
-	 	# if(input$slopes != "" && exists(input$slopes))
-	 		# slopes = get(input$slopes)
-	 	# else
-	 		# slopes = 1
-	 	# if(input$which_type == "deltas")
-	 		# throld = NULL
-	 	# else
-	 		# throld = input$throld
-	 	# wrightMap(get(input$thetas),get(input$thresholds),alpha = slopes,throld = throld,make.from = input$make_from,main.title=main.title(),show.thr.lab = input$show.thr.lab, use.hist = input$use.hist, axis.logits = input$axis.logits,label.items = label.items(),label.items.rows = input$label_items_rows,label.items.srt = input$label.items.srt,label.items.ticks = input$label.items.ticks,thr.sym.cex = input$cex,thr.sym.pch=thr.sym.pch(),thr.sym.col.bg=thr.sym.col(),axis.persons = input$axis.persons,axis.items = input$axis.items)
-	 # }
-	 #cat(args)
 	 return(do.call(wrightMap,args))
 
   	
@@ -357,9 +346,15 @@ shinyServer(function(input, output,session) {
   	})
   	
   	make.from.text <- reactive({
-  		if(input$datatype == "CQ" || is.null(input$make_from) || input$make_from == "deltas")
+  		if(input$datatype == "CQ" || is.null(input$make_from) || input$make_from == "deltas" || input$throld == .5)
   			return("")
-  		return(",make.from = \"throlds\"")
+  		return(",make.from = \"thresholds\"")
+  	})
+  	
+  	alphas.text <- reactive({
+  		if(input$datatype == "R" && input$slopes != "")
+  			return(paste(",alpha =",input$slopes))
+  		return("")
   	})
   item.table.text <- reactive({
   	if(is.null(input$item.table) || input$item.table == "default")
@@ -455,7 +450,7 @@ shinyServer(function(input, output,session) {
   	return(paste(",thr.sym.col.bg =",list(cols)))
   })
   
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
   
   ##########
   
@@ -466,13 +461,21 @@ shinyServer(function(input, output,session) {
   })
   
   output$fitPlot <- renderPlot({
-  	if(is.null(input$eap) || is.null(input$shw))
-  		return("")
-  	if(input$fit.table == "none")
-  		fit.table <- NULL
-  	else
-  		fit.table <- input$fit.table
-  	fitgraph(model1(),table = input$fit.table)
+  	if(input$datatype == "CQ") {
+	  	if(is.null(input$eap) || is.null(input$shw))
+	  		return("")
+	  	if(input$fit.table == "none")
+	  		fit.table <- NULL
+	  	else
+	  		fit.table <- input$fit.table
+	  	fitgraph(model1(),table = input$fit.table,fit.type = input$fit.type)
+	 }
+	 else if(input$datatype == "R") {
+	 	if(input$fitEst == "" || input$fitLB == "" || input$fitUB == "" || !exists(input$fitEst) || !exists(input$fitUB) || !exists(input$fitLB))
+	 		return()
+	 	else
+	 		fitgraph(get(input$fitEst), get(input$fitLB), get(input$fitUB), itemLabels = "")
+	 }
   })
   
   
