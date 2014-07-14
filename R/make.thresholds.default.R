@@ -80,7 +80,7 @@ max.length <- length(parameters)
 				message(paste("objective = ", opti$objective))
 		}
 		}
-		else if(make.from == "throlds"){
+		else if(make.from == "thresholds"){
 			for (response in 1:n.parameters) {
 				opti <- optimize(throlds.minimize,interval = theta.interval, threshold = parameters[response], slope = slope)
 				thresholds[response] <- opti$minimum
@@ -110,7 +110,7 @@ apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.in
 	}
 	if(make.from == "deltas")
 		message("Assuming partial credit model")
-	else if(make.from == "throlds")
+	else if(make.from == "thresholds")
 		message("Assuming graded response model")
 
 	return(apply.thresholds(item.params, design.matrix, theta.interval, alpha, c.params))

@@ -14,9 +14,17 @@ shinyUI(fluidPage(
   		conditionalPanel(condition="input.showPane=='files'",
   			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
   			conditionalPanel(condition = "input.datatype == 'R'",
-  				textInput('thetas',"Name of person parameters object"),
-  				textInput('thresholds',"Name of item parameters object"),
-  				textInput('slopes',"Name of slopes object (if not specified, assumed all are 1)")
+  				conditionalPanel(condition = "input.selectedTab == 'wmap'",
+  					textInput('thetas',"Name of person parameters object"),
+  					textInput('thresholds',"Name of item parameters object"),
+  					textInput('slopes',"Name of slopes object (if not specified, assumed all are 1)"),
+  					textInput('c.params',"Name of guessing parameters object (if not specified, assumed all are 0)")
+  				),
+  				conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
+  					textInput('fitEst',"Name of fit estimates object"),
+  					textInput('fitLB',"Name of fit lower bounds object"),
+  					textInput('fitUB',"Name of fit upper bounds object")
+  				)
   			),
   			conditionalPanel(condition="input.datatype == 'CQ'",
     			fileInput('eap', 'Choose Person Estimates File'),
@@ -32,13 +40,13 @@ shinyUI(fluidPage(
 	    			uiOutput("interactions.table")
 	    		),
 	    		conditionalPanel(condition = "input.datatype == 'R'",
-	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds" = "throlds"),selected = "throlds",inline = TRUE)),
+	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds" = "thresholds"),selected = "thresholds",inline = TRUE)),
 	    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
 	    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
 	    		)
 	    	),
 	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
-	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U"))
+	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U")),
 	    		selectInput("fit.table","Graph which table?",choices = c("Please select files" = "none"))
 	    	)
     		
