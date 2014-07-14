@@ -1,12 +1,12 @@
 make.thresholds.default <- function(item.params, design.matrix = "normal", make.from = "deltas", theta.interval = c(-10, 10), throld = 0.5, 
-	alpha = 1, ...) {
+	alpha = 1, c.params = 0, ...) {
 	#print("default")
 	
 	# Provides a predicted probability of a given response for a polytomous
 	# item. Mostly used in other functions.
 
 	predicted.prob = function(theta, response, design.matrix, parameters, slope) {
-		numerator = exp(slope * (theta * (response - 1) + sum(parameters * design.matrix[response, ])))
+		numerator =  exp(slope * (theta * (response - 1) + sum(parameters * design.matrix[response, ])))
 		denominator = 0
 		for (k in 1:nrow(design.matrix)) {
 			denominator = denominator + exp(slope * (theta * (k - 1) + sum(parameters * design.matrix[k, ])))
@@ -24,12 +24,12 @@ make.thresholds.default <- function(item.params, design.matrix = "normal", make.
 	# The function passed to R's 'optimize' function. Finds the cumulative
 	# predicted probability of a response, then returns (predict P - .5)^2.
 # Minimizing this function finds the Thurstone threshold.
-minimize.fun = function(theta, response, design.matrix, parameters, slope) {
+minimize.fun = function(theta, response, design.matrix, parameters, slope, guess) {
 		max.score = nrow(design.matrix)
 		categories = max.score:response
 		predictions = rep(NA, times = max.score)
 		for (x in categories) {
-			predictions[x] = predicted.prob(theta, x, design.matrix, parameters, slope)
+			predictions[x] = guess + (1 - guess) * predicted.prob(theta, x, design.matrix, parameters, slope)
 		}
 		total = sum(predictions, na.rm = TRUE)
 		sq.err = (total - throld)^2
@@ -39,7 +39,7 @@ minimize.fun = function(theta, response, design.matrix, parameters, slope) {
 	# First creates an item design matrix if one not provided. Options
 	# are "normal", "conquest", and an actual matrix. Then minimizes
 # 'minimize.fun' for each threshold for the item.
-get.thresholds = function(parameters, design.matrix = "normal", theta.interval = c(-10, 10), slope) {
+get.thresholds = function(parameters, design.matrix = "normal", theta.interval = c(-10, 10), slope, guess) {
 		#print(parameters)
 		#print("get")
 		parameters = as.numeric(parameters)
@@ -74,7 +74,7 @@ max.length <- length(parameters)
 
 		for (response in 2:n.categories) {
 			opti = optimize(minimize.fun, interval = theta.interval, response = response, design.matrix = design.matrix, parameters = parameters, 
-				slope = slope)
+				slope = slope, guess = guess)
 			thresholds[response - 1] = opti$minimum
 			if (opti$objective > 10^(-5)) 
 				message(paste("objective = ", opti$objective))
@@ -98,10 +98,10 @@ max.length <- length(parameters)
 	# to 'get.thresholds'. NAs are fine in the parameter.matrix, allowing
 # items to have differing numbers of categories. design.matrix may be a
 # single choice for all items or a list of matrices, one for each item.
-apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.interval = c(-10, 10), slope = slope) {
+apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.interval = c(-10, 10), slope = slope, guess = guess) {
 
 
-		threshold.matrix <- as.matrix(mapply(get.thresholds, as.data.frame(t(parameter.matrix)), t(design.matrix), slope = slope))
+		threshold.matrix <- as.matrix(mapply(get.thresholds, as.data.frame(t(parameter.matrix)), t(design.matrix), slope = slope, guess = guess))
 		if (NCOL(threshold.matrix) > 1) 
 			threshold.matrix <- t(threshold.matrix)
 
@@ -113,7 +113,7 @@ apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.in
 	else if(make.from == "throlds")
 		message("Assuming graded response model")
 
-	return(apply.thresholds(item.params, design.matrix, theta.interval, alpha))
+	return(apply.thresholds(item.params, design.matrix, theta.interval, alpha, c.params))
 
 
 }
