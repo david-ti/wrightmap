@@ -40,7 +40,7 @@ shinyUI(fluidPage(
 	    			uiOutput("interactions.table")
 	    		),
 	    		conditionalPanel(condition = "input.datatype == 'R'",
-	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds" = "thresholds"),selected = "thresholds",inline = TRUE)),
+	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds"),selected = "thresholds",inline = TRUE)),
 	    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
 	    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
 	    		)
@@ -56,12 +56,12 @@ shinyUI(fluidPage(
 			conditionalPanel(condition = "!input.autotitle",
 				textInput('title',"Title")
 			),
-			checkboxInput('show.thr.lab', 'Show Threshold Labels', TRUE),
 			textInput('axis.logits',"Logit axis label","Logits"),
 			textInput('axis.persons',"Respondents axis label","Respondents"),
 			textInput('axis.items',"Items axis label","Items")
     	),
     	conditionalPanel(condition = "input.showPane=='label.items'",
+    		checkboxInput('show.thr.lab', 'Show Threshold Labels', TRUE),
     		selectInput("label_items_rows","Rows of item labels",choices = c(1,2,3)),
     		checkboxInput("label.items.ticks","Tick marks",value = TRUE),
     		conditionalPanel(condition = "input.label_items_rows == 1",

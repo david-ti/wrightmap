@@ -108,6 +108,12 @@ apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.in
 		return(threshold.matrix)
 
 	}
+	if(any(c.params != 0)) {
+		if(make.from != "deltas")
+			stop("Cannot run 3PL using threshold inputs")
+		if(NCOL(item.params) != 1)
+			stop("Cannot run polytomous 3PL")
+	}
 	if(make.from == "deltas")
 		message("Assuming partial credit model")
 	else if(make.from == "thresholds")

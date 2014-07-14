@@ -277,6 +277,7 @@ shinyServer(function(input, output,session) {
 	 		}
 	 	
 	 }
+	 #message(args[3])
 	 
 	 args <- c(args,"main.title" = main.title(),"show.thr.lab" = input$show.thr.lab, "use.hist" = input$use.hist, "axis.logits" = input$axis.logits,"axis.persons" = input$axis.persons,"axis.items" = input$axis.items,"label.items" = list(label.items()),"label.items.rows" = input$label_items_rows,"label.items.srt" = input$label.items.srt,"label.items.ticks" = input$label.items.ticks,
 	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()))
