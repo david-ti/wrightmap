@@ -38,6 +38,7 @@ shinyUI(fluidPage(
 	    		)
 	    	),
 	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
+	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U"))
 	    		selectInput("fit.table","Graph which table?",choices = c("Please select files" = "none"))
 	    	)
     		
