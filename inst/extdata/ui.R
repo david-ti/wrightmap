@@ -109,6 +109,9 @@ shinyUI(fluidPage(
     		sliderInput("width","Plot width",min = 1, max = 100, value = 100, step = 1),
     		value = "fitgraph"
     	),
+    	tabPanel("Dif plot",
+    		value = "difplot"
+    	),
     	id = "selectedTab"
     )
   )

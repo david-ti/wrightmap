@@ -28,10 +28,14 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item
 	}
 
 	model <- thetas
-
+	
+	if(!is.null(model$p.est)) {
 	p.est <- model$p.est
 	columns.at <- grep("^est", names(p.est), perl = TRUE)
 	thetas <- p.est[columns.at]
+	}
+	else
+		thetas <- 0
 
 
 	if (throld == .5 && !is.null(model$GIN) && is.null(item.table) && (item.type != "deltas")) {

@@ -20,6 +20,12 @@ shinyServer(function(input, output,session) {
     		else if(input$datatype == "R")
     			panelChoices <- c("File options" = "files")
     		}
+    	else if(input$selectedTab == "difplot") {
+    		if(input$datatype == "CQ")
+    			panelChoices <- c("File options" = "files","Data options" = "data")
+    		else if(input$datatype == "R")
+    			panelChoices <- c("File options" = "files")
+    		}
 		
 		updateRadioButtons(session, "showPane", choices = panelChoices)
 # 
@@ -33,7 +39,10 @@ shinyServer(function(input, output,session) {
 
 ####  
   
-  model1 <- reactive({CQmodel(input$eap$datapath,input$shw$datapath,input$p.type)})
+  model1 <- reactive({CQmodel(p.est = p.est,show = input$shw$datapath,input$p.type)
+  	})
+  	
+  	model2 <- reactive({CQmodel(show = input$shw$datapath)})
   
   
   #######
@@ -44,7 +53,7 @@ shinyServer(function(input, output,session) {
   })
   
   item.tables <- reactive ({
-  	if(is.null(input$eap) || is.null(input$shw))
+  	if(is.null(input$shw))
       return()
   	tables.list <- tables()
 	interactions.at <- grep("\\*", tables.list)
@@ -62,7 +71,7 @@ shinyServer(function(input, output,session) {
   })
   
   interactions <- reactive({
-  	if(is.null(input$eap) || is.null(input$shw))
+  	if(is.null(input$shw))
       return()
   	tables.list <- tables()
 	interactions.at <- grepl("^[^\\*]+\\*[^\\*]+$", tables.list)
@@ -100,7 +109,7 @@ shinyServer(function(input, output,session) {
   })
   
   observe({
-  	if(is.null(input$eap) || is.null(input$shw))
+  	if(is.null(input$shw))
      	fitTables <- c("Please select files" = "none")
      else
      	fitTables <- tables()
@@ -304,7 +313,7 @@ shinyServer(function(input, output,session) {
   	
   	#on.exit(try(dev.off()))
   	if(input$datatype == "CQ") {
-	  	if(is.null(input$eap) || is.null(input$shw))
+	  	if(is.null(input$shw))
 	  		return(NULL)
 	  		
 	  	if(is.null(input$item.table) || input$item.table == "default") 
@@ -473,7 +482,7 @@ shinyServer(function(input, output,session) {
   
   output$fitPlot <- renderPlot({
   	if(input$datatype == "CQ") {
-	  	if(is.null(input$eap) || is.null(input$shw))
+	  	if(is.null(input$shw))
 	  		return("")
 	  	if(input$fit.table == "none")
 	  		fit.table <- NULL
@@ -488,6 +497,10 @@ shinyServer(function(input, output,session) {
 	 		fitgraph(get(input$fitEst), get(input$fitLB), get(input$fitUB), itemLabels = "")
 	 }
   })
+  
+  ##############
+  
+ 
   
   
 })
