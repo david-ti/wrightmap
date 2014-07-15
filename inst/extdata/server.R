@@ -4,13 +4,21 @@ library(shiny)
 shinyServer(function(input, output,session) {
   
 	observe({
-    	if(input$selectedTab == "wmap")
-    		panelChoices <- c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    	if(input$selectedTab == "wmap") {
+    		if(input$datatype == "R" && !is.null(input$c.params) && input$c.params != "" && exists(input$c.params) && any(get(input$c.params) != 0)) {
+    			updateRadioButtons(session,"make_from",selected = "deltas")
+    			panelChoices <- c("File options" = "files","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    		}
+    		else {
+    			updateRadioButtons(session,"make_from",selected = "thresholds")
+    			panelChoices <- c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    			}
+    	}
     	else if(input$selectedTab == "fitgraph") {
     		if(input$datatype == "CQ")
     			panelChoices <- c("File options" = "files","Data options" = "data")
     		else if(input$datatype == "R")
-    			panelChoices <- c("File options")
+    			panelChoices <- c("File options" = "files")
     		}
 		
 		updateRadioButtons(session, "showPane", choices = panelChoices)
@@ -263,21 +271,23 @@ shinyServer(function(input, output,session) {
 	 	#print(input$thetas)
 	 	if(input$thetas == "" || input$thresholds == "" || !exists(input$thetas) || !exists(input$thresholds) || (input$slopes != "" && !exists(input$slopes)))
 	 		return()
-	 	args <- 	c(args,"thetas" = list(get(input$thetas)), "thresholds" = list(get(input$thresholds)),"make.from" = input$make_from)
+	 	args <- 	c(args,"thetas" = list(get(input$thetas)), "thresholds" = list(get(input$thresholds)))
 	 	
 	 	if(input$slopes != "" && exists(input$slopes))
 	 		args <- c(args,"alpha" = list(get(input$slopes)))
 	 		
-	 	if(input$c.params != "" && exists(input$c.params))
+	 	if(input$c.params != "" && exists(input$c.params) && any(get(input$c.params) != 0))
 	 		args <- c(args,"c.params"= list(get(input$c.params)))
+	 	else
+	 		args <- c(args,"make.from" = input$make_from)
 	 		
-	 	if(input$make_from == "thresholds" || input$which_type == "thresholds") {
+	 	if(input$make_from == "thresholds" || input$which_type == "thresholds" || (input$which_type == "default" && input$throld != .5)) {
 	 		#cat("throlds")
 	 		args <- c(args,"throld" = input$throld)
 	 		}
 	 	
 	 }
-	 #message(args[3])
+	 #message(args[4])
 	 
 	 args <- c(args,"main.title" = main.title(),"show.thr.lab" = input$show.thr.lab, "use.hist" = input$use.hist, "axis.logits" = input$axis.logits,"axis.persons" = input$axis.persons,"axis.items" = input$axis.items,"label.items" = list(label.items()),"label.items.rows" = input$label_items_rows,"label.items.srt" = input$label.items.srt,"label.items.ticks" = input$label.items.ticks,
 	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()))
