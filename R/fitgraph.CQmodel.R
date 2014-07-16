@@ -11,6 +11,8 @@ function(fitEst,table = NULL,fit.type = "W",itemLabels =NULL,...) {
 	
 	if(is.null(itemLabels)) {
 		colNames <- unlist(strsplit(names(fitEst$RMP)[table.num],"*",fixed = TRUE))
+		if(length(colNames) == 1)
+			itemLabels <- table[[colNames]]
 		itemLabels <- do.call(paste,table[colNames])
 	}
 	fitgraph(unlist(table[estlabel]),unlist(table[llabel]),unlist(table[ulabel]),itemLabels)

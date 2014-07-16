@@ -39,7 +39,7 @@ shinyServer(function(input, output,session) {
 
 ####  
   
-  model1 <- reactive({CQmodel(p.est = p.est,show = input$shw$datapath,input$p.type)
+  model1 <- reactive({CQmodel(p.est = input$eap$datapath,show = input$shw$datapath,input$p.type)
   	})
   	
   	model2 <- reactive({CQmodel(show = input$shw$datapath)})
@@ -49,7 +49,7 @@ shinyServer(function(input, output,session) {
   
   tables <- reactive({
   	#return(c("a","b"))
-  	names(model1()$RMP)
+  	names(model2()$RMP)
   })
   
   item.tables <- reactive ({
@@ -110,10 +110,42 @@ shinyServer(function(input, output,session) {
   
   observe({
   	if(is.null(input$shw))
-     	fitTables <- c("Please select files" = "none")
-     else
-     	fitTables <- tables()
-     updateSelectInput(session, "fit.table",choices = fitTables)
+     	tables <- c("Please select files" = "none")
+     else {
+     		tables <- tables()
+     		if(input$selectedTab == "difplot") {
+     			interactions.at <- grepl("^[^\\*]+\\*[^\\*]+$", tables)
+				tables <- tables[interactions.at]
+				steps.at <- grepl("^step|step$",tables)
+				tables <- tables[!steps.at]		
+     		}
+     }
+     updateSelectInput(session, "pick.table",choices = tables,selected = tables[1])
+  })
+  
+  observe({
+  	if(is.null(input$shw))
+  		types <- c("Please select files" = "none")
+  	else {
+  		types <- unlist(strsplit(input$pick.table,"*",fixed = TRUE))
+  	}
+  	updateSelectInput(session, "grouptype",choices = types,selected = types[2])
+  })
+  
+  observe({
+  	if(is.null(input$shw))
+  		groups <- c("Please select files" = "none")
+  	else {
+  		table <- model2()$RMP[[input$pick.table]]
+  		#message(head(table))
+  		if(!is.null(table) && input$grouptype != "") {
+  			#message(input$grouptype)
+  			groups <- unique(table[[input$grouptype]])
+  			}
+  		else
+  			groups <- c("Please select files" = "none")
+  	}
+  	updateSelectInput(session, "group",choices = groups,selected = groups[1])
   })
   
   #############
@@ -332,7 +364,7 @@ shinyServer(function(input, output,session) {
 	  		interactions.table <- input$interactions.table
 	  		
 	    
-	      return(wrightMap( model1(),item.table = item.table, interactions = interactions.table, step.table = step.table, item.type=input$which_type))
+	      return(wrightMap( model2(),item.table = item.table, interactions = interactions.table, step.table = step.table, item.type=input$which_type))
 	 }
 	 if(input$datatype == "R" && input$thetas != "" && input$thresholds!="") {
 	 	#print(input$thetas)
@@ -354,15 +386,15 @@ shinyServer(function(input, output,session) {
   
   thetas.text <- reactive({
   	if(input$datatype == "CQ")
-  		return(paste("\"",input$eap$name,"\"",sep=""))
+  		return(paste("\"",input$eap$name,"\",",sep=""))
   	if(input$datatype == "R")
-  		return(input$thetas)
+  		return(paste0(input$thetas,","))
   	})
   	  thresholds.text <- reactive({
   	if(input$datatype == "CQ")
-  		return(paste(",\"",input$shw$name,"\"",sep=""))
+  		return(paste("\"",input$shw$name,"\"",sep=""))
   	if(input$datatype == "R")
-  		return(paste(",",input$thresholds,sep=""))
+  		return(input$thresholds)
   	})
   	
   	make.from.text <- reactive({
@@ -463,17 +495,27 @@ shinyServer(function(input, output,session) {
   
   thr.sym.col.text <- reactive({
   	cols <- thr.sym.col()
-  	if(is.null(cols) || (input$color_by =="all" && cols == rgb(0, 0, 0, 0.3)))
+  	if(is.null(cols) || all(cols == rgb(0, 0, 0, 0.3)))
   		return("")
-  	if(length(cols == 1))
+  	if(length(cols) == 1)
   		cols <- paste("\"",cols,"\"",sep="")
   	return(paste(",thr.sym.col.bg =",list(cols)))
   })
   
-  output$command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  output$wmap.command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
   
   ##########
   
+  table.text <- reactive({
+  	if(input$pick.table == "none")
+  		return("")
+  	return(paste0(",table = \"",input$pick.table,"\""))
+  })
+  
+  output$fitplot.command <-
+  renderPrint(cat("fitgraph(",thresholds.text(),table.text(),")",sep = ""))
+  
+  ##########
     
   
   output$fitPlot.ui <- renderUI({
@@ -484,11 +526,11 @@ shinyServer(function(input, output,session) {
   	if(input$datatype == "CQ") {
 	  	if(is.null(input$shw))
 	  		return("")
-	  	if(input$fit.table == "none")
+	  	if(input$pick.table == "none")
 	  		fit.table <- NULL
 	  	else
-	  		fit.table <- input$fit.table
-	  	fitgraph(model1(),table = input$fit.table,fit.type = input$fit.type)
+	  		fit.table <- input$pick.table
+	  	fitgraph(model2(),table = input$pick.table,fit.type = input$fit.type)
 	 }
 	 else if(input$datatype == "R") {
 	 	if(input$fitEst == "" || input$fitLB == "" || input$fitUB == "" || !exists(input$fitEst) || !exists(input$fitUB) || !exists(input$fitLB))
@@ -500,6 +542,20 @@ shinyServer(function(input, output,session) {
   
   ##############
   
+  output$difplot <- renderPlot({
+  	if(is.null(input$shw))
+	  		return()
+	  model <- model2()
+	  table.name <- input$pick.table
+	  group <- input$group
+	  grouptype <- input$grouptype
+	  table <- model$RMP[[table.name]]
+	  
+	  RMPs <- names(model$RMP)
+	  if(table.name %in% RMPs && grouptype %in% names(table) && group %in% table[[grouptype]])
+	  	return(difplot(model,table = table.name,group = group,grouptype = grouptype))
+	  return()
+  })
  
   
   
