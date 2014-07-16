@@ -127,9 +127,9 @@ shinyServer(function(input, output,session) {
   	if(is.null(input$shw))
   		types <- c("Please select files" = "none")
   	else {
-  		types <- unlist(strsplit(input$pick.table,"*",fixed = TRUE))
+  		types <- rev(unlist(strsplit(input$pick.table,"*",fixed = TRUE)))
   	}
-  	updateSelectInput(session, "grouptype",choices = types,selected = types[2])
+  	updateSelectInput(session, "grouptype",choices = types,selected = types[1])
   })
   
   observe({
@@ -512,10 +512,34 @@ shinyServer(function(input, output,session) {
   	return(paste0(",table = \"",input$pick.table,"\""))
   })
   
+  fit.type.text <- reactive({
+  	if(input$datatype == "R" || input$fit.type == formals(fitgraph.CQmodel)[["fit.type"]])
+  		return("")
+  	return(paste0(",fit.type = \"",input$fit.type,"\""))
+  })
+  
   output$fitplot.command <-
-  renderPrint(cat("fitgraph(",thresholds.text(),table.text(),")",sep = ""))
+  renderPrint(cat("fitgraph(",thresholds.text(),table.text(),fit.type.text(),")",sep = ""))
   
   ##########
+  
+  grouptype.text <- reactive({
+  	if(input$grouptype == "none")
+  		return("")
+  	return(paste0(",grouptype = \"",input$grouptype,"\""))
+  })
+  
+  group.text <- reactive({
+  	if(input$group == "none")
+  		return("")
+  	return(paste0(",group = \"",input$group,"\""))
+  })
+  
+  output$difplot.command<-
+  renderPrint(cat("difplot(",thresholds.text(),table.text(),grouptype.text(),group.text(),")",sep = ""))
+  
+  
+  ################
     
   
   output$fitPlot.ui <- renderUI({
@@ -530,7 +554,7 @@ shinyServer(function(input, output,session) {
 	  		fit.table <- NULL
 	  	else
 	  		fit.table <- input$pick.table
-	  	fitgraph(model2(),table = input$pick.table,fit.type = input$fit.type)
+	  	fitgraph(model2(),table = fit.table,fit.type = input$fit.type)
 	 }
 	 else if(input$datatype == "R") {
 	 	if(input$fitEst == "" || input$fitLB == "" || input$fitUB == "" || !exists(input$fitEst) || !exists(input$fitUB) || !exists(input$fitLB))

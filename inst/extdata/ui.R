@@ -119,6 +119,7 @@ shinyUI(fluidPage(
     	),
     	tabPanel("Dif plot",
     		plotOutput("difplot"),
+    		verbatimTextOutput("difplot.command"),
     		value = "difplot"
     	),
     	id = "selectedTab"
