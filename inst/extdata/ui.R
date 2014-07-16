@@ -27,9 +27,11 @@ shinyUI(fluidPage(
   				)
   			),
   			conditionalPanel(condition="input.datatype == 'CQ'",
-    			fileInput('eap', 'Choose Person Estimates File'),
     			fileInput('shw', 'Choose Show File'),
-    			selectInput("p.type", "Person estimates type:", choices = c("EAP", "MLE", "WLE"))
+    			conditionalPanel(condition = "input.selectedTab == 'wmap'",
+    				fileInput('eap', 'Choose Person Estimates File'),
+    				selectInput("p.type", "Person estimates type:", choices = c("EAP", "MLE", "WLE"))
+    			)
     		)
     	),
     	conditionalPanel(condition = "input.showPane == 'data'",
@@ -46,8 +48,13 @@ shinyUI(fluidPage(
 	    		)
 	    	),
 	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
-	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U")),
-	    		selectInput("fit.table","Graph which table?",choices = c("Please select files" = "none"))
+	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U"))
+	    	),
+	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph' || input.selectedTab == 'difplot'",
+	    		selectInput("pick.table","Graph which table?",choices = c("Please select files" = "none"))),
+	    	conditionalPanel(condition = "input.selectedTab == 'difplot'",
+	    		selectInput("grouptype","Group by",choices = c("Please select files" = "none")),
+	    		selectInput("group","Group",choices = c("Please select files" = "none"))
 	    	)
     		
     	),
@@ -101,15 +108,17 @@ shinyUI(fluidPage(
     		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
     			sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
     		),
-    		verbatimTextOutput("command"),
+    		verbatimTextOutput("wmap.command"),
     		value = "wmap"
     	),
     	tabPanel("Fit plot",
     		uiOutput("fitPlot.ui"),
     		sliderInput("width","Plot width",min = 1, max = 100, value = 100, step = 1),
+    		verbatimTextOutput("fitplot.command"),
     		value = "fitgraph"
     	),
     	tabPanel("Dif plot",
+    		plotOutput("difplot"),
     		value = "difplot"
     	),
     	id = "selectedTab"
