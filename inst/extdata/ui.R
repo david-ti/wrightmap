@@ -5,7 +5,7 @@ shinyUI(fluidPage(
   # Application title
   titlePanel("Wright Map"),
   
-  # Sidebar with a slider input for number of observations
+  
   sidebarLayout(
   sidebarPanel(
   	wellPanel(
@@ -24,6 +24,10 @@ shinyUI(fluidPage(
   					textInput('fitEst',"Name of fit estimates object"),
   					textInput('fitLB',"Name of fit lower bounds object"),
   					textInput('fitUB',"Name of fit upper bounds object")
+  				),
+  				conditionalPanel(condition = "input.selectedTab == 'difplot'",
+  					textInput('difEst',"Name of estimates object"),
+  					textInput('difErr',"Name of errors object")
   				)
   			),
   			conditionalPanel(condition="input.datatype == 'CQ'",
@@ -82,6 +86,7 @@ shinyUI(fluidPage(
     		checkboxInput('use.hist', 'Histogram?', TRUE)
     	),
     	conditionalPanel(condition="input.showPane=='sym.disp'",
+    		checboxInput('show.thr.sym', 'Show Threshold Symbols', TRUE),
 		    sliderInput(
 		    				"cex", 
 		                	"Symbol size", 

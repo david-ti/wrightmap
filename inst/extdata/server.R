@@ -217,6 +217,13 @@ shinyServer(function(input, output,session) {
   			})
   })
   
+    # output$step.labels <- renderUI({
+  	# steps <- stepnames()
+  	# lapply(1:length(steps),function(i) {
+  				# textInput(paste("steplab",i,sep="_"),paste("Choose label for step",steps[i]))
+  			# })
+  # })
+  
   #########
 
   main.title <- reactive({
@@ -330,7 +337,7 @@ shinyServer(function(input, output,session) {
 	 }
 	 #message(args[4])
 	 
-	 args <- c(args,"main.title" = main.title(),"show.thr.lab" = input$show.thr.lab, "use.hist" = input$use.hist, "axis.logits" = input$axis.logits,"axis.persons" = input$axis.persons,"axis.items" = input$axis.items,"label.items" = list(label.items()),"label.items.rows" = input$label_items_rows,"label.items.srt" = input$label.items.srt,"label.items.ticks" = input$label.items.ticks,
+	 args <- c(args,"main.title" = main.title(), "use.hist" = input$use.hist, "axis.logits" = input$axis.logits,"axis.persons" = input$axis.persons,"axis.items" = input$axis.items,"label.items" = list(label.items()),"label.items.rows" = input$label_items_rows,"label.items.srt" = input$label.items.srt,"label.items.ticks" = input$label.items.ticks, "show.thr.lab" = input$show.thr.lab,"show.thr.sym" = input$show.thr.sym,
 	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()))
 	  		
 	    
@@ -475,10 +482,20 @@ shinyServer(function(input, output,session) {
   		return("")
   	return(paste(",label.items.srt =",input$label.items.srt))
   })
+  label.items.ticks.text <- reactive({
+  	if(input$label.items.ticks == formals(wrightMap.default)[["label.items.ticks"]])
+  		return("")
+  	return(paste(",label.items.ticks =",input$label.items.ticks))
+  })
   show.thr.lab.text <- reactive({
   	if(input$show.thr.lab)
   		return("")
   	return(",show.thr.lab = FALSE")
+  })
+    show.thr.sym.text <- reactive({
+  	if(input$show.thr.sym)
+  		return("")
+  	return(",show.thr.sym = FALSE")
   })
   thr.sym.cex.text <- reactive({
   	if(abs(input$cex-1.2) < .09)
@@ -502,12 +519,19 @@ shinyServer(function(input, output,session) {
   	return(paste(",thr.sym.col.bg =",list(cols)))
   })
   
-  output$wmap.command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),show.thr.lab.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  output$wmap.command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),label.items.ticks.text(),show.thr.lab.text(),show.thr.sym.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
   
   ##########
   
+ fitdata.text <- reactive({
+ 	if(input$datatype == "CQ")
+ 		return(paste("\"",input$shw$name,"\"",sep=""))
+ 	if(input$datatype == "R")
+ 		return(paste0(input$fitEst,",fitLB = ",input$fitLB,",fitUB = ",input$fitUB))
+ })
+  
   table.text <- reactive({
-  	if(input$pick.table == "none")
+  	if(input$datatype == "R" || input$pick.table == "none")
   		return("")
   	return(paste0(",table = \"",input$pick.table,"\""))
   })
@@ -518,25 +542,41 @@ shinyServer(function(input, output,session) {
   	return(paste0(",fit.type = \"",input$fit.type,"\""))
   })
   
+
+  
   output$fitplot.command <-
-  renderPrint(cat("fitgraph(",thresholds.text(),table.text(),fit.type.text(),")",sep = ""))
+  renderPrint(cat("fitgraph(",fitdata.text(),table.text(),fit.type.text(),")",sep = ""))
   
   ##########
   
+  difcomm.text <- reactive({
+  	if(input$datatype == "CQ")
+ 		return("difplot(")
+ 	if(input$datatype == "R")
+ 		return("plotCI(")
+  })
+  
+  difdata.text <- reactive({
+ 	if(input$datatype == "CQ")
+ 		return(paste("\"",input$shw$name,"\"",sep=""))
+ 	if(input$datatype == "R")
+ 		return(paste0(input$difEst,",errors = ",input$difErr))
+ })
+  
   grouptype.text <- reactive({
-  	if(input$grouptype == "none")
+  	if(input$datatype == "R" || input$grouptype == "none")
   		return("")
   	return(paste0(",grouptype = \"",input$grouptype,"\""))
   })
   
   group.text <- reactive({
-  	if(input$group == "none")
+  	if(input$datatype == "R" || input$group == "none")
   		return("")
   	return(paste0(",group = \"",input$group,"\""))
   })
   
   output$difplot.command<-
-  renderPrint(cat("difplot(",thresholds.text(),table.text(),grouptype.text(),group.text(),")",sep = ""))
+  renderPrint(cat(difcomm.text(),difdata.text(),table.text(),grouptype.text(),group.text(),")",sep = ""))
   
   
   ################
@@ -567,19 +607,32 @@ shinyServer(function(input, output,session) {
   ##############
   
   output$difplot <- renderPlot({
-  	if(is.null(input$shw))
-	  		return()
-	  model <- model2()
-	  table.name <- input$pick.table
-	  group <- input$group
-	  grouptype <- input$grouptype
-	  table <- model$RMP[[table.name]]
-	  
-	  RMPs <- names(model$RMP)
-	  if(table.name %in% RMPs && grouptype %in% names(table) && group %in% table[[grouptype]])
-	  	return(difplot(model,table = table.name,group = group,grouptype = grouptype))
+  	if(input$datatype == "CQ") {
+	  	if(is.null(input$shw))
+		  		return()
+		  model <- model2()
+		  table.name <- input$pick.table
+		  group <- input$group
+		  grouptype <- input$grouptype
+		  table <- model$RMP[[table.name]]
+		  
+		  RMPs <- names(model$RMP)
+		  if(table.name %in% RMPs && grouptype %in% names(table) && group %in% table[[grouptype]])
+		  	return(difplot(model,table = table.name,group = group,grouptype = grouptype))
+	}
+	else if(input$datatype == "R") {
+		
+		if(input$difEst != "" && input$difErr != "" && exists(input$difEst) && exists(input$difErr)) {
+			#message(get(ests),get(errors))
+			return(plotCI(get(input$difEst),get(input$difErr)))
+			}
+	}
 	  return()
   })
+  
+  ##########
+  
+
  
   
   
