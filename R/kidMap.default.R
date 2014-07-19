@@ -66,7 +66,7 @@ function(thetas, thresholds, est, SE, use.hist = TRUE, main.title = "Wright Map"
 
             bar.colors[distInfo[,1] < est + SE & distInfo[,3] > est - SE] <- 'grey75'
 
-            bar.colors[distInfo[,1] < est & distInfo[,3] > est] <- 'grey45'
+            bar.colors[distInfo[,1] - est < 0.00000001 & distInfo[,3] - est > 0] <- 'grey45'
 
             #print(round(distInfo,10))
 
