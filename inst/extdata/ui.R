@@ -3,7 +3,7 @@ library(shiny)
 # Define UI for application that plots random distributions 
 shinyUI(fluidPage(
   # Application title
-  titlePanel("Wright Map"),
+  titlePanel("Wright Map (David Torres Irribarra & Rebecca Freund, 2014)"),
   
   
   sidebarLayout(
@@ -48,7 +48,7 @@ shinyUI(fluidPage(
 	    		conditionalPanel(condition = "input.datatype == 'R'",
 	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds"),selected = "thresholds",inline = TRUE)),
 	    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
-	    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
+	    			selectInput("which_type","Graph which parameters?", choices = c("Thresholds" = "thresholds","Deltas" = "deltas"))
 	    		)
 	    	),
 	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
@@ -86,7 +86,7 @@ shinyUI(fluidPage(
     		checkboxInput('use.hist', 'Histogram?', TRUE)
     	),
     	conditionalPanel(condition="input.showPane=='sym.disp'",
-    		checboxInput('show.thr.sym', 'Show Threshold Symbols', TRUE),
+    		checkboxInput('show.thr.sym', 'Show Threshold Symbols', TRUE),
 		    sliderInput(
 		    				"cex", 
 		                	"Symbol size", 
@@ -111,7 +111,7 @@ shinyUI(fluidPage(
     	tabPanel("Wright map",
     		plotOutput("wmap"),
     		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
-    			sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
+    			sliderInput("throld","Threshold",min=.05,max = .95, value = .5, step = .05,animate = animationOptions(loop = TRUE,interval=500))
     		),
     		verbatimTextOutput("wmap.command"),
     		value = "wmap"

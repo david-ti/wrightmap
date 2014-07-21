@@ -474,7 +474,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		model$nDim = floor(length(p.est)/colperdim)
 
-		if (is.null(model$dimensions) || length(model$dimensions != model$nDim)) 
+		if (is.null(model$dimensions) || length(model$dimensions) != model$nDim) 
 			model$dimensions <- paste("d", c(1:model$nDim), sep = "")
 
 		if (p.type == "EAP") {

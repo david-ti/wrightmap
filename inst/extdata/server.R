@@ -170,6 +170,13 @@ shinyServer(function(input, output,session) {
   		items <- c(1:NROW(wm))
   	return(items)
   	})
+  	
+  	dimnames <- reactive({
+  		if(input$datatype = "CQ") {
+  			model <- model2()
+  		}
+  		
+  	})
   
   sym_choices <- c("Diamond" = 23,"Circle" = 21, "Square" = 22, "Triangle" = 24)
   
@@ -187,6 +194,10 @@ shinyServer(function(input, output,session) {
   		}
   	else if(symby == "item")
   		lapply(1:length(items),function(i) {
+  				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for item",items[i]),choices = sym_choices)
+  			})
+  	else if(symby == "dim")
+  		lapply(1:length(dims),function(i) {
   				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for item",items[i]),choices = sym_choices)
   			})
   })
