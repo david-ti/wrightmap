@@ -57,7 +57,8 @@ function(thetas, thresholds, est, SE, use.hist = TRUE, main.title = "Wright Map"
             indivPlot(est, SE, thetas, yRange = yRange)
             
         } else {
-            # print( distInfo)
+        	distInfo <- round(distInfo,3)
+             #print( distInfo)
             #print(attr(distInfo, "dim.color"))
             plot(c(min(distInfo[, 1]), max(distInfo[, 3])), c(min(distInfo[, 2]), max(distInfo[, 4])), ylim = yRange, xlim = c(max(distInfo[, 4]), 0), 
                 type = "n", axes = FALSE, ylab = "", xlab = "", cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, col = attr(distInfo, "dim.color"))
@@ -66,7 +67,7 @@ function(thetas, thresholds, est, SE, use.hist = TRUE, main.title = "Wright Map"
 
             bar.colors[distInfo[,1] < est + SE & distInfo[,3] > est - SE] <- 'grey75'
 
-            bar.colors[distInfo[,1] - est < 0 & distInfo[,3] - est > 0.0000001] <- 'grey45'
+            bar.colors[distInfo[,1] - est <= 0 & distInfo[,3] - est > 0] <- 'grey45'
 
             #print(round(distInfo,10))
 

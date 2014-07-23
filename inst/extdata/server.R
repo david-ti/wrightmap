@@ -7,11 +7,11 @@ shinyServer(function(input, output,session) {
     	if(input$selectedTab == "wmap") {
     		if(input$datatype == "R" && !is.null(input$c.params) && input$c.params != "" && exists(input$c.params) && any(get(input$c.params) != 0)) {
     			updateRadioButtons(session,"make_from",selected = "deltas")
-    			panelChoices <- c("File options" = "files","Formatting options" = "format", "Dimension options" = "dims","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    			panelChoices <- c("File options" = "files","Formatting options" = "format", "Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
     		}
     		else {
     			updateRadioButtons(session,"make_from",selected = "thresholds")
-    			panelChoices <- c("File options" = "files","Data options" = "data","Formatting options" = "format","Dimension options" = "dims","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    			panelChoices <- c("File options" = "files","Data options" = "data","Formatting options" = "format","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
     			}
     	}
     	else if(input$selectedTab == "fitgraph") {
@@ -521,6 +521,13 @@ shinyServer(function(input, output,session) {
   })
   
   #########
+  func.text <- reactive({
+  	est <- as.numeric(input$est)
+  		if(!is.null(est) && !is.na(est)) {
+  			return("kidMap(")
+  			}
+  	return("wrightMap(")
+  })
   
   thetas.text <- reactive({
   	if(input$datatype == "CQ")
@@ -533,6 +540,17 @@ shinyServer(function(input, output,session) {
   		return(paste("\"",input$shw$name,"\"",sep=""))
   	if(input$datatype == "R")
   		return(input$thresholds)
+  	})
+  	
+  	est.text <- reactive({
+  		est <- as.numeric(input$est)
+  		if(!is.null(est) && !is.na(est)) {
+  			SE <- as.numeric(input$err)
+  			if(is.na(SE))
+  				SE <- 0
+  			return(paste0(",est = ",est,",SE = ",SE))
+  			}
+  		return("")
   	})
   	
   	make.from.text <- reactive({
@@ -680,7 +698,7 @@ shinyServer(function(input, output,session) {
   	return(paste(",item.prop =",item.prop))
   })
   
-  output$wmap.command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),label.items.ticks.text(),show.thr.lab.text(),show.thr.sym.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),dim.names.text(),min.l.text(),max.l.text(),item.prop.text(),")",sep=""))
+  output$wmap.command <- renderPrint(cat(func.text(),thetas.text(),thresholds.text(),est.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),label.items.ticks.text(),show.thr.lab.text(),show.thr.sym.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),dim.names.text(),min.l.text(),max.l.text(),item.prop.text(),")",sep=""))
   
   ##########
   
