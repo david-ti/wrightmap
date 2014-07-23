@@ -84,5 +84,5 @@ function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = N
 		dim.names <- model$dimensions
 
 
-	wrightMap(thetas, throlds, est, SE, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
+	kidMap(thetas, throlds, est, SE, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
 }
