@@ -1,5 +1,5 @@
-wrightMap.default <-
-function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
+kidMap.default <-
+function(thetas, thresholds, est, SE, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
     
     ## Helper Functions
     
@@ -32,7 +32,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
                 
                 bin.size <- abs(densElem$breaks[1] - densElem$breaks[2])
                 
-                thetaHist <- data.frame(xleft = densElem$mids - (bin.size/2), ybotton = densElem$mids * 0, xright = densElem$mids + (bin.size/2), ytop = densElem$counts)
+                thetaHist <- data.frame(xleft = densElem$mids - (bin.size/2), ybotton = densElem$mids * 0, xright = densElem$mids + (bin.size/2), ytop = densElem$counts/max(densElem$counts))
                 
                 return(thetaHist)
                 
@@ -47,38 +47,71 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     }
     
     
-    personPlot <- function(distInfo, use.hist, yRange, xRange, dim.lab.side, dim.lab.adj, dims.col, p.cex.lab, p.font.lab, p.lwd, p.las, p.cex.axis, p.font.axis, p.tcl) {
+    personPlot <- function(distInfo, est, SE, use.hist, yRange, xRange, dim.lab.side, dim.lab.adj, dims.col, p.cex.lab, p.font.lab, p.lwd, p.las, p.cex.axis, p.font.axis, p.tcl) {
         
         if (use.hist == FALSE) {
             
             plot(distInfo, ylim = yRange, xlim = xRange, type = "l", axes = FALSE, ylab = "", xlab = "", cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, 
                 col = attr(distInfo, "dim.color"))
+
+            indivPlot(est, SE, thetas, yRange = yRange)
             
         } else {
-            # print( distInfo)
+        	distInfo <- round(distInfo,3)
+             #print( distInfo)
             #print(attr(distInfo, "dim.color"))
             plot(c(min(distInfo[, 1]), max(distInfo[, 3])), c(min(distInfo[, 2]), max(distInfo[, 4])), ylim = yRange, xlim = c(max(distInfo[, 4]), 0), 
                 type = "n", axes = FALSE, ylab = "", xlab = "", cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, col = attr(distInfo, "dim.color"))
-            
-            rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3], col = attr(distInfo, "dim.color"))
+
+            bar.colors <- rep('white', dim(distInfo)[1])
+
+            bar.colors[distInfo[,1] < est + SE & distInfo[,3] > est - SE] <- 'grey75'
+
+            bar.colors[distInfo[,1] - est <= 0 & distInfo[,3] - est > 0] <- 'grey45'
+
+            #print(round(distInfo,10))
+
+            rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3], col = bar.colors)
             
         }
         
         mtext(attr(distInfo, "dim.name"), side = dim.lab.side, line = -1, cex = 0.6, font = 1, adj = dim.lab.adj)
         
-        box(bty = "c")
+        box(bty = "n")
         
     }
+
+    prob.calc <- function( x, theta.est, pr = .5 ){
+
+        (exp( 1 * ( theta.est - x ) ) / ( 1 + exp( 1 * ( theta.est - x ) )) - pr)^2
+
+    }
+
+    indivPlot <- function(est, SE, thetas, use.hist, yRange) {
+        
+        est.rank <- length(thetas[thetas <= est])/length(thetas)*100
+
+        lb.rank <- length(thetas[thetas <= est - SE])/length(thetas)*100
+
+        ub.rank <- length(thetas[thetas <= est + SE])/length(thetas)*100
+        par( xpd = NA)
+        points( c( 0,0), c(est - SE, est + SE), ylim = yRange, xlim = c(0,1), ylab = "", xlab = "", type = "l", lwd = 5, lend=2, col = 'grey70')
+
+        #text(.5, est     , pos = 4, labels = est.rank, srt = 0, cex = .7)
+        #text(.5, est - SE, pos = 1, labels = lb.rank, srt = 0, cex = .7)
+        #text(.5, est + SE, pos = 3, labels = ub.rank, srt = 0, cex = .7)
+
+        points(0,est, ylim = yRange, xlim = c(0,1), ylab = "", xlab = "", pch = 15, cex = .6)
+
+        par( xpd = FALSE)
+
+        box(bty = "n")
+
+    }
     
+
     
     # Preparing Data
-    
-    if(!is.null(throld)) {
-    	thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = throld, alpha = alpha, make.from = make.from, c.params = c.params)
-    }
-    else if(any(c.params != 0)) {
-    	thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = .5, alpha = alpha, make.from = make.from, c.params = c.params)
-    }
     
     thetas <- as.matrix(thetas)
     thr <- as.matrix(thresholds)
@@ -105,7 +138,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
 
     if (is.null(max.l)){
 
-		max.l <- max(c(max.theta, thr), na.rm = TRUE) + max.logit.pad
+        max.l <- max(c(max.theta, thr), na.rm = TRUE) + max.logit.pad
 
     }
     
@@ -113,7 +146,9 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     xRange <- c(1, 0)
     
     item.side <- round((nD * item.prop)/(1 - item.prop))
-    layout.wm <- c(seq(1:nD), rep(nD + 1, item.side))
+    layout.wm <- c( rep(seq( 1:nD ), each = 1 ), rep( nD + 1, item.side * 1) )
+
+    #layout.wm <- c( rep(seq( 1:nD ), each = 1 ), nD + 1, rep( nD + 2, item.side * 1) )
 
     if ( is.null(dim.color)){
 
@@ -144,18 +179,16 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     
 
     if(new.quartz)
-    	dev.new(width = 9, height = 5)
-    op <- par("oma","mar","mgp")
-    
-    par(oma = op$oma + c(0,5,0,5))
+        dev.new(width = 9, height = 5)
+    par(oma = c(0, 5, 0, 5))
     
     layout(matrix(layout.wm, nrow = 1), widths = c(rep((1 - item.prop)/nD, nD), rep(item.prop/item.side, item.side)), heights = 0.8)
     
     ## Generating Person Side
     
     
-    par(mar = c(op$mar[1],0.2,op$mar[3],.1))
-    par(mgp = c(op$mar[1] - 2.4, 1, 0))
+    par(mar = c(5, 0.1, 4, 0) + 0.1)
+    par(mgp = c(2.7, 1, 0))
     
     distInfo <- theta.dens(thetas, use.hist, breaks)
     
@@ -166,9 +199,10 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
     }
     
-    lapply(distInfo, FUN = personPlot, use.hist = use.hist, yRange = yRange, xRange = xRange, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, 
+    lapply(distInfo, FUN = personPlot, est = est, SE = SE, use.hist = use.hist, yRange = yRange, xRange = xRange, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, 
         p.font.lab = 3, p.lwd = 2, p.las = 1, p.cex.axis = 1.1, p.font.axis = 2, p.tcl = -0.5)
     
+
     ## Generating Item Side
     
     plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
@@ -179,6 +213,24 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     
     axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
     par(mgp = c(0, 0.2, 0))
+
+    loc.pr.2 <- optimize( prob.calc, interval = c(-10,10), theta.est = est, pr = .2)$minimum
+    loc.pr.4 <- optimize( prob.calc, interval = c(-10,10), theta.est = est, pr = .4)$minimum
+    loc.pr.5 <- optimize( prob.calc, interval = c(-10,10), theta.est = est, pr = .5)$minimum
+    loc.pr.6 <- optimize( prob.calc, interval = c(-10,10), theta.est = est, pr = .6)$minimum
+    loc.pr.8 <- optimize( prob.calc, interval = c(-10,10), theta.est = est, pr = .8)$minimum
+
+    lines( c(.8,par("usr")[2]), c( loc.pr.2, loc.pr.2), type = 'l', col = 'grey70', lwd = 1.5, lend = 2 )
+    lines( c(.8,par("usr")[2]), c( loc.pr.4, loc.pr.4), type = 'l', col = 'grey70', lwd = 1.5, lend = 2 )
+    lines( c(.8,par("usr")[2]), c( loc.pr.5, loc.pr.5), type = 'l', col = 'grey70', lwd = 1.5, lend = 2 )
+    lines( c(.8,par("usr")[2]), c( loc.pr.6, loc.pr.6), type = 'l', col = 'grey70', lwd = 1.5, lend = 2 )
+    lines( c(.8,par("usr")[2]), c( loc.pr.8, loc.pr.8), type = 'l', col = 'grey70', lwd = 1.5, lend = 2 )
+
+    text( .5, loc.pr.2, labels = "20%", cex = .8)
+    text( .5, loc.pr.4, labels = "40%", cex = .8)
+    text( .5, loc.pr.5, labels = "50%", cex = .8)
+    text( .5, loc.pr.6, labels = "60%", cex = .8)
+    text( .5, loc.pr.8, labels = "80%", cex = .8)            
     
     if (show.thr.sym == TRUE) {
         
@@ -269,13 +321,16 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         }
         
     }
-    
-    
+
+
     mtext(axis.logits, side = 4, line = 2.5, outer = TRUE, cex = 0.9, font = 3)
     mtext(axis.persons, side = 2, line = 1, outer = TRUE, cex = 0.9, font = 3)
     par(oma = c(0, 0, 3, 0))
     mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
-    par(op)
+
+
+
+
     if(return.thresholds) {
     return(thresholds)
     }

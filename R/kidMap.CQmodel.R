@@ -1,6 +1,6 @@
-wrightMap.CQmodel <-
-function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item.type = "default", label.items = NULL, main.title = NULL, 
-	thr.lab.text = NULL, dim.names = NULL, throld = .5,...) {
+kidMap.CQmodel <-
+function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = NULL, label.items = NULL, main.title = NULL, 
+	thr.lab.text = NULL, dim.names = NULL, ...) {
 
 	unpack.GIN <- function(GIN) {
 		if (class(GIN) == "matrix") 
@@ -38,7 +38,7 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item
 		thetas <- 0
 
 
-	if (throld == .5 && !is.null(model$GIN) && is.null(item.table) && (item.type != "deltas")) {
+	if (!is.null(model$GIN) && is.null(item.table)) {
 		#print("false")
 		throlds <- unpack.GIN(model$GIN)
 		names <- unpack.names(model$GIN)
@@ -46,21 +46,17 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item
 
 
 		if (is.null(main.title)) 
-			main.title <- "Wright Map (thresholds)"
-		message("Using GIN table for threshold parameters")
+			main.title <- "Kid Map"
+		#message("Using GIN table for threshold parameters")
 	} else {
 		RMP <- model$RMP
 
-		if (item.type != "thresholds") {
+		
 			throlds <- make.deltas(model, item.table = item.table, interactions = interactions, step.table = step.table)
 				if (is.null(main.title)) 
-					main.title <- "Wright Map (Deltas)"
+					main.title <- "Kid Map"
 				
-		} else {
-			throlds <- make.thresholds(model, item.table = item.table, interactions = interactions, step.table = step.table,throld = throld)
-			if (is.null(main.title)) 
-				main.title <- "Wright Map (Thresholds)"
-		}
+		
 
 
 
@@ -88,5 +84,5 @@ function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item
 		dim.names <- model$dimensions
 
 
-	wrightMap(thetas, throlds, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
+	kidMap(thetas, throlds, est, SE, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
 }
