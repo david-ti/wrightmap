@@ -3,13 +3,13 @@ library(shiny)
 # Define UI for application that plots random distributions 
 shinyUI(fluidPage(
   # Application title
-  titlePanel("Wright Map (David Torres Irribarra & Rebecca Freund, 2014)"),
+  titlePanel("Wright Map"),
   
   
   sidebarLayout(
   sidebarPanel(
   	wellPanel(
-    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
+    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Formatting options" = "format","Dimension options" = "dims", "Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
     	),
   		conditionalPanel(condition="input.showPane=='files'",
   			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
@@ -48,7 +48,7 @@ shinyUI(fluidPage(
 	    		conditionalPanel(condition = "input.datatype == 'R'",
 	    			radioButtons('make_from',"Input item parameters",choices = c("deltas","thresholds"),selected = "thresholds",inline = TRUE)),
 	    		conditionalPanel(condition = "input.make_from == 'deltas' || input.datatype == 'CQ'",
-	    			selectInput("which_type","Graph which parameters?", choices = c("Thresholds" = "thresholds","Deltas" = "deltas"))
+	    			selectInput("which_type","Graph which parameters?", choices = c("default","Thresholds" = "thresholds","Deltas" = "deltas"))
 	    		)
 	    	),
 	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
@@ -62,6 +62,14 @@ shinyUI(fluidPage(
 	    	)
     		
     	),
+    	conditionalPanel(condition = "input.showPane == 'format'",
+    		textInput("minl","Minimum Logit"),
+    		textInput("maxl","Maximum Logit"),
+    		sliderInput("itemprop","Item proportion",min = .25,max = .9,value = formals(wrightMap.default)[["item.prop"]],step = .01)
+    	),
+    	conditionalPanel(condition = "input.showPane == 'dims'",
+    		uiOutput("dim.items")
+    	),
 		conditionalPanel(condition="input.showPane == 'labels' && input.selectedTab == 'wmap'",
 			checkboxInput('autotitle',"Create title automatically",TRUE),
 			conditionalPanel(condition = "!input.autotitle",
@@ -69,7 +77,8 @@ shinyUI(fluidPage(
 			),
 			textInput('axis.logits',"Logit axis label","Logits"),
 			textInput('axis.persons',"Respondents axis label","Respondents"),
-			textInput('axis.items',"Items axis label","Items")
+			textInput('axis.items',"Items axis label","Items"),
+			uiOutput("dim.labels")
     	),
     	conditionalPanel(condition = "input.showPane=='label.items'",
     		checkboxInput('show.thr.lab', 'Show Threshold Labels', TRUE),
@@ -83,7 +92,8 @@ shinyUI(fluidPage(
     			uiOutput("item.labels"))
     	),
     	conditionalPanel(condition="input.showPane=='person.disp'",
-    		checkboxInput('use.hist', 'Histogram?', TRUE)
+    		checkboxInput('use.hist', 'Histogram?', TRUE),
+    		uiOutput("dim.colors")
     	),
     	conditionalPanel(condition="input.showPane=='sym.disp'",
     		checkboxInput('show.thr.sym', 'Show Threshold Symbols', TRUE),
@@ -94,11 +104,11 @@ shinyUI(fluidPage(
 		               	max = 5, 
 		                	value = 1.2, step = .1
 		    ),
-		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","item"),selected="all"),
+		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","dim","item"),selected="all"),
 		    uiOutput("sym_pickers")
 		),
 		conditionalPanel(condition="input.showPane=='color.disp'",
-		    selectInput('color_by',"Choose colors by",choices = c("all","step","item")),
+		    selectInput('color_by',"Choose colors by",choices = c("all","step","dim","item")),
 		    uiOutput("color_pickers")
 		)
 		
@@ -128,6 +138,7 @@ shinyUI(fluidPage(
     		value = "difplot"
     	),
     	id = "selectedTab"
-    )
+    ),
+    h4("David Torres Irribarra & Rebecca Freund (2014)")
   )
 )))

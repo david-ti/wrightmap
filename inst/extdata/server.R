@@ -7,11 +7,11 @@ shinyServer(function(input, output,session) {
     	if(input$selectedTab == "wmap") {
     		if(input$datatype == "R" && !is.null(input$c.params) && input$c.params != "" && exists(input$c.params) && any(get(input$c.params) != 0)) {
     			updateRadioButtons(session,"make_from",selected = "deltas")
-    			panelChoices <- c("File options" = "files","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    			panelChoices <- c("File options" = "files","Formatting options" = "format", "Dimension options" = "dims","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
     		}
     		else {
     			updateRadioButtons(session,"make_from",selected = "thresholds")
-    			panelChoices <- c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
+    			panelChoices <- c("File options" = "files","Data options" = "data","Formatting options" = "format","Dimension options" = "dims","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp")
     			}
     	}
     	else if(input$selectedTab == "fitgraph") {
@@ -171,9 +171,15 @@ shinyServer(function(input, output,session) {
   	return(items)
   	})
   	
-  	dimnames <- reactive({
-  		if(input$datatype = "CQ") {
+  	dim_names <- reactive({
+  		if(input$datatype == "CQ") {
   			model <- model2()
+  			return(model$dimensions)
+  		}
+  		if(input$datatype == "R") {
+  			 if(input$thetas == "" || !exists(input$thetas))
+  				 return()
+  			return(paste("Dimension",1:NCOL(get(input$thetas))))
   		}
   		
   	})
@@ -183,26 +189,31 @@ shinyServer(function(input, output,session) {
   
   output$sym_pickers <- renderUI({
   	symby <- input$sym_by
-  	steps <- stepnames()
-  	items <- itemnames()
+  	
+  	
   	if(symby == "all")
   		return(selectInput("sym","Choose symbol",choices = sym_choices))
   	else if(symby == "step") {
+  			steps <- stepnames()
   			lapply(1:length(steps),function(i) {
   				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for step",steps[i]),choices = sym_choices)
   			})
   		}
-  	else if(symby == "item")
+  	else if(symby == "item") {
+  		items <- itemnames()
   		lapply(1:length(items),function(i) {
   				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for item",items[i]),choices = sym_choices)
   			})
-  	else if(symby == "dim")
+  		}
+  	else if(symby == "dim") {
+  		dims <- dim_names()
   		lapply(1:length(dims),function(i) {
-  				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for item",items[i]),choices = sym_choices)
+  				selectInput(paste("sym",i,sep="_"),paste("Choose symbol for",dims[i]),choices = sym_choices)
   			})
+  		}
   })
     
-  col_choices <- c("gray"= rgb(0, 0, 0, 0.3),"red"= rgb(1, 0, 0, 0.7),"green"= rgb(0, 1, 0, 0.7),"blue"= rgb(0, 0, 1, 0.7))
+  col_choices <- c("gray"= rgb(0, 0, 0, 0.3),"red"= rgb(1, 0, 0, 0.7),"green"= rgb(0, 1, 0, 0.7),"blue"= rgb(0, 0, 1, 0.7),"white","black")
   
   output$color_pickers <- renderUI({
   	colby <- input$color_by
@@ -210,15 +221,16 @@ shinyServer(function(input, output,session) {
   	items <- itemnames()
   	if(colby == "all")
   		return(selectInput("col","Choose color",choices = col_choices))
-  	else if(colby == "step") {
-  			lapply(1:length(steps),function(i) {
+  	if(colby == "step") {
+  			return(lapply(1:length(steps),function(i) {
   				selectInput(paste("col",i,sep="_"),paste("Choose color for step",steps[i]),choices = col_choices)
-  			})
+  			}))
   		}
-  	else if(colby == "item")
-  		lapply(1:length(items),function(i) {
+  	if(colby == "item")
+  		return(lapply(1:length(items),function(i) {
   				selectInput(paste("col",i,sep="_"),paste("Choose color for item",items[i]),choices = col_choices)
-  			})
+  			}))
+  		return()
   })
   
   output$item.labels <- renderUI({
@@ -235,6 +247,40 @@ shinyServer(function(input, output,session) {
   			# })
   # })
   
+  output$dim.labels <- renderUI({
+  	dims <- dim_names()
+  	lapply(1:length(dims),function(i) {
+  				textInput(paste("dimlab",i,sep="_"),paste("Choose label for",dims[i]))
+  			})
+  	
+  })
+  
+  output$dim.colors <- renderUI({
+  	dims <- dim_names()
+  	lapply(1:length(dims),function(i) {
+  				selectInput(paste("dimcol",i,sep="_"),paste("Choose color for dim",dims[i]),choices = c("default",col_choices))
+  			})
+  })
+  
+  output$dim.items <- renderUI({
+  	dims <- dim_names()
+  	dnums <- 1:length(dims)
+  	names(dnums) <- dims
+  	items <- itemnames()
+  	
+  	lapply(1:length(items), function(i) {
+  		selectInput(paste("itemdim",i,sep="_"),paste("Choose dimension for item",items[i]),choices = dnums)
+  	})
+  })
+  
+  
+  item.dims <- reactive({
+  	return(unlist(lapply(1:length(itemnames()), function(i) {
+  			as.integer(input[[paste("itemdim",i,sep="_")]])
+  		})))
+
+  })
+  
   #########
 
   main.title <- reactive({
@@ -242,6 +288,8 @@ shinyServer(function(input, output,session) {
   		return()
   	input$title
   })
+  
+
   
   thr.sym.pch <- reactive({
   	if(is.null(wmap_bare()))
@@ -260,6 +308,12 @@ shinyServer(function(input, output,session) {
   			as.integer(input[[paste("sym",i,sep="_")]])
   		}))
   		return(item_pch)
+  	}
+  	if(symby == "dim") {
+  		dim_pch <- unlist(lapply(1:length(dim_names()), function(i) {
+  			as.integer(input[[paste("sym",i,sep="_")]])
+  		}))
+  		return(dim_pch[item.dims()])
   	}
   	return()
   })
@@ -282,6 +336,9 @@ shinyServer(function(input, output,session) {
   		}))
   		return(item_col)
   	}
+  	if(colby == "dim") {
+  		return(dcols.items()[item.dims()])
+  	}
   	return()
   })
   
@@ -298,6 +355,51 @@ shinyServer(function(input, output,session) {
   	return(labels)
   })
   
+  dim.names <- reactive({
+  	dnames <- unlist(lapply(1:length(dim_names()), function(i) {
+  			input[[paste("dimlab",i,sep="_")]]
+  		}))
+  	if(all(dnames == ""))
+  		return()
+  	return(dnames)
+  })
+  
+  
+  dimcols <- reactive({
+  	return(unlist(lapply(1:length(dim_names()), function(i) {
+  			input[[paste("dimcol",i,sep="_")]]
+  		})))
+  })
+  
+  dim.color <- reactive({
+  	dcols <- dimcols()
+  	if(input$use.hist)
+  		dcols[dcols == "default"] <- "white"
+  	else
+  		dcols[dcols == "default"] <- "black"
+  	return(dcols)
+  })
+  
+  dcols.items <- reactive({
+  	dcols <- dimcols()
+  	dcols[dcols == "default"] <- rgb(0,0,0,0.3)
+  	return(dcols)
+  })
+  
+    minl <- reactive({
+  	min.l <- as.numeric(input$minl)
+  	if(is.na(min.l))
+  		return()
+  	return(min.l)
+  })
+  
+    maxl <- reactive({
+  	max.l <- as.numeric(input$maxl)
+  	if(is.na(max.l))
+  		return()
+  	return(max.l)
+  })
+  
  # output$bugprint <- renderPrint({
   	# thr.sym.pch()
 
@@ -305,7 +407,7 @@ shinyServer(function(input, output,session) {
   
   ##########
   
-  wmap <- reactive({
+  wm.args <- reactive({
   	
   	#on.exit(dev.off)	
   	args<- list()
@@ -349,13 +451,18 @@ shinyServer(function(input, output,session) {
 	 #message(args[4])
 	 
 	 args <- c(args,"main.title" = main.title(), "use.hist" = input$use.hist, "axis.logits" = input$axis.logits,"axis.persons" = input$axis.persons,"axis.items" = input$axis.items,"label.items" = list(label.items()),"label.items.rows" = input$label_items_rows,"label.items.srt" = input$label.items.srt,"label.items.ticks" = input$label.items.ticks, "show.thr.lab" = input$show.thr.lab,"show.thr.sym" = input$show.thr.sym,
-	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()))
+	               "thr.sym.cex" = input$cex,"thr.sym.pch"=list(thr.sym.pch()),"thr.sym.col.bg"=list(thr.sym.col()),"dim.names" = list(dim.names()),dim.color = list(dim.color()),min.l = minl(),max.l = maxl(),item.prop = input$itemprop)
 	  		
 	    
-	 return(do.call(wrightMap,args))
+	 #return(do.call(call,c("wrightMap",as.list(args))))
+	 #return(list(args))
+	 #return(do.call(wrightMap,args))
+	 #message(class(args),"in")
+	 return(args)
 
   	
   })
+  
   
   ##########
   
@@ -397,7 +504,12 @@ shinyServer(function(input, output,session) {
 
   ##########
   output$wmap <- renderPlot({
-  	    wmap()
+  		#message(wm.call())
+  		args <- wm.args()
+  		if(is.null(args))
+  			return()
+  	    do.call(wrightMap,args)
+  	    #wm.args()
   })
   
   #########
@@ -429,17 +541,17 @@ shinyServer(function(input, output,session) {
   item.table.text <- reactive({
   	if(is.null(input$item.table) || input$item.table == "default")
   		return("")
-  	return(paste(",item.table = ",input$item.table,sep=""))
+  	return(paste(",item.table = \"",input$item.table,"\"",sep=""))
   })
     interactions.text <- reactive({
   	if(is.null(input$interactions.table) || input$interactions.table == "default")
   		return("")
-  	return(paste(",interactions = ",input$interactions.table,sep=""))
+  	return(paste(",interactions = \"",input$interactions.table,"\"",sep=""))
   })
     step.table.text <- reactive({
   	if(is.null(input$step.table) || input$step.table == "default")
   		return("")
-  	return(paste(",step.table = ",input$step.table,sep=""))
+  	return(paste(",step.table = \"",input$step.table,"\"",sep=""))
   })
   type.text <- reactive({
   	if(input$which_type == "default")
@@ -516,7 +628,7 @@ shinyServer(function(input, output,session) {
   thr.sym.pch.text <- reactive({
   	pchs <- thr.sym.pch()
   	#return()
-  	if(length(pchs) == 0 || (input$sym_by == "all" && pchs == 23))
+  	if(length(pchs) == 0 || all(pchs == 23))
   			return("")
   	return(paste(",thr.sym.pch =",list(pchs)))
   })
@@ -530,7 +642,37 @@ shinyServer(function(input, output,session) {
   	return(paste(",thr.sym.col.bg =",list(cols)))
   })
   
-  output$wmap.command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),label.items.ticks.text(),show.thr.lab.text(),show.thr.sym.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),")",sep=""))
+  dim.names.text <- reactive({
+  	dims <- dim.names()
+  	if(is.null(dims))
+  		return("")
+  	if(length(dims) == 1)
+  		dims <- paste("\"",dims,"\"",sep="")
+  	return(paste(",dim.names =",list(dims)))
+  })
+  
+  min.l.text <- reactive({
+  	min.l <- minl()
+  	if(is.null(min.l))
+  		return("")
+  	return(paste(",min.l =",min.l))
+  })
+  
+    max.l.text <- reactive({
+  	max.l <- maxl()
+  	if(is.null(max.l))
+  		return("")
+  	return(paste(",max.l =",max.l))
+  })
+  
+  item.prop.text <- reactive({
+  	item.prop <- input$itemprop
+  	if(item.prop == formals(wrightMap.default)[["item.prop"]])
+  		return("")
+  	return(paste(",item.prop =",item.prop))
+  })
+  
+  output$wmap.command <- renderPrint(cat("wrightMap(",thetas.text(),thresholds.text(),item.table.text(),interactions.text(),step.table.text(),make.from.text(),alphas.text(),type.text(),throld.text(),use.hist.text(),main.title.text(),axis.logits.text(),axis.persons.text(),axis.items.text(),label.items.text(),label.items.rows.text(),label.items.srt.text(),label.items.ticks.text(),show.thr.lab.text(),show.thr.sym.text(),thr.sym.cex.text(),thr.sym.pch.text(),thr.sym.col.text(),dim.names.text(),min.l.text(),max.l.text(),item.prop.text(),")",sep=""))
   
   ##########
   
