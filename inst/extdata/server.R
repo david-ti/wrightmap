@@ -508,6 +508,14 @@ shinyServer(function(input, output,session) {
   		args <- wm.args()
   		if(is.null(args))
   			return()
+  		est <- as.numeric(input$est)
+  		if(!is.null(est) && !is.na(est)) {
+  			SE <- as.numeric(input$err)
+  			if(is.na(SE))
+  				SE <- 0
+  			args <- c(args,"est" = est,"SE" = SE)
+  			return(do.call(kidMap,args))
+  		}
   	    do.call(wrightMap,args)
   	    #wm.args()
   })

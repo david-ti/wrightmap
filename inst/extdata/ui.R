@@ -119,11 +119,13 @@ shinyUI(fluidPage(
   #textOutput("model"),
   	tabsetPanel(type = "tabs",
     	tabPanel("Wright map",
+    		verbatimTextOutput("wmap.command"),
     		plotOutput("wmap"),
     		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
     			sliderInput("throld","Threshold",min=.05,max = .95, value = .5, step = .05,animate = animationOptions(loop = TRUE,interval=500))
     		),
-    		verbatimTextOutput("wmap.command"),
+    		textInput("est","Individual ability estimate"),
+    		textInput("err","Individual standard error"),
     		value = "wmap"
     	),
     	tabPanel("Fit plot",
