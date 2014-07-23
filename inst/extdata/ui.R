@@ -9,10 +9,10 @@ shinyUI(fluidPage(
   sidebarLayout(
   sidebarPanel(
   	wellPanel(
-    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Formatting options" = "format","Dimension options" = "dims", "Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
+    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Formatting options" = "format", "Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
     	),
   		conditionalPanel(condition="input.showPane=='files'",
-  			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
+  			selectInput('datatype',"Type of data", choices = c("R object" = "R","ConQuest output" = "CQ")),
   			conditionalPanel(condition = "input.datatype == 'R'",
   				conditionalPanel(condition = "input.selectedTab == 'wmap'",
   					textInput('thetas',"Name of person parameters object"),
@@ -104,11 +104,11 @@ shinyUI(fluidPage(
 		               	max = 5, 
 		                	value = 1.2, step = .1
 		    ),
-		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","dim","item"),selected="all"),
+		    selectInput('sym_by',"Choose symbols by",choices = c("all","step","item"),selected="all"),
 		    uiOutput("sym_pickers")
 		),
 		conditionalPanel(condition="input.showPane=='color.disp'",
-		    selectInput('color_by',"Choose colors by",choices = c("all","step","dim","item")),
+		    selectInput('color_by',"Choose colors by",choices = c("all","step","item")),
 		    uiOutput("color_pickers")
 		)
 		
@@ -119,11 +119,13 @@ shinyUI(fluidPage(
   #textOutput("model"),
   	tabsetPanel(type = "tabs",
     	tabPanel("Wright map",
+    		verbatimTextOutput("wmap.command"),
     		plotOutput("wmap"),
     		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
     			sliderInput("throld","Threshold",min=.05,max = .95, value = .5, step = .05,animate = animationOptions(loop = TRUE,interval=500))
     		),
-    		verbatimTextOutput("wmap.command"),
+    		textInput("est","Individual ability estimate"),
+    		textInput("err","Individual standard error"),
     		value = "wmap"
     	),
     	tabPanel("Fit plot",
@@ -139,6 +141,6 @@ shinyUI(fluidPage(
     	),
     	id = "selectedTab"
     ),
-    h4("David Torres Irribarra & Rebecca Freund (2014)")
+    em("David Torres Irribarra & Rebecca Freund (2014)")
   )
 )))
