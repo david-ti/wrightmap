@@ -385,13 +385,27 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		variance.line = grep("Variance", PMP$cov.cor, value = TRUE)
 		m <- gregexpr("[0-9]+\\.[0-9]+(?![0-9])(?![\\s]*\\))", variance.line, perl = TRUE)
 		PMP$variances <- as.numeric(unlist(regmatches(variance.line, m)))
-		m <- gregexpr("[0-9\\.]+(?=[\\s]*\\))", variance.line, perl = TRUE)
+		m <- gregexpr("[0-9\\.\\-#IO]+(?=[\\s]*\\))", variance.line, perl = TRUE)
 		errors <- as.numeric(unlist(regmatches(variance.line, m)))
 		PMP$nDim = length(PMP$variances)
+		length(errors) <- length(PMP$variances)
 		PMP$dimensions = "Main dimension"
 		if (PMP$nDim > 1) {
-			PMP$cov.cor <- read.fwf(tempify(PMP$cov.cor[8:(8 + PMP$nDim - 1)]), widths = c(25, rep(9, PMP$nDim)), row.names = 1, 
+
+			if (CQV == 2){
+				
+				PMP$cov.cor <- read.fwf(tempify(PMP$cov.cor[8:(8 + PMP$nDim - 1)]), widths = c(25, rep(9, PMP$nDim)), row.names = 1, 
 				strip.white = TRUE, stringsAsFactors = FALSE)
+				
+			}
+			
+			if (CQV == 3){
+				
+				PMP$cov.cor <- read.fwf(tempify(PMP$cov.cor[8:(8 + PMP$nDim - 1)]), widths = c(25, rep(18, PMP$nDim)), row.names = 1, 
+				strip.white = TRUE, stringsAsFactors = FALSE)
+				
+			}
+
 			PMP$dimensions <- row.names(PMP$cov.cor)
 			names(PMP$cov.cor) <- PMP$dimensions
 			PMP$cor.matrix <- PMP$cov.cor
@@ -474,7 +488,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		model$nDim = floor(length(p.est)/colperdim)
 
-		if (is.null(model$dimensions) || length(model$dimensions) != model$nDim) 
+		if (is.null(model$dimensions) || length(model$dimensions != model$nDim)) 
 			model$dimensions <- paste("d", c(1:model$nDim), sep = "")
 
 		if (p.type == "EAP") {

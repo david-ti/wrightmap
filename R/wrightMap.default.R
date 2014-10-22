@@ -1,5 +1,5 @@
 wrightMap.default <-
-function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
+function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.cex = 0.9, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.cex = 0.6,dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
     
     ## Helper Functions
     
@@ -47,7 +47,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     }
     
     
-    personPlot <- function(distInfo, use.hist, yRange, xRange, dim.lab.side, dim.lab.adj, dims.col, p.cex.lab, p.font.lab, p.lwd, p.las, p.cex.axis, p.font.axis, p.tcl) {
+    personPlot <- function(distInfo, use.hist, yRange, xRange, dim.lab.side, dim.lab.cex, dim.lab.adj, dims.col, p.cex.lab, p.font.lab, p.lwd, p.las, p.cex.axis, p.font.axis, p.tcl) {
         
         if (use.hist == FALSE) {
             
@@ -64,7 +64,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
             
         }
         
-        mtext(attr(distInfo, "dim.name"), side = dim.lab.side, line = -1, cex = 0.6, font = 1, adj = dim.lab.adj)
+        mtext(attr(distInfo, "dim.name"), side = dim.lab.side, line = -1, cex = dim.lab.cex, font = 1, adj = dim.lab.adj)
         
         box(bty = "c")
         
@@ -166,7 +166,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
     }
     
-    lapply(distInfo, FUN = personPlot, use.hist = use.hist, yRange = yRange, xRange = xRange, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, 
+    lapply(distInfo, FUN = personPlot, use.hist = use.hist, yRange = yRange, xRange = xRange, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, 
         p.font.lab = 3, p.lwd = 2, p.las = 1, p.cex.axis = 1.1, p.font.axis = 2, p.tcl = -0.5)
     
     ## Generating Item Side
@@ -214,7 +214,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
             text.adj = c(0.5, 2)
         }
 
-        text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = 0.9)
+        text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
         
         
         if (label.items.ticks == TRUE) {
@@ -229,11 +229,11 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
         
         text(seq(from = 1, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 2)], adj = c(0.5, 1.9), 
-            xpd = TRUE, cex = 0.9)
+            xpd = TRUE, cex = label.items.cex)
         
         
         text(seq(from = 2, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 2)], adj = c(0.5, 3.1), 
-            xpd = TRUE, cex = 0.9)
+            xpd = TRUE, cex = label.items.cex)
         
         
         if (label.items.ticks == TRUE) {
@@ -249,15 +249,15 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
         
         text(seq(from = 1, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 3)], adj = c(0.5, 1.9), 
-            xpd = TRUE, cex = 0.9)
+            xpd = TRUE, cex = label.items.cex)
         
         
         text(seq(from = 2, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 3)], adj = c(0.5, 3.1), 
-            xpd = TRUE, cex = 0.9)
+            xpd = TRUE, cex = label.items.cex)
         
         
         text(seq(from = 3, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 3, to = nrow(thr), by = 3)], adj = c(0.5, 4.3), 
-            xpd = TRUE, cex = 0.9)
+            xpd = TRUE, cex = label.items.cex)
         
         
         if (label.items.ticks == TRUE) {
