@@ -75,7 +75,8 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         itemRange <- range(x)
         round((itemRange[2]-itemRange[1])/.2,0)
 
-        return(seq(from = itemRange[1], to = itemRange[2], by = .1))
+        # return(seq(from = itemRange[1], to = itemRange[2], by = .1))
+        return(seq(from = itemRange[1], to = itemRange[2], length.out = 25))
 
     }
 
