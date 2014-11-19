@@ -1,5 +1,5 @@
 wrightMap2 <-
-function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, type = "21c", main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.cex = 0.9, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.cex = 0.6,dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
+function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, item.plot = "modern", main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.cex = 0.9, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.cex = 0.6,dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
     
     ## Helper Functions
     
@@ -156,7 +156,6 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     
     # Generating Full Map
     
-
     if(new.quartz)
         dev.new(width = 9, height = 5)
     op <- par("oma","mar","mgp")
@@ -166,7 +165,6 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     layout(matrix(layout.wm, nrow = 1), widths = c(rep((1 - item.prop)/nD, nD), rep(item.prop/item.side, item.side)), heights = 0.8)
     
     ## Generating Person Side
-    
     
     par(mar = c(op$mar[1],0.2,op$mar[3],.1))
     par(mgp = c(op$mar[1] - 2.4, 1, 0))
@@ -184,41 +182,21 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         p.font.lab = 3, p.lwd = 2, p.las = 1, p.cex.axis = 1.1, p.font.axis = 2, p.tcl = -0.5)
     
     ## Generating Item Side
-    
-    plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
 
-    box(bty = "o")
-    
-    usr <- par("usr")
-    
-    axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
-    par(mgp = c(0, 0.2, 0))
-    
-    if (type == "20c"){
+    if (item.plot == "modern"){
 
-        item.hist <- hist(thresholds, plot = FALSE, breaks = Nbins(yRange))
+        plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
 
-        itemBinLocations <- item.hist$mids
-
-        bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])
-
-        item.hist <- data.frame(xleft   = item.hist$mids - (bin.size/2), 
-                                ybotton = item.hist$mids * 0, 
-                                xright  = item.hist$mids + (bin.size/2), 
-                                ytop    = item.hist$counts)
-
-        item.labels <- matrix( rep( formatC( 1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
-        item.labels <- t( apply( item.labels, 1, paste, c(1:nL), sep=".") )
+        box(bty = "o")
         
-        binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
+        usr <- par("usr")
         
-        binnedList <- unlist(lapply(1:length(itemBinLocations), binthresholds, item.labels, binnedItems))
+        axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
 
-        text(cbind(0,itemBinLocations),labels = binnedList, pos = 4, offset = 1)
+        par(mgp = c(0, 0.2, 0))
 
-    } else {
 
-        if (show.thr.sym == TRUE) {
+       if (show.thr.sym == TRUE) {
             
             points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), col = as.matrix(thr.sym.col.fg), 
                 bg = as.matrix(thr.sym.col.bg))
@@ -239,12 +217,80 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
             }
             
         }
+
+    } 
+
+    if (item.plot == "classic"){
+
+        plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
+
+        box(bty = "o")
     
+        usr <- par("usr")
+        
+        axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
+
+        par(mgp = c(0, 0.2, 0))
+
+        item.hist <- hist(thresholds, plot = FALSE, breaks = Nbins(yRange))
+
+        itemBinLocations <- item.hist$mids
+
+        bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])
+
+        item.hist <- data.frame(xleft   = item.hist$mids - (bin.size/2), 
+                                ybotton = item.hist$mids * 0, 
+                                xright  = item.hist$mids + (bin.size/2), 
+                                ytop    = item.hist$counts)
+
+        item.labels <- matrix( rep( formatC( 1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+        item.labels <- t( apply( item.labels, 1, paste, c(1:nL), sep=".") )
+        
+        binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
+        
+        binnedList <- unlist(lapply(1:length(itemBinLocations), binthresholds, item.labels, binnedItems))
+
+        text(cbind(0,itemBinLocations),labels = binnedList, pos = 4, offset = 1)    
+    
+    }
+
+    if (item.plot == "hist"){
+
+        item.hist <- hist(thresholds, plot = FALSE, breaks = Nbins(yRange))
+
+        itemBinLocations <- item.hist$mids
+
+        bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])
+
+        item.hist <- data.frame(xleft   = item.hist$mids - (bin.size/2), 
+                                ybotton = item.hist$mids * 0, 
+                                xright  = item.hist$mids + (bin.size/2), 
+                                ytop    = item.hist$counts)
+
+        plot(c(min(item.hist[, 1]), max(item.hist[, 3])), c(min(item.hist[, 2]), max(item.hist[, 4])), ylim = yRange, xlim = c(0,max(item.hist[, 4])), type = "n", axes = FALSE, ylab = "", xlab = "")
+
+        box(bty = "o")
+        
+        usr <- par("usr")
+        
+        axis(4, las = 1, cex.axis = 0.8, font.axis = 2)
+
+        par(mgp = c(0, 0.2, 0))
+
+        item.labels <- matrix( rep( formatC( 1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+        item.labels <- t( apply( item.labels, 1, paste, c(1:nL), sep=".") )
+        
+        binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
+        
+        binnedList <- unlist(lapply(1:length(itemBinLocations), binthresholds, item.labels, binnedItems))
+
+        rect(item.hist[, 4], item.hist[, 1], item.hist[, 2], item.hist[, 3])
+
     }
     
     par(mgp = c(3, 1, 0))
     
-    if (type == "21c"){
+    if (item.plot == "modern"){
 
         if (label.items.rows == 1) {
             
