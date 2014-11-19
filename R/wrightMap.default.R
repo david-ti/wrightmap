@@ -1,4 +1,4 @@
-wrightMap2 <-
+wrightMap.default <-
 function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, item.plot = "modern", main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.cex = 0.9, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.cex = 0.6,dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
     
     ## Helper Functions
@@ -248,7 +248,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
         binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
         
-        binnedList <- unlist(lapply(1:length(itemBinLocations), binthresholds, item.labels, binnedItems))
+        binnedList <- unlist(lapply(1:length(itemBinLocations), binItems, item.labels, binnedItems))
 
         text(cbind(0,itemBinLocations),labels = binnedList, pos = 4, offset = 1)    
     
@@ -282,7 +282,7 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
         binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
         
-        binnedList <- unlist(lapply(1:length(itemBinLocations), binthresholds, item.labels, binnedItems))
+        binnedList <- unlist(lapply(1:length(itemBinLocations), binItems, item.labels, binnedItems))
 
         rect(item.hist[, 4], item.hist[, 1], item.hist[, 2], item.hist[, 3])
 
