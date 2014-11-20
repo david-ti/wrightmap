@@ -1,5 +1,9 @@
 wrightMap.default <-
+<<<<<<< HEAD
 function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.cex = 0.9, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.cex = 0.6,dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
+=======
+function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from = "deltas",alpha = 1, c.params = 0, use.hist = TRUE, item.plot = "modern", main.title = "Wright Map", axis.logits = "Logits", axis.persons = "Respondents", axis.items = "Items", label.items = NULL, label.items.rows = 1, label.items.cex = 0.9, label.items.srt = 0, label.items.ticks = TRUE, show.thr.lab = TRUE, show.thr.sym = TRUE, thr.lab.text = NULL, thr.lab.col = "black", thr.lab.pos = c(2, 4), thr.lab.font = 2, thr.lab.cex = 0.85, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.sym.cex = 1.2, thr.sym.lwd = 1, dim.names = NULL, dim.color = NULL, dim.lab.side = 3, dim.lab.cex = 0.6,dim.lab.adj = 0.5, breaks = "FD", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8,return.thresholds = TRUE, new.quartz= FALSE,...) {
+>>>>>>> text_item_side
     
     ## Helper Functions
     
@@ -70,14 +74,36 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
     }
     
-    
+    Nbins <- function(x){
+
+        itemRange <- range(x)
+        round((itemRange[2]-itemRange[1])/.2,0)
+
+        # return(seq(from = itemRange[1], to = itemRange[2], by = .1))
+        return(seq(from = itemRange[1], to = itemRange[2], length.out = 25))
+
+    }
+
+    binItems <- function( level, labelMat, cutMat){
+
+        paste( sort(labelMat[cutMat==level]), collapse=" | ")
+
+    }
+
     # Preparing Data
     
     if(!is.null(throld)) {
+<<<<<<< HEAD
     	thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = throld, alpha = alpha, make.from = make.from, c.params = c.params)
     }
     else if(any(c.params != 0)) {
     	thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = .5, alpha = alpha, make.from = make.from, c.params = c.params)
+=======
+        thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = throld, alpha = alpha, make.from = make.from, c.params = c.params)
+    }
+    else if(any(c.params != 0)) {
+        thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = .5, alpha = alpha, make.from = make.from, c.params = c.params)
+>>>>>>> text_item_side
     }
     
     thetas <- as.matrix(thetas)
@@ -105,13 +131,13 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
 
     if (is.null(max.l)){
 
-		max.l <- max(c(max.theta, thr), na.rm = TRUE) + max.logit.pad
+        max.l <- max(c(max.theta, thr), na.rm = TRUE) + max.logit.pad
 
     }
     
     yRange <- c(min.l, max.l)
     xRange <- c(1, 0)
-    
+
     item.side <- round((nD * item.prop)/(1 - item.prop))
     layout.wm <- c(seq(1:nD), rep(nD + 1, item.side))
 
@@ -142,9 +168,12 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     
     # Generating Full Map
     
-
     if(new.quartz)
+<<<<<<< HEAD
     	dev.new(width = 9, height = 5)
+=======
+        dev.new(width = 9, height = 5)
+>>>>>>> text_item_side
     op <- par("oma","mar","mgp")
     
     par(oma = op$oma + c(0,5,0,5))
@@ -153,7 +182,10 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
     
     ## Generating Person Side
     
+<<<<<<< HEAD
     
+=======
+>>>>>>> text_item_side
     par(mar = c(op$mar[1],0.2,op$mar[3],.1))
     par(mgp = c(op$mar[1] - 2.4, 1, 0))
     
@@ -170,63 +202,33 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         p.font.lab = 3, p.lwd = 2, p.las = 1, p.cex.axis = 1.1, p.font.axis = 2, p.tcl = -0.5)
     
     ## Generating Item Side
-    
-    plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
-    
-    box(bty = "o")
-    
-    usr <- par("usr")
-    
-    axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
-    par(mgp = c(0, 0.2, 0))
-    
-    if (show.thr.sym == TRUE) {
-        
-        points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), col = as.matrix(thr.sym.col.fg), 
-            bg = as.matrix(thr.sym.col.bg))
-        
-    }
-    
-    
-    if (show.thr.lab == TRUE) {
-        
-        if (show.thr.sym == TRUE){
-            pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-            pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
-            text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, font = thr.lab.font)
-        } else{
 
-            text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
+    if (item.plot == "modern"){
 
-        }
-        
-    }
-    
-    
-    par(mgp = c(3, 1, 0))
-    
-    
-    if (label.items.rows == 1) {
-        
-        if (label.items.srt != 0){ 
-            text.adj = c(1.1,1.1)
-        } else {
-            text.adj = c(0.5, 2)
-        }
+        plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
 
+<<<<<<< HEAD
         text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
+=======
+        box(bty = "o")
+>>>>>>> text_item_side
         
+        usr <- par("usr")
         
-        if (label.items.ticks == TRUE) {
+        axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
+
+        par(mgp = c(0, 0.2, 0))
+
+
+       if (show.thr.sym == TRUE) {
             
-            axis(1, at = 1:nI, labels = FALSE, line = NA, tcl = -0.35)
+            points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), col = as.matrix(thr.sym.col.fg), 
+                bg = as.matrix(thr.sym.col.bg))
             
         }
         
-    }
-    
-    if (label.items.rows == 2) {
         
+<<<<<<< HEAD
         
         text(seq(from = 1, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 2)], adj = c(0.5, 1.9), 
             xpd = TRUE, cex = label.items.cex)
@@ -237,39 +239,176 @@ function(thetas, thresholds, throld = NULL, design.matrix = "normal", make.from 
         
         
         if (label.items.ticks == TRUE) {
+=======
+        if (show.thr.lab == TRUE) {
+>>>>>>> text_item_side
             
-            axis(1, at = seq(from = 1, to = nI, by = 2), labels = FALSE, line = NA, tcl = -0.35)
-            axis(1, at = seq(from = 2, to = nI, by = 2), labels = FALSE, line = NA, tcl = -0.9)
+            if (show.thr.sym == TRUE){
+                pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
+                pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+                text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, font = thr.lab.font)
+            } else{
+
+                text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
+
+            }
             
         }
-        
-    }
+
+    } 
+
+    if (item.plot == "classic"){
+
+        plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = 1.3, font.lab = 3)
+
+        box(bty = "o")
     
-    if (label.items.rows == 3) {
+        usr <- par("usr")
         
+        axis(4, las = 1, cex.axis = 1.2, font.axis = 2)
+
+        par(mgp = c(0, 0.2, 0))
+
+        item.hist <- hist(thresholds, plot = FALSE, breaks = Nbins(yRange))
+
+        itemBinLocations <- item.hist$mids
+
+        bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])
+
+        item.hist <- data.frame(xleft   = item.hist$mids - (bin.size/2), 
+                                ybotton = item.hist$mids * 0, 
+                                xright  = item.hist$mids + (bin.size/2), 
+                                ytop    = item.hist$counts)
+
+        item.labels <- matrix( rep( formatC( 1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+        item.labels <- t( apply( item.labels, 1, paste, c(1:nL), sep=".") )
         
+<<<<<<< HEAD
         text(seq(from = 1, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 3)], adj = c(0.5, 1.9), 
             xpd = TRUE, cex = label.items.cex)
+=======
+        binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
+>>>>>>> text_item_side
         
+        binnedList <- unlist(lapply(1:length(itemBinLocations), binItems, item.labels, binnedItems))
+
+        text(cbind(0,itemBinLocations),labels = binnedList, pos = 4, offset = 1)    
+    
+    }
+
+    if (item.plot == "hist"){
+
+        item.hist <- hist(thresholds, plot = FALSE, breaks = Nbins(yRange))
+
+        itemBinLocations <- item.hist$mids
+
+        bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])
+
+        item.hist <- data.frame(xleft   = item.hist$mids - (bin.size/2), 
+                                ybotton = item.hist$mids * 0, 
+                                xright  = item.hist$mids + (bin.size/2), 
+                                ytop    = item.hist$counts)
+
+        plot(c(min(item.hist[, 1]), max(item.hist[, 3])), c(min(item.hist[, 2]), max(item.hist[, 4])), ylim = yRange, xlim = c(0,max(item.hist[, 4])), type = "n", axes = FALSE, ylab = "", xlab = "")
+
+        box(bty = "o")
         
+<<<<<<< HEAD
         text(seq(from = 2, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 3)], adj = c(0.5, 3.1), 
             xpd = TRUE, cex = label.items.cex)
+=======
+        usr <- par("usr")
+>>>>>>> text_item_side
         
+        axis(4, las = 1, cex.axis = 0.8, font.axis = 2)
+
+        par(mgp = c(0, 0.2, 0))
+
+        item.labels <- matrix( rep( formatC( 1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+        item.labels <- t( apply( item.labels, 1, paste, c(1:nL), sep=".") )
         
+<<<<<<< HEAD
         text(seq(from = 3, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 3, to = nrow(thr), by = 3)], adj = c(0.5, 4.3), 
             xpd = TRUE, cex = label.items.cex)
+=======
+        binnedItems <- matrix(cut(thresholds,breaks=c(item.hist[,1],tail(item.hist[,3],1)), labels=c(1:length(item.hist[,1]+1))), ncol=nL)
+>>>>>>> text_item_side
         
-        
-        if (label.items.ticks == TRUE) {
+        binnedList <- unlist(lapply(1:length(itemBinLocations), binItems, item.labels, binnedItems))
+
+        rect(item.hist[, 4], item.hist[, 1], item.hist[, 2], item.hist[, 3])
+
+    }
+    
+    par(mgp = c(3, 1, 0))
+    
+    if (item.plot == "modern"){
+
+        if (label.items.rows == 1) {
             
-            axis(1, at = seq(from = 1, to = nI, by = 3), labels = FALSE, line = NA, tcl = -0.35)
-            axis(1, at = seq(from = 2, to = nI, by = 3), labels = FALSE, line = NA, tcl = -0.9)
-            axis(1, at = seq(from = 3, to = nI, by = 3), labels = FALSE, line = NA, tcl = -1.4)
+            if (label.items.srt != 0){ 
+                text.adj = c(1.1,1.1)
+            } else {
+                text.adj = c(0.5, 2)
+            }
+
+            text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
+            
+            
+            if (label.items.ticks == TRUE) {
+                
+                axis(1, at = 1:nI, labels = FALSE, line = NA, tcl = -0.35)
+                
+            }
             
         }
         
-    }
+        if (label.items.rows == 2) {
+            
+            
+            text(seq(from = 1, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 2)], adj = c(0.5, 1.9), 
+                xpd = TRUE, cex = label.items.cex)
+            
+            
+            text(seq(from = 2, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 2)], adj = c(0.5, 3.1), 
+                xpd = TRUE, cex = label.items.cex)
+            
+            
+            if (label.items.ticks == TRUE) {
+                
+                axis(1, at = seq(from = 1, to = nI, by = 2), labels = FALSE, line = NA, tcl = -0.35)
+                axis(1, at = seq(from = 2, to = nI, by = 2), labels = FALSE, line = NA, tcl = -0.9)
+                
+            }
+            
+        }
+        
+        if (label.items.rows == 3) {
+            
+            
+            text(seq(from = 1, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 3)], adj = c(0.5, 1.9), 
+                xpd = TRUE, cex = label.items.cex)
+            
+            
+            text(seq(from = 2, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 3)], adj = c(0.5, 3.1), 
+                xpd = TRUE, cex = label.items.cex)
+            
+            
+            text(seq(from = 3, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 3, to = nrow(thr), by = 3)], adj = c(0.5, 4.3), 
+                xpd = TRUE, cex = label.items.cex)
+            
+            
+            if (label.items.ticks == TRUE) {
+                
+                axis(1, at = seq(from = 1, to = nI, by = 3), labels = FALSE, line = NA, tcl = -0.35)
+                axis(1, at = seq(from = 2, to = nI, by = 3), labels = FALSE, line = NA, tcl = -0.9)
+                axis(1, at = seq(from = 3, to = nI, by = 3), labels = FALSE, line = NA, tcl = -1.4)
+                
+            }
+            
+        }
     
+    }
     
     mtext(axis.logits, side = 4, line = 2.5, outer = TRUE, cex = 0.9, font = 3)
     mtext(axis.persons, side = 2, line = 1, outer = TRUE, cex = 0.9, font = 3)
