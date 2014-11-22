@@ -1,4 +1,4 @@
-itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",...) {
+itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",oma = c(0,0,0,3),...) {
 	
 	thr <- as.matrix(thr)
 
@@ -19,8 +19,9 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 			label.items <- rownames(thr)
 		else label.items <- c(paste("Item", seq(1:nI)))
 	}
+	par(oma = oma)
 	#par(mar = c(0,0,0,0))
-	par(mgp = c(1, 0.2, 0))
+	par(mgp = c(2, 0.2, 0))
 
 	plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), 
 		cex.lab = .8, font.lab = 3)
@@ -28,7 +29,7 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-	axis(4, las = 1, cex.axis = .6, font.axis = 2)
+	axis(4, las = 1, cex.axis = .7, font.axis = 2)
 	
 
 	if (show.thr.sym == TRUE) {
@@ -52,11 +53,11 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 
 	if (label.items.rows == 1) {
 		if (label.items.srt != 0) {
-			text.adj = c(1.1, 1.1)
+			text.adj = c(1, 1)
 		} else {
 			text.adj = c(0.5, 2)
 		}
-		text(seq(1:nrow(thr)), y = par("usr")[3], labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
+		text(seq(1:nrow(thr)), y = par("usr")[3] - .2, labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
 
 		if (label.items.ticks == TRUE) {
 
@@ -69,10 +70,10 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 	if (label.items.rows == 2) {
 
 		text(seq(from = 1, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 2)], 
-			adj = c(0.5, 1.9), xpd = TRUE, cex = label.items.cex)
+			adj = c(0.5, 2.4), xpd = TRUE, cex = label.items.cex)
 
 		text(seq(from = 2, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 2)], 
-			adj = c(0.5, 3.1), xpd = TRUE, cex = label.items.cex)
+			adj = c(0.5, 4.0), xpd = TRUE, cex = label.items.cex)
 
 		if (label.items.ticks == TRUE) {
 
@@ -86,15 +87,15 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 	if (label.items.rows == 3) {
 
 		text(seq(from = 1, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 3)], 
-			adj = c(0.5, 1.9), xpd = TRUE, cex = label.items.cex)
+			adj = c(0.5, 2.4), xpd = TRUE, cex = label.items.cex)
 
 
 		text(seq(from = 2, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 3)], 
-			adj = c(0.5, 3.1), xpd = TRUE, cex = label.items.cex)
+			adj = c(0.5, 4.0), xpd = TRUE, cex = label.items.cex)
 
 
 		text(seq(from = 3, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 3, to = nrow(thr), by = 3)], 
-			adj = c(0.5, 4.3), xpd = TRUE, cex = label.items.cex)
+			adj = c(0.5, 5.4), xpd = TRUE, cex = label.items.cex)
 
 		if (label.items.ticks == TRUE) {
 

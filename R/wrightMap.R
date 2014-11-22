@@ -54,7 +54,7 @@ wrightMap <- function(thetas, thresholds = NULL, item.side = itemModern, person.
 	split.screen(screens)
 	
 	
-	do.call(item.side,list(thresholds,yRange,...))
+	do.call(item.side,list(thresholds,yRange,oma = c(0,0,0,0),...))
 	close.screen(1)
 
 	do.call(person.side,list(thetas,yRange,oma = c(0,0,0,0),axis.logits = NULL,...))
