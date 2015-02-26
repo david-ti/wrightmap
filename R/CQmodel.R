@@ -486,7 +486,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 			colperdim = 3
 		else colperdim = 4
 
-		model$nDim = floor(length(p.est)/colperdim)
+		model$nDim = floor((length(p.est) - 1)/colperdim)
 
 		if (is.null(model$dimensions) || length(model$dimensions != model$nDim)) 
 			model$dimensions <- paste("d", c(1:model$nDim), sep = "")
@@ -500,9 +500,17 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		if (length(p.est)%%colperdim == 1) {
 			names(p.est) <- c("casenum", pp_lab_t)
+		} else if (p.type != "WLE") {
+			names(p.est) <- c("casenum", "pid", pp_lab_t)
+		} else if (length(p.est)%%colperdim == 3) {
+			names(p.est) <- c("casenum","pid", pp_lab_t, "case.fit")
+		} else if (any(p.est[4] < p.est[3])) {
+			names(p.est) <- c("casenum", pp_lab_t, "case.fit")
 		} else {
 			names(p.est) <- c("casenum", "pid", pp_lab_t)
 		}
+		
+		
 
 		model$p.est <- p.est
 		model$p.est.type <- p.type
