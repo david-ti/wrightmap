@@ -40,8 +40,10 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 
 	if (show.thr.lab == TRUE) {
 		if (show.thr.sym == TRUE) {
-			pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-			pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+			if(length(pos != length(thr))) {
+				pos <- matrix(rep(rep_len(thr.lab.pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
+				pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+			}
 			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, 
 				font = thr.lab.font)
 		} else {

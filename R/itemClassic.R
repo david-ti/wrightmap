@@ -1,12 +1,21 @@
 itemClassic <- function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c(0,0,0,3),...) {
-	Nbins <- function(x) {
+	Nbins <- function(thr,itemRange) {
+		
+		#print(paste("thr =", c(min(thr),max(thr))))
+		#print(paste("range =",itemRange))
 
-		itemRange <- range(x)
-		round((itemRange[2] - itemRange[1])/0.2, 0)
 
-		# return(seq(from = itemRange[1], to = itemRange[2], by = .1))
-		return(seq(from = itemRange[1], to = itemRange[2], length.out = 25))
-
+				
+		breaks <- seq(from = itemRange[1], to = itemRange[2], length.out = 25)
+		
+		#print(breaks)
+		if(min(thr) < min(breaks))
+			breaks <- c(min(thr),breaks)
+			
+		if(max(thr) > max(breaks))
+			breaks <- c(breaks,max(thr))
+		
+		return(breaks)
 	}
 
 	binItems <- function(level, labelMat, cutMat) {
@@ -34,18 +43,26 @@ itemClassic <- function(thr, yRange = NULL, axis.items = "Items",axis.logits = "
 	axis(4, las = 1, cex.axis = .7, font.axis = 2)
 
 	
-	item.hist <- hist(thr, plot = FALSE, breaks = Nbins(yRange))
+	item.hist <- hist(thr, plot = FALSE, breaks = Nbins(thr,yRange))
+	#print(item.hist$mids)
+	#stop()
 
 	itemBinLocations <- item.hist$mids
+	#print(cbind(0, itemBinLocations))
 	bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])
 	item.hist <- data.frame(xleft = item.hist$mids - (bin.size/2), ybottom = item.hist$mids * 0, xright = item.hist$mids + 
 		(bin.size/2), ytop = item.hist$counts)
 
 	item.labels <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
 	item.labels <- t(apply(item.labels, 1, paste, c(1:nL), sep = "."))
+	
+	#print(c(item.hist[, 1], tail(item.hist[, 3], 1)))
+	#print(Nbins(thr,yRange))
 
-	binnedItems <- matrix(cut(thr, breaks = c(item.hist[, 1], tail(item.hist[, 3], 1)), labels = c(1:length(item.hist[, 
+	binnedItems <- matrix(cut(thr, breaks = Nbins(thr,yRange), labels = c(1:length(item.hist[, 
 		1] + 1))), ncol = nL)
+	
+	#print(binnedItems)
 
 	binnedList <- unlist(lapply(1:length(itemBinLocations), binItems, item.labels, binnedItems))
 

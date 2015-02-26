@@ -15,6 +15,7 @@ wrightMap <- function(thetas, thresholds = NULL, item.side = itemModern, person.
 	}
 	
 	# Setting plot parameters
+	thresholds <- as.matrix(thresholds)
 	
 	nD <- ncol(thetas)
 	
