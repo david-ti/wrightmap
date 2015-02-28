@@ -1,4 +1,4 @@
-wrightMap <- function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist, throld = NULL, design.matrix = "normal", make.from = "deltas", alpha = 1, c.params = 0, main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...) {
+wrightMap <- function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist, use.hist = NULL, throld = NULL,  design.matrix = "normal", make.from = "deltas", alpha = 1, c.params = 0, main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...) {
 
 	## Helper Functions
 
@@ -58,6 +58,10 @@ wrightMap <- function(thetas, thresholds = NULL, item.side = itemModern, person.
 	do.call(item.side,list(thresholds,yRange,oma = c(0,0,0,0),...))
 	close.screen(1)
 
+	if(!is.null(use.hist)) {
+		message("Parameter 'hist' is deprecated. Please use 'person.side' parameter instead.")
+		person.side <- ifelse(hist,personHist,personDens)
+	}
 	do.call(person.side,list(thetas,yRange,oma = c(0,0,0,0),axis.logits = NULL,...))
 	
 	par(oma = c(0, 0, 3, 0))
