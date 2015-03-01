@@ -1,5 +1,5 @@
 CQmodel <-
-function(p.est = NULL, show = NULL, p.type = NULL) {
+function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 	############Helper functions############
 	
@@ -16,6 +16,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 
 	RMP <- function(table, parts) {
+		
 
 
 
@@ -90,6 +91,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 	
 
 		}
+		
 
 		if (length(line.seps)==0){
 
@@ -104,12 +106,22 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		if (all(parts == 'step') & length(parts) == 1) {line.seps <- nchar(left.side.titles)}
 
 		#line.seps
+		#print(table)
 
 
 		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)
+		
+		#print(out)
 		out = gsub("[\\(\\)\\*,]", " ", out)
+		#print(out)
 		out = trim(out)
+		
+		if(nchar(out[1]) < sum(RMP.lengths)) {
+			RMP.lengths <- c(10,7)
+			RMP.titles <- c("est","error")
+		}
 		out <- split.right(out, sum(RMP.lengths))
+		
 
 		# out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
 		# if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
@@ -123,11 +135,13 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 			left.table[sapply(left.table, is.character)] <- sapply(left.table[sapply(left.table, is.character)],function (x) gsub("^\\s+|\\s+$", "", x))
 
 		}
+		
 		#left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
 		# if (imported) {
 		# 	left.table[2] <- paste(left.table[[1]], left.table[[2]])
 		# 	left.table <- left.table[2]
 		# }
+		
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
 
 		cbind(left.table, right.table)
@@ -293,16 +307,16 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		model <- breakup(shw, shw.starts, shw.titles)
 		model$imported <- imported
+		
+		#print(model)
 
-
-		#return(proc.time()-ptm)
 		
 		#######SOE####################
 		
 		#ptm <- proc.time()
 		date.pattern <- "(?:(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s+)?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(0[1-9]|[1-2]?[0-9]|3[01])\\s+(2[0-3]|[0-1][0-9]):([0-5][0-9])(?::(60|[0-5][0-9]))?\\s+(19[0-9]{2}|[2-9][0-9]{3})+$"
-		date.at <- grep(date.pattern, model$SOE)
-		title.date <- model$SOE[date.at]
+		date.at <- grep(date.pattern, model[[1]])
+		title.date <- model[[1]][date.at]
 		model$SOE <- safe.remove(model$SOE, date.at)
 		m <- regexpr(date.pattern, title.date)
 		model$run.details <- list()
@@ -324,46 +338,60 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		two.colons.at <- grep(":.+:", colons)
 		other.lines <- append(other.lines, colons[two.colons.at])
 		colons <- safe.remove(colons, two.colons.at)
+		
+		if(!is.null(colons)) {
 
-		SOE <- split.by(colons, ":")
+			SOE <- split.by(colons, ":")
+	
+			other.lines <- other.lines[-grep("===", other.lines)]
+			other.lines <- other.lines[other.lines != ""]
+			other.lines <- other.lines[other.lines != "SUMMARY OF THE ESTIMATION"]
+			other.lines <- trim(other.lines)
+	
+			reason.at <- grep("Iterations terminated because", other.lines)
+			SOE$termination.reason <- other.lines[reason.at]
+			other.lines <- safe.remove(other.lines, reason.at)
+	
+			deviance.line <- grep("Deviance Change=", other.lines, value = TRUE)
+			other.lines <- other.lines[-grep("Deviance Change=", other.lines)]
+			termination.criteria <- c(unlist(strsplit(SOE$criteria, ",")), deviance.line)
+			SOE <- c(SOE, split.by(termination.criteria, "="))
+			SOE$criteria <- NULL
+	
+			model$run.details$format <- SOE$format
+			model$run.details$key <- SOE$key
+			model$run.details <- c(model$run.details, other.lines)
+			SOE <- numify(SOE)
+	
+			model <- c(SOE["equation"], SOE["participants"], SOE["deviance"], SOE["parameters"], model)
+			class(SOE) <- "SOE"
+	
+	
+			model$SOE <- SOE
+		
+		}
+		
+		if(is.null(model$equation)) {
+			if(is.null(equation)) {
+				stop("Please specify the model equation.")
+			} else {
+				model$equation <- equation
+			}
+		}
+		
+		
 
-		other.lines <- other.lines[-grep("===", other.lines)]
-		other.lines <- other.lines[other.lines != ""]
-		other.lines <- other.lines[other.lines != "SUMMARY OF THE ESTIMATION"]
-		other.lines <- trim(other.lines)
 
-		reason.at <- grep("Iterations terminated because", other.lines)
-		SOE$termination.reason <- other.lines[reason.at]
-		other.lines <- safe.remove(other.lines, reason.at)
-
-		deviance.line <- grep("Deviance Change=", other.lines, value = TRUE)
-		other.lines <- other.lines[-grep("Deviance Change=", other.lines)]
-		termination.criteria <- c(unlist(strsplit(SOE$criteria, ",")), deviance.line)
-		SOE <- c(SOE, split.by(termination.criteria, "="))
-		SOE$criteria <- NULL
-
-		model$run.details$format <- SOE$format
-		model$run.details$key <- SOE$key
-		model$run.details <- c(model$run.details, other.lines)
-		SOE <- numify(SOE)
-
-		model <- c(SOE["equation"], SOE["participants"], SOE["deviance"], SOE["parameters"], model)
-		class(SOE) <- "SOE"
-
-
-		model$SOE <- SOE
-
-
-		#return(proc.time()-ptm)
 		
 		##############RMP######################
 		
 
 
-		additive.parts = unlist(strsplit(SOE$equation, "[+|-]"))
+		additive.parts = unlist(strsplit(model$equation, "[+|-]"))
 		parts = strsplit(additive.parts, "\\*")
 		model$additive.parts <- additive.parts
 		model$parts <- parts
+		
 		if (imported) {
 			params <- RMP(model$RMP, "Parameters")
 			model$RMP <- list()
@@ -374,9 +402,12 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 			model$run.details$names <- mapply(get.names, parts[parts == additive.parts], model$RMP[parts == additive.parts])
 		}
 		
+		#print(model$RMP)
+		
 
 		##########PMP###########
 		
+		if(!is.null(model$PMP)) {
 		PMP.starts <- grep("^====+", model$PMP)
 		PMP.heads <- grep(date.string, model$PMP)
 		PMP.starts <- PMP.starts[!(PMP.starts + 1) %in% PMP.heads]
@@ -440,6 +471,8 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		model$PMP <- NULL
 		model <- c(model, PMP)
+		
+		}
 
 
 		########GIN#########

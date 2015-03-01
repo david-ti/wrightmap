@@ -3,6 +3,8 @@ function(ests, errors, labels = "", zeroline = TRUE, incol = "gray", outcol = "b
 	main.title = "Statistical Significance Plot", axes = FALSE, xlab = "", pch = 16, ...) {
 
 	xcorrs = 1:length(ests)
+	errors[is.na(errors)] <- 0
+	print(errors)
 	lowerbounds = ests - 1.96 * errors
 	upperbounds = ests + 1.96 * errors
 	blackorblue <- function(lower, upper, incol, outcol) {
