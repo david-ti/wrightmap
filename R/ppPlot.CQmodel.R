@@ -1,6 +1,5 @@
-kidMap.CQmodel <-
-function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = NULL, label.items = NULL, main.title = NULL, 
-	thr.lab.text = NULL, dim.names = NULL, ...) {
+ppPlot.CQmodel <-
+function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = NULL, label.items = NULL, thr.lab.text = NULL, dim.names = NULL, ...) {
 
 	unpack.GIN <- function(GIN) {
 		if (class(GIN) == "matrix") 
@@ -44,26 +43,10 @@ function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = N
 		names <- unpack.names(model$GIN)
 		colnames(throlds) <- names
 
-
-		if (is.null(main.title)) 
-			main.title <- "Kid Map"
-		#message("Using GIN table for threshold parameters")
 	} else {
 		RMP <- model$RMP
-
-		
-			throlds <- make.deltas(model, item.table = item.table, interactions = interactions, step.table = step.table)
-				if (is.null(main.title)) 
-					main.title <- "Kid Map"
-				
-		
-
-
-
-
-
-		#print(label.items)
-		
+		throlds <- make.deltas(model, item.table = item.table, interactions = interactions, step.table = step.table)
+						
 	}
 
 	if (is.null(label.items)) {
@@ -84,5 +67,5 @@ function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = N
 		dim.names <- model$dimensions
 
 
-	kidMap(thetas, throlds, est, SE, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
+	ppPlot(thetas, throlds, est, SE, label.items = label.items, dim.names = dim.names, thr.lab.text = thr.lab.text, ...)
 }
