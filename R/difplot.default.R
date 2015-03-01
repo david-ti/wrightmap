@@ -1,5 +1,7 @@
-difplot.default <- function(table, grouptype = NULL, group = NULL, item.names = NULL, drawLabels = TRUE, ylim = c(-1, 
+difplot.default <- function(data, grouptype = NULL, group = NULL, item.names = NULL, drawLabels = TRUE, ylim = c(-1, 
 	1), ylab = NULL, ...) {
+		
+	table <- data
 
 	if (is.null(group)) {
 		if (is.null(grouptype)) {

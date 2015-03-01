@@ -1,5 +1,5 @@
-difplot.CQmodel <- function(model, table.name = NULL, grouptype = NULL, group = NULL, ...) {
-	RMP <- model$RMP
+difplot.CQmodel <- function(data, table.name = NULL, grouptype = NULL, group = NULL, ...) {
+	RMP <- data$RMP
 	if (is.null(table.name)) {
 		if (is.null(grouptype)) {
 			if (is.null(group)) {
