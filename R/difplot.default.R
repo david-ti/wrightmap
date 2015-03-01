@@ -1,4 +1,4 @@
-difplot.default <- function(data, grouptype = NULL, group = NULL, item.names = NULL, drawLabels = TRUE, ylim = c(-1, 
+difplot.default <- function(data, grouptype = NULL, group = NULL, item.names = NULL, ylim = c(-1, 
 	1), ylab = NULL, ...) {
 		
 	table <- data
@@ -29,5 +29,5 @@ difplot.default <- function(data, grouptype = NULL, group = NULL, item.names = N
 	if(is.null(ylab))
 		ylab <- paste0("Estimates of ",grouptype," effects (",group,")")
 	
-	plotCI(table$est[m], table$error[m], item.names, drawLabels, ylim = ylim, ylab = ylab, ...)
+	plotCI(table$est[m], table$error[m], item.names, ylim = ylim, ylab = ylab, ...)
 }
