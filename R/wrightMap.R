@@ -1,11 +1,14 @@
-wrightMap <- function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist, use.hist = NULL, throld = NULL,  design.matrix = "normal", make.from = "deltas", alpha = 1, c.params = 0, main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...) {
+wrightMap <-
+function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist, use.hist = NULL, throld = NULL,  design.matrix = "normal", make.from = "deltas", alpha = 1, c.params = 0, main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...) {
 
 	## Helper Functions
 
 
-	thetas <- personData(thetas)
 	if(is.null(thresholds))
 		thresholds <- thetas
+	
+	thetas <- personData(thetas)
+	
 	thresholds <- itemData(thresholds,...)
 	
 	if (!is.null(throld)) {
