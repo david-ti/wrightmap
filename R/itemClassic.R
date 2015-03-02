@@ -10,11 +10,11 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c
 		breaks <- seq(from = itemRange[1], to = itemRange[2], length.out = 25)
 		
 		#print(breaks)
-		if(min(thr) < min(breaks))
-			breaks <- c(min(thr),breaks)
+		if(min(thr, na.rm = TRUE) < min(breaks))
+			breaks <- c(min(thr, na.rm = TRUE),breaks)
 			
-		if(max(thr) > max(breaks))
-			breaks <- c(breaks,max(thr))
+		if(max(thr, na.rm = TRUE) > max(breaks))
+			breaks <- c(breaks,max(thr, na.rm = TRUE))
 		
 		return(breaks)
 	}
