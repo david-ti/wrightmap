@@ -1,5 +1,6 @@
 itemHist <- function(thr, yRange = NULL,axis.items = "Items",axis.logits = "Logits",oma = c(0,0,0,3),...) {
 
+	
 	Nbins <- function(x) {
 
 		itemRange <- range(x)
@@ -8,6 +9,8 @@ itemHist <- function(thr, yRange = NULL,axis.items = "Items",axis.logits = "Logi
 		return(seq(from = itemRange[1], to = itemRange[2], length.out = 25))
 
 	}
+	
+	thr <- as.matrix(thr)
 
 	nI <- dim(thr)[1]
 	
