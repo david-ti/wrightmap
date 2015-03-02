@@ -15,7 +15,7 @@ itemHist <- function(thr, yRange = NULL,axis.items = "Items",axis.logits = "Logi
 	nI <- dim(thr)[1]
 	
 	if(is.null(yRange))
-		yRange <- c(min(thr),max(thr))
+		yRange <- c(min(thr, na.rm = TRUE),max(thr, na.rm = TRUE))
 
 	item.hist <- hist(thr, plot = FALSE, breaks = Nbins(yRange))
 	bin.size <- abs(item.hist$breaks[1] - item.hist$breaks[2])

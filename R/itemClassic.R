@@ -1,4 +1,5 @@
-itemClassic <- function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c(0,0,0,3),...) {
+itemClassic <-
+function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c(0,0,0,3),...) {
 	Nbins <- function(thr,itemRange) {
 		
 		#print(paste("thr =", c(min(thr),max(thr))))
@@ -30,7 +31,7 @@ itemClassic <- function(thr, yRange = NULL, axis.items = "Items",axis.logits = "
 	nL <- dim(thr)[2]
 	
 	if(is.null(yRange))
-		yRange <- c(min(thr),max(thr))
+		yRange <- c(min(thr, na.rm = TRUE),max(thr, na.rm = TRUE))
 	par(oma = oma)	
 	par(mgp = c(1, 0.2, 0))
 
