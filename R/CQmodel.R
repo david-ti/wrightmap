@@ -385,27 +385,13 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 		variance.line = grep("Variance", PMP$cov.cor, value = TRUE)
 		m <- gregexpr("[0-9]+\\.[0-9]+(?![0-9])(?![\\s]*\\))", variance.line, perl = TRUE)
 		PMP$variances <- as.numeric(unlist(regmatches(variance.line, m)))
-		m <- gregexpr("[0-9\\.\\-#IO]+(?=[\\s]*\\))", variance.line, perl = TRUE)
+		m <- gregexpr("[0-9\\.]+(?=[\\s]*\\))", variance.line, perl = TRUE)
 		errors <- as.numeric(unlist(regmatches(variance.line, m)))
 		PMP$nDim = length(PMP$variances)
-		length(errors) <- length(PMP$variances)
 		PMP$dimensions = "Main dimension"
 		if (PMP$nDim > 1) {
-
-			if (CQV == 2){
-				
-				PMP$cov.cor <- read.fwf(tempify(PMP$cov.cor[8:(8 + PMP$nDim - 1)]), widths = c(25, rep(9, PMP$nDim)), row.names = 1, 
+			PMP$cov.cor <- read.fwf(tempify(PMP$cov.cor[8:(8 + PMP$nDim - 1)]), widths = c(25, rep(9, PMP$nDim)), row.names = 1, 
 				strip.white = TRUE, stringsAsFactors = FALSE)
-				
-			}
-			
-			if (CQV == 3){
-				
-				PMP$cov.cor <- read.fwf(tempify(PMP$cov.cor[8:(8 + PMP$nDim - 1)]), widths = c(25, rep(18, PMP$nDim)), row.names = 1, 
-				strip.white = TRUE, stringsAsFactors = FALSE)
-				
-			}
-
 			PMP$dimensions <- row.names(PMP$cov.cor)
 			names(PMP$cov.cor) <- PMP$dimensions
 			PMP$cor.matrix <- PMP$cov.cor
@@ -486,7 +472,7 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 			colperdim = 3
 		else colperdim = 4
 
-		model$nDim = floor((length(p.est) - 1)/colperdim)
+		model$nDim = floor(length(p.est)/colperdim)
 
 		if (is.null(model$dimensions) || length(model$dimensions != model$nDim)) 
 			model$dimensions <- paste("d", c(1:model$nDim), sep = "")
@@ -500,17 +486,9 @@ function(p.est = NULL, show = NULL, p.type = NULL) {
 
 		if (length(p.est)%%colperdim == 1) {
 			names(p.est) <- c("casenum", pp_lab_t)
-		} else if (p.type != "WLE") {
-			names(p.est) <- c("casenum", "pid", pp_lab_t)
-		} else if (length(p.est)%%colperdim == 3) {
-			names(p.est) <- c("casenum","pid", pp_lab_t, "case.fit")
-		} else if (any(p.est[4] < p.est[3])) {
-			names(p.est) <- c("casenum", pp_lab_t, "case.fit")
 		} else {
 			names(p.est) <- c("casenum", "pid", pp_lab_t)
 		}
-		
-		
 
 		model$p.est <- p.est
 		model$p.est.type <- p.type

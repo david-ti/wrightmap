@@ -1,6 +1,6 @@
-kidMap.CQmodel <-
-function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = NULL, label.items = NULL, main.title = NULL, 
-	thr.lab.text = NULL, dim.names = NULL, ...) {
+wrightMap.CQmodel <-
+function(thetas, item.table = NULL, interactions = NULL, step.table = NULL, item.type = "default", label.items = NULL, main.title = NULL, 
+	thr.lab.text = NULL, dim.names = NULL, throld = .5,...) {
 
 	unpack.GIN <- function(GIN) {
 		if (class(GIN) == "matrix") 
@@ -28,17 +28,13 @@ function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = N
 	}
 
 	model <- thetas
-	
-	if(!is.null(model$p.est)) {
+
 	p.est <- model$p.est
 	columns.at <- grep("^est", names(p.est), perl = TRUE)
 	thetas <- p.est[columns.at]
-	}
-	else
-		thetas <- 0
 
 
-	if (!is.null(model$GIN) && is.null(item.table)) {
+	if (throld == .5 && !is.null(model$GIN) && is.null(item.table) && (item.type != "deltas")) {
 		#print("false")
 		throlds <- unpack.GIN(model$GIN)
 		names <- unpack.names(model$GIN)
@@ -46,17 +42,21 @@ function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = N
 
 
 		if (is.null(main.title)) 
-			main.title <- "Kid Map"
-		#message("Using GIN table for threshold parameters")
+			main.title <- "Wright Map (thresholds)"
+		message("Using GIN table for threshold parameters")
 	} else {
 		RMP <- model$RMP
 
-		
+		if (item.type != "thresholds") {
 			throlds <- make.deltas(model, item.table = item.table, interactions = interactions, step.table = step.table)
 				if (is.null(main.title)) 
-					main.title <- "Kid Map"
+					main.title <- "Wright Map (Deltas)"
 				
-		
+		} else {
+			throlds <- make.thresholds(model, item.table = item.table, interactions = interactions, step.table = step.table,throld = throld)
+			if (is.null(main.title)) 
+				main.title <- "Wright Map (Thresholds)"
+		}
 
 
 
@@ -84,5 +84,5 @@ function(thetas, est, SE, item.table = NULL, interactions = NULL, step.table = N
 		dim.names <- model$dimensions
 
 
-	kidMap(thetas, throlds, est, SE, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
+	wrightMap(thetas, throlds, label.items = label.items, dim.names = dim.names, main.title = main.title, thr.lab.text = thr.lab.text, ...)
 }

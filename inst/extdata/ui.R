@@ -5,14 +5,14 @@ shinyUI(fluidPage(
   # Application title
   titlePanel("Wright Map"),
   
-  
+  # Sidebar with a slider input for number of observations
   sidebarLayout(
   sidebarPanel(
   	wellPanel(
-    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Formatting options" = "format", "Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
+    	radioButtons('showPane', 'Show:', choices = c("File options" = "files","Data options" = "data","Text options" = "labels","Item labels" = "label.items","Person display options" = "person.disp","Symbol options" = "sym.disp","Item color options" = "color.disp"))
     	),
   		conditionalPanel(condition="input.showPane=='files'",
-  			selectInput('datatype',"Type of data", choices = c("R object" = "R","ConQuest output" = "CQ")),
+  			selectInput('datatype',"Type of data", choices = c("ConQuest output" = "CQ","R object" = "R")),
   			conditionalPanel(condition = "input.datatype == 'R'",
   				conditionalPanel(condition = "input.selectedTab == 'wmap'",
   					textInput('thetas',"Name of person parameters object"),
@@ -24,18 +24,12 @@ shinyUI(fluidPage(
   					textInput('fitEst',"Name of fit estimates object"),
   					textInput('fitLB',"Name of fit lower bounds object"),
   					textInput('fitUB',"Name of fit upper bounds object")
-  				),
-  				conditionalPanel(condition = "input.selectedTab == 'difplot'",
-  					textInput('difEst',"Name of estimates object"),
-  					textInput('difErr',"Name of errors object")
   				)
   			),
   			conditionalPanel(condition="input.datatype == 'CQ'",
+    			fileInput('eap', 'Choose Person Estimates File'),
     			fileInput('shw', 'Choose Show File'),
-    			conditionalPanel(condition = "input.selectedTab == 'wmap'",
-    				fileInput('eap', 'Choose Person Estimates File'),
-    				selectInput("p.type", "Person estimates type:", choices = c("EAP", "MLE", "WLE"))
-    			)
+    			selectInput("p.type", "Person estimates type:", choices = c("EAP", "MLE", "WLE"))
     		)
     	),
     	conditionalPanel(condition = "input.showPane == 'data'",
@@ -52,23 +46,10 @@ shinyUI(fluidPage(
 	    		)
 	    	),
 	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph'",
-	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U"))
-	    	),
-	    	conditionalPanel(condition = "input.selectedTab == 'fitgraph' || input.selectedTab == 'difplot'",
-	    		selectInput("pick.table","Graph which table?",choices = c("Please select files" = "none"))),
-	    	conditionalPanel(condition = "input.selectedTab == 'difplot'",
-	    		selectInput("grouptype","Group by",choices = c("Please select files" = "none")),
-	    		selectInput("group","Group",choices = c("Please select files" = "none"))
+	    		radioButtons("fit.type", "Fit type",choices = c("Weighted" = "W", "Unweighted" = "U")),
+	    		selectInput("fit.table","Graph which table?",choices = c("Please select files" = "none"))
 	    	)
     		
-    	),
-    	conditionalPanel(condition = "input.showPane == 'format'",
-    		textInput("minl","Minimum Logit"),
-    		textInput("maxl","Maximum Logit"),
-    		sliderInput("itemprop","Item proportion",min = .25,max = .9,value = formals(wrightMap.default)[["item.prop"]],step = .01)
-    	),
-    	conditionalPanel(condition = "input.showPane == 'dims'",
-    		uiOutput("dim.items")
     	),
 		conditionalPanel(condition="input.showPane == 'labels' && input.selectedTab == 'wmap'",
 			checkboxInput('autotitle',"Create title automatically",TRUE),
@@ -77,8 +58,7 @@ shinyUI(fluidPage(
 			),
 			textInput('axis.logits',"Logit axis label","Logits"),
 			textInput('axis.persons',"Respondents axis label","Respondents"),
-			textInput('axis.items',"Items axis label","Items"),
-			uiOutput("dim.labels")
+			textInput('axis.items',"Items axis label","Items")
     	),
     	conditionalPanel(condition = "input.showPane=='label.items'",
     		checkboxInput('show.thr.lab', 'Show Threshold Labels', TRUE),
@@ -92,11 +72,9 @@ shinyUI(fluidPage(
     			uiOutput("item.labels"))
     	),
     	conditionalPanel(condition="input.showPane=='person.disp'",
-    		checkboxInput('use.hist', 'Histogram?', TRUE),
-    		uiOutput("dim.colors")
+    		checkboxInput('use.hist', 'Histogram?', TRUE)
     	),
     	conditionalPanel(condition="input.showPane=='sym.disp'",
-    		checkboxInput('show.thr.sym', 'Show Threshold Symbols', TRUE),
 		    sliderInput(
 		    				"cex", 
 		                	"Symbol size", 
@@ -119,28 +97,19 @@ shinyUI(fluidPage(
   #textOutput("model"),
   	tabsetPanel(type = "tabs",
     	tabPanel("Wright map",
-    		verbatimTextOutput("wmap.command"),
     		plotOutput("wmap"),
     		conditionalPanel(condition = "input.which_type!='deltas' || (input.datatype == 'R' && input.make_from == 'thresholds')",
-    			sliderInput("throld","Threshold",min=.05,max = .95, value = .5, step = .05,animate = animationOptions(loop = TRUE,interval=500))
+    			sliderInput("throld","Threshold",min=.01,max = .99, value = .5, step = .01)
     		),
-    		textInput("est","Individual ability estimate"),
-    		textInput("err","Individual standard error"),
+    		verbatimTextOutput("command"),
     		value = "wmap"
     	),
     	tabPanel("Fit plot",
     		uiOutput("fitPlot.ui"),
     		sliderInput("width","Plot width",min = 1, max = 100, value = 100, step = 1),
-    		verbatimTextOutput("fitplot.command"),
     		value = "fitgraph"
     	),
-    	tabPanel("Dif plot",
-    		plotOutput("difplot"),
-    		verbatimTextOutput("difplot.command"),
-    		value = "difplot"
-    	),
     	id = "selectedTab"
-    ),
-    em("David Torres Irribarra & Rebecca Freund (2014)")
+    )
   )
 )))

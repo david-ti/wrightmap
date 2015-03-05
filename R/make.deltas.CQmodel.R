@@ -95,8 +95,8 @@ function(item.params, item.table = NULL, interactions = NULL, step.table = NULL,
 	
 	
 
-	# message("Using ", item.name, ifelse(!is.null(interactions), paste(" and", inter.name), ""), ifelse(!is.null(step.table), paste(" and", 
-		# step.name), ""), " tables to create delta parameters")
+	message("Using ", item.name, ifelse(!is.null(interactions), paste(" and", inter.name), ""), ifelse(!is.null(step.table), paste(" and", 
+		step.name), ""), " tables to create delta parameters")
 
 	return(throlds)
 
