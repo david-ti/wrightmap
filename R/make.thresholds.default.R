@@ -43,11 +43,11 @@ get.thresholds = function(parameters, design.matrix = "normal", theta.interval =
 		#print(parameters)
 		#print("get")
 		parameters = as.numeric(parameters)
+		max.length <- length(parameters)
 		parameters = parameters[!is.na(parameters)]
 		n.parameters = length(parameters)
-		thresholds = rep(NA, times = n.parameters)
+		thresholds = rep(NA, times = max.length)
 		if(make.from == "deltas") {
-max.length <- length(parameters)
 		
 		n.categories = n.parameters + 1
 
