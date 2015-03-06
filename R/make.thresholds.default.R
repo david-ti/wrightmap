@@ -43,11 +43,11 @@ get.thresholds = function(parameters, design.matrix = "normal", theta.interval =
 		#print(parameters)
 		#print("get")
 		parameters = as.numeric(parameters)
+		max.length <- length(parameters)
 		parameters = parameters[!is.na(parameters)]
 		n.parameters = length(parameters)
-		thresholds = rep(NA, times = n.parameters)
+		thresholds = rep(NA, times = max.length)
 		if(make.from == "deltas") {
-max.length <- length(parameters)
 		
 		n.categories = n.parameters + 1
 
@@ -114,10 +114,10 @@ apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.in
 		if(NCOL(item.params) != 1)
 			stop("Cannot run polytomous 3PL")
 	}
-	# if(make.from == "deltas")
-		# message("Assuming partial credit model")
-	# else if(make.from == "thresholds")
-		# message("Assuming graded response model")
+	if(make.from == "deltas")
+		message("Assuming partial credit model")
+	else if(make.from == "thresholds")
+		message("Assuming graded response model")
 
 	return(apply.thresholds(item.params, design.matrix, theta.interval, alpha, c.params))
 
