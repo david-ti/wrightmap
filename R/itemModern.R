@@ -1,5 +1,5 @@
 itemModern <-
-function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",oma = c(0,0,0,3),...) {
+function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",axis.logits.side = "R", oma = c(0,0,0,3),...) {
 	
 	thr <- as.matrix(thr)
 
@@ -30,8 +30,16 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-	axis(4, las = 1, cex.axis = .7, font.axis = 2)
 	
+	if (axis.logits.side == "R") {
+		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
+		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
+	} else if (axis.logits.side == "L") {
+		axis(2, las = 1, cex.axis = 0.7, font.axis = 2)
+		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
+	}
+	
+
 
 	if (show.thr.sym == TRUE) {
 
@@ -111,5 +119,5 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 
 	}
 	
-	mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
+	
 }

@@ -1,5 +1,5 @@
 itemClassic <-
-function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c(0,0,0,3),...) {
+function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",axis.logits.side = "R",oma = c(0,0,0,3),...) {
 	Nbins <- function(thr,itemRange) {
 		
 		#print(paste("thr =", c(min(thr),max(thr))))
@@ -41,7 +41,14 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-	axis(4, las = 1, cex.axis = .7, font.axis = 2)
+	if (axis.logits.side == "R") {
+		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
+		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
+	} else if (axis.logits.side == "L") {
+		axis(2, las = 1, cex.axis = 0.7, font.axis = 2)
+		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
+	}
+
 
 	
 	item.hist <- hist(thr, plot = FALSE, breaks = Nbins(thr,yRange))
@@ -69,6 +76,5 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",oma = c
 
 	text(cbind(0, itemBinLocations), labels = binnedList, pos = 4, offset = 1 * 15/nI,cex = .65)
 	
-	mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
-
+	
 }

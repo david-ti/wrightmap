@@ -1,4 +1,5 @@
-personDens <- function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5,dim.names = NULL,dim.color = "black",oma = c(0, 5, 0, 5), axis.logits = "Logits",axis.persons = "Respondents",...) {
+personDens <-
+function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5,dim.names = NULL,dim.color = "black",oma = c(0, 5, 0, 5), axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...) {
 
 	densExt <- function(densElem) {
 		xDim <- densElem["y"][[1]]
@@ -60,11 +61,10 @@ personDens <- function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 
 
 		lapply(distInfo, FUN = person.plot, yRange = yRange, xRange = xRange, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, p.font.lab = 3, p.lwd = 2)
 		
-		if (!is.null(axis.logits)) {
-		axis(4, las = 1, cex.axis = 0.6, font.axis = 2)
-		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
-
+		if (show.axis.logits) {
+		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
 	}
+	mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
 		
 		screen(first)
 	#print(distInfo)

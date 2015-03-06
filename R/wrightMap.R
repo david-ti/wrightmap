@@ -65,7 +65,7 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 		message("Parameter 'hist' is deprecated. Please use 'person.side' parameter instead.")
 		person.side <- ifelse(hist,personHist,personDens)
 	}
-	do.call(person.side,list(thetas,yRange,oma = c(0,0,0,0),axis.logits = NULL,...))
+	do.call(person.side,list(thetas,yRange,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE,...))
 	
 	par(oma = c(0, 0, 3, 0))
 	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
