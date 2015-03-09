@@ -1,5 +1,5 @@
 wrightMap <-
-function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist, use.hist = NULL, throld = NULL,  design.matrix = "normal", make.from = "deltas", alpha = 1, c.params = 0, main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, ...) {
+function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist,  main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, use.hist = NULL,...) {
 
 	## Helper Functions
 
@@ -10,12 +10,6 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	thetas <- personData(thetas)
 	
 	thresholds <- itemData(thresholds,...)
-	
-	if (!is.null(throld)) {
-		thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = throld, alpha = alpha, make.from = make.from, c.params = c.params)
-	} else if (any(c.params != 0)) {
-		thresholds <- make.thresholds(thresholds, design.matrix = design.matrix, throld = 0.5, alpha = alpha, make.from = make.from, c.params = c.params)
-	}
 	
 	# Setting plot parameters
 	thresholds <- as.matrix(thresholds)
