@@ -35,6 +35,7 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		parts.search[parts == 'step'] <- '(step|category)'
 
 		line.seps <- numeric()
+		
 
 		for (i in 1:length(parts)) {
 
@@ -44,6 +45,8 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 				temp.col.seps[1] <- gregexpr(parts.search[i],left.side.titles)[[1]][1] - 2
 				#print(temp.col.seps)
+				
+				
 
 				if (i > 1){
 
@@ -51,6 +54,8 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 					# print(temp.col.seps)
 	
 					if(parts[i] != 'step' & parts[i] != 'category'){
+						
+						
 	
 						first.line <- substr(table[7], 1, temp.col.seps[1]+2)
 						#print(first.line)
@@ -62,6 +67,8 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 						temp.col.seps[1] <- temp.col.seps[1] - temp.col.seps[2] - sum(line.seps)
 						
 						#print(temp.col.seps)
+						
+						
 	
 					}else{
 
@@ -392,21 +399,24 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		model$additive.parts <- additive.parts
 		model$parts <- parts
 		
+		
+		
 		if (imported) {
 			params <- RMP(model$RMP, "Parameters")
 			model$RMP <- list()
 			model$RMP$item <- params
 		} else {
-			RMP.tables <- breakup(model$RMP, grep("TERM ", model$RMP), additive.parts)
+			RMP.tables <- breakup(model$RMP, grep("  VARIABLES", model$RMP) - 2, additive.parts)
 			model$RMP = mapply(RMP, RMP.tables, parts, SIMPLIFY = FALSE)
 			model$run.details$names <- mapply(get.names, parts[parts == additive.parts], model$RMP[parts == additive.parts])
 		}
+		
+		
 		
 		#print(model$RMP)
 		
 
 		##########PMP###########
-		
 		if(!is.null(model$PMP)) {
 		PMP.starts <- grep("^====+", model$PMP)
 		PMP.heads <- grep(date.string, model$PMP)
@@ -473,13 +483,17 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		model <- c(model, PMP)
 		
 		}
+		
 
 
 		########GIN#########
 		
 		do.GIN <- function(GIN) {
-			GIN <- GIN[7:(length(GIN))]
+			
+			GIN <- GIN[4:(length(GIN))]
 			GIN <- GIN[-grep("===",GIN)]
+			GIN <- GIN[-grep("GIN Number", GIN)]
+			GIN <- GIN[-grep("---",GIN)]
 
 			GIN <- gsub("\\s*\t\\s*", "\t", GIN)
 			GIN <- gsub(" +","_",GIN)
@@ -490,13 +504,16 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 			return(make.GIN(GIN))
 		}
 		
+		
 		if (!is.null(model$GIN)) {
 			model$GIN <- do.GIN(model$GIN)
 		}
 		
+		
 		if(!is.null(model$GIN.deltas)) {
 			model$GIN.deltas <- do.GIN(model$GIN.deltas)
 		}
+		
 		#return(proc.time()-ptm)
 		class(model) <- "CQmodel"
 
