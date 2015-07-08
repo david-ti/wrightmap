@@ -1,5 +1,5 @@
 personDens <-
-function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5,dim.names = NULL,dim.color = "black",oma = c(0, 5, 0, 5), axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...) {
+function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5,dim.names = NULL,dim.color = "black",person.points = NULL, person.range = NULL, p.point.col = "black", p.range.col = "gray70",oma = c(0, 5, 0, 5), axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...) {
 
 	densExt <- function(densElem) {
 		xDim <- densElem["y"][[1]]
@@ -17,13 +17,33 @@ function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj
 		return(distInfo)
 	}
 
-	person.plot <- function(distInfo, yRange, xRange, dim.lab.side, dim.lab.cex, dim.lab.adj, p.cex.lab, p.font.lab, p.lwd) {
+	person.plot <- function(distInfo, yRange, xRange, p.points, p.range, p.col, r.col, dim.lab.side, dim.lab.cex, dim.lab.adj, p.cex.lab, p.font.lab, p.lwd) {
 		par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 		
 		plot(distInfo, ylim = yRange, xlim = xRange, type = "l", axes = FALSE, ylab = "", xlab = "", cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, col = attr(distInfo, "dim.color"))
 		mtext(attr(distInfo, "dim.name"), side = dim.lab.side, line = -1, cex = dim.lab.cex, font = 1, adj = dim.lab.adj)
 		box(bty = "c")
 		
+		draw.range <- function(upper, lower, col) {
+				
+				points( c( 0,0), c(lower, upper), type = "l", lwd = 5, lend=2, col = col)
+			}
+			
+		draw.point <- function(pt, col) {
+				
+				 points(0,pt, pch = 15, cex = .6, col = col)
+			}
+
+		 if(!is.null(p.range)) {
+				p.range <- matrix(p.range,nrow = 2)
+				lower <- p.range[1,]
+				upper <- p.range[2,]
+				mapply(draw.range,upper,lower,r.col)
+			}
+			if(!is.null(p.points)) {
+				mapply(draw.point,p.points,p.col)
+			}
+		 
 		if (screen() != max(split.screen())) 
 			screen(screen() + 1)
 	}
@@ -59,7 +79,7 @@ function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj
 
 	par(oma = oma)
 
-		lapply(distInfo, FUN = person.plot, yRange = yRange, xRange = xRange, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, p.font.lab = 3, p.lwd = 2)
+		lapply(distInfo, FUN = person.plot, yRange = yRange, xRange = xRange, p.points = person.points, p.range = person.range, p.col = p.point.col, r.col = p.range.col, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, p.cex.lab = 1.3, p.font.lab = 3, p.lwd = 2)
 		
 		if (show.axis.logits) {
 		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
