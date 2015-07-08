@@ -1,5 +1,5 @@
 personHist <-
-function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
+function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
 
 	densExt <- function(densElem) {
 		bin.size <- abs(densElem$breaks[1] - densElem$breaks[2])
@@ -15,7 +15,7 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 		return(distInfo)
 	}
 
-	person.plot <- function(distInfo, use.hist, yRange, dim.lab.side, dim.lab.cex, dim.lab.adj, p.cex.lab, p.font.lab, p.lwd) {
+	person.plot <- function(distInfo, yRange, p.points, p.range, p.col, r.col, dim.lab.side, dim.lab.cex, dim.lab.adj, p.cex.lab, p.font.lab, p.lwd) {
 		#par(mar = c(0,0,0,0))
 		
 		#print(screen())
@@ -23,10 +23,48 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 		par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 
 		plot(c(min(distInfo[, 1]), max(distInfo[, 3])), c(min(distInfo[, 2]), max(distInfo[, 4])), ylim = yRange, xlim = c(max(distInfo[, 
-			4]), 0), type = "n", ylab = "", xlab = "", axes = FALSE, cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd, col = attr(distInfo, 
-			"dim.color"))
+			4]), 0), type = "n", ylab = "", xlab = "", axes = FALSE, cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd)
+			
+			draw.range <- function(upper, lower, col, distInfo) {
+				in.range <- distInfo[,1] < upper & distInfo[,3] > lower
+				range.info <- distInfo[in.range,]
+				rect(range.info[, 4], range.info[, 1], range.info[, 2], range.info[, 3], col = col)
+			}
+			
+			draw.point <- function(pt, col, distInfo) {
+				has.point <- distInfo[,1] - pt <= 0 & distInfo[,3] - pt > 0
+				point.info <- distInfo[has.point,]
+				rect(point.info[, 4], point.info[, 1], point.info[, 2], point.info[, 3], col = col)
+			}
+			
+			rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3], col = attr(distInfo, "dim.color"))
+		
+			
+			
+			if(!is.null(p.range)) {
+				p.range <- matrix(p.range,nrow = 2)
+				lower <- p.range[1,]
+				upper <- p.range[2,]
+				mapply(draw.range,upper,lower,r.col,list(distInfo))
+			}
+			if(!is.null(p.points)) {
+				mapply(draw.point,p.points,p.col,list(distInfo))
+			}
+			
+		
+			# if(!is.null(p.ranges)) {
+				# p.ranges <- matrix(p.ranges,nrow = 2)
+				# for(i in 1:ncol(p.ranges)) {
+					# bar.colors[distInfo[,1] < p.ranges[2,i] & distInfo[,3] > p.ranges[1,i]] <- 'grey75'
+				# }
+			# }
+			
+			# for(p in p.points) {
+				   # bar.colors[distInfo[,1] - p <= 0 & distInfo[,3] - p > 0] <- 'grey45'
+            	# }
 
-		rect(distInfo[, 4], distInfo[, 1], distInfo[, 2], distInfo[, 3], col = attr(distInfo, "dim.color"))
+		
+		
 		mtext(attr(distInfo, "dim.name"), side = dim.lab.side, line = -1, cex = dim.lab.cex, font = 1, adj = dim.lab.adj)
 		box(bty = "c")
 
@@ -68,7 +106,7 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 
 
 
-	lapply(distInfo, FUN = person.plot, yRange = yRange, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, 
+	lapply(distInfo, FUN = person.plot, yRange = yRange, p.points = person.points, p.range = person.range, p.col = p.point.col, r.col = p.range.col, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, 
 		p.cex.lab = 1.3, p.font.lab = 3, p.lwd = 2)
 	if (show.axis.logits) {
 		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)

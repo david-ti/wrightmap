@@ -42,4 +42,6 @@ if (axis.logits.side == "R") {
 	par(mgp = c(0, 0.2, 0))
 	rect(item.hist[, 4], item.hist[, 1], item.hist[, 2], item.hist[, 3])
 	
+	cutLines(...)
+	
 }

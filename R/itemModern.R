@@ -24,8 +24,10 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	#par(mar = c(0,0,0,0))
 	par(mgp = c(2, 0.2, 0))
 
+
 	plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), 
 		cex.lab = .8, font.lab = 3)
+
 
 	box(bty = "o")
 	usr <- par("usr")
@@ -40,15 +42,15 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	}
 	
 
-
-	if (show.thr.sym == TRUE) {
+#############
+	if (show.thr.sym) {
 
 		points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), 
 			col = as.matrix(thr.sym.col.fg), bg = as.matrix(thr.sym.col.bg))
 	}
 
-	if (show.thr.lab == TRUE) {
-		if (show.thr.sym == TRUE) {
+	if (show.thr.lab) {
+		if (show.thr.sym) {
 			pos <- thr.lab.pos
 			if(length(pos) != length(thr)) {
 				pos <- matrix(rep(rep_len(pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
@@ -60,6 +62,10 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
 		}
 	}
+	
+	cutLines(...)
+
+##############
 
 	#par(mgp = c(3, 1, 0))
 
@@ -71,7 +77,7 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 		}
 		text(seq(1:nrow(thr)), y = par("usr")[3] - .2, labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
 
-		if (label.items.ticks == TRUE) {
+		if (label.items.ticks) {
 
 			axis(1, at = 1:nI, labels = FALSE, line = NA, tcl = -0.35)
 

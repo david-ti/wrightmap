@@ -76,5 +76,7 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",axis.lo
 
 	text(cbind(0, itemBinLocations), labels = binnedList, pos = 4, offset = 1 * 15/nI,cex = .65)
 	
+	cutLines(...)
+	
 	
 }
