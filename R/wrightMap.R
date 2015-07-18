@@ -56,8 +56,8 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	close.screen(1)
 
 	if(!is.null(use.hist)) {
-		message("Parameter 'hist' is deprecated. Please use 'person.side' parameter instead.")
-		person.side <- ifelse(hist,personHist,personDens)
+		message("Parameter 'use.hist' is deprecated. Please use 'person.side' parameter instead.")
+		person.side <- ifelse(use.hist,personHist,personDens)
 	}
 	do.call(person.side,list(thetas,yRange,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE,...))
 	
