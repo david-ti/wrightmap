@@ -1,5 +1,5 @@
 ppPlot <-
-function(thetas, thresholds, est, SE, main.title = "Person Probability Plot", cut.left = 0, cut.right = .94, cut.lab.adj = c(1,.5),...) {
+function(thetas, thresholds = NULL, est, SE, main.title = "Person Probability Plot", cut.left = 0, cut.right = .94, cut.lab.adj = c(1,.5),...) {
 	
 	prob.calc <- function( x, theta.est, pr = .5 ){
 

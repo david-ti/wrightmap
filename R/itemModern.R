@@ -1,5 +1,5 @@
 itemModern <-
-function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",show.axis.logits = "R", oma = c(0,0,0,3),...) {
+function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",show.axis.logits = "R", oma = c(0,0,0,3),cutpoints = NULL,...) {
 	
 	thr <- as.matrix(thr)
 
@@ -63,7 +63,9 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 		}
 	}
 	
-	cutLines(...)
+	if(!is.null(cutpoints)) {
+		cutLines(cutpoints,...)
+	}
 
 ##############
 

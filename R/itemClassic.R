@@ -1,5 +1,5 @@
 itemClassic <-
-function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),...) {
+function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),cutpoints = NULL,...) {
 	Nbins <- function(thr,itemRange) {
 		
 		#print(paste("thr =", c(min(thr),max(thr))))
@@ -76,7 +76,9 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 
 	text(cbind(0, itemBinLocations), labels = binnedList, pos = 4, offset = 1 * 15/nI,cex = .65)
 	
-	cutLines(...)
+	if(!is.null(cutpoints)) {
+		cutLines(cutpoints,...)
+	}
 	
 	
 }

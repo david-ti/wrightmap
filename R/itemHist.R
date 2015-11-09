@@ -1,4 +1,4 @@
-itemHist <- function(thr, yRange = NULL,axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),...) {
+itemHist <- function(thr, yRange = NULL,axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),cutpoints = NULL,...) {
 
 	
 	Nbins <- function(x) {
@@ -42,6 +42,8 @@ if (show.axis.logits == "R" | show.axis.logits == TRUE) {
 	par(mgp = c(0, 0.2, 0))
 	rect(item.hist[, 4], item.hist[, 1], item.hist[, 2], item.hist[, 3])
 	
-	cutLines(...)
+	if(!is.null(cutpoints)) {
+		cutLines(cutpoints,...)
+	}
 	
 }
