@@ -11,8 +11,7 @@ Draw the person side of a Wright Map in a variety of styles. Intended to be prim
 }
 \usage{
 personHist(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...)
-}
-\usage{
+
 personDens(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5,dim.names = NULL,dim.color = "black",person.points = NULL, person.range = NULL, p.point.col = "black", p.range.col = "gray70",oma = c(0, 5, 0, 5), axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...)
 }
 
@@ -58,8 +57,7 @@ values to use for the \code{oma} parameter (see \code{\link{par}})
 \item{show.axis.logits}{
 	logical indicating whether to show the logit axis
 }
-  \item{axis.logits}{
-\item{axis.logits}{title of the y-axis on the right side}
+  \item{axis.logits}title of the y-axis on the right side}
 }
   \item{\dots}{
 Not used.
@@ -81,10 +79,11 @@ These functions are designed as helper functions for \code{\link{wrightMap}} and
 	\item etc.
 }
 
-The \code{personHist} style, the default, draws the person distribution as a histogram, and is equivalent to the \code{use.hist = TRUE} option from previous versions of wrightMap. The \code{personDens} style draws a density plot.
-}
+The \code{personHist} style, the default, draws the person distribution as a histogram, and is equivalent to the \code{use.hist = TRUE} option from previous versions of wrightMap. The \code{personDens} style draws a density plot.}
 
 The \code{person.points}, \code{person.range}, \code{p.point.col}, and \code{p.range.col} parameters are called directly by \code{\link{ppPlot}} to show the estimate and standard deviation for a single person. However, they can also be specified without using \code{\link{ppPlot}} to highlight arbitrary values or ranges.
+
+}
 
 \author{
 Rebecca Freund and David Torres Irribarra

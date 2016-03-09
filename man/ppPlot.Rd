@@ -9,8 +9,7 @@
 Plots a Wright Map for a single person (similar to a kidmap). On the person side, highlights their estimated ability and a range of one standard error. On the item side, draws lines representing item difficulties at which they are expected to have a 20\%, 40\%, 50\%, 60\%, and 80\% chance of success.}
 \usage{
 ppPlot(thetas, thresholds, est, SE, main.title = "Person Probability Plot", cut.left = 0, cut.right = .94, cut.lab.adj = c(1,.5),\dots)
-}
-\usage{
+
 cutLines(cutpoints = NULL,cut.left = 0, cut.right = 1, cut.lab.text = NULL, cut.lab.adj = c(0,1),\dots)
 }
 \arguments{

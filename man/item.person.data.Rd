@@ -16,7 +16,7 @@
 Processing CQmodel objects for plotting
 }
 \description{
-The \code{itemData} and \code{personData} functions take CQmodel objects (or ConQuest output files) as inputs and return a vector or matrix. They were originally developed for use by \code{\link{wrightMap}}, but are separated out here to allow the outputs to be sent to other plotting functions.}
+The \code{itemData} and \code{personData} functions take CQmodel objects (or ConQuest output files) as inputs and return a vector or matrix. They were originally developed for use by \code{\link{wrightMap}}, but are separated out here to allow the outputs to be sent to other plotting functions.
 }
 \usage{
 itemData(thresholds, \dots)
@@ -73,7 +73,8 @@ personData arguments:
 \details{
 	The itemData and personData functions are usually called by \code{\link{wrightMap}}. They can also be called directly.
 	
-For the itemData function, note that the \code{item.table}, \code{interactions}, and \code{step.table} parameters must be the exact name of specific RMP tables. You cannot specify an interactions table or a step table without also specifying an item table (although JUST an item table is fine). If your model equation is more complicated, you will have to either use a GIN table or specify in the function call which tables to use for what. A model of the form item + item * step + booklet, for example, will not run unless there is a GIN table or you have defined at least the item.table.}
+For the itemData function, note that the \code{item.table}, \code{interactions}, and \code{step.table} parameters must be the exact name of specific RMP tables. You cannot specify an interactions table or a step table without also specifying an item table (although JUST an item table is fine). If your model equation is more complicated, you will have to either use a GIN table or specify in the function call which tables to use for what. A model of the form item + item * step + booklet, for example, will not run unless there is a GIN table or you have defined at least the item.table.
+}
 
 
 

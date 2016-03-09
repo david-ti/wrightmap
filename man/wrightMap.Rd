@@ -57,7 +57,7 @@ wrightMap parameters:
   logical. Determines whether the wrightMap will be created on a new graphical device or if it will reuse one already open. By default is set to \code{FALSE} to avoid creating new devices.
 }
   \item{use.hist}{
-    deprecated. Use the \code{\link{person.side}} parameter instead}
+    deprecated. Use the \code{\link{person.side}} parameter instead
 }
   \item{\dots}{
   Additional arguments to pass to \code{\link{person.data}}, \code{\link{item.data}}, \code{\link{person.side}}, or \code{\link{item.side}}
