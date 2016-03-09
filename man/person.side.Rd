@@ -80,7 +80,7 @@ These functions are designed as helper functions for \code{\link{wrightMap}} and
 	\item etc.
 }
 
-The \code{personHist} style, the default, draws the person distribution as a histogram, and is equivalent to the \code{use.hist = TRUE} option from previous versions of wrightMap. The \code{personDens} style draws a density plot.}
+The \code{personHist} style, the default, draws the person distribution as a histogram, and is equivalent to the \code{use.hist = TRUE} option from previous versions of wrightMap. The \code{personDens} style draws a density plot.
 
 The \code{person.points}, \code{person.range}, \code{p.point.col}, and \code{p.range.col} parameters are called directly by \code{\link{ppPlot}} to show the estimate and standard deviation for a single person. However, they can also be specified without using \code{\link{ppPlot}} to highlight arbitrary values or ranges.
 
