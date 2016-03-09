@@ -124,4 +124,3 @@ wrightMap(model2, item.table = "rater")
 	personHist(m3.person)
 	personDens(m3.person)
   }
-}

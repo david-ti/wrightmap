@@ -99,7 +99,7 @@ The \code{itemClassic} style draws a stacked plot, similar to the Wright Maps av
 \author{Rebecca Freund and David Torres Irribarra}
 \note{
 When combining with a \code{\link{person.side}} function, note that those functions use \code{\link{split.screen}}, which are incompatible with \code{\link{layout}} and some other plotting functions. Note also that all graphs on a single plot should usually have their yRange explicitly specified to ensure that values are comparable across plots. To plot data from ConQuest output, use \code{\link{itemData}} first to extract the data table.
-}}
+}
 
 
 \seealso{
