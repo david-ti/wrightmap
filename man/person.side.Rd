@@ -57,7 +57,8 @@ values to use for the \code{oma} parameter (see \code{\link{par}})
 \item{show.axis.logits}{
 	logical indicating whether to show the logit axis
 }
-  \item{axis.logits}{title of the y-axis on the right side}
+  \item{axis.logits}{
+  	title of the y-axis on the right side
 }
   \item{\dots}{
 Not used.

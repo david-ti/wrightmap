@@ -82,7 +82,7 @@ wrightMap parameters:
 \code{\link{person.side}}
 \code{\link{item.side}}
 \code{\link{personData}}
-\code{\link{itemData}}}
+\code{\link{itemData}}
 }
 
 \examples{
