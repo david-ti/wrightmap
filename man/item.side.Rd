@@ -8,7 +8,7 @@
 \description{Draw the item side of a Wright Map in a variety of styles. Intended to be primarily called by \code{\link{wrightMap}}, but also available for use on their own.
 }
 \usage{
-itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = 0.8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.rows = 1, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6, label.items.ticks = TRUE, axis.logits = "Logits", show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
+itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = 0.8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col = rgb(0, 0, 0, 0.3), thr.sym.col.fg = thr.sym.col, thr.sym.col.bg = thr.sym.col, show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.rows = 1, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6, label.items.ticks = TRUE, axis.logits = "Logits", show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
 
 itemClassic(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits", show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
 
@@ -42,11 +42,14 @@ General arguments:
     \item{thr.sym.pch}{
     	 an integer, vector or matrix of integers specifying a symbol or a single character to be used to represent the item thresholds.
     	 }
+    	  \item{thr.sym.col}{
+  	 an integer, vector or matrix of strings indicating the color to be used for the threshold symbols. 
+  	 }
   \item{thr.sym.col.fg}{
-  	 an integer, vector or matrix of numerical values indicating the foreground color to be used in the thresholds labels. 
+  	 an integer, vector or matrix of strings indicating the foreground color to be used for the threshold symbols. 
   	 }
    \item{thr.sym.col.bg}{
-   	 an integer, vector or matrix of numerical values indicating the background color to be used in the thresholds labels. 
+   	 an integer, vector or matrix of strings indicating the background color to be used for the threshold symbols. 
    	 }
   \item{show.thr.lab}{
   	 logical. If \code{TRUE} (default), the plot will show labels for the item thresholds. 
