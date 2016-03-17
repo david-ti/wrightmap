@@ -9,9 +9,9 @@ Type: Package
 
 Title: Wright Map: IRT item-person map with ConQuest integration
 
-Version: 1.1
+Version: 1.2
 
-Date: 2014-03-28
+Date: 2016-03-15
 
 Author: David Torres Irribarra & Rebecca Freund
 
