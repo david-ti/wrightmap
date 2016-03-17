@@ -1,3 +1,3 @@
-difplot <- function(x, ...) {
+difplot <- function(data, ...) {
 	UseMethod("difplot")
 }

@@ -1,3 +1,3 @@
-difplot.character <- function(showFile, ...) {
-	difplot(CQmodel(show = showFile), ...)
+difplot.character <- function(data, equation = NULL, ...) {
+	difplot(CQmodel(show = data, equation = equation), ...)
 }

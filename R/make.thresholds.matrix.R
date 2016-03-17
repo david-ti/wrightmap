@@ -1,4 +1,4 @@
-make.thresholds.default <- function(item.params, design.matrix = "normal", make.from = "deltas", theta.interval = c(-10, 10), throld = 0.5, 
+make.thresholds.matrix <- function(item.params, design.matrix = "normal", make.from = "deltas", theta.interval = c(-10, 10), throld = 0.5, 
 	alpha = 1, c.params = 0, ...) {
 	#print("default")
 	
