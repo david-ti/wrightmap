@@ -8,9 +8,11 @@ function( fitEst, fitLB, fitUB, itemLabels
 	                 ,... )
 {
 
+	par(mar=c(4.1, 4.1, 3.1, 1.1))
+
 	nI <- length(fitEst)
 	item <- c(1:nI)
-	dev.new()
+	#dev.new()
 	plot( fitEst ~ item
 		, type = "n"
 		, axes = FALSE
@@ -75,4 +77,6 @@ function( fitEst, fitLB, fitUB, itemLabels
 	     , cex  = cex)
     
 	text( item, fitEst, as.list( itemLabels), pos = 3, cex = .75)
+
+	par(mar=c(5.1,4.1,4.1,2.1))
 }
