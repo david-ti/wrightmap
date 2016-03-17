@@ -8,11 +8,20 @@
 \description{Draw the item side of a Wright Map in a variety of styles. Intended to be primarily called by \code{\link{wrightMap}}, but also available for use on their own.
 }
 \usage{
-itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = 0.8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.rows = 1, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6, label.items.ticks = TRUE, axis.logits = "Logits", show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
+itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE
+, thr.sym.cex = 0.8, thr.sym.lwd = 1, thr.sym.pch = 23
+, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3)
+, show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL
+, thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.rows = 1
+, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6
+, label.items.ticks = TRUE, axis.logits = "Logits", show.axis.logits = "R"
+, oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
 
-itemClassic(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits", show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
+itemClassic(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits"
+, show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
 
-itemHist(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits", show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL,...)
+itemHist(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits"
+, show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL,...)
 }
 
 \arguments{
@@ -168,7 +177,8 @@ wrightMap( uni.proficiency, thresholds
 	model1 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.shw"))
 	m1.item <- itemData(model1)
 	
-	itemModern(m1.item, label.items.srt= 90, oma = c(3,0,0,3)) #control of oma allows us to give more space to longer item names
+  #control of oma allows us to give more space to longer item names
+	itemModern(m1.item, label.items.srt= 90, oma = c(3,0,0,3)) 
 	itemClassic(m1.item)
 	itemHist(m1.item)
 	
@@ -190,7 +200,8 @@ wrightMap( uni.proficiency, thresholds
     itemModern(thresholds, yRange = c(-3,4), show.axis.logits = "L", oma = c(0,0,0,2))
     mtext("Wright Map", side = 3, font = 2, line = 1)
     screen(2)
-    personHist(multi.proficiency, axis.persons = "",yRange = c(-3,4), axis.logits = "Persons", show.axis.logits = FALSE)
+    personHist(multi.proficiency, axis.persons = "",yRange = c(-3,4)
+    , axis.logits = "Persons", show.axis.logits = FALSE)
     
     
     ## Creating a multidimensional Wright Map with each dimension separate
@@ -215,9 +226,11 @@ wrightMap( uni.proficiency, thresholds
 	itemModern(dim1.diff,yRange = c(-3,3),show.axis.logits = FALSE)
 	mtext("Wright Map", side = 3, font = 2, line = 1)
 	screen(3)
-	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = "",axis.persons = "",dim.names = "Dim2")
+	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = ""
+  ,axis.persons = "",dim.names = "Dim2")
 	screen(4)
-	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE,label.items = paste("Item",6:10))
+	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE
+  ,label.items = paste("Item",6:10))
 	
 	
 

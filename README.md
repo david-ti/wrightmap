@@ -1,7 +1,7 @@
 wrightmap
 =========
 
-Wright Map: IRT item-person map with ConQuest integration
+Wright Map: IRT Item-Person Map With ConQuest Integration
 
 Package: WrightMap
 

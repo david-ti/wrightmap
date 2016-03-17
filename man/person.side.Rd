@@ -126,7 +126,8 @@ Rebecca Freund and David Torres Irribarra
     itemModern(thresholds, yRange = c(-3,4), show.axis.logits = "L", oma = c(0,0,0,2))
     mtext("Wright Map", side = 3, font = 2, line = 1)
     screen(2)
-    personHist(multi.proficiency, axis.persons = "",yRange = c(-3,4), axis.logits = "Persons", show.axis.logits = FALSE)
+    personHist(multi.proficiency, axis.persons = "",yRange = c(-3,4)
+    , axis.logits = "Persons", show.axis.logits = FALSE)
     
      ## Creating a multidimensional Wright Map with each dimension separate
     
@@ -148,9 +149,11 @@ Rebecca Freund and David Torres Irribarra
 	itemModern(dim1.diff,yRange = c(-3,3),show.axis.logits = FALSE)
 	mtext("Wright Map", side = 3, font = 2, line = 1)
 	screen(3)
-	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = "",axis.persons = "",dim.names = "Dim2")
+	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = ""
+  , axis.persons = "",dim.names = "Dim2")
 	screen(4)
-	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE,label.items = paste("Item",6:10))
+	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE
+  , label.items = paste("Item",6:10))
 	
 
 }

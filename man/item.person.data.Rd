@@ -22,7 +22,8 @@ The \code{itemData} and \code{personData} functions take CQmodel objects (or Con
 itemData(thresholds, \dots)
 \method{itemData}{default}(thresholds, item.type = "deltas",\dots)
 \method{itemData}{character}(thresholds, p.type = NULL, equation = NULL, \dots)
-\method{itemData}{CQmodel}(thresholds, item.table = NULL, interactions = NULL, step.table = NULL, item.type = "default", throld = 0.5, \dots)
+\method{itemData}{CQmodel}(thresholds, item.table = NULL, interactions = NULL, 
+step.table = NULL, item.type = "default", throld = 0.5, \dots)
 
 personData(thetas,\dots)
 \method{personData}{default}(thetas,\dots)
@@ -116,7 +117,9 @@ wrightMap(model2, item.table = "rater")
 	m3.item <- itemData(model3)
 	
 	dev.new(width=10, height=10)
-	itemModern(m3.item, label.items.srt= 90, oma = c(2,0,0,2)) #control of oma allows us to give more space to longer item names
+	
+	#control of oma allows us to give more space to longer item names
+	itemModern(m3.item, label.items.srt= 90, oma = c(2,0,0,2)) 
 	itemClassic(m3.item)
 	itemHist(m3.item)
 	
