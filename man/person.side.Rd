@@ -144,12 +144,14 @@ Rebecca Freund and David Torres Irribarra
   								.5,.6,0,1,
   								.5,1,0,1),ncol = 4,byrow = TRUE))
   							  
-	personDens(d1,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = "")
+	personDens(d1,yRange = c(-3,3),show.axis.logits = FALSE
+  , axis.logits = "")
 	screen(2)
 	itemModern(dim1.diff,yRange = c(-3,3),show.axis.logits = FALSE)
 	mtext("Wright Map", side = 3, font = 2, line = 1)
 	screen(3)
-	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = ""
+	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE
+  , axis.logits = ""
   , axis.persons = "",dim.names = "Dim2")
 	screen(4)
 	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE
