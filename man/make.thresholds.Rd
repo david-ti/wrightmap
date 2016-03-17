@@ -3,6 +3,7 @@
 \alias{make.thresholds.default}
 \alias{make.thresholds.CQmodel}
 \alias{make.thresholds.character}
+\alias{make.thresholds.matrix}
 \title{
 Calculate Thurstonian thresholds.
 }
@@ -10,8 +11,8 @@ Calculate Thurstonian thresholds.
 This function accepts a matrix of delta parameters and converts them to thresholds (using a threshold of .5). It can also take as input a CQmodel object or a filename of a ConQuest show file.}
 \usage{
 make.thresholds(item.params, \dots)
-\method{make.thresholds}{character}(item.params,\dots)
-\method{make.thresholds}{CQmodel}(item.params,item.table = NULL, interactions = NULL,step.table = NULL,\dots)
+\method{make.thresholds}{character}(item.params, design.matrix = "normal",\dots)
+\method{make.thresholds}{CQmodel}(item.params,item.table = NULL, interactions = NULL,step.table = NULL, design.matrix = "normal", throld = 0.5, alpha = 1,\dots)
 \method{make.thresholds}{default}(item.params, design.matrix = "normal", make.from = "deltas", theta.interval = c(-10, 10), throld = 0.5, alpha = 1, c.params = 0,\dots)
 \method{make.thresholds}{matrix}(item.params, design.matrix = "normal", make.from = "deltas", theta.interval = c(-10, 10), throld = 0.5, alpha = 1, c.params = 0,\dots)
 }

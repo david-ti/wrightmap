@@ -110,6 +110,16 @@ When combining with a \code{\link{person.side}} function, note that those functi
 \examples{
 	
 	#As a call from wrightMap:
+
+  ## Mock results
+  uni.proficiency <- rnorm(1000, mean =  -0.5, sd = 1)
+
+  items.loc <- sort( rnorm( 20))
+  thresholds <- data.frame(
+    l1 = items.loc - 0.5 ,
+    l2 = items.loc - 0.25,
+    l3 = items.loc + 0.25,
+    l4 = items.loc + 0.5)
 	
 	## Setting up labels, colors and symbols
 
@@ -141,7 +151,7 @@ wrightMap( uni.proficiency, thresholds
 	
 	## Plotting results of a unidimensional Rating Scale Model
 
-  items.loc <- sort( rnorm( 10))
+  items.loc <- sort( rnorm( 20))
   thresholds <- data.frame(
     l1 = items.loc - 0.5 ,
     l2 = items.loc - 0.25,
@@ -164,11 +174,11 @@ wrightMap( uni.proficiency, thresholds
 	
 	## Creating a Wright Map with item side on the left
 	
-	multi.proficiency <- data.frame(
+	 multi.proficiency <- data.frame(
     d1 = rnorm(1000, mean =  -0.5, sd = 1),
     d2 = rnorm(1000, mean =   0.0, sd = 1),
     d3 = rnorm(1000, mean =  +0.5, sd = 1))
-    
+
     # split.screen: Set up a split screen with the left side 80 percent of the screen
     # yRange = c(-3,4): Set the yRange to be the same for both sides
     # axis.logits.side = "L": Move the item logit axis to the left
@@ -193,12 +203,13 @@ wrightMap( uni.proficiency, thresholds
 	dim1.diff <- rnorm(5)
 	dim2.diff <- rnorm(5)
 
-  
+  dev.new(width=10, height=10)
 	split.screen(figs = matrix(c(0,.1,0,1,
   								.12,.6,0,1,
   								.5,.6,0,1,
   								.5,1,0,1),ncol = 4,byrow = TRUE))
-  							  
+  
+
 	personDens(d1,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = "")
 	screen(2)
 	itemModern(dim1.diff,yRange = c(-3,3),show.axis.logits = FALSE)

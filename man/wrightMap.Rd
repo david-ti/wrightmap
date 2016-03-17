@@ -60,7 +60,7 @@ wrightMap parameters:
     deprecated. Use the \code{\link{person.side}} parameter instead
 }
   \item{\dots}{
-  Additional arguments to pass to \code{\link{person.data}}, \code{\link{item.data}}, \code{\link{person.side}}, or \code{\link{item.side}}
+  Additional arguments to pass to \code{\link{personData}}, \code{\link{itemData}}, \code{\link{person.side}}, or \code{\link{item.side}}
 }
 
   
@@ -139,7 +139,7 @@ wrightMap( uni.proficiency, thresholds)
 	
 	# Rating scale model:
 	model2 <- CQmodel(file.path(fpath,"ex2b.eap"), file.path(fpath,"ex2b-2.shw"))
-	wrightMap(model3, label.items.row = 2) 
+	wrightMap(model2, label.items.row = 2) 
 		
   # Complex model
 	model3 <- CQmodel(file.path(fpath,"ex4a.mle"), file.path(fpath,"ex4a.shw")) 

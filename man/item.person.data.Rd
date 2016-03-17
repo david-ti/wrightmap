@@ -21,7 +21,7 @@ The \code{itemData} and \code{personData} functions take CQmodel objects (or Con
 \usage{
 itemData(thresholds, \dots)
 \method{itemData}{default}(thresholds, item.type = "deltas",\dots)
-\method{itemData}{character}(thresholds, equation = NULL, \dots)
+\method{itemData}{character}(thresholds, p.type = NULL, equation = NULL, \dots)
 \method{itemData}{CQmodel}(thresholds, item.table = NULL, interactions = NULL, step.table = NULL, item.type = "default", throld = 0.5, \dots)
 
 personData(thetas,\dots)
@@ -66,7 +66,6 @@ personData arguments:
 
 \item{thetas}{a CQModel object or the name of the Conquest person parameters file (EAPs, MLEs, etc.)}
  \item{p.type}{ Type of person parameter estimate (EAP, MLE or WLE). }
- \item{\dots}{Not used.}
 
 }
 
@@ -116,7 +115,8 @@ wrightMap(model2, item.table = "rater")
 	model3 <- CQmodel(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2a.shw"))
 	m3.item <- itemData(model3)
 	
-	itemModern(m3.item, label.items.srt= 90, oma = c(3,0,0,3)) #control of oma allows us to give more space to longer item names
+	dev.new(width=10, height=10)
+	itemModern(m3.item, label.items.srt= 90, oma = c(2,0,0,2)) #control of oma allows us to give more space to longer item names
 	itemClassic(m3.item)
 	itemHist(m3.item)
 	

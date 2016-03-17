@@ -3,6 +3,7 @@
 \alias{fitgraph.default}
 \alias{fitgraph.CQmodel}
 \alias{fitgraph.character}
+\alias{fitgraph.numeric}
 \title{
 Item Fit Graphs
 }
@@ -78,14 +79,14 @@ Argument to use when passing a CQmodel object:
 \examples{
 
 # Generating mock data
-sampleLabels <- paste('item ',1:10)
+sampleLabels <- paste('item',1:10)
 
 fitBounds <- (abs(rnorm(10, mean = 0, sd = .05)) * 2)
 fitEst <- rnorm(10, mean = 1, sd = .1)
-fitBounds <- (abs(rnorm(10, mean = 0, sd = .05)) * 2)
+
 fitLB <- 1 - fitBounds
 fitUB <- 1 + fitBounds
-
+par("mar")
 # running fitgraph
 fitgraph(fitEst,fitLB,fitUB,itemLabels=sampleLabels)
 

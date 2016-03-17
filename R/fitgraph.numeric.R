@@ -8,6 +8,8 @@ function( fitEst, fitLB, fitUB, itemLabels
 	                 ,... )
 {
 
+	par(mar=c(4.1, 4.1, 3.1, 1.1))
+
 	nI <- length(fitEst)
 	item <- c(1:nI)
 	#dev.new()
