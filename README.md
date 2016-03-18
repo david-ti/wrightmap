@@ -1,13 +1,11 @@
-wrightmap
+Wright Map
 =========
 
-Title: IRT Item-Person Map with 'ConQuest' Integration
+IRT Item-Person Map with 'ConQuest' Integration
 
 Package: WrightMap
 
 Type: Package
-
-Title: Wright Map: IRT item-person map with ConQuest integration
 
 Version: 1.2
 
