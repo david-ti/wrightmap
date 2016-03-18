@@ -16,9 +16,6 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 
 	RMP <- function(table, parts) {
-		
-
-
 
 		RMP.lengths = c(10, 9, 8, 6, 6, 6, 8, 6, 5, 6)
 		RMP.titles = c("est", "error", "U.fit", "U.Low", "U.High", "U.T", "W.fit", "W.Low", "W.High", "W.T")
@@ -36,7 +33,6 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 		line.seps <- numeric()
 		
-
 		for (i in 1:length(parts)) {
 
 			temp.col.seps <- numeric()
@@ -98,7 +94,6 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 	
 
 		}
-		
 
 		if (length(line.seps)==0){
 
@@ -112,26 +107,23 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 		if (all(parts == 'step') & length(parts) == 1) {line.seps <- nchar(left.side.titles)}
 
-		#line.seps
-		#print(table)
-
-
-		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)
-		
-		#print(out)
+		out = grep("^ *(Parameter )?[0-9]", table, value = TRUE)		
 		out = gsub("[\\(\\)\\*,]", " ", out)
-		#print(out)
 		out = trim(out)
 		
 		if(nchar(out[1]) < sum(RMP.lengths)) {
-			RMP.lengths <- c(10,7)
-			RMP.titles <- c("est","error")
+			out1 <- split.right(out, 10)
+			multcols <- grep("[^ ] +[^ ]",out1[[2]])
+			if(length(multcols) > 0) {
+				RMP.lengths <- c(10,7)
+				RMP.titles <- c("est","error")
+			} else {
+				RMP.lengths <- 10
+				RMP.titles <- "est"
+			}
 		}
 		out <- split.right(out, sum(RMP.lengths))
 		
-
-		# out[,1] <- sub("(^[0-9]+)(\\s.+)", "\\1 \" \\2 \"", out[,1], perl=TRUE)
-		# if (length(titles)>2){ out[,1] <- sub("([0-9]\\s+\"$)", "\" \" \\1", out[,1], perl=TRUE)}
 		if ( (all(parts == 'step') & length(parts) == 1) | imported) {
 
 			left.table <- matrix(apply(out[1],1,function (x) gsub("^\\s+|\\s+$", "", x)), ncol=1)			
@@ -142,13 +134,8 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 			left.table[sapply(left.table, is.character)] <- sapply(left.table[sapply(left.table, is.character)],function (x) gsub("^\\s+|\\s+$", "", x))
 
 		}
-		
-		#left.table <- read.table(tempify(out[1]), col.names = titles, stringsAsFactors = FALSE)
-		# if (imported) {
-		# 	left.table[2] <- paste(left.table[[1]], left.table[[2]])
-		# 	left.table <- left.table[2]
-		# }
-		
+
+
 		right.table <- read.fwf(tempify(out[2]), RMP.lengths, col.names = RMP.titles, stringsAsFactors = FALSE)
 
 		cbind(left.table, right.table)
@@ -157,7 +144,8 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 
 	split.right <- function(table, right) {
-		left = nchar(table[1]) - right
+		maxchar <- max(sapply(table,nchar))
+		left = maxchar - right
 		tf <- tempfile()
 		write(table, tf)
 		out <- read.fwf(tf, c(left, right), stringsAsFactors=FALSE)
@@ -166,7 +154,7 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 
 	tempify <- function(list) {
 		tf <- tempfile()
-		write(as.matrix(list), tf)
+		write(as.character(as.matrix(list)), tf)
 		tf
 	}
 	
@@ -387,8 +375,6 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		}
 		
 		
-
-
 		
 		##############RMP######################
 		
@@ -398,8 +384,6 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		parts = strsplit(additive.parts, "\\*")
 		model$additive.parts <- additive.parts
 		model$parts <- parts
-		
-		
 		
 		if (imported) {
 			params <- RMP(model$RMP, "Parameters")
