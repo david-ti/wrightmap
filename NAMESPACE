@@ -4,6 +4,8 @@ importFrom("grDevices", "dev.new", "rgb")
 importFrom("graphics", "abline", "axis", "box", "hist", "layout",
      "lines", "mtext", "par", "plot", "points", "polygon",
      "rect", "text", "title")
+importFrom("graphics", "close.screen", "screen", "segments",
+             "split.screen")
 importFrom("stats", "density", "na.omit", "optimize", "quantile",
      "reshape")
 importFrom("utils", "read.delim", "read.fwf", "read.table")
