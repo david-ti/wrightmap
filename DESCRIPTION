@@ -1,10 +1,10 @@
 Package: WrightMap
 Type: Package
-Title: Wright Map: IRT item-person map with ConQuest integration
-Version: 1.1
-Date: 2014-03-28
+Title: IRT Item-Person Map with 'ConQuest' Integration
+Version: 1.2
+Date: 2016-03-15
 Author: David Torres Irribarra & Rebecca Freund
 Maintainer: David Torres Irribarra <dti@berkeley.edu>
-Description: A powerful yet simple graphical tool available in the field of psychometrics is the Wright Map (also known as item maps or item-person maps), which presents the location of both respondents and items on the same scale. Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to create these plots from item parameters and person estimates stored as R objects. Although the package can be used in conjunction with any software used to estimate the IRT model (e.g. eRm or IRToys in R, or Stata, Mplus, etc.),  WrightMap features special integration with ConQuest to facilitate reading and plotting its output directly.The wrightMap function creates Wright Maps based on person estimates and item parameters produced by an item response analysis. The CQmodel function reads output files created using ConQuest software and creates a set of data frames for easy data manipulation, bundled in a CQmodel object. The wrightMap function can take a CQmodel object as input or it can be used to create Wright Maps directly from data frames of person and item parameters.
+Description: A powerful yet simple graphical tool available in the field of psychometrics is the Wright Map (also known as item maps or item-person maps), which presents the location of both respondents and items on the same scale. Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The 'WrightMap' package provides functions to create these plots from item parameters and person estimates stored as R objects. Although the package can be used in conjunction with any software used to estimate the IRT model (e.g. 'eRm' or 'IRToys' in 'R', or 'Stata', 'Mplus', etc.),  'WrightMap' features special integration with 'ConQuest' to facilitate reading and plotting its output directly.The 'wrightMap' function creates Wright Maps based on person estimates and item parameters produced by an item response analysis. The 'CQmodel' function reads output files created using 'ConQuest' software and creates a set of data frames for easy data manipulation, bundled in a 'CQmodel' object. The 'wrightMap' function can take a 'CQmodel' object as input or it can be used to create Wright Maps directly from data frames of person and item parameters.
 License: BSD_2_clause + file LICENSE
 Depends: R (>= 3.0.0) 

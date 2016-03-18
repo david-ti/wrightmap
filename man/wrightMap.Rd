@@ -8,7 +8,10 @@ wrightMap: item-person maps
 This function allows the easy generation of `Wright Maps' (named after Ben Wright), also known as item-person maps. They are used to to display unidimensional and multidimensional assessment results. These maps represent simultaneously the proficiency distribution of respondents and the item difficulty parameters as estimated by a model of the Rasch family.
 }
 \usage{
-wrightMap(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist,  main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, use.hist = NULL,...) 
+wrightMap(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist
+,  main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL
+, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE
+, use.hist = NULL,...) 
 \method{plot}{CQmodel}(x, \dots)
 }
 

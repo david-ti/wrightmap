@@ -11,9 +11,12 @@ Plotting confidence intervals and DIF
 \description{The \code{plotCI} function is intended for graphing confidence intervals. The \code{difplot} function is a wrapper for \code{plotCI} specifcally intended for examining Differential Item Functioning from ConQuest output.
 }
 \usage{
-plotCI(ests, errors, labels = "", zeroline = TRUE, incol = "gray", outcol = "blue", main.title = "Statistical Significance Plot", axes = FALSE, xlab = "", pch = 16, \dots)
-\method{difplot}{default}(data, grouptype = NULL, group = NULL, item.names = NULL, ylim = c(-1, 1), ylab = NULL, \dots)
-\method{difplot}{CQmodel}(data, table.name = NULL, grouptype = NULL, group = NULL, \dots)
+plotCI(ests, errors, labels = "", zeroline = TRUE, incol = "gray", outcol = "blue"
+, main.title = "Statistical Significance Plot", axes = FALSE, xlab = "", pch = 16, \dots)
+\method{difplot}{default}(data, grouptype = NULL, group = NULL, item.names = NULL
+, ylim = c(-1, 1), ylab = NULL, \dots)
+\method{difplot}{CQmodel}(data, table.name = NULL, grouptype = NULL
+, group = NULL, \dots)
 \method{difplot}{character}(data, equation, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -61,6 +64,8 @@ The \code{plotCI} function takes point estimates and standard errors as inputs a
 	
 	fpath <- system.file("extdata", package="WrightMap")
 
-	difplot(file.path(fpath,"ex6a.shw"), equation = "item-gender+item*gender") #equation must be specified because there is no summary of estimation table in this example
+	# equation must be specified because there is no summary of estimation 
+	# table in this example
+	difplot(file.path(fpath,"ex6a.shw"), equation = "item-gender+item*gender") 
 
 }

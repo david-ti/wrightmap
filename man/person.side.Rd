@@ -10,9 +10,16 @@ Wright Map person sides
 Draw the person side of a Wright Map in a variety of styles. Intended to be primarily called by \code{\link{wrightMap}}, but also available for use on their own.
 }
 \usage{
-personHist(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...)
+personHist(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3
+  , dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL
+  , person.range = NULL, p.point.col = "gray45", p.range.col = "gray75"
+  ,axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits"
+  , show.axis.logits = TRUE,...)
 
-personDens(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5,dim.names = NULL,dim.color = "black",person.points = NULL, person.range = NULL, p.point.col = "black", p.range.col = "gray70",oma = c(0, 5, 0, 5), axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...)
+personDens(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5
+  ,dim.names = NULL,dim.color = "black",person.points = NULL, person.range = NULL
+  , p.point.col = "black", p.range.col = "gray70",oma = c(0, 5, 0, 5)
+  , axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...)
 }
 
 \arguments{
@@ -126,7 +133,8 @@ Rebecca Freund and David Torres Irribarra
     itemModern(thresholds, yRange = c(-3,4), show.axis.logits = "L", oma = c(0,0,0,2))
     mtext("Wright Map", side = 3, font = 2, line = 1)
     screen(2)
-    personHist(multi.proficiency, axis.persons = "",yRange = c(-3,4), axis.logits = "Persons", show.axis.logits = FALSE)
+    personHist(multi.proficiency, axis.persons = "",yRange = c(-3,4)
+    , axis.logits = "Persons", show.axis.logits = FALSE)
     
      ## Creating a multidimensional Wright Map with each dimension separate
     
@@ -143,14 +151,18 @@ Rebecca Freund and David Torres Irribarra
   								.5,.6,0,1,
   								.5,1,0,1),ncol = 4,byrow = TRUE))
   							  
-	personDens(d1,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = "")
+	personDens(d1,yRange = c(-3,3),show.axis.logits = FALSE
+  , axis.logits = "")
 	screen(2)
 	itemModern(dim1.diff,yRange = c(-3,3),show.axis.logits = FALSE)
 	mtext("Wright Map", side = 3, font = 2, line = 1)
 	screen(3)
-	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE,axis.logits = "",axis.persons = "",dim.names = "Dim2")
+	personDens(d2,yRange = c(-3,3),show.axis.logits = FALSE
+  , axis.logits = ""
+  , axis.persons = "",dim.names = "Dim2")
 	screen(4)
-	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE,label.items = paste("Item",6:10))
+	itemModern(dim2.diff,yRange = c(-3,3),show.axis.logits = FALSE
+  , label.items = paste("Item",6:10))
 	
 
 }
