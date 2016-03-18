@@ -51,15 +51,19 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	
 	split.screen(screens)
 	
-	
-	do.call(item.side,list(thresholds,yRange,oma = c(0,0,0,0),...))
+	dots <- list(...)
+	dots[c("yRange","oma")] <- NULL
+	item.params <- list(thr = thresholds,yRange = yRange,oma = c(0,0,0,0))
+	do.call(item.side,c(item.params,dots))
 	close.screen(1)
-
 	if(!is.null(use.hist)) {
 		message("Parameter 'use.hist' is deprecated. Please use 'person.side' parameter instead.")
 		person.side <- ifelse(use.hist,personHist,personDens)
 	}
-	do.call(person.side,list(thetas,yRange,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE,...))
+	
+	dots[c("axis.logits","show.axis.logits")] <- NULL
+	person.params <- list(thetas = thetas,yRange = yRange,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE)
+	do.call(person.side,c(person.params,dots))
 	
 	par(oma = c(0, 0, 3, 0))
 	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
