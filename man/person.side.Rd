@@ -10,13 +10,13 @@ Wright Map person sides
 Draw the person side of a Wright Map in a variety of styles. Intended to be primarily called by \code{\link{wrightMap}}, but also available for use on their own.
 }
 \usage{
-personHist(thetas, yRange = NULL, close.on.close = TRUE, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3
+personHist(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3
   , dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL
   , person.range = NULL, p.point.col = "gray45", p.range.col = "gray75"
   ,axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits"
   , show.axis.logits = TRUE,...)
 
-personDens(thetas, yRange = NULL, close.on.close = TRUE, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5
+personDens(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5
   ,dim.names = NULL,dim.color = "black",person.points = NULL, person.range = NULL
   , p.point.col = "black", p.range.col = "gray70",oma = c(0, 5, 0, 5)
   , axis.logits = "Logits",show.axis.logits = TRUE, axis.persons = "Respondents",...)
@@ -28,9 +28,6 @@ vector or matrix of person parameters. If a matrix, persons should be the rows a
 }
   \item{yRange}{
 vector with 2 elements specifying the lower and upper limits of the plot's y-axis.
-}
-\item{close.on.close}{
-	should the screens close at the end of the function. Default is TRUE, but is FALSE when called from inside of \code{wrightMap}.
 }
   \item{dim.lab.cex}{
 An integer specifying the amount the dimension labels should be magnified relative to the default.
