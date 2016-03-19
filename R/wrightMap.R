@@ -39,7 +39,7 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	#par(oma = op$oma + c(0, 5, 0, 5))
 	par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 	#par(mgp = c(op$mar[1] - 2.4, 1, 0))
-	close.screen(all.screens = TRUE)
+
 	par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 	left.marg <- 0.05
 	right.marg <- .1
@@ -49,13 +49,14 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	item.screen <- c(divider,1 - right.marg,0,1)
 	screens <- matrix(c(item.screen,person.screen),ncol = 4,byrow = TRUE)
 	
+	old.screens <- split.screen()
 	split.screen(screens)
-	
+	item.screen <- screen()
 	dots <- list(...)
 	dots[c("yRange","oma")] <- NULL
 	item.params <- list(thr = thresholds,yRange = yRange,oma = c(0,0,0,0))
 	do.call(item.side,c(item.params,dots))
-	close.screen(1)
+	close.screen(item.screen)
 	if(!is.null(use.hist)) {
 		message("Parameter 'use.hist' is deprecated. Please use 'person.side' parameter instead.")
 		person.side <- ifelse(use.hist,personHist,personDens)
@@ -68,7 +69,10 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	par(oma = c(0, 0, 3, 0))
 	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
 	par(op)
-	close.screen(all.screens = TRUE)
+	
+	curr.screens <- split.screen()
+	new.screens <- curr.screens[!(curr.screens %in% old.screens) ]
+	close.screen(new.screens)
 	
 	if (return.thresholds) {
 		return(thresholds)
