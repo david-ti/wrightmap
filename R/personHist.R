@@ -1,5 +1,5 @@
 personHist <-
-function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
+function(thetas, yRange = NULL, close.on.close = TRUE, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
 
 	densExt <- function(densElem) {
 		bin.size <- abs(densElem$breaks[1] - densElem$breaks[2])
@@ -112,8 +112,12 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
 	}
 	mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
-	screen(first)
-	#print(distInfo)
+	screen(first, new = FALSE)
 	mtext(axis.persons, side = 2, line = 1, cex = 0.8, font = 3)
+	
+	if(close.on.close) {
+		close.screen(all.screens = TRUE)
+	}
+	
 
 }

@@ -61,8 +61,8 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 		person.side <- ifelse(use.hist,personHist,personDens)
 	}
 	
-	dots[c("axis.logits","show.axis.logits")] <- NULL
-	person.params <- list(thetas = thetas,yRange = yRange,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE)
+	dots[c("axis.logits","show.axis.logits","close.on.close")] <- NULL
+	person.params <- list(thetas = thetas,yRange = yRange,close.on.close = FALSE,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE)
 	do.call(person.side,c(person.params,dots))
 	
 	par(oma = c(0, 0, 3, 0))
