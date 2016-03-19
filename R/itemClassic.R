@@ -30,8 +30,11 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 	nI <- dim(thr)[1]
 	nL <- dim(thr)[2]
 	
-	if(is.null(yRange))
+	if(is.null(yRange)) {
 		yRange <- c(min(thr, na.rm = TRUE),max(thr, na.rm = TRUE))
+		yA <- (yRange[2] - yRange[1])*.1
+		yRange <- yRange + c(-yA,yA )
+	}
 	par(oma = oma)	
 	par(mgp = c(1, 0.2, 0))
 
