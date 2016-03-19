@@ -68,10 +68,12 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	par(oma = c(0, 0, 3, 0))
 	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
 	par(op)
+	close.screen(all.screens = TRUE)
+	
 	if (return.thresholds) {
 		return(thresholds)
 	}
-	
-	close.screen(all.screens = TRUE)
+
+
 
 }

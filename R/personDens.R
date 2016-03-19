@@ -86,7 +86,7 @@ function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj
 	}
 	mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
 		
-		screen(first)
+		screen(first, new = FALSE)
 	#print(distInfo)
 	mtext(axis.persons, side = 2, line = 1, cex = 0.8, font = 3)
 
