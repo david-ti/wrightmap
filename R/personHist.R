@@ -1,5 +1,5 @@
 personHist <-
-function(thetas, yRange = NULL, close.on.close = TRUE, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
+function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
 
 	densExt <- function(densElem) {
 		bin.size <- abs(densElem$breaks[1] - densElem$breaks[2])
@@ -94,11 +94,11 @@ function(thetas, yRange = NULL, close.on.close = TRUE, breaks = "FD", dim.lab.ce
 		attr(distInfo[[i]], "dim.name") <- dim.names[i]
 		attr(distInfo[[i]], "dim.color") <- dim.color[i]
 	}
+	old.screens <- split.screen()
 	split.screen(c(1, nD))
 
 	first <- screen()
-	#print(first)
-	#print(split.screen())
+
 
 	op <- par("mar","oma")
 
@@ -115,9 +115,9 @@ function(thetas, yRange = NULL, close.on.close = TRUE, breaks = "FD", dim.lab.ce
 	screen(first, new = FALSE)
 	mtext(axis.persons, side = 2, line = 1, cex = 0.8, font = 3)
 	
-	if(close.on.close) {
-		close.screen(all.screens = TRUE)
-	}
-	
+	curr.screens <- split.screen()
+	new.screens <- curr.screens[!(curr.screens %in% old.screens) ]
+	close.screen(new.screens)
+
 
 }
