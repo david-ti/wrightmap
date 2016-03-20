@@ -48,7 +48,6 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	person.screen <- c(left.marg,divider,0,1)
 	item.screen <- c(divider,1 - right.marg,0,1)
 	screens <- matrix(c(item.screen,person.screen),ncol = 4,byrow = TRUE)
-	
 	old.screens <- split.screen()
 	split.screen(screens)
 	item.screen <- screen()
