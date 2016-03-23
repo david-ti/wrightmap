@@ -69,6 +69,7 @@ wrightMap( uni.proficiency, difficulties, person.side = personDens)
 
 	difficulties  <- sort( rnorm( 20))
 
+dev.new(width=10, height=10)
 wrightMap( multi.proficiency, difficulties)
 
 # Plotting results of a unidimensional Rating Scale Model
@@ -83,6 +84,7 @@ wrightMap( multi.proficiency, difficulties)
 		l3 = items.loc + 0.25,
 		l4 = items.loc + 0.5)
 
+dev.new(width=10, height=10)
 wrightMap( uni.proficiency, thresholds)
 
 ## Setting up labels, colors and symbols
@@ -105,6 +107,7 @@ wrightMap( uni.proficiency, thresholds)
 		l3 = rep( 17,20),
 		l4 = rep( 18,20))
 
+dev.new(width=10, height=10)
 wrightMap( uni.proficiency, thresholds
 	, thr.lab.text = thresholds.labels
 	, thr.lab.col = thresholds.colors
