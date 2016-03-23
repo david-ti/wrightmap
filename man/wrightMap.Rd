@@ -113,6 +113,7 @@ wrightMap( uni.proficiency, difficulties, person.side = personDens)
 
   difficulties  <- sort( rnorm( 20))
 
+dev.new(width=10, height=10)
 wrightMap( multi.proficiency, difficulties)
 
 # Plotting results of a unidimensional Rating Scale Model
