@@ -39,7 +39,7 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	#par(oma = op$oma + c(0, 5, 0, 5))
 	par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 	#par(mgp = c(op$mar[1] - 2.4, 1, 0))
-	close.screen(all.screens = TRUE)
+
 	par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 	left.marg <- 0.05
 	right.marg <- .1
@@ -48,30 +48,34 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	person.screen <- c(left.marg,divider,0,1)
 	item.screen <- c(divider,1 - right.marg,0,1)
 	screens <- matrix(c(item.screen,person.screen),ncol = 4,byrow = TRUE)
-	
+	old.screens <- split.screen()
 	split.screen(screens)
-	
+	item.screen <- screen()
 	dots <- list(...)
 	dots[c("yRange","oma")] <- NULL
 	item.params <- list(thr = thresholds,yRange = yRange,oma = c(0,0,0,0))
 	do.call(item.side,c(item.params,dots))
-	close.screen(1)
+	par(oma = c(0, 0, 3, 0))
+	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
+	close.screen(item.screen)
 	if(!is.null(use.hist)) {
 		message("Parameter 'use.hist' is deprecated. Please use 'person.side' parameter instead.")
 		person.side <- ifelse(use.hist,personHist,personDens)
 	}
 	
-	dots[c("axis.logits","show.axis.logits")] <- NULL
-	person.params <- list(thetas = thetas,yRange = yRange,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE)
+	dots[c("axis.logits","show.axis.logits","close.on.close")] <- NULL
+	person.params <- list(thetas = thetas,yRange = yRange,close.on.close = FALSE,oma = c(0,0,0,0),axis.logits = "",show.axis.logits = FALSE)
 	do.call(person.side,c(person.params,dots))
-	
-	par(oma = c(0, 0, 3, 0))
-	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
 	par(op)
+	
+	curr.screens <- split.screen()
+	new.screens <- curr.screens[!(curr.screens %in% old.screens) ]
+	close.screen(new.screens)
+	
 	if (return.thresholds) {
 		return(thresholds)
 	}
-	
-	close.screen(all.screens = TRUE)
+
+
 
 }

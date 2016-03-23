@@ -30,8 +30,11 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 	nI <- dim(thr)[1]
 	nL <- dim(thr)[2]
 	
-	if(is.null(yRange))
+	if(is.null(yRange)) {
 		yRange <- c(min(thr, na.rm = TRUE),max(thr, na.rm = TRUE))
+		yA <- (yRange[2] - yRange[1])*.1
+		yRange <- yRange + c(-yA,yA )
+	}
 	par(oma = oma)	
 	par(mgp = c(1, 0.2, 0))
 
@@ -49,7 +52,9 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
 	}
 
-
+	if(!is.null(cutpoints)) {
+		cutLines(cutpoints,...)
+	}
 	
 	item.hist <- hist(thr, plot = FALSE, breaks = Nbins(thr,yRange))
 	#print(item.hist$mids)
@@ -76,9 +81,7 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 
 	text(cbind(0, itemBinLocations), labels = binnedList, pos = 4, offset = 1 * 15/nI,cex = .65)
 	
-	if(!is.null(cutpoints)) {
-		cutLines(cutpoints,...)
-	}
+
 	
 	
 }

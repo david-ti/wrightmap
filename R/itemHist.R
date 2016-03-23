@@ -27,10 +27,15 @@ itemHist <- function(thr, yRange = NULL,axis.items = "Items",axis.logits = "Logi
 	plot(c(min(item.hist[, 1]), max(item.hist[, 3])), c(min(item.hist[, 2]), max(item.hist[, 4])), ylim = yRange, xlim = c(0, max(item.hist[, 
 		4])), type = "n", axes = FALSE, ylab = "", xlab = axis.items,cex.lab = .8,font.lab = 3)
 
+	if(!is.null(cutpoints)) {
+		cutLines(cutpoints,...)
+	}
+
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-if (show.axis.logits == "R" | show.axis.logits == TRUE) {
+
+	if (show.axis.logits == "R" | show.axis.logits == TRUE) {
 		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
 		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
 	} else if (show.axis.logits == "L") {
@@ -38,12 +43,7 @@ if (show.axis.logits == "R" | show.axis.logits == TRUE) {
 		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
 	}
 
-
 	par(mgp = c(0, 0.2, 0))
 	rect(item.hist[, 4], item.hist[, 1], item.hist[, 2], item.hist[, 3])
-	
-	if(!is.null(cutpoints)) {
-		cutLines(cutpoints,...)
-	}
 	
 }

@@ -48,7 +48,7 @@ plotCI(ests, errors, labels = "", zeroline = TRUE, incol = "gray", outcol = "blu
 }
 }
 \details{
-The \code{plotCI} function takes point estimates and standard errors as inputs and plots confidence intervals in relation to a zero-line. By default, it colors the intervals gray if they include zero, and blue if they do not. The \code{difplot} function is a wrapper for \code{plotCI} specifcally intended for examining Differential Item Functioning from ConQuest output and expects tables formatted exactly like ConQuest output to work correctly. For plotting DIF from other statistical packages, it is recommended to use \code{plotCI} directly.
+The \code{plotCI} function takes point estimates and standard errors as inputs and plots 95 percent confidence intervals in relation to a zero-line. By default, it colors the intervals gray if they include zero, and blue if they do not. The \code{difplot} function is a wrapper for \code{plotCI} specifcally intended for examining Differential Item Functioning from ConQuest output and expects tables formatted exactly like ConQuest output to work correctly. For plotting DIF from other statistical packages, it is recommended to use \code{plotCI} directly.
 }
 
 \author{David Torres Irribarra and Rebecca Freund}

@@ -16,14 +16,15 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 	}
 
 	person.plot <- function(distInfo, yRange, p.points, p.range, p.col, r.col, dim.lab.side, dim.lab.cex, dim.lab.adj, p.cex.lab, p.font.lab, p.lwd) {
-		#par(mar = c(0,0,0,0))
-		
-		#print(screen())
+
 		
 		par(mar = c(op$mar[1], 0.2, op$mar[3], 0.1))
 
 		plot(c(min(distInfo[, 1]), max(distInfo[, 3])), c(min(distInfo[, 2]), max(distInfo[, 4])), ylim = yRange, xlim = c(max(distInfo[, 
 			4]), 0), type = "n", ylab = "", xlab = "", axes = FALSE, cex.lab = p.cex.lab, font.lab = p.font.lab, lwd = p.lwd)
+			
+			if(screen() == first)
+				mtext(axis.persons, side = 2, line = 1, cex = 0.8, font = 3)
 			
 			draw.range <- function(upper, lower, col, distInfo) {
 				in.range <- distInfo[,1] < upper & distInfo[,3] > lower
@@ -51,17 +52,6 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 				mapply(draw.point,p.points,p.col,list(distInfo))
 			}
 			
-		
-			# if(!is.null(p.ranges)) {
-				# p.ranges <- matrix(p.ranges,nrow = 2)
-				# for(i in 1:ncol(p.ranges)) {
-					# bar.colors[distInfo[,1] < p.ranges[2,i] & distInfo[,3] > p.ranges[1,i]] <- 'grey75'
-				# }
-			# }
-			
-			# for(p in p.points) {
-				   # bar.colors[distInfo[,1] - p <= 0 & distInfo[,3] - p > 0] <- 'grey45'
-            	# }
 
 		
 		
@@ -94,17 +84,18 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 		attr(distInfo[[i]], "dim.name") <- dim.names[i]
 		attr(distInfo[[i]], "dim.color") <- dim.color[i]
 	}
+	old.screens <- split.screen()
 	split.screen(c(1, nD))
 
 	first <- screen()
-	#print(first)
-	#print(split.screen())
+	
 
 	op <- par("mar","oma")
 
 	par(oma = oma)
 
-
+	
+	
 
 	lapply(distInfo, FUN = person.plot, yRange = yRange, p.points = person.points, p.range = person.range, p.col = p.point.col, r.col = p.range.col, dim.lab.cex = dim.lab.cex, dim.lab.side = dim.lab.side, dim.lab.adj = dim.lab.adj, 
 		p.cex.lab = 1.3, p.font.lab = 3, p.lwd = 2)
@@ -112,8 +103,10 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
 	}
 	mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
-	screen(first)
-	#print(distInfo)
-	mtext(axis.persons, side = 2, line = 1, cex = 0.8, font = 3)
+	
+	curr.screens <- split.screen()
+	new.screens <- curr.screens[!(curr.screens %in% old.screens) ]
+	close.screen(new.screens)
+
 
 }

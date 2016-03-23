@@ -28,6 +28,10 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), 
 		cex.lab = .8, font.lab = 3)
 
+	
+	if(!is.null(cutpoints)) {
+		cutLines(cutpoints,...)
+	}
 
 	box(bty = "o")
 	usr <- par("usr")
@@ -62,10 +66,7 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
 		}
 	}
-	
-	if(!is.null(cutpoints)) {
-		cutLines(cutpoints,...)
-	}
+
 
 ##############
 

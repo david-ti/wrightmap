@@ -18,7 +18,7 @@ function(ests, errors, labels = "", zeroline = TRUE, incol = "gray", outcol = "b
 	box()
 	segments(x0 = xcorrs, y0 = lowerbounds, y1 = upperbounds, col = col, lwd = 2, lend = 1)
 	
-	text(xcorrs, upperbounds + 0.05, labels, cex = 0.7, col = col)
+	text(xcorrs, upperbounds, labels, cex = 0.7, col = col, pos = 3, offset = .1)
 	
 	if (zeroline) 
 		abline(h = 0, lty = "dashed")

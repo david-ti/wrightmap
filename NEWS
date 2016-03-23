@@ -54,6 +54,8 @@ wrightMap split into data handling and plotting, each of which is further split 
 
 - fitgraph no longer calls a new window
 
+- better handling of generics
+
 ##Bugfix:
 
 - Fixes to CQmodel on reading the #IO variance errors and included fix for the var/covar matrix on CQ3
