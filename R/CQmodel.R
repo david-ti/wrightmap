@@ -141,6 +141,13 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		cbind(left.table, right.table)
 
 	}
+	
+	wmap.items <- function(map) {
+		m <- regexpr("\\|[0-9][0-9 ]+",map)
+		x2 <- regmatches(map,m)
+		m2 <- gregexpr("[0-9]+",x2)
+		return(sort(as.numeric(unlist(regmatches(x2,m2)))))
+	}
 
 
 	split.right <- function(table, right) {
@@ -242,6 +249,7 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		titles[grepl("^IMPORTED MODEL", titles)] <- "RMP"
 		titles[titles == "TABLES OF POPULATION MODEL PARAMETER ESTIMATES"] <- "PMP"
 		titles[grepl("MAP OF .+ AND RESPONSE MODEL PARAMETER ESTIMATES", titles)] <- "MRM"
+		titles[grepl("HORIZONTAL MAP OF .+ AND THRESHOLDS", titles)] <- "HMT"
 		titles[grepl("MAP OF .+ AND THRESHOLDS", titles)] <- "MTH"
 		titles[titles == "TABLES OF GIN Thresholds"] <- "GIN"
 		titles[titles == "TABLES OF GIN Item Parameters"] <- "GIN.deltas"
@@ -468,6 +476,17 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		
 		}
 		
+		##########MRM############
+		
+		maps <- model[names(model) == "MRM"]
+		if(length(maps) > 1) {
+		model[names(model) == "MRM"] <- NULL
+		model$MRM <- maps[1]
+		model$MRM.dim <- maps[-1]
+		names(model$MRM.dim) <- model$dimensions
+		
+		model$dim.items <- sapply(model$MRM.dim,wmap.items)
+		}
 
 
 		########GIN#########
