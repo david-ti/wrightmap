@@ -2,8 +2,10 @@ personHist <-
 function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
 
 	densExt <- function(densElem) {
-		bin.size <- abs(densElem$breaks[1] - densElem$breaks[2])
-		thetaHist <- data.frame(xleft = densElem$mids - (bin.size/2), ybottom = densElem$mids * 0, xright = densElem$mids + (bin.size/2), 
+		
+		n.bars <- length(densElem$breaks)
+
+		thetaHist <- data.frame(xleft = densElem$breaks[-n.bars], ybottom = densElem$mids * 0, xright = densElem$breaks[-1], 
 			ytop = densElem$counts)
 
 		return(thetaHist)
