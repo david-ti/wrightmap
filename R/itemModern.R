@@ -58,7 +58,7 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 			pos <- thr.lab.pos
 			if(length(pos) != length(thr)) {
 				pos <- matrix(rep(rep_len(pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-				pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+				pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ], ties.method = "random")]))
 			}
 			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, 
 				font = thr.lab.font)
