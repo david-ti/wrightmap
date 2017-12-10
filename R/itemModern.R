@@ -1,5 +1,5 @@
 itemModern <-
-function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",show.axis.logits = "R", oma = c(0,0,0,3),cutpoints = NULL,...) {
+function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",show.axis.logits = "R", oma = c(0,0,0,3),cutpoints = NULL,vertLines = TRUE,...) {
 	
 	thr <- as.matrix(thr)
 
@@ -47,10 +47,27 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	
 
 #############
+
+	if(vertLines == TRUE){
+
+		vertLines.data <- cbind(cbind(1:nrow(thr),1:nrow(thr)),cbind(apply(thr,1,min,na.rm = TRUE),apply(thr,1,max,na.rm = TRUE)))
+
+		vertLines <- function(x,...){
+
+			lines(c(x[1],x[2]),c(x[3],x[4]),...)
+
+		}
+
+		apply(vertLines.data, 1, vertLines, col = "grey90")	
+
+
+	}
+
 	if (show.thr.sym) {
 
-		points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), 
+		points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), lend = 'butt', ljoin = "mitre",
 			col = as.matrix(thr.sym.col.fg), bg = as.matrix(thr.sym.col.bg))
+
 	}
 
 	if (show.thr.lab) {
@@ -58,7 +75,7 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 			pos <- thr.lab.pos
 			if(length(pos) != length(thr)) {
 				pos <- matrix(rep(rep_len(pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-				pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ])]))
+				pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ], ties.method = "random")]))
 			}
 			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, 
 				font = thr.lab.font)

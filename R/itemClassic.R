@@ -67,7 +67,9 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 		(bin.size/2), ytop = item.hist$counts)
 
 	item.labels <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
-	item.labels <- t(apply(item.labels, 1, paste, c(1:nL), sep = "."))
+	if(nL > 1){
+		item.labels <- t(apply(item.labels, 1, paste, c(1:nL), sep = "."))
+	}
 	
 	#print(c(item.hist[, 1], tail(item.hist[, 3], 1)))
 	#print(Nbins(thr,yRange))
