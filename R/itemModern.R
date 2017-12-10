@@ -47,10 +47,21 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	
 
 #############
+
+
+	vertLines <- function(x,...){
+
+		lines(c(x[1],x[2]),c(x[3],x[4]),...)
+
+	}
+
+	apply(vertLines.data, 1, vertLines, col = "grey90")	
+
 	if (show.thr.sym) {
 
 		points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), 
 			col = as.matrix(thr.sym.col.fg), bg = as.matrix(thr.sym.col.bg))
+
 	}
 
 	if (show.thr.lab) {
