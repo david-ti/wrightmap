@@ -48,7 +48,7 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 
 #############
 
-	if(vertLines = TRUE){
+	if(vertLines == TRUE){
 
 		vertLines.data <- cbind(cbind(1:nrow(thr),1:nrow(thr)),cbind(apply(thr,1,min,na.rm = TRUE),apply(thr,1,max,na.rm = TRUE)))
 
