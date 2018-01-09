@@ -1,20 +1,18 @@
-itemModern <-
-function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.cex = .8, thr.sym.lwd = 1, thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL, thr.lab.col = "black", thr.lab.cex = .5, thr.lab.font = 2,label.items.rows = 1,label.items.srt = 0,label.items = NULL,label.items.cex = 0.6,label.items.ticks = TRUE,axis.logits = "Logits",show.axis.logits = "R", oma = c(0,0,0,3),cutpoints = NULL,vertLines = TRUE,...) {
-	
+itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.par = list(), show.thr.lab = TRUE, 
+	thr.lab.par = list(), label.items.rows = 1, label.items.ticks = TRUE, label.items.par = list(), axis.logits = "Logits", 
+	show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, vertLines = TRUE, thr.sym.cex = 0.8, thr.sym.lwd = 1, 
+	thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.lab.pos = c(2, 4), thr.lab.text = NULL, 
+	thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6, 
+	...) {
+
 	thr <- as.matrix(thr)
 
 	nI <- dim(thr)[1]
-	
-	if(is.null(yRange))
-		yRange <- c(min(thr, na.rm = TRUE),max(thr, na.rm = TRUE))
+
+	if (is.null(yRange)) 
+		yRange <- c(min(thr, na.rm = TRUE), max(thr, na.rm = TRUE))
 
 
-	if (is.null(thr.lab.text)) {
-		if (!is.null(colnames(thr))) 
-			thr.lab.text <- as.data.frame(matrix(rep(colnames(thr), each = nrow(thr)), nrow = nrow(thr)))
-		else thr.lab.text = col(thr)
-	}
-	
 	if (is.null(label.items)) {
 		if (!is.null(rownames(thr))) 
 			label.items <- rownames(thr)
@@ -25,18 +23,18 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 	par(mgp = c(2, 0.2, 0))
 
 
-	plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), 
-		cex.lab = .8, font.lab = 3)
+	plot(seq(1:nI), rep(0, nI), type = "n", axes = FALSE, xlab = axis.items, ylab = "", ylim = yRange, xlim = c(0.5, nI + 
+		0.5), cex.lab = 0.8, font.lab = 3)
 
-	
-	if(!is.null(cutpoints)) {
-		cutLines(cutpoints,...)
+
+	if (!is.null(cutpoints)) {
+		cutLines(cutpoints, ...)
 	}
 
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-	
+
 	if (show.axis.logits == "R" | show.axis.logits == TRUE) {
 		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
 		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
@@ -44,106 +42,84 @@ function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.
 		axis(2, las = 1, cex.axis = 0.7, font.axis = 2)
 		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
 	}
+
+
+	#############
 	
+	if (vertLines == TRUE) {
 
-#############
+		vertLines.data <- cbind(cbind(1:nrow(thr), 1:nrow(thr)), cbind(apply(thr, 1, min, na.rm = TRUE), apply(thr, 1, 
+			max, na.rm = TRUE)))
 
-	if(vertLines == TRUE){
+		vertLines <- function(x, ...) {
 
-		vertLines.data <- cbind(cbind(1:nrow(thr),1:nrow(thr)),cbind(apply(thr,1,min,na.rm = TRUE),apply(thr,1,max,na.rm = TRUE)))
-
-		vertLines <- function(x,...){
-
-			lines(c(x[1],x[2]),c(x[3],x[4]),...)
+			lines(c(x[1], x[2]), c(x[3], x[4]), ...)
 
 		}
 
-		apply(vertLines.data, 1, vertLines, col = "grey90")	
+		apply(vertLines.data, 1, vertLines, col = "grey90")
 
 
 	}
 
 	if (show.thr.sym) {
 
-		points(row(thr), thr, ylim = yRange, type = "p", cex = thr.sym.cex, lwd = thr.sym.lwd, pch = as.matrix(thr.sym.pch), lend = 'butt', ljoin = "mitre",
-			col = as.matrix(thr.sym.col.fg), bg = as.matrix(thr.sym.col.bg))
+		thr.sym <- function(cex = thr.sym.cex, lwd = thr.sym.lwd, pch = thr.sym.pch, lend = "butt", ljoin = "mitre", col = thr.sym.col.fg, 
+			bg = thr.sym.col.bg, x = row(thr), y = thr, ...) {
+
+			return(list(cex = cex, lwd = lwd, pch = as.matrix(pch), lend = lend, ljoin = ljoin, col = as.matrix(col), bg = as.matrix(bg), x = x, y = y,
+				...))
+		}
+
+		thr.sym.par <- do.call(thr.sym, thr.sym.par)
+		do.call(points, args = thr.sym.par)
 
 	}
 
 	if (show.thr.lab) {
-		if (show.thr.sym) {
-			pos <- thr.lab.pos
-			if(length(pos) != length(thr)) {
-				pos <- matrix(rep(rep_len(pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
-				pos <- t(sapply(1:nrow(thr), function(x) pos[x, rank(thr[x, ], ties.method = "random")]))
+
+		thr.lab <- function(labels = thr.lab.text, col = thr.lab.col, pos = thr.lab.pos, cex = thr.lab.cex, font = thr.lab.font, x = row(thr), y = thr,
+			...) {
+
+			if (is.null(labels)) {
+				if (!is.null(colnames(thr))) 
+					labels <- as.data.frame(matrix(rep(colnames(thr), each = nI), nrow = nI))
+				else labels = col(thr)
 			}
-			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), pos = pos, cex = thr.lab.cex, 
-				font = thr.lab.font)
-		} else {
-			text(row(thr), thr, labels = as.matrix(thr.lab.text), col = as.matrix(thr.lab.col), cex = thr.lab.cex, font = thr.lab.font)
+
+			if (show.thr.sym & length(pos) != length(thr)) {
+				pos <- matrix(rep(rep_len(pos, ncol(thr)), nI), byrow = TRUE, ncol = ncol(thr))
+				pos <- t(sapply(1:nI, function(x) pos[x, rank(thr[x, ], ties.method = "random")]))
+			}
+
+			return(list(labels = as.matrix(labels), col = as.matrix(col), pos = pos, cex = cex, font = font, x = x, y = y,...))
+
 		}
+
+		thr.lab.par <- do.call(thr.lab, thr.lab.par)
+		do.call(text, args = thr.lab.par)
+
 	}
 
 
-##############
-
-	#par(mgp = c(3, 1, 0))
-
-	if (label.items.rows == 1) {
-		if (label.items.srt != 0) {
-			text.adj = c(1, 1)
-		} else {
-			text.adj = c(0.5, 2)
-		}
-		text(seq(1:nrow(thr)), y = par("usr")[3] - .2, labels = label.items, srt = label.items.srt, adj = text.adj, xpd = TRUE, cex = label.items.cex)
-
-		if (label.items.ticks) {
-
-			axis(1, at = 1:nI, labels = FALSE, line = NA, tcl = -0.35)
-
-		}
-
-	}
-
-	if (label.items.rows == 2) {
-
-		text(seq(from = 1, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 2)], 
-			adj = c(0.5, 2.4), xpd = TRUE, cex = label.items.cex)
-
-		text(seq(from = 2, to = nrow(thr), by = 2), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 2)], 
-			adj = c(0.5, 4.0), xpd = TRUE, cex = label.items.cex)
-
-		if (label.items.ticks == TRUE) {
-
-			axis(1, at = seq(from = 1, to = nI, by = 2), labels = FALSE, line = NA, tcl = -0.35)
-			axis(1, at = seq(from = 2, to = nI, by = 2), labels = FALSE, line = NA, tcl = -0.9)
-
-		}
-
-	}
-
-	if (label.items.rows == 3) {
-
-		text(seq(from = 1, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 1, to = nrow(thr), by = 3)], 
-			adj = c(0.5, 2.4), xpd = TRUE, cex = label.items.cex)
-
-
-		text(seq(from = 2, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 2, to = nrow(thr), by = 3)], 
-			adj = c(0.5, 4.0), xpd = TRUE, cex = label.items.cex)
-
-
-		text(seq(from = 3, to = nrow(thr), by = 3), y = par("usr")[3], labels = label.items[seq(from = 3, to = nrow(thr), by = 3)], 
-			adj = c(0.5, 5.4), xpd = TRUE, cex = label.items.cex)
-
-		if (label.items.ticks == TRUE) {
-
-			axis(1, at = seq(from = 1, to = nI, by = 3), labels = FALSE, line = NA, tcl = -0.35)
-			axis(1, at = seq(from = 2, to = nI, by = 3), labels = FALSE, line = NA, tcl = -0.9)
-			axis(1, at = seq(from = 3, to = nI, by = 3), labels = FALSE, line = NA, tcl = -1.4)
-
-		}
-
-	}
+	##############
+	ticks <- -.5 * 1:label.items.rows
+	x.axis.y <- par("usr")[3] + par("cxy")[2] * ticks
 	
+	x.axis <- function(labels = label.items, srt = label.items.srt, adj = ifelse(srt == 0, c(.5,1),1), xpd = NA, cex = label.items.cex, x = 1:nI, y = x.axis.y, ...) {
+
+		return(list(labels = labels, srt = srt, xpd = xpd, cex = cex, y = y, adj = adj, x = x,...))
+	}
+
+	label.items.par <- do.call(x.axis, label.items.par)
+
+	do.call(what = text, args = label.items.par)
 	
+	if (label.items.ticks) {
+
+		suppressWarnings(do.call(what = mapply, args = list(FUN = axis, side = 1, at = label.items.par$x, labels = FALSE, tcl = (label.items.par$y - par("usr")[3])/(par("cxy")[2]) +.2)))
+	}
+
+	
+
 }
