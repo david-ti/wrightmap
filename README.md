@@ -1,17 +1,15 @@
-wrightmap
+Wright Map
 =========
 
-Wright Map: IRT item-person map with ConQuest integration
+IRT Item-Person Map with 'ConQuest' Integration
 
 Package: WrightMap
 
 Type: Package
 
-Title: Wright Map: IRT item-person map with ConQuest integration
+Version: 1.2.1
 
-Version: 1.1
-
-Date: 2014-03-28
+Date: 2016-03-18
 
 Author: David Torres Irribarra & Rebecca Freund
 

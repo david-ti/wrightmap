@@ -1,0 +1,71 @@
+#Updates for 1.2:
+
+##Major change:
+
+wrightMap split into data handling and plotting, each of which is further split into person & item side. The data handling functions are further split by filetype and the plotting functions are split by plot types. For data handling, this is meant to make it possible to have item and person data of different filetypes. For plotting, this is meant to make the plotting function more flexible and make it easier to add different plot styles. Details:
+
+- wrightMap.default, wrightMap.CQmodel, wrightMap.character are now removed. There is only wrightMap.R, which calls the appropriate data handling and plotting functions
+
+- helper functions for data handling 
+
+- parameter person.side accepts person plot functions personHist (default) and personDens
+
+- parameter item.side accepts item plot functions itemModern (default), itemClassic, and itemHist
+
+##API changes
+
+- the "type" parameter in wrightMap is now called "item.type" to avoid collision with the "type" parameter in the "plot" function. 
+
+- For the same reason, the "type" parameter in fitgraph is now called "fit.type"
+
+- the "use.hist" parameter in wrightMap is deprecated. Create a histogram with person.side = personHist (default) and density with person.side = personDens
+
+- fitgraph and make.thresholds now explicitly include a version for numeric and matrix respectively. This should fix namespace problems for users who prefer to include external functions with :: notation.
+
+##New functions:
+
+- ppPlot
+- plotCI
+- difplot
+
+##New features:
+
+- now possible to add points and ranges to person side
+
+- can easily add cutpoints on item side
+
+- added "classic" and "hist" item map
+
+- "throld" parameters added to make.thresholds and wrightMap, allowing for the calculation of thresholds other than .5
+
+- "alpha" and "c.params" added to make.thresholds and wrightMap, supporting the 2PL and 3PL models
+
+- label.items.cex and dim.lab.cex added to wrightMap to control label sizes
+
+- support for ConQuest4 added
+
+- "equation" added to CQmodel and wrightMap.CQmodel, to handle CQ output without a summary of estimation table
+
+- it is now possible to plot the person and item sides separately
+
+##Improvements:
+
+- wrightMap now remembers your original graphical parameters and restores them after drawing the map 
+
+- fitgraph no longer calls a new window
+
+- better handling of generics
+
+##Bugfix:
+
+- Fixes to CQmodel on reading the #IO variance errors and included fix for the var/covar matrix on CQ3
+
+- Fixed a bug where thr.lab.pos couldn't take a matrix
+
+- Fixed a bug where fitgraph.CQmodel assumed there was always a parameter called "item" in your table
+
+- wrightMap will no longer crash if the p.est parameter is null
+
+##Other notes:
+
+- Removed some of the runtime messages

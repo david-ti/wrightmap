@@ -1,0 +1,566 @@
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+SUMMARY OF THE ESTIMATION
+===========================================================Build: Mar 23 2012===
+
+Estimation method was: Gauss-Hermite Quadrature with 225 nodes
+Assumed population distribution was: Gaussian
+Constraint was: DEFAULT
+The Data File: ex1.dat
+The format:  id 1-5 responses 12-23
+No case weights
+The regression model:
+Grouping Variables:
+The item model: item
+Slopes are fixed
+Sample size: 1000
+Final Deviance:    13244.72950
+Total number of estimated parameters: 15
+The number of iterations: 140
+Termination criteria:  Max iterations=1000, Parameter Change= 0.00010
+                       Deviance Change= 0.00010
+Iterations terminated because the convergence criteria were reached
+Random number generation seed:    1.00000
+Number of nodes used when drawing PVs: 2000
+Number of nodes used when computing fit: 200
+Number of plausible values to draw: 5
+Maximum number of iterations without a deviance improvement: 100
+Maximum number of Newton steps in M-step: 10
+Value for obtaining finite MLEs for zero/perfects:    0.30000
+
+key 1 scored as 1: acddbcebbacc
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+TABLES OF RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+TERM 1: item
+--------------------------------------------------------------------------------------------------------------
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+     item           ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------------
+ 1   BSMMA01          0.056   0.068    0.87 ( 0.91, 1.09) -3.0   0.91 ( 0.94, 1.06) -2.8                      
+ 2   BSMMA02         -0.515   0.073    1.10 ( 0.91, 1.09)  2.2   1.02 ( 0.92, 1.08)  0.5                      
+ 3   BSMMA03         -0.354   0.071    0.91 ( 0.91, 1.09) -2.0   0.94 ( 0.93, 1.07) -1.6                      
+ 4   BSMMA04          0.555   0.066    0.99 ( 0.91, 1.09) -0.3   0.98 ( 0.95, 1.05) -0.8                      
+ 5   BSMMA05          0.917   0.067    1.17 ( 0.91, 1.09)  3.6   1.11 ( 0.95, 1.05)  3.9                      
+ 6   BSMMA06         -0.659*  0.074    1.00 ( 0.91, 1.09)  0.0   1.01 ( 0.92, 1.08)  0.2                      
+ 7   BSMSA07         -0.079   0.074    1.04 ( 0.91, 1.09)  1.0   1.01 ( 0.92, 1.08)  0.2                      
+ 8   BSMSA08         -0.014   0.073    1.10 ( 0.91, 1.09)  2.2   1.06 ( 0.92, 1.08)  1.5                      
+ 9   BSMSA09         -0.648   0.084    0.91 ( 0.91, 1.09) -2.0   0.97 ( 0.88, 1.12) -0.6                      
+ 10  BSMSA10         -0.079   0.074    1.08 ( 0.91, 1.09)  1.8   1.03 ( 0.92, 1.08)  0.7                      
+ 11  BSMSA11         -0.186   0.075    0.91 ( 0.91, 1.09) -2.2   0.96 ( 0.91, 1.09) -0.9                      
+ 12  BSMSA12          1.005*  0.067    0.99 ( 0.91, 1.09) -0.2   0.99 ( 0.95, 1.05) -0.3                      
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.976
+Chi-square test of parameter equality =     401.77,  df = 10,  Sig Level = 0.000
+^ Empirical standard errors have been used
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+TABLES OF POPULATION MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+REGRESSION COEFFICIENTS
+
+                                     Dimension
+                         ----------------------------------
+Regression Variable          Dimension_1      Dimension_2
+
+CONSTANT                   0.800 ( 0.049)    1.363 ( 0.048)     
+----------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+================================================================
+CONDITIONAL COVARIANCE/CORRELATION MATRIX
+
+                                    Dimension
+                         ------------------------------------
+Dimension                    1                 2
+
+Dimension_1                                  0.790           
+Dimension_2                0.802                             
+-------------------------------------------------------------
+Variance                   1.245  ( 0.123)   0.779  ( 0.101) 
+-------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Values below the diagonal are correlations and values above are covariances
+=============================================================
+                        
+RELIABILITY COEFFICIENTS
+------------------------
+                        
+Dimension: (Dimension_1)                                                        
+-----------------------
+ MLE Person separation RELIABILITY:   0.354                                     
+ WLE Person separation RELIABILITY:   0.283                                     
+ EAP/PV RELIABILITY:                  0.618                                     
+------------------------
+Dimension: (Dimension_2)                                                        
+-----------------------
+ MLE Person separation RELIABILITY:   0.000                                     
+ WLE Person separation RELIABILITY:   0.000                                     
+ EAP/PV RELIABILITY:                  0.554                                     
+------------------------
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+MAP OF LATENT DISTRIBUTIONS AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+                  Dimension                  Terms in the Model (excl Step terms)
+----------------------------------------------
+          Dimension_1         Dimension_2                      +item
+---------------------------------------------------------------------------------------
+                          |                   |                                       |
+   5                      |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+   4                      |                   |                                       |
+                          |                  X|                                       |
+                          |                   |                                       |
+                         X|                   |                                       |
+                         X|                  X|                                       |
+                         X|                 XX|                                       |
+                        XX|                XXX|                                       |
+   3                     X|                 XX|                                       |
+                       XXX|              XXXXX|                                       |
+                      XXXX|              XXXXX|                                       |
+                     XXXXX|            XXXXXXX|                                       |
+                    XXXXXX|      XXXXXXXXXXXXX|                                       |
+                  XXXXXXXX|     XXXXXXXXXXXXXX|                                       |
+   2              XXXXXXXX|     XXXXXXXXXXXXXX|                                       |
+                 XXXXXXXXX|    XXXXXXXXXXXXXXX|                                       |
+             XXXXXXXXXXXXX|  XXXXXXXXXXXXXXXXX|                                       |
+                XXXXXXXXXX| XXXXXXXXXXXXXXXXXX|                                       |
+            XXXXXXXXXXXXXX|XXXXXXXXXXXXXXXXXXX|                                       |
+              XXXXXXXXXXXX|XXXXXXXXXXXXXXXXXXX|                                       |
+             XXXXXXXXXXXXX| XXXXXXXXXXXXXXXXXX|                                       |
+   1        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|12                                     |
+           XXXXXXXXXXXXXXX|  XXXXXXXXXXXXXXXXX|5                                      |
+              XXXXXXXXXXXX|      XXXXXXXXXXXXX|                                       |
+         XXXXXXXXXXXXXXXXX|     XXXXXXXXXXXXXX|4                                      |
+         XXXXXXXXXXXXXXXXX|         XXXXXXXXXX|                                       |
+           XXXXXXXXXXXXXXX|           XXXXXXXX|                                       |
+               XXXXXXXXXXX|           XXXXXXXX|                                       |
+   0          XXXXXXXXXXXX|              XXXXX|1 7 8 10                               |
+               XXXXXXXXXXX|               XXXX|11                                     |
+                 XXXXXXXXX|                XXX|3                                      |
+                    XXXXXX|                  X|2                                      |
+                  XXXXXXXX|                XXX|6 9                                    |
+                     XXXXX|                  X|                                       |
+                     XXXXX|                   |                                       |
+  -1                   XXX|                   |                                       |
+                       XXX|                   |                                       |
+                       XXX|                   |                                       |
+                        XX|                   |                                       |
+                        XX|                   |                                       |
+                         X|                   |                                       |
+  -2                      |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+  -3                      |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+                          |                   |                                       |
+=======================================================================================
+Each 'X' represents 3.5 cases
+
+=======================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+MAP OF LATENT DISTRIBUTIONS AND THRESHOLDS
+===========================================================Build: Mar 23 2012===
+           Dimension                Generalised-Item Thresholds
+--------------------------
+          1         2
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                |         |
+   5            |         |
+                |         |
+                |         |
+                |         |
+                |         |
+                |         |
+                |         |
+   4            |         |
+                |         |
+                |         |
+                |         |
+                |        X|
+                |        X|
+               X|       XX|
+   3           X|        X|
+               X|      XXX|
+              XX|      XXX|
+             XXX|     XXXX|
+             XXX|  XXXXXXX|
+            XXXX|  XXXXXXX|
+   2        XXXX|  XXXXXXX|
+            XXXX|  XXXXXXX|
+         XXXXXXX| XXXXXXXX|
+           XXXXX|XXXXXXXXX|
+         XXXXXXX|XXXXXXXXX|
+          XXXXXX|XXXXXXXXX|
+         XXXXXXX|XXXXXXXXX|
+   1     XXXXXXXXXXXXXXXXX|12
+         XXXXXXX|XXXXXXXXX|5
+          XXXXXX|  XXXXXXX|
+        XXXXXXXX|  XXXXXXX|4
+       XXXXXXXXX|    XXXXX|
+        XXXXXXXX|     XXXX|
+          XXXXXX|     XXXX|
+   0      XXXXXX|       XX|1 7 8 10
+           XXXXX|       XX|11
+            XXXX|        X|3
+             XXX|        X|2
+            XXXX|        X|6 9
+              XX|        X|
+             XXX|         |
+  -1           X|         |
+              XX|         |
+               X|         |
+               X|         |
+               X|         |
+                |         |
+  -2            |         |
+                |         |
+                |         |
+                |         |
+                |         |
+                |         |
+                |         |
+  -3            |         |
+                |         |
+                |         |
+                |         |
+                |         |
+============================================================================================================================================================================================================================================================================================================
+Each 'X' represents 7.1 cases
+The labels for thresholds show the levels of
+    item, and category, respectively
+
+============================================================================================================================================================================================================================================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+HORIZONTAL MAP OF LATENT DISTRIBUTIONS AND THRESHOLDS
+===========================================================Build: Mar 23 2012===
+
+
+
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+
+
+
+                           X
+                          XXX
+                          XXX XXX X X
+                        XXXXXXXXXXX X
+                       XXXXXXXXXXXXXX
+                    X XXXXXXXXXXXXXXXXXX
+                  X XXXXXXXXXXXXXXXXXXXXXX
+                X XXXXXXXXXXXXXXXXXXXXXXXXX
+-------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX--------------
+                               X
+                              XXXXXX
+                              XXXXXXX
+                            XXXXXXXXXXXXX
+                            XXXXXXXXXXXXX
+                           XXXXXXXXXXXXXX
+                         XXXXXXXXXXXXXXXXX
+                         XXXXXXXXXXXXXXXXXXX
+                       XXXXXXXXXXXXXXXXXXXXX X
+-------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXX------------
+
+============================================================
+Generalised Item: 1-->item:1 (BSMMA01)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                        1
+============================================================
+
+============================================================
+Generalised Item: 2-->item:2 (BSMMA02)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                     1
+============================================================
+
+============================================================
+Generalised Item: 3-->item:3 (BSMMA03)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                      1
+============================================================
+
+============================================================
+Generalised Item: 4-->item:4 (BSMMA04)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                            1
+============================================================
+
+============================================================
+Generalised Item: 5-->item:5 (BSMMA05)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                              1
+============================================================
+
+============================================================
+Generalised Item: 6-->item:6 (BSMMA06)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                    1
+============================================================
+
+============================================================
+Generalised Item: 7-->item:7 (BSMSA07)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                        1
+============================================================
+
+============================================================
+Generalised Item: 8-->item:8 (BSMSA08)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                        1
+============================================================
+
+============================================================
+Generalised Item: 9-->item:9 (BSMSA09)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                    1
+============================================================
+
+============================================================
+Generalised Item: 10-->item:10 (BSMSA10)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                        1
+============================================================
+
+============================================================
+Generalised Item: 11-->item:11 (BSMSA11)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                       1
+============================================================
+
+============================================================
+Generalised Item: 12-->item:12 (BSMSA12)
+------------------------------------------------------------
+   -3     -2    -1     +0     +1     +2    +3     +4     +5
+------------------------------------------------------------
+                               1
+============================================================
+
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+MAP OF LATENT DISTRIBUTIONS AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+        Dimension        Terms in the Model (excl Step terms)
+--------------------
+Dimension_1                                +item
+-------------------------------------------------------------------
+                          |                                       |
+   5                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+   4                      |                                       |
+                          |                                       |
+                          |                                       |
+                         X|                                       |
+                         X|                                       |
+                         X|                                       |
+                        XX|                                       |
+   3                     X|                                       |
+                       XXX|                                       |
+                      XXXX|                                       |
+                     XXXXX|                                       |
+                    XXXXXX|                                       |
+                  XXXXXXXX|                                       |
+   2              XXXXXXXX|                                       |
+                 XXXXXXXXX|                                       |
+             XXXXXXXXXXXXX|                                       |
+                XXXXXXXXXX|                                       |
+            XXXXXXXXXXXXXX|                                       |
+              XXXXXXXXXXXX|                                       |
+             XXXXXXXXXXXXX|                                       |
+   1        XXXXXXXXXXXXXX|                                       |
+           XXXXXXXXXXXXXXX|5                                      |
+              XXXXXXXXXXXX|                                       |
+         XXXXXXXXXXXXXXXXX|4                                      |
+         XXXXXXXXXXXXXXXXX|                                       |
+           XXXXXXXXXXXXXXX|                                       |
+               XXXXXXXXXXX|                                       |
+   0          XXXXXXXXXXXX|1                                      |
+               XXXXXXXXXXX|                                       |
+                 XXXXXXXXX|3                                      |
+                    XXXXXX|2                                      |
+                  XXXXXXXX|6                                      |
+                     XXXXX|                                       |
+                     XXXXX|                                       |
+  -1                   XXX|                                       |
+                       XXX|                                       |
+                       XXX|                                       |
+                        XX|                                       |
+                        XX|                                       |
+                         X|                                       |
+  -2                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+  -3                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+===================================================================
+Each 'X' represents 3.5 cases
+
+===================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+MAP OF LATENT DISTRIBUTIONS AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+        Dimension        Terms in the Model (excl Step terms)
+--------------------
+Dimension_2                                +item
+-------------------------------------------------------------------
+                          |                                       |
+   5                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+   4                      |                                       |
+                         X|                                       |
+                          |                                       |
+                          |                                       |
+                         X|                                       |
+                        XX|                                       |
+                       XXX|                                       |
+   3                    XX|                                       |
+                     XXXXX|                                       |
+                     XXXXX|                                       |
+                   XXXXXXX|                                       |
+             XXXXXXXXXXXXX|                                       |
+            XXXXXXXXXXXXXX|                                       |
+   2        XXXXXXXXXXXXXX|                                       |
+           XXXXXXXXXXXXXXX|                                       |
+         XXXXXXXXXXXXXXXXX|                                       |
+        XXXXXXXXXXXXXXXXXX|                                       |
+       XXXXXXXXXXXXXXXXXXX|                                       |
+       XXXXXXXXXXXXXXXXXXX|                                       |
+        XXXXXXXXXXXXXXXXXX|                                       |
+   1  XXXXXXXXXXXXXXXXXXXX|12                                     |
+         XXXXXXXXXXXXXXXXX|                                       |
+             XXXXXXXXXXXXX|                                       |
+            XXXXXXXXXXXXXX|                                       |
+                XXXXXXXXXX|                                       |
+                  XXXXXXXX|                                       |
+                  XXXXXXXX|                                       |
+   0                 XXXXX|7 8 10                                 |
+                      XXXX|11                                     |
+                       XXX|                                       |
+                         X|                                       |
+                       XXX|9                                      |
+                         X|                                       |
+                          |                                       |
+  -1                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+  -2                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+  -3                      |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+                          |                                       |
+===================================================================
+Each 'X' represents 3.5 cases
+
+===================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+TABLES OF GIN Thresholds
+===========================================================Build: Mar 23 2012===
+GIN Number  Threshold           GIN Labels
+--------------------------------------------------------------------------------
+1.1	     0.056		item	1	BSMMA01	
+2.1	    -0.515		item	2	BSMMA02	
+3.1	    -0.354		item	3	BSMMA03	
+4.1	     0.556		item	4	BSMMA04	
+5.1	     0.917		item	5	BSMMA05	
+6.1	    -0.659		item	6	BSMMA06	
+7.1	    -0.079		item	7	BSMSA07	
+8.1	    -0.015		item	8	BSMSA08	
+9.1	    -0.647		item	9	BSMSA09	
+10.1	    -0.079		item	10	BSMSA10	
+11.1	    -0.186		item	11	BSMSA11	
+12.1	     1.005		item	12	BSMSA12	
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+TABLES OF GIN Item Parameters
+===========================================================Build: Mar 23 2012===
+GIN Number  Delta Est.          GIN Labels
+--------------------------------------------------------------------------------
+1.1	     0.056		item	1	BSMMA01	
+2.1	    -0.515		item	2	BSMMA02	
+3.1	    -0.354		item	3	BSMMA03	
+4.1	     0.555		item	4	BSMMA04	
+5.1	     0.917		item	5	BSMMA05	
+6.1	    -0.659		item	6	BSMMA06	
+7.1	    -0.079		item	7	BSMSA07	
+8.1	    -0.014		item	8	BSMSA08	
+9.1	    -0.648		item	9	BSMSA09	
+10.1	    -0.079		item	10	BSMSA10	
+11.1	    -0.186		item	11	BSMSA11	
+12.1	     1.005		item	12	BSMSA12	
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Thu Mar 06 22:49 2014
+Parameter Estimate Error Variance/Covariance Matrix
+===========================================================Build: Mar 23 2012===
+
+--------------------------------------------------------------------------------
+         ================================================================================

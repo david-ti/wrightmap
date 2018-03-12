@@ -1,34 +1,5 @@
-
-# Version 23 - August 13, 2013
-
-# Fit Graph
-fitgraph <- function( fitEst, ...) {
-	UseMethod("fitgraph")
-}
-
-fitgraph.character <- function(fitEst,...) {
-	fitgraph(CQmodel(show = fitEst),...)
-}
-
-fitgraph.CQmodel <- function(fitEst,table = NULL,type = "W",itemLabels =NULL,...) {
-	if(is.null(table)) {
-		table <- fitEst$RMP[[1]]
-	}
-	else {
-		table <- fitEst$RMP[[table]]
-	}
-	estlabel <- paste(type,"fit",sep=".")
-	llabel <- paste(type,"Low",sep=".")
-	ulabel <- paste(type,"High",sep=".")
-	
-	if(is.null(itemLabels))
-		itemLabels <- unlist(table$item)
-	
-	fitgraph(unlist(table[estlabel]),unlist(table[llabel]),unlist(table[ulabel]),itemLabels)
-}
-
-
-fitgraph.default <- function( fitEst, fitLB, fitUB, itemLabels
+fitgraph.numeric <-
+function( fitEst, fitLB, fitUB, itemLabels
 	                 , mainTitle   = 'Fit Plot'
 					 , pch    = 18
 	                 , fitColours = c('gray70','gray60','gray50','gray40','gray0')
@@ -37,9 +8,11 @@ fitgraph.default <- function( fitEst, fitLB, fitUB, itemLabels
 	                 ,... )
 {
 
+	par(mar=c(4.1, 4.1, 3.1, 1.1))
+
 	nI <- length(fitEst)
 	item <- c(1:nI)
-	dev.new()
+	#dev.new()
 	plot( fitEst ~ item
 		, type = "n"
 		, axes = FALSE
@@ -105,4 +78,3 @@ fitgraph.default <- function( fitEst, fitLB, fitUB, itemLabels
     
 	text( item, fitEst, as.list( itemLabels), pos = 3, cex = .75)
 }
-

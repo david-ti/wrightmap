@@ -1,1 +1,35 @@
 exportPattern("^[[:alpha:]]+")
+
+importFrom("grDevices", "dev.new", "rgb")
+importFrom("graphics", "abline", "axis", "box", "hist", "layout",
+     "lines", "mtext", "par", "plot", "points", "polygon",
+     "rect", "text", "title")
+importFrom("graphics", "close.screen", "screen", "segments",
+             "split.screen")
+importFrom("stats", "density", "na.omit", "optimize", "quantile",
+     "reshape")
+importFrom("utils", "read.delim", "read.fwf", "read.table")
+
+S3method(difplot,CQmodel )
+S3method(difplot,character )
+S3method(difplot,default )
+S3method(fitgraph,CQmodel)
+S3method(fitgraph,character )
+S3method(fitgraph,default )
+S3method(fitgraph,numeric )
+S3method(itemData,CQmodel)
+S3method(itemData,character )
+S3method(itemData,default )
+S3method(make.deltas,CQmodel)
+S3method(make.deltas,character )
+S3method(make.deltas,default )
+S3method(make.thresholds,CQmodel)
+S3method(make.thresholds,character )
+S3method(make.thresholds,default)
+S3method(make.thresholds,matrix )
+S3method(personData,CQmodel )
+S3method(personData,character)
+S3method(personData,default )
+S3method(plot,CQmodel )
+S3method(print,CQmodel )
+S3method(print,SOE)
