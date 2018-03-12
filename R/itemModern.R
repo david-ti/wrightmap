@@ -1,10 +1,10 @@
 itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE, thr.sym.par = list(), show.thr.lab = TRUE, 
-	thr.lab.par = list(), label.items.rows = 1, label.items.ticks = TRUE, label.items.par = list(), axis.logits = "Logits", 
-	show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, vertLines = TRUE, thr.sym.cex = 0.8, thr.sym.lwd = 1, 
+	thr.lab.par = list(), label.items.rows = 1, label.items.ticks = TRUE, label.items.par = list(), 
+	show.axis.logits = TRUE, axis.logits.par = list(), logits.text.par = list(), oma = c(0, 0, 0, 3), cutpoints = NULL, vertLines = TRUE, thr.sym.cex = 0.8, thr.sym.lwd = 1, 
 	thr.sym.pch = 23, thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3), thr.lab.pos = c(2, 4), thr.lab.text = NULL, 
-	thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6, 
+	thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.srt = 0, label.items = NULL, label.items.cex = 0.6, axis.logits = "Logits",
 	...) {
-
+		
 	thr <- as.matrix(thr)
 
 	nI <- dim(thr)[1]
@@ -34,14 +34,29 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-
-	if (show.axis.logits == "R" | show.axis.logits == TRUE) {
-		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
-		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
-	} else if (show.axis.logits == "L") {
-		axis(2, las = 1, cex.axis = 0.7, font.axis = 2)
-		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
+	
+	if(show.axis.logits) {
+				
+		axis.l <- function(side = 4, las = 1, cex.axis = 0.7, font.axis = 2, ...) {
+			return(list(side = side, las = las, cex.axis = cex.axis, font.axis = font.axis, ...))
+		}
+		
+		if(show.axis.logits == "L") {
+			axis.logits.par$side == 2
+		}
+		
+		axis.logits.par <- do.call(axis.l, axis.logits.par)
+		do.call(axis, axis.logits.par)
+		
+		logits.text <- function(text = axis.logits, side = axis.logits.par$side, line = 1.5, cex = 0.8, font = 3, ...) {
+			return(list(text = text, side = side, line = line, cex = cex, font = font, ...))
+		}
+		
+		logits.text.par <- do.call(logits.text, logits.text.par)
+		do.call(mtext,logits.text.par)
+		
 	}
+	
 
 
 	#############
