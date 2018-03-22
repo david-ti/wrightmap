@@ -1,5 +1,5 @@
 wrightMap <-
-function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist,  main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, use.hist = NULL,...) {
+function(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist,  main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL, max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE, use.hist = NULL, item.names.labels=FALSE, ...) {
 
 	## Helper Functions
 
@@ -53,7 +53,7 @@ function(thetas, thresholds = NULL, item.side = itemModern, person.side = person
 	item.screen <- screen()
 	dots <- list(...)
 	dots[c("yRange","oma")] <- NULL
-	item.params <- list(thr = thresholds,yRange = yRange,oma = c(0,0,0,0))
+	item.params <- list(thr = thresholds,yRange = yRange,oma = c(0,0,0,0), item.names.labels=item.names.labels)
 	do.call(item.side,c(item.params,dots))
 	par(oma = c(0, 0, 3, 0))
 	mtext(main.title, side = 3, line = 1, outer = TRUE, font = 2)
