@@ -1,5 +1,5 @@
 itemClassic <-
-function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),cutpoints = NULL,...) {
+function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),cutpoints = NULL, item.names.labels=FALSE, ...) {
 	Nbins <- function(thr,itemRange) {
 		
 		#print(paste("thr =", c(min(thr),max(thr))))
@@ -66,8 +66,14 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 	item.hist <- data.frame(xleft = item.hist$mids - (bin.size/2), ybottom = item.hist$mids * 0, xright = item.hist$mids + 
 		(bin.size/2), ytop = item.hist$counts)
 
-	item.labels <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
-	if(nL > 1){
+	# item.labels - use generic list or user defined item names 
+	if (item.names.labels==FALSE){
+	        item.labels <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+	}else if(item.names.labels==TRUE){
+		item.labels<-matrix(row.names(thr))
+	}
+		
+        if(nL > 1){
 		item.labels <- t(apply(item.labels, 1, paste, c(1:nL), sep = "."))
 	}
 	
