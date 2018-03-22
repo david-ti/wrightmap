@@ -1,5 +1,5 @@
 itemClassic <-
-function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),cutpoints = NULL,...) {
+function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.axis.logits = "R",oma = c(0,0,0,3),cutpoints = NULL, label.items = NULL,label.steps = NULL,label.sep = ".",thr.lab.sep = " | ",thr.lab.par = list(), axis.logits.par = list(),logits.text.par = list(),...) {
 	Nbins <- function(thr,itemRange) {
 		
 		#print(paste("thr =", c(min(thr),max(thr))))
@@ -21,7 +21,7 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 
 	binItems <- function(level, labelMat, cutMat) {
 
-		paste(sort(labelMat[cutMat == level]), collapse = " | ")
+		paste(sort(labelMat[cutMat == level]), collapse = thr.lab.sep)
 
 	}
 	
@@ -44,13 +44,29 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 	box(bty = "o")
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
-	if (show.axis.logits == "R" | show.axis.logits == TRUE) {
-		axis(4, las = 1, cex.axis = 0.7, font.axis = 2)
-		mtext(axis.logits, side = 4, line = 1.5, cex = 0.8, font = 3)
-	} else if (show.axis.logits == "L") {
-		axis(2, las = 1, cex.axis = 0.7, font.axis = 2)
-		mtext(axis.logits, side = 2, line = 1.5, cex = 0.8, font = 3)
+	
+	if(show.axis.logits != FALSE) {
+				
+		axis.l <- function(side = 4, las = 1, cex.axis = 0.7, font.axis = 2, ...) {
+			return(list(side = side, las = las, cex.axis = cex.axis, font.axis = font.axis, ...))
+		}
+		
+		if(show.axis.logits == "L") {
+			axis.logits.par$side == 2
+		}
+		
+		axis.logits.par <- do.call(axis.l, axis.logits.par)
+		do.call(axis, axis.logits.par)
+		
+		logits.text <- function(text = axis.logits, side = axis.logits.par$side, line = 1.5, cex = 0.8, font = 3, ...) {
+			return(list(text = text, side = side, line = line, cex = cex, font = font, ...))
+		}
+		
+		logits.text.par <- do.call(logits.text, logits.text.par)
+		do.call(mtext,logits.text.par)
+		
 	}
+	
 
 	if(!is.null(cutpoints)) {
 		cutLines(cutpoints,...)
@@ -66,9 +82,22 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 	item.hist <- data.frame(xleft = item.hist$mids - (bin.size/2), ybottom = item.hist$mids * 0, xright = item.hist$mids + 
 		(bin.size/2), ytop = item.hist$counts)
 
-	item.labels <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+	if(is.null(label.items))
+		label.items <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
+	else if(is.logical(label.items) && label.items)
+		label.items <- matrix(rownames(thr))
+	else
+		label.items <- matrix(label.items)
+	if(is.null(label.steps)) {
+		label.steps <- c(1:nL)
+	} else if(is.logical(label.steps) && label.steps) {
+		if(!is.null(colnames(thr)))
+			label.steps <- colnames(thr)
+		else
+			label.steps <- c(1:nL)
+	}
 	if(nL > 1){
-		item.labels <- t(apply(item.labels, 1, paste, c(1:nL), sep = "."))
+		item.labels <- t(apply(label.items, 1, paste, label.steps, sep = label.sep))
 	}
 	
 	#print(c(item.hist[, 1], tail(item.hist[, 3], 1)))
@@ -81,9 +110,11 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 
 	binnedList <- unlist(lapply(1:length(itemBinLocations), binItems, item.labels, binnedItems))
 
-	text(cbind(0, itemBinLocations), labels = binnedList, pos = 4, offset = 1 * 15/nI,cex = .65)
+	thr.lab <- function(x = 0, pos = 4, offset = 1 * 15/nI, cex = .65, ...) {
+		return(list(x = x, y = itemBinLocations, labels = binnedList, pos = pos, offset = offset, cex = cex, ...))
+	}
 	
-
-	
+	thr.lab.par <- do.call(thr.lab,thr.lab.par)
+	do.call(text,thr.lab.par)
 	
 }

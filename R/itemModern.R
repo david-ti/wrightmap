@@ -35,7 +35,7 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items", show.thr.sym = 
 	usr <- par("usr")
 	par(mgp = c(3, 1, 0))
 	
-	if(show.axis.logits) {
+	if(show.axis.logits!= FALSE) {
 				
 		axis.l <- function(side = 4, las = 1, cex.axis = 0.7, font.axis = 2, ...) {
 			return(list(side = side, las = las, cex.axis = cex.axis, font.axis = font.axis, ...))
