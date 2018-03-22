@@ -82,15 +82,15 @@ function(thr, yRange = NULL, axis.items = "Items",axis.logits = "Logits",show.ax
 	item.hist <- data.frame(xleft = item.hist$mids - (bin.size/2), ybottom = item.hist$mids * 0, xright = item.hist$mids + 
 		(bin.size/2), ytop = item.hist$counts)
 
-	if(is.null(label.items) || label.items == FALSE)
+	if(is.null(label.items) || (length(label.items) == 1 && label.items == FALSE))
 		label.items <- matrix(rep(formatC(1:nI, digits = 1, format = "d", flag = "0"), nL), ncol = nL)
-	else if(label.items == TRUE)
+	else if(length(label.items) == 1 && label.items == TRUE)
 		label.items <- matrix(rownames(thr))
 	else
 		label.items <- matrix(label.items)
-	if(is.null(label.steps) || label.steps == FALSE) {
+	if(is.null(label.steps) || (length(label.steps) == 1 && label.steps == FALSE)) {
 		label.steps <- c(1:nL)
-	} else if(label.steps == TRUE) {
+	} else if(length(label.steps) == 1 && label.steps == TRUE) {
 		if(!is.null(colnames(thr)))
 			label.steps <- colnames(thr)
 		else
