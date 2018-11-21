@@ -1,7 +1,6 @@
 make.deltas.CQmodel <-
 function(item.params, item.table = NULL, interactions = NULL, step.table = NULL, item.sign = NULL, inter.sign = NULL, 
 	step.sign = NULL, ...) {
-	#print("deltas")
 	RMP <- item.params$RMP
 	if (is.null(item.table)) {
 		parts <- unique(unlist(item.params$parts))
@@ -73,6 +72,12 @@ function(item.params, item.table = NULL, interactions = NULL, step.table = NULL,
 			crosses <- reshape(interactions[c(item.col, step.col, "est")], direction = "wide", timevar = step.col, idvar = item.col)
 			crosses <- crosses[colSums(!is.na(crosses)) != 0]
 			crosses <- crosses[rowSums(!is.na(crosses)) > 1, ]
+			# find missing items, jerred bug
+			if(!is.null(item.table)) {
+				item.nums <- item.table[[1]]
+				crosses[1] <- match(crosses[,1],item.nums)
+				
+			}
 		} else {
 			crosses <- 0
 			inter.sign <- 1
