@@ -1,5 +1,5 @@
 personHist <-
-function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
+function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj = 0.5, dim.names = NULL, dim.color = "white", person.points = NULL, person.range = NULL, p.point.col = "gray45", p.range.col = "gray75",axis.persons = "Respondents", show.axis.persons = FALSE, axis.persons.par = list(), oma = c(0, 5, 0, 5), axis.logits = "Logits", show.axis.logits = TRUE,...) {
 
 	densExt <- function(densElem) {
 		bin.size <- abs(densElem$breaks[1] - densElem$breaks[2])
@@ -50,6 +50,13 @@ function(thetas, yRange = NULL, breaks = "FD", dim.lab.cex = 0.6, dim.lab.side =
 			}
 			if(!is.null(p.points)) {
 				mapply(draw.point,p.points,p.col,list(distInfo))
+			}
+			
+			axis.pers <- function(side = 1, ...) {
+				axis(side = side, ...)
+			}
+			if(show.axis.persons) { 
+				do.call(axis.pers,axis.persons.par)
 			}
 			
 
