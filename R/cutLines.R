@@ -14,7 +14,7 @@ cutLines <- function(cutpoints = NULL,cut.left = 0, cut.right = 1, cut.lab.text 
 			text(width *(.01  + cut.lab.adj[1] * .98),cutpoints + (.5 - cut.lab.adj[2])*.1,labels = cut.lab.text,cex= .6, adj = cut.lab.adj,...)
 		}
 		
-		do.call(cut.text,cut.lab.par)
+		do.call(cut.text,cut,lab.par)
 		
 		
 		
