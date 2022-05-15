@@ -15,7 +15,7 @@ itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE
 , thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.rows = 1
 , label.items.srt = 0, label.items = NULL, label.items.cex = 0.6
 , label.items.ticks = TRUE, axis.logits = "Logits", show.axis.logits = "R"
-, oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
+, oma = c(0, 0, 0, 3), cutpoints = NULL, vertLines = FALSE, ...)
 
 itemClassic(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits"
 , show.axis.logits = "R", oma = c(0, 0, 0, 3), cutpoints = NULL, ...)
@@ -89,6 +89,9 @@ a vector of strings containing the labels identifying the items.
 }
   \item{label.items.ticks}{
   logical. If \code{TRUE} (default), ticks are drawn in the x-axis of the item side.
+}
+  \item{vertLines}{
+  logical. If \code{TRUE}, light gray vertical lines are drawn to mark all symbols associated with an item or feature in the x-axis.
 }
 }
 \details{

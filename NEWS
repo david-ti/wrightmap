@@ -1,3 +1,13 @@
+#Updates for 1.2.3:
+
+- Bug fix for the vertLines options.
+
+#Updates for 1.2.2:
+
+- This update contains minor changes to keep code consistent with R updates.
+- It includes a new option for itemModern called vertLines. This options plots a thin gray line vertically connecting all the symbols associated with an item or feature in the x-axis.
+
+
 #Updates for 1.2:
 
 ##Major change:

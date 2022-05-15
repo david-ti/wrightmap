@@ -2,7 +2,8 @@ itemData.CQmodel <- function(thresholds, item.table = NULL, interactions = NULL,
 	...) {
 
 	unpack.GIN <- function(GIN) {
-		if (class(GIN) == "matrix") 
+		# if (class(GIN) == "matrix") 
+		if (is(GIN, "matrix"))
 			return(GIN)
 		else {
 			return(do.call(cbind, lapply(GIN, unpack.GIN)))
@@ -10,7 +11,8 @@ itemData.CQmodel <- function(thresholds, item.table = NULL, interactions = NULL,
 	}
 
 	unpack.names <- function(GIN, sofar = "") {
-		if (class(GIN) == "matrix") {
+		# if (class(GIN) == "matrix") {
+		if (is(GIN, "matrix")) {
 			my.names <- c(1:ncol(GIN))
 		} else my.names <- names(GIN)
 
@@ -21,7 +23,8 @@ itemData.CQmodel <- function(thresholds, item.table = NULL, interactions = NULL,
 			names <- my.names
 		} else names <- c(outer(my.names, sofar, paste))
 
-		if (class(GIN) == "matrix") 
+		# if (class(GIN) == "matrix") 
+		if (is(GIN, "matrix"))
 			return(names)
 		else return(unpack.names(GIN[[1]], names))
 	}

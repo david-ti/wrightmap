@@ -161,7 +161,8 @@ function(p.est = NULL, show = NULL, p.type = NULL, equation = NULL) {
 		make.GIN <- function(table) {
 		if (length(table) == 5) {
 			items <- as.vector(unlist(unique(table[5])))
-			if(class(items) != "character")
+			# if(class(items) != "character")
+			if (!is(items, "character"))
 				items <- paste("Item",items,sep="_")
 			#print(items)
 			#print(length(items))

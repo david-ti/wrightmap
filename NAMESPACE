@@ -9,6 +9,7 @@ importFrom("graphics", "close.screen", "screen", "segments",
 importFrom("stats", "density", "na.omit", "optimize", "quantile",
      "reshape")
 importFrom("utils", "read.delim", "read.fwf", "read.table")
+importFrom("methods", "is")
 
 S3method(difplot,CQmodel )
 S3method(difplot,character )
