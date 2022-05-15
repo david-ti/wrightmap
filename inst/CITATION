@@ -5,6 +5,6 @@ citEntry(entry = "Manual",
                              as.person("Rebecca Freund")),
   title = "Wright Map: IRT item-person map with ConQuest integration",
   year = "2014",
-  url = "http://github.com/david-ti/wrightmap",
-  textVersion = "Torres Irribarra, D. & Freund, R. (2014). Wright Map: IRT item-person map with ConQuest integration. Available at http://github.com/david-ti/wrightmap"
+  url = "https://github.com/david-ti/wrightmap",
+  textVersion = "Torres Irribarra, D. & Freund, R. (2014). Wright Map: IRT item-person map with ConQuest integration. Available at https://github.com/david-ti/wrightmap"
 )
