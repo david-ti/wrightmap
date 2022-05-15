@@ -2,10 +2,10 @@
 \alias{extract.deltas}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Extract Master's Delta parameters from a TAM model.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function takes as its input a TAM object. It adds reads the TAM item parameters and organizes them into a matrix that can be used as input in the \code{\link{CCCfit}} function.
 }
 \usage{
 extract.deltas(tamObject)
@@ -13,33 +13,30 @@ extract.deltas(tamObject)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{tamObject}{
-%%     ~~Describe \code{tamObject} here~~
+  TAM object containing the results of a a Rasch model or Partial Credit model.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+This function organizes the item parameter results into a matrix where each row is contains the parameters associated with an item and each columns is contains the parameters associated with a specific step (score 0 vs score 1, score 1 vs score 2, etc.). The resulting matrix will have as many rows as items and as many columns as the maximum number of steps among the items.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A matrix in which each row is an item and each column is a step
 }
 \references{
-%% ~put references to the literature/web site here ~
+Masters, G. N. (1982). A Rasch model for partial credit scoring. \emph{Psychometrika}, 47(2), 149-174. 
 }
 \author{
-%%  ~~who you are~~
+David Torres Irribarra
 }
-\note{
+%\note{
 %%  ~~further notes~~
-}
+%}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+ \code{\link{CCCfit}}
+ \code{\link{make.thresholds}}
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----

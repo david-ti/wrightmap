@@ -2,62 +2,63 @@
 \alias{CCCfit}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Empirical category characteristic curve plot for the Partial Credit Model
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+The \code{CCCfit} function is intended for contrasting a Rasch model's expected category characteristic curve against the empirical data from observed responses. The \code{CCCfit} function displays the expected probability asociated with all response categories and plots the observed response proportions for all non-zero response categories.
 }
 \usage{
-CCCfit(itemNumber, observedResponses, personEstimates, itemParameters, xlim = c(-4, 4), method = "Quantile", NQtiles = 10)
+CCCfit(itemNumber, observedResponses, personEstimates, 
+    itemParameters, xlim = c(-4, 4), method = "Quantile", NQtiles = 10)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{itemNumber}{
-%%     ~~Describe \code{itemNumber} here~~
+The position of the item in the test. This position is used to select the column of observed responses and the item difficulty among the item parameters.
 }
   \item{observedResponses}{
-%%     ~~Describe \code{observedResponses} here~~
+Data frame or matrix with observed responses. The data frame or matrix should be of size  N * I, where N is the number of respondents and I is the number of items in the model.
 }
   \item{personEstimates}{
-%%     ~~Describe \code{personEstimates} here~~
+A vector of length N containing the model based person estimates or predictions.
 }
   \item{itemParameters}{
-%%     ~~Describe \code{itemParameters} here~~
+A data frame or matrix with I rows (one for each item) and M columns, where M is equal to the maximum number of item scores minus 1. This matrix contains the model based estimates for the step parameters (deltas), where column 1 contains the parameter associated with the step between category 0 versus category 1, column 2 the step parameters of category 1 versus category 2, and so on.
 }
   \item{xlim}{
-%%     ~~Describe \code{xlim} here~~
+Vector with two values indicating the minimum and maximum values to be used when plotting the item characteristic curve.
 }
   \item{method}{
-%%     ~~Describe \code{method} here~~
+Selects the \code{Quantile} method to group the respondents (see `Details').
 }
   \item{NQtiles}{
-%%     ~~Describe \code{NQtiles} here~~
+This value controls how many grouping will be used: 4 groups cases groups respondents by quartiles, 5 by quintiles, 10 by deciles, etc.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The function uses the step difficulty parameters to generate the model based curve. The observed responses are then grouped using the \code{Quantile} method in order to contrast the model predicted response probability with the observed proportion (this is the only method implemented so far). By default the function uses deciles to generate the respondent groups.
 }
-\value{
+% \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
-}
-\references{
+% }
+% \references{
 %% ~put references to the literature/web site here ~
-}
+% }
 \author{
-%%  ~~who you are~~
+David Torres Irribarra
 }
-\note{
+% \note{
 %%  ~~further notes~~
-}
+% }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+ \code{\link{ICCfit}}
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
