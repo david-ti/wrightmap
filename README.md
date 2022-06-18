@@ -9,7 +9,7 @@ Type: Package
 
 Version: 1.3
 
-Date: 2022-05-15
+Date: 2022-06-18
 
 Author: David Torres Irribarra & Rebecca Freund
 
