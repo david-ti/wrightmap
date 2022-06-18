@@ -77,7 +77,7 @@ wrightMap parameters:
 
 \references{
   Wilson, M. (2005). Constructing measures: An item response modeling approach. 
-  Wright, B. D., \& Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
+  Wright, B. D. and Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
 }
 
 \author{David Torres Irribarra and Rebecca Freund}

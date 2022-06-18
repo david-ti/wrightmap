@@ -36,7 +36,7 @@ Maintainer: David Torres Irribarra <dti@berkeley.edu> and Rebecca Freund <rlfreu
 	Andrich, D. (1978). A rating formulation for ordered response categories. \emph{Psychometrika}, \emph{43}(4), 561--573. 
 	Masters, G. N. (1982). A Rasch model for partial credit scoring. \emph{Psychometrika}, \emph{47}(2), 149--174. 
 	Wilson, M. (2005). Constructing measures: An item response modeling approach. 
-	Wright, B. D., \& Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
+	Wright, B. D. and Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
 }
 
 \keyword{Wright Map}
