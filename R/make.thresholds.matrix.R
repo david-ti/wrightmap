@@ -1,6 +1,6 @@
 make.thresholds.matrix <- function(item.params, design.matrix = "normal", make.from = "deltas", theta.interval = c(-10, 10), throld = 0.5, 
 	alpha = 1, c.params = 0, ...) {
-	#print("default")
+	#print("matrix")
 	
 	# Provides a predicted probability of a given response for a polytomous
 	# item. Mostly used in other functions.
@@ -101,7 +101,7 @@ get.thresholds = function(parameters, design.matrix = "normal", theta.interval =
 apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.interval = c(-10, 10), slope = slope, guess = guess) {
 
 
-		threshold.matrix <- as.matrix(mapply(get.thresholds, as.data.frame(t(parameter.matrix)), t(design.matrix), slope = slope, guess = guess))
+		threshold.matrix <- as.matrix(mapply(get.thresholds, as.data.frame(t(parameter.matrix)), t(design.matrix), slope = slope, guess = guess, MoreArgs = list(theta.interval = theta.interval)))
 		if (NCOL(threshold.matrix) > 1) 
 			threshold.matrix <- t(threshold.matrix)
 

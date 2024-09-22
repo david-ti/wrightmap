@@ -101,7 +101,7 @@ get.thresholds = function(parameters, design.matrix = "normal", theta.interval =
 apply.thresholds = function(parameter.matrix, design.matrix = "normal", theta.interval = c(-10, 10), slope = slope, guess = guess) {
 
 
-		threshold.matrix <- as.matrix(mapply(get.thresholds, as.data.frame(t(parameter.matrix)), t(design.matrix), slope = slope, guess = guess))
+		threshold.matrix <- as.matrix(mapply(get.thresholds, as.data.frame(t(parameter.matrix)), t(design.matrix), slope = slope, guess = guess, MoreArgs = list(theta.interval = theta.interval)))
 		if (NCOL(threshold.matrix) > 1) 
 			threshold.matrix <- t(threshold.matrix)
 
