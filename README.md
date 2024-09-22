@@ -7,9 +7,9 @@ Package: WrightMap
 
 Type: Package
 
-Version: 1.3
+Version: 1.4
 
-Date: 2022-05-15
+Date: 2024-09-30
 
 Author: David Torres Irribarra & Rebecca Freund
 

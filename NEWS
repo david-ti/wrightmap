@@ -1,3 +1,12 @@
+#Updates for 1.4:
+
+- Started using ChatGPT to help out with code maintenance, documentation, and adding missing arguments to functions.
+- Added new function "sim.PCM" to simulate data from the Rasch Model and the Partial Credit Model.
+- Added option to pass custom labels when using itemClassic to plot the item side.
+- Added option to "axis.logits.cex" to itemModern, itemHist, and itemClassic  to control de size of the logit values on the y axis.
+
+
+
 #Updates for 1.3:
 
 - Added fuctions to plot empirical item and category characteristics curves.
