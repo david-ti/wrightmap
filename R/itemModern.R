@@ -12,6 +12,7 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items",
                        show.axis.logits = "R", axis.logits.cex = 0.7, 
                        oma = c(0, 0, 0, 3), cutpoints = NULL, 
                        vertLines = FALSE, vertLines.par = list(), 
+                       cutpoints.par = list(),
                        thr.sym.par = list(), thr.lab.par = list(), 
                        label.items.par = list(), axis.logits.par = list(), 
                        logits.text.par = list(), ...) {
@@ -51,9 +52,11 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items",
          ylab = "", ylim = yRange, xlim = c(0.5, nI + 0.5), cex.lab = .8, 
          font.lab = 3)
     
-    # Add cutpoints if provided
+    # Add cutpoints if provided, using 'cutpoints.par'
     if (!is.null(cutpoints)) {
-        cutLines(cutpoints, ...)
+        cutpoints.default <- list(col = "black", lwd = 1, lty = 2)
+        cutpoints.par <- modifyList(cutpoints.default, cutpoints.par)
+        abline(h = cutpoints, col = cutpoints.par$col, lwd = cutpoints.par$lwd, lty = cutpoints.par$lty)
     }
     
     # Draw logit axis based on user choice and customize using `axis.logits.par`

@@ -1,10 +1,11 @@
 itemClassic <- function(thr, yRange = NULL, axis.items = "Items", 
                         axis.logits = "Logits", show.axis.logits = "R", 
                         axis.logits.cex = 0.7, oma = c(0, 0, 0, 3), 
-                        cutpoints = NULL, label.items = NULL, label.steps = NULL, 
-                        label.sep = ".", thr.lab.sep = " | ", thr.lab.par = list(), 
-                        axis.logits.par = list(), logits.text.par = list(), 
-                        pad.char = "_", font.family = "mono", ...) {
+                        cutpoints = NULL, cutpoints.par = list(), label.items = NULL, 
+                        label.steps = NULL, label.sep = ".", thr.lab.sep = " | ", 
+                        thr.lab.par = list(), axis.logits.par = list(), 
+                        logits.text.par = list(), pad.char = "_", 
+                        font.family = "mono", ...) {
   
   # Helper function to generate breaks for the histogram
   Nbins <- function(thr, itemRange) {
@@ -74,9 +75,11 @@ itemClassic <- function(thr, yRange = NULL, axis.items = "Items",
     do.call(mtext, logits.text.par)
   }
 
-  # Plot cutpoints if provided
+  # Plot cutpoints if provided and customize with `cutpoints.par`
   if (!is.null(cutpoints)) {
-    cutLines(cutpoints, ...)
+    cutpoints.default <- list(col = "grey90", lwd = 1, lty = 1)
+    cutpoints.par <- modifyList(cutpoints.default, cutpoints.par)
+    abline(h = cutpoints, col = cutpoints.par$col, lwd = cutpoints.par$lwd, lty = cutpoints.par$lty)
   }
   
   # Create histogram data
@@ -130,5 +133,4 @@ itemClassic <- function(thr, yRange = NULL, axis.items = "Items",
   
   thr.lab.par <- do.call(thr.lab, thr.lab.par)
   do.call(text, thr.lab.par)
-  
 }
