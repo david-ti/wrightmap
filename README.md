@@ -9,7 +9,7 @@ Type: Package
 
 Version: 1.4
 
-Date: 2024-09-30
+Date: 2024-09-24
 
 Author: David Torres Irribarra & Rebecca Freund
 
