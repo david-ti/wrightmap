@@ -21,6 +21,7 @@ on:
       - '**/.DS_Store'
       - '**/.gitignore'
       - '**/R/.Rapp.history'     
+  workflow_dispatch: 
 
 permissions:
   contents: read
