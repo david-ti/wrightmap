@@ -39,7 +39,7 @@ A list with the following components:
 simulated_data <- sim.PCM(pN = 100, iN = 5, lN = 3)
 
 # Simulate with custom item thresholds
-custom_delta <- matrix(c(0, -1, -2, 0, 0.5, 1, 0, -0.5, -1), ncol = 3)
+custom_delta <- matrix(c(-0.5, -1, -2, 1, 0.5, 1), nrow = 3)
 simulated_data_custom <- sim.PCM(pN = 50, iN = 3, lN = 3, delta = custom_delta)
 
 # Simulate with custom person abilities

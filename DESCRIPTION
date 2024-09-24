@@ -10,3 +10,5 @@ License: BSD_2_clause + file LICENSE
 Depends: R (>= 3.0.0)
 Imports: methods, RColorBrewer
 Encoding: UTF-8
+
+

@@ -36,7 +36,7 @@ Maintainer: David Torres Irribarra <dti@berkeley.edu> and Rebecca Freund <rlfreu
 	Andrich, D. (1978). A rating formulation for ordered response categories. \emph{Psychometrika}, \emph{43}(4), 561--573. 
 	Masters, G. N. (1982). A Rasch model for partial credit scoring. \emph{Psychometrika}, \emph{47}(2), 149--174. 
 	Wilson, M. (2005). Constructing measures: An item response modeling approach. 
-	Wright, B. D., \& Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
+	Wright, B. D., & Stone, M. H. (1979). \emph{Best test design.} Chicago: Mesa Press. 
 }
 
 \keyword{Wright Map}
@@ -110,7 +110,7 @@ wrightMap( uni.proficiency, thresholds)
 dev.new(width=10, height=10)
 wrightMap( uni.proficiency, thresholds
 	, thr.lab.text = thresholds.labels
-	, thr.lab.col = thresholds.colors
+	, thr.lab.col = as.vector(as.matrix(thresholds.colors))
 	, thr.sym.pch = thresholds.symbols
 	)
 

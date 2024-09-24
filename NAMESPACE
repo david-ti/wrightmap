@@ -7,11 +7,10 @@ importFrom("graphics", "abline", "axis", "box", "hist", "layout",
 importFrom("graphics", "close.screen", "screen", "segments",
              "split.screen", "legend")
 importFrom("stats", "density", "na.omit", "optimize", "quantile",
-     "reshape", "aggregate", "qnorm")
-importFrom("utils", "read.delim", "read.fwf", "read.table")
+     "reshape", "aggregate", "qnorm", "rnorm", "runif")
+importFrom("utils", "read.delim", "read.fwf", "read.table", "modifyList")
 importFrom("methods", "is")
 importFrom("RColorBrewer", "brewer.pal")
-
 
 S3method(difplot,CQmodel )
 S3method(difplot,character )

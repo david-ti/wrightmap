@@ -34,11 +34,16 @@ itemHist(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits"
 General arguments:
   \item{thr}{A vector or matrix of threshold parameters. If a matrix, items should be in rows and steps in columns.}
   \item{yRange}{A vector with 2 elements specifying the lower and upper limits of the plot's y-axis.}
+  \item{label.items}{A vector of strings representing the item labels used in itemModern and itemClassic}
   \item{axis.items}{The title of the x-axis.}
   \item{axis.logits}{The title of the y-axis.}
+  \item{axis.logits.cex}{The size of the logit values on the y-axis.}
   \item{show.axis.logits}{If set to "R" or "L", draws a logit axis on the right or left. Will also draw an axis on the right if the value is \code{TRUE}. If any other value, the axis is not drawn.}
   \item{oma}{Values to use for the \code{oma} parameter (see \code{\link{par}}).}
   \item{cutpoints}{Values at which to draw horizontal lines (see \code{\link{cutLines}}).}
+  \item{label.items.par}{A list of parameters to further customize item labels.}
+  \item{axis.logits.par}{A list of parameters for customizing the logit axis.}
+  \item{logits.text.par}{A list of parameters for customizing the logit axis text.}
   \item{\dots}{Additional arguments passed to \code{\link{cutLines}}.}
 
 Specific to \code{itemModern}:
@@ -56,7 +61,6 @@ Specific to \code{itemModern}:
   \item{thr.lab.font}{An integer or matrix specifying the font type for the threshold labels. 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.}
   \item{label.items.rows}{An integer specifying the number of rows used to display the item labels (default: 1). Useful when item labels overlap.}
   \item{label.items.srt}{Angle of rotation for item labels. Only applicable if \code{label.items.rows} is set to 1.}
-  \item{label.items}{A vector of strings representing the item labels.}
   \item{label.items.cex}{A numerical value specifying the magnification factor for the item labels.}
   \item{label.items.ticks}{Logical. If \code{TRUE} (default), ticks are drawn on the x-axis for the item side.}
   \item{vertLines}{Logical. If \code{TRUE}, vertical lines are drawn to mark all symbols associated with an item.}
@@ -64,22 +68,16 @@ Specific to \code{itemModern}:
   \item{cutpoints.par}{A list of parameters (e.g., \code{col}, \code{lwd}, \code{lty}) to customize the cutpoint lines.}
   \item{thr.sym.par}{A list of parameters to further customize threshold symbols.}
   \item{thr.lab.par}{A list of parameters to further customize threshold labels.}
-  \item{label.items.par}{A list of parameters to further customize item labels.}
-  \item{axis.logits.par}{A list of parameters for customizing the logit axis.}
-  \item{logits.text.par}{A list of parameters for customizing the logit axis text.}
+  
 
 Specific to \code{itemClassic}:
-  \item{label.items}{A vector of strings representing the item labels.}
+
   \item{label.steps}{A vector specifying the labels for the threshold steps.}
   \item{label.sep}{A string indicating the separator used between item labels and step labels.}
   \item{thr.lab.sep}{A string indicating the separator used between threshold labels for different items.}
   \item{pad.char}{A character used to pad item labels to a fixed width.}
   \item{font.family}{A string specifying the font family for the item labels (default: \code{mono}).}
 
-Specific to \code{itemHist}:
-  \item{axis.logits.par}{A list of parameters to customize the logit axis in the item histogram.}
-  \item{logits.text.par}{A list of parameters to customize the text of the logit axis in the item histogram.}
-  \item{cutpoints.par}{A list of parameters to customize the cutpoint lines in the item histogram.}
 }
 \details{
 These functions are designed as helper functions for \code{\link{wrightMap}} to draw the item side of a map. When called outside of that function, they can be used to create more customized maps. Possible uses include:
@@ -138,7 +136,7 @@ thresholds.symbols <- data.frame(
 
 wrightMap(uni.proficiency, thresholds,
   thr.lab.text = thresholds.labels,
-  thr.lab.col = thresholds.colors,
+  thr.lab.col = as.vector(as.matrix(thresholds.colors)),
   thr.sym.pch = thresholds.symbols
 )
 

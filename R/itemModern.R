@@ -58,6 +58,8 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items",
         cutpoints.par <- modifyList(cutpoints.default, cutpoints.par)
         abline(h = cutpoints, col = cutpoints.par$col, lwd = cutpoints.par$lwd, lty = cutpoints.par$lty)
     }
+
+    box(bty = "o")
     
     # Draw logit axis based on user choice and customize using `axis.logits.par`
     if (show.axis.logits %in% c("R", TRUE)) {
