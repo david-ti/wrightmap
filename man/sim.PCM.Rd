@@ -49,8 +49,8 @@ simulated_data_theta <- sim.PCM(pN = 100, iN = 5, lN = 3, theta = custom_theta)
 # Rasch model simulation (dichotomous items)
 # 50 persons with abilities ranging from -3 to 3
 rasch_theta <- seq(-3, 3, length.out = 50)
-rasch_delta <- matrix(c(0, 1.5, 0, -1, 0, 0.5, 0, -0.5, 0, 1, 0, -1.5, 0, 2, 0, -2, 0, 0.8, 0, -0.8), 
-                      ncol = 2, byrow = TRUE)
+rasch_delta <- matrix(c(0,1.5,0,-1,0,0.5,0,-0.5,0,1,0,-1.5,0,2,0,-2,0,0.8,0,-0.8)
+                      , ncol = 2, byrow = TRUE)
 simulated_rasch <- sim.PCM(pN = 50, iN = 10, lN = 2, delta = rasch_delta, theta = rasch_theta)
 
 # Simulation with items having different numbers of levels

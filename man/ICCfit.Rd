@@ -69,7 +69,9 @@ simulated_data <- sim.PCM(pN = 1000, iN = 5, lN = 2)
 # Extract simulated item responses and abilities
 observed_responses <- simulated_data$resp - 1
 person_abilities <- simulated_data$theta
-item_params <- cbind(simulated_data$delta[,2],rep(0.08),5) # defining a 0.08 of error for the item parameters, this usually would be estimated
+item_params <- cbind(simulated_data$delta[,2],rep(0.08),5) 
+# Defining a 0.08 of error for the item parameters, 
+# this usually would be estimated.
 
 # Plot the ICC for the first item using the Quantile method
 ICCfit(itemNumber = 1, 

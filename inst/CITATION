@@ -1,12 +1,13 @@
-citHeader("To cite WrightMap in publications, please use:")
+citation(auto = meta)
 
-citEntry(entry = "Manual",
-  author = personList(
-    person(given = "David", family = "Torres Irribarra"),
-    person(given = "Rebecca", family = "Freund")
+bibentry(
+  bibtype = "Manual",
+  author = c(
+    person("David", "Torres Irribarra"),
+    person("Rebecca", "Freund")
   ),
   title = "Wright Map: IRT item-person map with ConQuest integration",
   year = "2014",
   url = "https://github.com/david-ti/wrightmap",
-  textVersion = "Torres Irribarra, D. & Freund, R. (2014). Wright Map: IRT item-person map with ConQuest integration. Available at https://github.com/david-ti/wrightmap"
+  note = "Available at https://github.com/david-ti/wrightmap"
 )
