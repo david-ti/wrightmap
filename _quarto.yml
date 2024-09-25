@@ -1,7 +1,7 @@
 project:
   type: website
   resources: 
-    - "data/*"
+    - "website/*"
 website:
   title: "WrightMap"
   navbar:
