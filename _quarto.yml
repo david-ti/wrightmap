@@ -1,6 +1,6 @@
 project:
   type: website
-  render: website/*.qmd
+  render: ["website/*.qmd"]
 website:
   title: "WrightMap"
   navbar:
