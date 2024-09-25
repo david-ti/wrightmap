@@ -50,11 +50,13 @@ jobs:
         uses: quarto-dev/quarto-actions/render@v2
         with:
           path: website
+          to: html
   
       - name: Render and Deploy to Github Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           render: false
+          target: gh-pages
           path: _site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
