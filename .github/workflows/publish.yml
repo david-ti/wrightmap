@@ -5,7 +5,7 @@ on:
     types: [published]
   workflow_dispatch:
 
-name: Publish WrightMap Quarto Pages
+name: Publish WrightMap Quarto Pages with R
 
 permissions:
   contents: write
@@ -30,16 +30,13 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.4.1'
-
-      - name: Install Wrightmap
-        run: install.packages("WrightMap")
-        shell: Rscript {0}
-        
+          
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages:
             any::rmarkdown
+            any::WrightMap
             any::TAM
             any::RColorBrewer
 
