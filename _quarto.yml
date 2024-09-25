@@ -1,8 +1,5 @@
 project:
   type: website
-  output-dir: docs
-  resources: 
-    - "website/*"
 website:
   title: "WrightMap"
   navbar:
