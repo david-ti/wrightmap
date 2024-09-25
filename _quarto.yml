@@ -15,14 +15,14 @@ website:
         menu:
           - file: website/tutorial01.qmd
             text: Tutorial 01
-          - file: website/tutorial01.qmd
+          - file: website/tutorial02.qmd
             text: Tutorial 02
-          - file: website/tutorial01.qmd
+          - file: website/tutorial03.qmd
             text: Tutorial 03
-          - file: website/tutorial01.qmd
+          - file: website/tutorial04.qmd
             text: Tutorial 04
-          - file: website/tutorial01.qmd
-            text: Tutorial 05                                    
+          - file: website/tutorial05.qmd
+            text: Tutorial 05                          
           # Add more tutorials here
 
       - text: Examples
