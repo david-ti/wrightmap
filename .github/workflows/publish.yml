@@ -46,11 +46,16 @@ jobs:
             any::QuantPsyc
             any::TeachingDemos
             any::rockchalk
-            
 
+      # Render the Quarto website files
+      - name: Render Quarto site
+        run: quarto render website # Explicitly render the 'website' folder before publishing
+      
+      # Deploy the rendered site to GitHub Pages
       - name: Render and Deploy to Github pages 
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
+          path: website  # Ensure we're publishing from the 'website' directory
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
