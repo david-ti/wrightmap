@@ -1,0 +1,13 @@
+/* Custom CSS */
+
+
+/* Custom style for pullquote */
+.pullquote {
+  font-style: italic;
+  font-size: 1.2em;
+  color: #555;
+  padding: 20px;
+  border-left: 5px solid #007acc;
+  background-color: #f5f5f5;
+  margin: 20px 0;
+}

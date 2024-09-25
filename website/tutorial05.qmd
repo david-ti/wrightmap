@@ -1,0 +1,293 @@
+---
+title: "WrightMap Tutorial - Part 5"
+subtitle: "More Flexibility Using the person and item side functions"
+author: "David Torres Irribarra"
+date: "25/09/2024"
+toc: true
+format: html
+editor: visual
+---
+
+## More Flexibility Using the person and item side functions
+###### Updated September 2024 for changes in version 1.4.
+
+### Introduction
+
+Version 1.2 of the `WrightMap` package allows you to directly access the functions used for drawing the person and item sides of the map in order to allow more flexible item person maps. The parts can be put together on the same plot using the `split.screen` function.
+
+### Calling the functions
+
+Let’s start by installing the latest version of the package from CRAN.
+
+```{r}
+install.packages('WrightMap')
+library(WrightMap)
+```
+
+And set up some item data.
+
+```{r}
+set.seed(2020)
+items.loc <- sort( rnorm( 20))
+thresholds <- data.frame(
+    l1 = items.loc - 0.5 ,
+    l2 = items.loc - 0.25,
+    l3 = items.loc + 0.25,
+    l4 = items.loc + 0.5)
+```
+
+We can draw a simple item map by calling one of the item side functions. Currently there are three: `itemModern`, `itemClassic`, and `itemHist`.
+
+The `itemModern` function is the default called by `wrightMap`.
+
+```{r}
+#| label: t05-i01-itemModernExample
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+itemModern(thresholds)
+```
+
+The `itemClassic` function creates item sides inspired by text-based Wright Maps.
+
+```{r}
+#| label: t05-i02-itemModernClassic
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+itemClassic(thresholds)
+```
+
+Finally, the `itemHist` function plots the items as a histogram.
+
+```{r}
+#| label: t05-i03-itemModernHist
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+itemHist(thresholds)
+```
+
+Similarly, the person side functions allow you to graph the person parameters. There are two: `personHist` and `personDens`.
+
+```{r}
+## Mock results
+multi.proficiency <- data.frame(
+    d1 = rnorm(1000, mean =  -0.5, sd = .5),
+    d2 = rnorm(1000, mean =   0.0, sd = 1),
+    d3 = rnorm(1000, mean =  +0.5, sd = 1),
+    d4 = rnorm(1000, mean =   0.0, sd = .5),
+    d5 = rnorm(1000, mean =  -0.5, sd = .75))
+```
+
+```{r}
+#| label: t05-i04-itemHistMultiDim
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+personHist(multi.proficiency)
+```
+
+```{r}
+#| label: t05-i05-itemDensMultiDim
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+personDens(multi.proficiency)
+```
+
+To use these plots in a Wright Map, use the `item.side` and `person.side` parameters.
+
+```{r}
+#| label: t05-i06-WMapMultiDim
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(multi.proficiency, thresholds, item.side = itemClassic, item.prop = 0.5, person.side = personDens)
+```
+
+### Use with CQmodel: The personData and itemData functions
+
+The person side and item side functions expect data in the form of matrices. They do not recognize CQmodel objects. When a CQModel object is sent to `wrightMap`, it first extracts the necessary data, and then sends the data to the plotting functions. In version 1.2, the data processing functions have also been made directly accessible to users in the form of the `personData` and `itemData` functions. These are fast ways to pull the data out of a CQmodel object in such a way that it is ready to be sent to `wrightMap` or any of the item and person plotting functions.
+
+The `personData` function is very simple. It can take either a CQmodel object or a string containing the name of a ConQuest person parameter file. It extracts the person estimates as a matrix.
+
+```{r}
+fpath <- system.file("extdata", package="WrightMap")
+model1 <- CQmodel(file.path(fpath, "ex7a.eap"), file.path(fpath, "ex7a.shw"))
+
+m1.person <- personData(model1)
+```
+
+```{r}
+#| label: t05-i07-personHistMultiDim
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+personHist(m1.person, dim.lab.side = 1)
+```
+
+The `itemData` function uses the GIN table (Thurstonian thresholds) if it is present, and otherwise tries to create delta parameters out of the RMP tables. You can also specify tables to use as items, steps, and interactions, and it will add them together appropriately to create delta parameters.
+
+```{r}
+model2 <- CQmodel(file.path(fpath, "ex4a.mle"), file.path(fpath, "ex4a.shw"))
+m2.item <- itemData(model2, item.table = "topic", interactions = "rater*topic", step.table = "rater")
+```
+
+```{r}
+#| label: t05-i08-itemModernExample
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+itemModern(m2.item)
+```
+
+Having these data functions pulled out also makes it easier to combine parameters from different models onto a single plot (when appropriate).
+
+```{r}
+#| label: t05-i09-MultiModelExample
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(m1.person, m2.item)
+```
+
+### Putting it all together with split.screen
+
+By calling these functions directly and using `split.screen`, we can make Wright Maps with other arrangements of persons and items. The item side functions can be combined using any of the base graphics options for combining plots (layout, `par(mfrow)`), but the person side functions are based on `split.screen`, which is incompatible with those options. We will be combining item and person maps, so we need to use `split.screen`.
+
+The first step of combining these functions is to set up the screens. Details for screen functions are in the documentation for `split.screen`. The function takes as a parameter a 4-column matrix, in which each row is a screen, and the columns represent the left, bottom, right, and top of the screens respectively. Each value is expressed as a number from 0 to 1, where 0 is the left/bottom of the current device and 1 is the right/top.
+
+To make a Wright Map with the items on the left and the persons on the right, we will set up two screens, with 80% of the width on the left and 20% on the right.
+
+```{r}
+split.screen(figs = matrix(c(0, .8, 0, 1, .8, 1, 0, 1), ncol = 4, byrow = TRUE))
+```
+
+Next, we’ll draw the item side. **IMPORTANT NOTE:** Make sure to explicitly set the `yRange` variable when combining plots to ensure they are on the same scale. We can also adjust some of the other parameters to work better with a left-side item plot. We’ll move the logit axis to the left with the `show.axis.logit` parameter, and set the righthand outer margin to 2 to give us a space between the plots.
+
+```{r}
+itemModern(thresholds, yRange = c(-3, 4), show.axis.logits = "L", oma = c(0, 0, 0, 2))
+
+mtext("Wright Map", side = 3, font = 2, line = 1)
+```
+
+Finally, we will move to screen 2 and draw the person side. This plot will be adjusted to move the persons label and remove the axis.
+
+```{r}
+screen(2)
+personHist(multi.proficiency, axis.persons = "", yRange = c(-3, 4), axis.logits = "Persons", show.axis.logits = FALSE)
+```
+
+The last thing to do is to close all the screens to prevent them from getting in the way of any future plotting.
+
+```{r}
+close.screen(all.screens = TRUE)
+```
+
+Here is the complete plot:
+
+```{r}
+#| label: t05-i10-multiPlotExample1
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+split.screen(figs = matrix(c(0, .8, 0, 1, .8, 1, 0, 1), ncol = 4, byrow = TRUE))
+
+itemModern(thresholds, yRange = c(-3, 4), show.axis.logits = "L", oma = c(0, 0, 0, 2))
+mtext("Wright Map", side = 3, font = 2, line = 1)
+
+screen(2)
+personHist(multi.proficiency, axis.persons = "", yRange = c(-3, 4), axis.logits = "Persons", show.axis.logits = FALSE)
+
+close.screen(all.screens = TRUE)
+```
+
+Countless arrangements are possible. As one last example, here are two ways to put two dimensions side by side in separate Wright Maps.
+
+Explicitly splitting the device into four screens:
+
+```{r}
+#| label: t05-i11-multiPlotExample2
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+d1 = rnorm(1000, mean =  -0.5, sd = 1)
+d2 = rnorm(1000, mean =   0.0, sd = 1)
+
+dim1.diff <- rnorm(5)
+dim2.diff <- rnorm(5)
+
+split.screen(figs = matrix(c(  0, .09, 0, 1,
+                             .11, .58, 0, 1,
+                              .5, .59, 0, 1,
+                             .51,  1, 0, 1), ncol = 4, byrow = TRUE))
+                            
+    personDens(d1, yRange = c(-3, 3), show.axis.logits = FALSE, axis.logits = "")
+
+screen(2)
+    itemModern(dim1.diff, yRange = c(-3, 3), show.axis.logits = FALSE)
+    mtext("Wright Map", side = 3, font = 2, line = 1)
+
+screen(3)
+    personDens(d2, yRange = c(-3, 3), show.axis.logits = FALSE, axis.logits = "", axis.persons = "", dim.names = "Dim2")
+
+screen(4)
+    itemModern(dim2.diff, yRange = c(-3, 3), show.axis.logits = FALSE, label.items = paste("Item", 6:10))
+
+close.screen(all.screens = TRUE)
+```
+
+Splitting the device into two screens with a Wright Map on each:
+
+```{r}
+#| label: t05-i12-multiPlotExample3
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+split.screen(figs = matrix(c( 0, .5, 0, 1,
+                             .5, 1, 0, 1), ncol = 4, byrow = TRUE))
+                              
+wrightMap(d1, dim1.diff, person.side = personDens, show.axis.logits = FALSE)
+
+screen(2)
+wrightMap(d2, dim2.diff, person.side = personDens, show.axis.logits = FALSE)
+
+close.screen(all.screens = TRUE)
+```

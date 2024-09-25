@@ -1,0 +1,41 @@
+---
+title: "About WrightMap"
+subtitle: "IRT item-person maps with ConQuest integration"
+author: "David Torres Irribarra"
+date: "25/09/2024"
+toc: true
+format: html
+css: custom.css
+editor: visual
+lang: en
+---
+
+A powerful yet simple graphical tool available in the field of psychometrics is the Wright Map, which presents the location of both respondents and items on the same scale.
+
+Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.
+
+![Sample Wright Map](.website/images/WrightMap_home.svg){#fig-WMhome}
+
+The plots can represent polytomoys and multidimensional models, are highly customizable, and as any other R plot, they can be exported into multiple image formats. Although the package can be used in conjunction with any software used to estimate the IRT model (e.g. eRm or IRToys in R, or Stata, Mplus, etc.), WrightMap features special integration with ConQuest to facilitate reading and plotting its output directly.
+
+WrightMap was created by David Torres Irribarra and Rebecca Freund.
+
+## Where does the name “Wright Map” comes from?
+
+These plots are named after [Ben Wright](https://en.wikipedia.org/wiki/Benjamin_Drake_Wright) for his contribution on using item maps to better understand measurement in the social sciences.
+
+::: {.pullquote}
+"It seemed to me that, in fact, Ben had made his most significant contributions to measurement in the area of conceptualizing measures, and interpreting the results of measurement analyses, and that his central tool in doing so were these (many forms of) items maps."
+
+— Mark Wilson on coining the name “Wright Map”
+:::
+
+[You can learn more about the origin of the term Wright Map here.](https://www.rasch.org/rmt/rmt253b.htm)
+
+## Where can you get WrightMap?
+
+You can download the package and/or find more information about the package on the WrightMap page on CRAN. Alternatively, you can get the source code on our [GitHub repository](https://github.com/david-ti/wrightmap/).
+
+## WrightMap tutorials
+
+You can learn more about how to use WrightMap in our tutorials page here.

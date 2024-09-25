@@ -1,0 +1,40 @@
+project:
+  type: website
+  resources: 
+    - "data/*"
+website:
+  title: "WrightMap"
+  navbar:
+    background: primary
+    search: true
+    left:
+      - file: website/index.qmd
+        text: Home
+      - file: website/about.qmd
+      - text: About WrightMap
+        menu:
+          - file: website/tutorial01.qmd
+            text: Tutorial 01
+          - file: website/tutorial01.qmd
+            text: Tutorial 02
+          - file: website/tutorial01.qmd
+            text: Tutorial 03
+          - file: website/tutorial01.qmd
+            text: Tutorial 04
+          - file: website/tutorial01.qmd
+            text: Tutorial 05                                    
+          # Add more tutorials here
+
+      - text: Examples
+        menu:
+          - file: website/example01.qmd
+            text: Simulating data
+          - file: website/example02.qmd
+            text: Wright Map & TAM
+          - file: website/example03.qmd
+            text: Introducing the PP plot           
+format:
+  html:
+    self-contained: true
+    embed-resources: true
+    theme: darkly

@@ -1,0 +1,105 @@
+---
+title: "Using WrightMap with the TAM Package"
+author: "David Torres Irribarra"
+date: "25/09/2024"
+toc: true
+format: html
+editor: visual
+---
+
+# Using WrightMap with the TAM Package
+
+WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.
+
+This post will show you how you can integrate R with one of these estimation packages, the Test Analysis Module (`TAM`) package, in just a couple of lines.
+
+## Setup
+
+Let's start by loading TAM.
+
+```{r}
+install.packages('TAM')
+library(TAM)
+```
+
+And we can use one of TAM's simulated datasets (without any missing data in this case) for this example:
+
+```{r}
+data(sim.rasch)
+str(sim.rasch)
+```
+
+A quick look with `str` confirms that we now have a simulated dataset with responses from 2000 persons (rows) to 40 items (columns). We are ready to go!
+
+## Analysis with TAM
+
+In this example, we will run a Rasch model using the TAM command `tam.mml`, which will estimate the model using a marginal maximum likelihood method.
+
+```{r}
+mod1 <- tam.mml(resp=sim.rasch)
+```
+
+The estimation should take very little time, and you should see a summary of the results and the total time it took to run the analysis.
+
+## Person Estimates
+
+You can get person estimates in several ways in TAM, but for this example, I will use the `tam.wle` command, which produces Warm Likelihood Estimates (WLE) for each respondent.
+
+```{r}
+persons.mod1 <- tam.wle(mod1)
+str(persons.mod1)
+```
+
+If we look at the resulting matrix, we can see that we have several columns, including:
+
+- **pid**: the ID of the respondent
+- **N.items**: the number of items
+- **PersonScores**: The score of each person
+- **PersonMax**: The maximum possible score of each person
+- **theta**: The WLE estimate
+- **error**: The standard error of the WLE estimate
+- **WLE.rel**: The WLE reliability
+
+You can look at the TAM documentation for more details, but for this example, we want to focus on the `theta` column, which contains the person estimates we need to create our Wright map.
+
+We can get the data we need by selecting just that column:
+
+```{r}
+WLEestimates.mod1 <- persons.mod1$theta
+```
+
+## Item Parameters
+
+And we can get our item estimates using the `tam.threshold` command.
+
+```{r}
+thresholds.mod1 <- tam.threshold(mod1)
+```
+
+## Creating the Wright Map
+
+With these two matrices, we are ready to plot our Wright Map:
+
+```{r}
+#| label: basic
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(WLEestimates.mod1, thresholds.mod1)
+```
+
+And you can start editing it to make it nicer:
+
+```{r}
+#| label: modified
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(WLEestimates.mod1, thresholds.mod1, show.thr.lab = FALSE, label.items = c(1:40), label.items.rows = 3)
+```

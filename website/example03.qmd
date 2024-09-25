@@ -1,0 +1,72 @@
+---
+title: "Introducing Person Probability Plots"
+author: "David Torres Irribarra"
+date: "25/09/2024"
+toc: true
+format: html
+editor: visual
+---
+
+## Introduction
+
+In this tutorial, we're going to dive into a cool new feature introduced in WrightMap version 1.2: the **Person Probability Plot** (PP plot). This plot is designed to represent model information for specific proficiencies, giving us a neat way to visualize the uncertainty surrounding a person’s estimate and to see the probabilities that the person will answer different items correctly.
+
+Let’s get started by loading an example ConQuest output:
+
+```{r}
+fpath <- system.file("extdata", package="WrightMap")
+model1 <- CQmodel(p.est = file.path(fpath,"ex2.eap"), show = file.path(fpath,"ex2.shw"))
+```
+
+## Creating a Basic Person Probability Plot
+
+Now, let's create the default version of the PP plot. There are three key things we need to provide: 
+
+1. A **model object** (in this case, `model1` from ConQuest)
+2. The **person's proficiency estimate** (let’s set it at 0 logits)
+3. The **standard error** associated with the estimate (we'll use 1 logit as the standard error)
+
+Here’s the code to generate the plot:
+
+```{r}
+#| label: t06-i01-ppplot01
+#| dev: ["svg", "png"]
+#| fig-cap: "Basic Person Probability Plot"
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 8
+#| dpi: 300
+ppPlot(model1, est = 0, SE = 1)
+```
+
+### Understanding the Plot
+
+In this basic version, we’re using the ConQuest item and person information stored in `model1`. The person being represented has a proficiency estimate of 0 logits and a standard error of 1 logit.
+
+- **Person Side (Histogram)**: The darkest bar represents the group in which the person’s proficiency estimate falls. The light gray bars on either side show the range of the standard error.
+- **Item Side (Probability Lines)**: For each item, the lines mark the probabilities that a person with this proficiency would answer correctly. The plot draws lines at 80%, 60%, 50%, 40%, and 20% probability thresholds.
+
+## Modifying the Plot: Adding Density and Classic Item Styles
+
+What if you want to change things up? Let’s try using a **density plot** on the person side instead of a histogram and switch to a **classic style** for the item side. Here’s how:
+
+```{r}
+#| label: t06-i02-ppplot02
+#| dev: ["svg", "png"]
+#| fig-cap: "Person Probability Plot with Density and Classic Item Style"
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 8
+#| dpi: 300
+ppPlot(model1, est = 0, SE = 1, person.side = personDens, item.side = itemClassic)
+```
+
+In this version:
+- **Person Side (Density)**: We’re using a density curve instead of the histogram to show where the proficiency estimate falls.
+- **Item Side (Classic)**: We’re switching to a "classic" item representation, giving us a more traditional look for the probability lines.
+
+## Conclusion
+
+The Person Probability Plot is a great tool for visualizing the relationship between person proficiencies and item difficulties, especially when you want to show how likely it is for a person to answer specific items correctly. You can easily customize these plots by switching between histogram or density views on the person side, and by using different styles for the item side.
+
+Hopefully, this new addition to WrightMap will make it easier to communicate the results of a model for specific respondents. Play around with the options and see how the PP plot can enhance your analysis!

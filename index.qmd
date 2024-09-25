@@ -1,0 +1,11 @@
+---
+toc: true
+---
+
+## Welcome to the official home of the WrightMap package
+
+Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.
+
+![Sample Wright Map](.website/images/WrightMap_home.svg){#fig-WMhome}
+
+You can read more about WrightMaps, browse our tutorials, or review our recent posts below.

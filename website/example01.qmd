@@ -1,0 +1,115 @@
+---
+title: "Simulating Item Responses with the Partial Credit and Rasch Models"
+subtitle: "Using the sim.PCM Function"
+author: "David Torres Irribarra"
+date: "25/09/2024"
+toc: true
+format: html
+editor: visual
+---
+
+# Simulating Item Responses for Partial Credit and Rasch Models
+
+In this tutorial, we're going to explore how to simulate item responses using the `sim.PCM` function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.
+
+What's great about `sim.PCM` is its flexibility—it lets you play around with different item levels, thresholds, and person abilities. Whether you want a simple Rasch model or a more complex situation where items have different numbers of categories, this function has you covered!
+
+## Setting Up the Simulation
+
+Let’s start by simulating some basic data. We'll begin with a simple setup: 100 respondents answering 5 items, each with 3 response levels (think of it like a Likert scale with three options).
+
+### Example 1: Basic Simulation
+
+Here, we’re simulating responses for 100 people across 5 items, each with 3 response options. It's as easy as that!
+
+```{r}
+#| label: ex1_simulated_data
+#| dev: ["svg", "png"]
+#| fig-cap: "Simulated responses for 100 respondents and 5 items with 3 levels."
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+simulated_data <- sim.PCM(pN = 100, iN = 5, lN = 3)
+```
+
+Just like that, you’ve got your data! This gives you a simple matrix of simulated responses that match our configuration: 100 respondents answering 5 items, each with 3 response levels.
+
+### Example 2: Customizing Item Thresholds
+
+What if you want more control over the item difficulty thresholds? You can pass in your own custom thresholds instead of letting the function generate them for you. Here's how:
+
+```{r}
+#| label: ex2_simulated_custom_thresholds
+#| dev: ["svg", "png"]
+#| fig-cap: "Simulated responses with custom item thresholds."
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+custom_delta <- matrix(c(-0.5, -1, -2, 1, 0.5, 1), nrow = 3)
+simulated_data_custom <- sim.PCM(pN = 50, iN = 3, lN = 3, delta = custom_delta)
+```
+
+In this example, we're specifying thresholds for 3 items. The `custom_delta` matrix defines how difficult each threshold is for the respective items. If you look at the output, you’ll see the responses simulated based on these difficulty levels.
+
+### Example 3: Simulating with Custom Person Abilities
+
+What about the people? Maybe you don’t want a standard normal distribution for their abilities. Let’s say you want a little more variety in the abilities of your respondents—no problem! You can also specify your own custom person abilities.
+
+```{r}
+#| label: ex3_simulated_custom_theta
+#| dev: ["svg", "png"]
+#| fig-cap: "Simulated responses with custom person abilities."
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+custom_theta <- rnorm(100, mean = 0, sd = 1.5)
+simulated_data_theta <- sim.PCM(pN = 100, iN = 5, lN = 3, theta = custom_theta)
+```
+
+Here, we’re generating a set of 100 person abilities (`custom_theta`) with a mean of 0 and a standard deviation of 1.5. This gives you more control over how the simulated people interact with the items in your test.
+
+### Example 4: Simulating a Rasch Model
+
+Now let’s move from polytomous items to a Rasch model with dichotomous items. In this case, each item only has two possible responses. We'll simulate data for 50 people, with abilities ranging from -3 to +3, responding to 10 items.
+
+```{r}
+#| label: ex4_simulated_rasch
+#| dev: ["svg", "png"]
+#| fig-cap: "Rasch model simulation with 50 respondents and 10 dichotomous items."
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+rasch_theta <- seq(-3, 3, length.out = 50)
+rasch_delta <- matrix(c(0,1.5,0,-1,0,0.5,0,-0.5,0,1,0,-1.5,0,2,0,-2,0,0.8,0,-0.8), ncol = 2, byrow = TRUE)
+simulated_rasch <- sim.PCM(pN = 50, iN = 10, lN = 2, delta = rasch_delta, theta = rasch_theta)
+```
+
+In this simulation, we have a Rasch model with 10 items and 50 persons. The `rasch_theta` values span from -3 to 3, representing a range of person abilities. The `rasch_delta` matrix specifies the difficulty of each item.
+
+### Example 5: Simulating Items with Different Numbers of Levels
+
+What if your items don’t all have the same number of response options? That’s where the `itemLevels` argument comes in handy. For example, let’s simulate a mix of items: some have 5 levels, some are dichotomous, and some have 3 levels.
+
+```{r}
+#| label: ex5_simulated_mixed_levels
+#| dev: ["svg", "png"]
+#| fig-cap: "Simulated responses for items with varying numbers of response levels."
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+simulated_mixed_levels <- sim.PCM(pN = 50, iN = 10, lN = 5, 
+                                  itemLevels = c(5, 5, 5, 5, 2, 2, 2, 3, 3, 3))
+```
+
+Here we’re simulating responses for 10 items, with 4 items having 5 levels, 3 items being dichotomous, and 3 items having 3 levels. This kind of flexibility is great for simulating more realistic data, where items can have different response structures.
+
+## Wrapping Up
+
+The `sim.PCM` function is a powerful tool for simulating item responses for both polytomous and dichotomous items. Whether you’re setting up a simple Rasch model, simulating items with multiple levels, or adding custom thresholds and person abilities, this function gives you the flexibility to generate realistic data tailored to your needs.
+
+Now that you’ve seen a few examples, you can start experimenting with different configurations to see what works best for your research or testing scenarios. Happy simulating!

@@ -1,0 +1,304 @@
+---
+title: "WrightMap Tutorial - Part 3"
+subtitle: "Plotting Multidimensional & Polytomous Models"
+author: "David Torres Irribarra"
+date: "25/09/2024"
+toc: true
+format: html
+editor: visual
+---
+
+## Plotting Multidimensional & Polytomous Models
+###### Updated September 2024 for changes in version 1.4.
+
+### Intro
+
+In Part 1, we reviewed how to install the package from GitHub and how to customize unidimensional and dichotomous models. Now in Part 2, we’ll look at graphing some more complicated models.
+
+(See Part 3 for ConQuest integration and making thresholds out of deltas.)
+
+In Part 2, we'll look at graphing some more complicated models. First, let's generate some thresholds for a multidimensional model. This will be a matrix containing five columns of person estimates.
+
+### Multidimensional models
+
+We will need again to load RColorBrewer for this example.
+
+```{r}
+install.packages("RColorBrewer")
+library(RColorBrewer)
+```
+
+```{r}
+set.seed(2020)
+mdim.sim.thetas <- matrix(rnorm(5000), ncol = 5)
+```
+
+Since this will be a dichotomous model, we'll generate a single column for thresholds.
+
+```{r}
+mdim.sim.thresholds <- runif(10, -3, 3)
+```
+
+Okay, let's see what the Wright Map looks like for this.
+
+```{r}
+#| label: t02-i01-first_mdim_example
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(mdim.sim.thetas, mdim.sim.thresholds)
+```
+
+That doesn't look right. Let's adjust the proportion of the map's parts.
+
+```{r}
+#| label: t02-i02-itemprop
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(mdim.sim.thetas, mdim.sim.thresholds, item.prop = 0.5)
+```
+
+Let's change the dimensions names.
+
+```{r}
+#| label: t02-i03-dimnames
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(mdim.sim.thetas, mdim.sim.thresholds, item.prop = 0.5,
+    dim.names = c("Algebra", "Calculus", "Trig", "Stats", "Arithmetic"))
+```
+
+And let's give them some color.
+
+```{r}
+#| label: t02-i04-dimcolors
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(mdim.sim.thetas, mdim.sim.thresholds, item.prop = 0.5,
+    dim.names = c("Algebra", "Calculus", "Trig", "Stats", "Arithmetic"),
+    dim.color = brewer.pal(5, "Set1"))
+```
+
+And let's associate the items with each dimension.
+
+```{r}
+#| label: t02-i05-dimitems
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(mdim.sim.thetas, mdim.sim.thresholds, item.prop = 0.5,
+    dim.names = c("Algebra", "Calculus", "Trig", "Stats", "Arithmetic"),
+    dim.color = brewer.pal(5, "Set1"), show.thr.lab = FALSE,
+    thr.sym.col.fg = rep(brewer.pal(5, "Set1"), each = 2),
+    thr.sym.col.bg = rep(brewer.pal(5, "Set1"), each = 2),
+    thr.sym.cex = 2, use.hist = FALSE)
+```
+
+### Polytomous models
+
+All right, let's look at a Rating Scale Model. First, let's generate three dimensions of person estimates.
+
+```{r}
+rsm.sim.thetas <- data.frame(d1 = rnorm(1000, mean = -0.5, sd = 1), d2 = rnorm(1000, 
+    mean = 0, sd = 1), d3 = rnorm(1000, mean = +0.5, sd = 1))
+```
+
+Now let's generate the thresholds for the polytomous items. We'll make them a matrix where each row is an item and each column a level.
+
+```{r}
+items.loc <- sort(rnorm(10))
+
+rsm.sim.thresholds <- data.frame(l1 = items.loc - 1, l2 = items.loc - 0.5,
+    l3 = items.loc + 0.5, l4 = items.loc + 1)
+
+rsm.sim.thresholds
+```
+
+Let's look at the Wright Map!
+
+```{r}
+#| label: t02-i06-polymexample
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rsm.sim.thetas, rsm.sim.thresholds)
+```
+
+Let's assign a color for each level.
+
+```{r}
+itemlevelcolors <- matrix(rep(brewer.pal(4, "Set1"), 10), byrow = TRUE, ncol = 4)
+
+itemlevelcolors
+```
+
+And now make a Wright Map with them.
+
+```{r}
+#| label: t02-i07-polymcolors
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rsm.sim.thetas, rsm.sim.thresholds, thr.sym.col.fg = itemlevelcolors,
+    thr.sym.col.bg = itemlevelcolors)
+```
+
+But we also want to indicate which dimension they belong to... with symbols.
+
+```{r}
+itemdimsymbols <- matrix(c(rep(16, 12), rep(17, 12), rep(18, 16)),
+    byrow = TRUE, ncol = 4)
+
+itemdimsymbols
+```
+
+```{r}
+#| label: t02-i08-polymexamplesymb
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rsm.sim.thetas, rsm.sim.thresholds, show.thr.lab = FALSE,
+    thr.sym.col.fg = itemlevelcolors, thr.sym.col.bg = itemlevelcolors,
+    thr.sym.pch = itemdimsymbols, thr.sym.cex = 2)
+```
+
+Additionally, we may want to clearly indicate which item parameters are associated with each item. We can draw lines that connect all parameters connected to an item using the `vertLines` parameter.
+
+```{r}
+#| label: t02-i09-vertLinesexample
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rsm.sim.thetas, rsm.sim.thresholds, show.thr.lab = FALSE,
+    thr.sym.col.fg = itemlevelcolors, thr.sym.col.bg = itemlevelcolors,
+    thr.sym.pch = itemdimsymbols, thr.sym.cex = 2, vertLines = TRUE)
+```
+
+### Changing the item axis
+
+What happens if you have too many items?
+
+```{r}
+rasch2.sim.thresholds <- runif(50, -3, 3)
+```
+
+We use the defaults...
+
+```{r}
+#| label: t02-i09-manyitemsdef
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rnorm(1000), rasch2.sim.thresholds)
+```
+
+Some options...
+
+You can use the `itemClassic` or `itemHist` options for `item.side`.
+
+```{r}
+#| label: t02-i10-manyitemsclassic
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 6
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rasch.sim.thetas, rasch2.sim.thresholds, item.side = itemClassic,
+    item.prop = .5)
+```
+
+```{r}
+#| label: t02-i11-manyitemhist
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rasch.sim.thetas, rasch2.sim.thresholds, item.side = itemHist, item.prop = 0.5)
+```
+
+Or you can play with the way labels are presented:
+
+```{r}
+#| label: t02-i12-manyitem45
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items.srt = 45)
+```
+
+```{r}
+#| label: t02-i13-manyitem2rows
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items.rows = 2)
+```
+
+```{r}
+#| label: t02-i14-manyitem3rows
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE,
+    label.items = c(1:50), label.items.rows = 3)
+```
+
+Or you can get rid of that axis completely.
+
+```{r}
+#| label: t02-i15-manyitemnoaxis
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.sym = FALSE,
+    thr.lab.text = paste("I", 1:50, sep = ""), label.items = "",
+    label.items.ticks = FALSE)
+```
