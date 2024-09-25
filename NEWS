@@ -1,3 +1,14 @@
+#Updates for 1.4:
+
+- Started using ChatGPT to help out with code maintenance, documentation, and adding missing arguments to functions.
+- Added new function "sim.PCM" to simulate data from the Rasch Model and the Partial Credit Model.
+- Added Rebecca's revised graphical options for itemClassic with some additional changes to accommodate differences in item label length through padding and font options, and for drawing vertical and cutpoint lines.
+- Added Rebecca's revised graphical options for itemModern with some additional changes to accommodate graphical options for drawing vertical and cutpoint lines.
+- Included the revised graphical options itemHist to include the new graphical options that itemClassic and itemModern now have.
+- Added option to "axis.logits.cex" to itemModern, itemHist, and itemClassic  to control de size of the logit values on the y axis.
+- Added example to the ICCfit documentation.
+
+
 #Updates for 1.3:
 
 - Added fuctions to plot empirical item and category characteristics curves.
