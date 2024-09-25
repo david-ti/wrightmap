@@ -56,6 +56,6 @@ jobs:
         with:
           render: false
           target: gh-pages
-          path: website
+          path: _site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
