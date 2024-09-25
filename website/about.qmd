@@ -2,7 +2,7 @@
 title: "About WrightMap"
 subtitle: "IRT item-person maps with ConQuest integration"
 author: "David Torres Irribarra"
-date: "25/09/2024"
+date: "09/25/2024"
 toc: true
 format: html
 css: custom.css
