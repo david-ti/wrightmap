@@ -8,6 +8,17 @@ format: html
 editor: visual
 ---
 
+```{r, include=FALSE, message=FALSE}
+# Set the CRAN mirror to avoid errors when installing packages
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Silently load the WrightMap package
+if (!requireNamespace("WrightMap", quietly = TRUE)) {
+  install.packages("WrightMap")
+}
+library(WrightMap)
+```
+
 ## Plotting Multidimensional & Polytomous Models
 ###### Updated September 2024 for changes in version 1.4.
 
@@ -228,6 +239,14 @@ wrightMap(rnorm(1000), rasch2.sim.thresholds)
 Some options...
 
 You can use the `itemClassic` or `itemHist` options for `item.side`.
+
+
+```{r}
+
+rasch.sim.thetas <- rnorm(1000)
+rasch2.sim.thresholds <- runif(10, -3, 3)
+
+```
 
 ```{r}
 #| label: t02-i10-manyitemsclassic

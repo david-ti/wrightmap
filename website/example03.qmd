@@ -7,6 +7,17 @@ format: html
 editor: visual
 ---
 
+```{r, include=FALSE, message=FALSE}
+# Set the CRAN mirror to avoid errors when installing packages
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Silently load the WrightMap package
+if (!requireNamespace("WrightMap", quietly = TRUE)) {
+  install.packages("WrightMap")
+}
+library(WrightMap)
+```
+
 ## Introduction
 
 In this tutorial, we're going to dive into a cool new feature introduced in WrightMap version 1.2: the **Person Probability Plot** (PP plot). This plot is designed to represent model information for specific proficiencies, giving us a neat way to visualize the uncertainty surrounding a person’s estimate and to see the probabilities that the person will answer different items correctly.

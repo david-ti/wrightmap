@@ -11,7 +11,8 @@ website:
       - file: website/index.qmd
         text: Home
       - file: website/about.qmd
-      - text: About WrightMap
+        text: About WrightMap
+      - text: Tutorials      
         menu:
           - file: website/tutorial01.qmd
             text: Tutorial 01
@@ -37,4 +38,4 @@ format:
   html:
     self-contained: true
     embed-resources: true
-    theme: darkly
+    theme: flatly

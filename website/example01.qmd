@@ -8,6 +8,17 @@ format: html
 editor: visual
 ---
 
+```{r, include=FALSE, message=FALSE}
+# Set the CRAN mirror to avoid errors when installing packages
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Silently load the WrightMap package
+if (!requireNamespace("WrightMap", quietly = TRUE)) {
+  install.packages("WrightMap")
+}
+library(WrightMap)
+```
+
 # Simulating Item Responses for Partial Credit and Rasch Models
 
 In this tutorial, we're going to explore how to simulate item responses using the `sim.PCM` function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.

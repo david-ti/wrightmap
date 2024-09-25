@@ -10,11 +10,45 @@ editor: visual
 lang: en
 ---
 
+```{r, include=FALSE, message=FALSE}
+
+# Silently load the WrightMap package
+if (!requireNamespace("WrightMap", quietly = TRUE)) {
+  install.packages("WrightMap")
+}
+library(WrightMap)
+```
+
 A powerful yet simple graphical tool available in the field of psychometrics is the Wright Map, which presents the location of both respondents and items on the same scale.
 
 Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.
 
-![Sample Wright Map](.website/images/WrightMap_home.svg){#fig-WMhome}
+
+
+```{r, include=FALSE, message=FALSE}
+rsm.sim.thetas <- data.frame(d1 = rnorm(1000, mean = -0.5, sd = 1), d2 = rnorm(1000, 
+    mean = 0, sd = 1), d3 = rnorm(1000, mean = +0.5, sd = 1))
+
+items.loc <- sort(rnorm(10))
+
+rsm.sim.thresholds <- data.frame(l1 = items.loc - 1, l2 = items.loc - 0.5,
+    l3 = items.loc + 0.5, l4 = items.loc + 1)
+
+rsm.sim.thresholds
+```
+
+```{r}
+#| echo: false
+#| label: t02-i06-polymexample
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(rsm.sim.thetas, rsm.sim.thresholds)
+```
+
 
 The plots can represent polytomoys and multidimensional models, are highly customizable, and as any other R plot, they can be exported into multiple image formats. Although the package can be used in conjunction with any software used to estimate the IRT model (e.g. eRm or IRToys in R, or Stata, Mplus, etc.), WrightMap features special integration with ConQuest to facilitate reading and plotting its output directly.
 

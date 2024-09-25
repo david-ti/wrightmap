@@ -7,6 +7,20 @@ format: html
 editor: visual
 ---
 
+```{r, include=FALSE, message=FALSE}
+# Set the CRAN mirror to avoid errors when installing packages
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Silently load the WrightMap package
+if (!requireNamespace("WrightMap", quietly = TRUE)) {
+  install.packages("WrightMap")
+}
+if (!requireNamespace("TAM", quietly = TRUE)) {
+  install.packages("TAM")
+}
+library(WrightMap)
+```
+
 # Using WrightMap with the TAM Package
 
 WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.
@@ -18,15 +32,14 @@ This post will show you how you can integrate R with one of these estimation pac
 Let's start by loading TAM.
 
 ```{r}
-install.packages('TAM')
 library(TAM)
 ```
 
 And we can use one of TAM's simulated datasets (without any missing data in this case) for this example:
 
 ```{r}
-data(sim.rasch)
-str(sim.rasch)
+data(data.sim.rasch)
+str(data.sim.rasch)
 ```
 
 A quick look with `str` confirms that we now have a simulated dataset with responses from 2000 persons (rows) to 40 items (columns). We are ready to go!
@@ -36,7 +49,9 @@ A quick look with `str` confirms that we now have a simulated dataset with respo
 In this example, we will run a Rasch model using the TAM command `tam.mml`, which will estimate the model using a marginal maximum likelihood method.
 
 ```{r}
-mod1 <- tam.mml(resp=sim.rasch)
+#| echo: true
+#| collapse: true
+mod1 <- tam.mml(resp=data.sim.rasch)
 ```
 
 The estimation should take very little time, and you should see a summary of the results and the total time it took to run the analysis.

@@ -8,6 +8,12 @@ format: html
 editor: visual
 ---
 
+```{r, include=FALSE, message=FALSE}
+# Set the CRAN mirror to avoid errors when installing packages
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+```
+
 ## More Flexibility Using the person and item side functions
 ###### Updated September 2024 for changes in version 1.4.
 
@@ -188,12 +194,21 @@ The first step of combining these functions is to set up the screens. Details fo
 To make a Wright Map with the items on the left and the persons on the right, we will set up two screens, with 80% of the width on the left and 20% on the right.
 
 ```{r}
+#| echo: true
+#| results: "hide"
+#| fig-show: "hide"
 split.screen(figs = matrix(c(0, .8, 0, 1, .8, 1, 0, 1), ncol = 4, byrow = TRUE))
 ```
 
 Next, we’ll draw the item side. **IMPORTANT NOTE:** Make sure to explicitly set the `yRange` variable when combining plots to ensure they are on the same scale. We can also adjust some of the other parameters to work better with a left-side item plot. We’ll move the logit axis to the left with the `show.axis.logit` parameter, and set the righthand outer margin to 2 to give us a space between the plots.
 
 ```{r}
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
 itemModern(thresholds, yRange = c(-3, 4), show.axis.logits = "L", oma = c(0, 0, 0, 2))
 
 mtext("Wright Map", side = 3, font = 2, line = 1)
@@ -201,10 +216,29 @@ mtext("Wright Map", side = 3, font = 2, line = 1)
 
 Finally, we will move to screen 2 and draw the person side. This plot will be adjusted to move the persons label and remove the axis.
 
-```{r}
+```r
 screen(2)
 personHist(multi.proficiency, axis.persons = "", yRange = c(-3, 4), axis.logits = "Persons", show.axis.logits = FALSE)
 ```
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| results: "hide"
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+close.screen(all.screens = TRUE)
+split.screen(figs = matrix(c(0, .8, 0, 1, .8, 1, 0, 1), ncol = 4, byrow = TRUE))
+itemModern(thresholds, yRange = c(-3, 4), show.axis.logits = "L", oma = c(0, 0, 0, 2))
+
+mtext("Wright Map", side = 3, font = 2, line = 1)
+screen(2)
+personHist(multi.proficiency, axis.persons = "", yRange = c(-3, 4), axis.logits = "Persons", show.axis.logits = FALSE)
+```
+
 
 The last thing to do is to close all the screens to prevent them from getting in the way of any future plotting.
 
