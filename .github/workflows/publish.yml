@@ -46,9 +46,15 @@ jobs:
           pak::pkg_install(c("WrightMap", "knitr", "rmarkdown", "downlit", "xml2", "ggplot2", "psych", "QuantPsyc", "TeachingDemos", "rockchalk"))
         shell: Rscript {0}
 
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          path: website
+  
       - name: Render and Deploy to Github Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
+          render: false
           target: gh-pages
           path: website
         env:
