@@ -1,6 +1,5 @@
 project:
   type: website
-  render: ["website/*.qmd"]
 website:
   title: "WrightMap"
   navbar:
@@ -35,6 +34,4 @@ website:
             text: Introducing the PP plot           
 format:
   html:
-    self-contained: true
-    embed-resources: true
     theme: flatly
