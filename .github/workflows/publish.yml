@@ -52,6 +52,7 @@ jobs:
       - name: Deploy to Github Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
+          target: gh-pages
           render: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
