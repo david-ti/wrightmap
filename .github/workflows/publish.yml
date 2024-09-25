@@ -29,22 +29,17 @@ jobs:
         with:
           r-version: '4.4.1'
 
-      - name: Cache R packages
-        uses: actions/cache@v3
+      - name: Install Wrightmap
+        run: install.packages("WrightMap")
+        shell: Rscript {0}
+        
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ hashFiles('**/*.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-r-
-
-      - name: Install pak
-        run: install.packages('pak')
-        shell: Rscript {0}
-
-      - name: Install dependencies using pak
-        run: |
-          pak::pkg_install(c("WrightMap", "knitr", "rmarkdown", "downlit", "xml2", "ggplot2", "psych", "QuantPsyc", "TeachingDemos", "rockchalk"))
-        shell: Rscript {0}
+          packages:
+            any::rmarkdown
+            any::TAM
+            any::RColorBrewer
 
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
