@@ -6,7 +6,7 @@ website:
     background: primary
     search: true
     left:
-      - file: index.qmd
+      - file: website/index.qmd
         text: Home
       - file: website/about.qmd
         text: About WrightMap
