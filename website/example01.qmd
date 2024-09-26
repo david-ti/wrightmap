@@ -2,7 +2,7 @@
 title: "Simulating Item Responses with the Partial Credit and Rasch Models"
 subtitle: "Using the sim.PCM Function"
 author: "David Torres Irribarra"
-date: "25/09/2024"
+date: "09/25/2024"
 toc: true
 format: html
 editor: visual
