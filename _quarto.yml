@@ -5,6 +5,7 @@ website:
   navbar:
     background: primary
     search: true
+    logo-href: "https://wrightmap.org/website/index.html"  # Link to be used when clicking the logo
     left:
       - file: website/index.qmd
         text: Home
