@@ -42,7 +42,7 @@ fpath <- system.file("extdata", "ex2.SHW",package="WrightMap")
 And we load the example output.
 
 ```{r}
-model1 <- CQmodel(p.est = readLines(system.file("extdata", "ex2.eap",package="WrightMap")),
+model1 <- CQmodel(p.est = readLines(system.file("extdata", "ex2.eap",package="WrightMap"))
     , show = readLines(system.file("extdata", "ex2.SHW",package="WrightMap")))
 ```
 
