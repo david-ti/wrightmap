@@ -30,16 +30,11 @@ In this part of the tutorial, we'll show how to load ConQuest output to make a C
 
 Let's load a model. The first parameter should be the name of the person estimates file, while the second should be the name of the show file. Both are necessary for creating Wright maps (although the `CQmodel` function will run fine with only one or the other, provided that they are properly passed). 
 
-We start by defining a path to the WrightMap example files.
+We start by reading the WrightMap example files with the CQmodel function.
 
 ```{r}
-fpath <- system.file("extdata", package="WrightMap")
-```
-
-And we load the example output.
-
-```{r}
-model1 <- CQmodel(p.est = file.path(fpath, "ex2.eap"), show = file.path(fpath, "ex2.SHW"))
+model1 <- CQmodel(p.est = system.file("extdata", "ex2.eap",package="WrightMap")
+    , show = system.file("extdata", "ex2.SHW",package="WrightMap"))
 ```
 
 This (`model1`) is a `CQmodel` object. Enter the name of the object to see the names of all the tables & information stored within this object.
