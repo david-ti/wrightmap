@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="David Torres Irribarra">
-<meta name="dcterms.date" content="2024-09-25">
 
-<title>About WrightMap – WrightMap</title>
+<title>index – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,7 +68,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="custom.css">
 </head>
 
 <body class="nav-fixed">
@@ -91,11 +88,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../website/index.html"> 
+    <a class="nav-link active" href="../website/index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../website/about.html" aria-current="page"> 
+    <a class="nav-link" href="../website/about.html"> 
 <span class="menu-text">About WrightMap</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -160,76 +157,29 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#where-does-the-name-wright-map-comes-from" id="toc-where-does-the-name-wright-map-comes-from" class="nav-link active" data-scroll-target="#where-does-the-name-wright-map-comes-from">Where does the name “Wright Map” comes from?</a></li>
-  <li><a href="#where-can-you-get-wrightmap" id="toc-where-can-you-get-wrightmap" class="nav-link" data-scroll-target="#where-can-you-get-wrightmap">Where can you get WrightMap?</a></li>
-  <li><a href="#wrightmap-tutorials" id="toc-wrightmap-tutorials" class="nav-link" data-scroll-target="#wrightmap-tutorials">WrightMap tutorials</a></li>
+  <li><a href="#welcome-to-the-official-home-of-the-wrightmap-package" id="toc-welcome-to-the-official-home-of-the-wrightmap-package" class="nav-link active" data-scroll-target="#welcome-to-the-official-home-of-the-wrightmap-package">Welcome to the official home of the WrightMap package</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">About WrightMap</h1>
-<p class="subtitle lead">IRT item-person maps with ConQuest integration</p>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>David Torres Irribarra </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 25, 2024</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>A powerful yet simple graphical tool available in the field of psychometrics is the Wright Map, which presents the location of both respondents and items on the same scale.</p>
+<section id="welcome-to-the-official-home-of-the-wrightmap-package" class="level2">
+<h2 class="anchored" data-anchor-id="welcome-to-the-official-home-of-the-wrightmap-package">Welcome to the official home of the WrightMap package</h2>
 <p>Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="about_files/figure-html/t02-i06-polymexample-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><img src="index_files/figure-html/t02-i06-polymexample-1.svg" class="img-fluid figure-img" width="2400"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The plots can represent polytomoys and multidimensional models, are highly customizable, and as any other R plot, they can be exported into multiple image formats. Although the package can be used in conjunction with any software used to estimate the IRT model (e.g.&nbsp;eRm or IRToys in R, or Stata, Mplus, etc.), WrightMap features special integration with ConQuest to facilitate reading and plotting its output directly.</p>
-<p>WrightMap was created by David Torres Irribarra and Rebecca Freund.</p>
-<section id="where-does-the-name-wright-map-comes-from" class="level2">
-<h2 class="anchored" data-anchor-id="where-does-the-name-wright-map-comes-from">Where does the name “Wright Map” comes from?</h2>
-<p>These plots are named after <a href="https://en.wikipedia.org/wiki/Benjamin_Drake_Wright">Ben Wright</a> for his contribution on using item maps to better understand measurement in the social sciences.</p>
-<div class="pullquote">
-<p>“It seemed to me that, in fact, Ben had made his most significant contributions to measurement in the area of conceptualizing measures, and interpreting the results of measurement analyses, and that his central tool in doing so were these (many forms of) items maps.”</p>
-<p>— Mark Wilson on coining the name “Wright Map”</p>
-</div>
-<p><a href="https://www.rasch.org/rmt/rmt253b.htm">You can learn more about the origin of the term Wright Map here.</a></p>
-</section>
-<section id="where-can-you-get-wrightmap" class="level2">
-<h2 class="anchored" data-anchor-id="where-can-you-get-wrightmap">Where can you get WrightMap?</h2>
-<p>You can download the package and/or find more information about the package on the WrightMap page on CRAN. Alternatively, you can get the source code on our <a href="https://github.com/david-ti/wrightmap/">GitHub repository</a>.</p>
-</section>
-<section id="wrightmap-tutorials" class="level2">
-<h2 class="anchored" data-anchor-id="wrightmap-tutorials">WrightMap tutorials</h2>
-<p>You can learn more about how to use WrightMap in our tutorials page here.</p>
+<p>You can read more about WrightMaps, browse our tutorials, or review our examples.</p>
 
 
 </section>

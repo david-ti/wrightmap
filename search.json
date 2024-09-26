@@ -56,6 +56,20 @@
     "text": "We start by creating mock person and item estimates.\nFor the person proficiencies, we create a matrix with 1000 values per dimension (5 dimensions in total).\n\nset.seed(2020)\nmdim.sim.thetas &lt;- matrix(rnorm(5000), ncol = 5)\n\n\n\n\nWhat happens if you have too many items?\n\nrasch2.sim.thresholds &lt;- runif(50, -3, 3)\n\nIf we use the defaults…\n\nwrightMap(rnorm(1000), rasch2.sim.thresholds)\n\n\n\n\n\n\n\n\nThings do not look quite right.\nWrightMap offers some options…\n\nrasch.sim.thetas &lt;- rnorm(1000)\nrasch2.sim.thresholds &lt;- runif(10, -3, 3)\n\nYou can use the itemClassic or itemHist options for item.side.\n\nwrightMap(rasch.sim.thetas, rasch2.sim.thresholds, item.side = itemClassic, item.prop = .5)\n\n\n\n\n\n\n\n\n\nwrightMap(rasch.sim.thetas, rasch2.sim.thresholds, item.side = itemHist, item.prop = 0.5)\n\n\n\n\n\n\n\n\nOr you can play with the way labels are presented:\n\nwrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items.srt = 45)\n\n\n\n\n\n\n\n\n\nwrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items.rows = 2)\n\n\n\n\n\n\n\n\n\nwrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items = c(1:50), label.items.rows = 3)\n\n\n\n\n\n\n\n\nOr you can get rid of that axis completely.\n\nwrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.sym = FALSE,\n    thr.lab.text = paste(\"I\", 1:10, sep = \"\"), label.items = \"\", label.items.ticks = FALSE)"
   },
   {
+    "objectID": "website/index.html",
+    "href": "website/index.html",
+    "title": "WrightMap",
+    "section": "",
+    "text": "Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.\n\n\n\n\n\n\n\n\n\nYou can read more about WrightMaps, browse our tutorials, or review our examples."
+  },
+  {
+    "objectID": "website/index.html#welcome-to-the-official-home-of-the-wrightmap-package",
+    "href": "website/index.html#welcome-to-the-official-home-of-the-wrightmap-package",
+    "title": "WrightMap",
+    "section": "",
+    "text": "Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.\n\n\n\n\n\n\n\n\n\nYou can read more about WrightMaps, browse our tutorials, or review our examples."
+  },
+  {
     "objectID": "website/tutorial01.html",
     "href": "website/tutorial01.html",
     "title": "WrightMap Tutorial - Part 1",
