@@ -8,7 +8,7 @@ website:
     left:
       - file: index.qmd
         text: Home
-      - fileile: website/about.qmd
+      - file: website/about.qmd
         text: About WrightMap
       - text: Tutorials      
         menu:
