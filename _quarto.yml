@@ -6,9 +6,9 @@ website:
     background: primary
     search: true
     left:
-      - file: website/index.qmd
+      - file: index.qmd
         text: Home
-      - file: website/about.qmd
+      - fileile: website/about.qmd
         text: About WrightMap
       - text: Tutorials      
         menu:
