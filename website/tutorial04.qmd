@@ -32,25 +32,25 @@ Let's load a model. The first parameter should be the name of the person estimat
 
 We start by defining a path to the WrightMap example files.
 
-```r
+```{r}
 fpath <- system.file("extdata", package="WrightMap")
 ```
 
 And we load the example output.
 
-```r
+```{r}
 model1 <- CQmodel(p.est = file.path(fpath, "ex2.eap"), show = file.path(fpath, "ex2.SHW"))
 ```
 
 This (`model1`) is a `CQmodel` object. Enter the name of the object to see the names of all the tables & information stored within this object.
 
-```r
+```{r}
 model1
 ```
 
 Type the name of any of these tables to see the information stored there.
 
-```r
+```{r}
 model1$SOE
 model1$equation
 model1$reg.coef
@@ -60,20 +60,20 @@ model1$variances
 
 The most relevant for our purposes are the `RMP`, `GIN`, and `p.est` tables. The `RMP` tables contain the Response Model Parameters. These are item parameters. Typing `model1$RMP` would display them, but they're a little long, so I'm just going to ask for the names and then show the first few rows of each table.
 
-```r
+```{r}
 names(model1$RMP)
 ```
 
 For this model, the RMPs have item and item*step parameters. We could add these to get the deltas. Let's see what the tables look like.
 
-```r
+```{r}
 head(model1$RMP$item)
 head(model1$RMP$"item*step")
 ```
 
 Let's look at a more complicated example.
 
-```r
+```{r}
 model2 <- CQmodel(file.path(fpath, "ex4a.mle"), file.path(fpath, "ex4a.shw"))
 model2$equation
 names(model2$RMP)
@@ -82,14 +82,14 @@ head(model2$RMP$"rater*topic*criteria*step")
 
 The GIN tables show the threshold parameters.
 
-```r
+```{r}
 model1$GIN
 model2$GIN
 ```
 
 Finally, the `p.est` table shows person parameters.
 
-```r
+```{r}
 head(model1$p.est)  ##EAPs
 head(model2$p.est)  ##MLEs
 ```
@@ -111,7 +111,7 @@ wrightMap(model1)
 
 The above uses the GIN table as thresholds. But you may want to use RMP tables. For example, if you have an item table and an item*step table, you might want to combine them to make deltas. You could do this yourself, but you could also let the `make.deltas` function do it for you. This function reshapes the item*step parameters, checks the item numbers to see if there are any dichotomous items, and then adds the steps and items. This can be especially useful if you didn't get a GIN table from ConQuest (see below).
 
-```r
+```{r}
 model3 <- CQmodel(file.path(fpath, "ex2a.eap"), file.path(fpath, "ex2a.shw"))
 model3$GIN
 model3$equation
@@ -133,7 +133,7 @@ wrightMap(model3, label.items.row = 2)
 
 The `make.deltas` function can also handle rating scale models.
 
-```r
+```{r}
 model4 <- CQmodel(file.path(fpath, "ex2b.eap"), file.path(fpath, "ex2b-2.shw"))
 model4$GIN
 model4$equation
@@ -158,7 +158,7 @@ wrightMap(model4, label.items.row = 2)
 In the above examples, we let `wrightMap` decide what parameters to graph. `wrightMap` starts by looking for a GIN table. If it finds that, it assumes they are thresholds and graphs them accordingly. If there is no GIN table, it then sends the function to `make.deltas`, which will examine the model equation to see if it knows how to handle it. `Make.deltas` can handle equations of the form:
 
 ```r
-A``` (e.g. `item`)
+A (e.g. `item`)
 A + B (e.g. `item + step` [RSM])
 A + A * B (e.g. `item + item * step` [PCM])
 A + A * B + B (e.g `item + item * gender + gender`)
@@ -166,7 +166,7 @@ A + A * B + B (e.g `item + item * gender + gender`)
 
 But sometimes we may want something other than the default. Let's look at `model2` again.
 
-```r
+```{r}
 model2$equation
 ```
 
@@ -210,6 +210,7 @@ wrightMap(model2, item.table = "topic")
 ```
 
 What I really want, though, is to show the rater*topic estimates. For this, we can use the `interactions` and `step.table` parameters.
+
 
 ```{r}
 #| label: t03-i07-CQexample08
@@ -281,7 +282,7 @@ wrightMap(model2, item.table = "rater", interactions = "rater*topic",
 
 So far, we've seen how to use the GIN table to graph thresholds, or the RMP tables to graph deltas. We have one use case left: Making thresholds out of those RMP-generated deltas. The `make.thresholds` function can handle this. The example below uses the `model3` deltas, but you can send it any matrix with items as rows and steps as columns.
 
-```r
+```{r}
 deltas <- make.deltas(model3)
 deltas
 make.thresholds(deltas)
@@ -289,7 +290,7 @@ make.thresholds(deltas)
 
 Alternately, we can just send the model object directly:
 
-```r
+```{r}
 make.thresholds(model3)
 ```
 
