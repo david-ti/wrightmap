@@ -1,1 +1,1 @@
-Sitemap: https://david-ti.github.io/wrightmap/sitemap.xml
+Sitemap: https://wrightmap.org/sitemap.xml
