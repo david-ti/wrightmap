@@ -362,6 +362,10 @@ wrightMap(model3, type = "thresholds", label.items.row = 2)
 
 Finally: If all you want is the Wright Maps, you can skip `CQmodel` entirely and just send your files to `wrightMap`.
 
+```r
+wrightMap(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2.shw"), label.items.row = 3)
+```
+
 ```{r}
 #| label: t03-i13-CQexample14
 #| dev: ["svg", "png"]
@@ -370,5 +374,8 @@ Finally: If all you want is the Wright Maps, you can skip `CQmodel` entirely and
 #| fig-width: 8
 #| fig-height: 5
 #| dpi: 300
-wrightMap(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2.shw"), label.items.row = 3)
+wrightMap(
+    file.path("https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2a.eap"), 
+    file.path("https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2a.shw")
+        , label.items.row = 3)
 ```
