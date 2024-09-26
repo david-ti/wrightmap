@@ -2,10 +2,11 @@
 title: "WrightMap Tutorial - Part 3"
 subtitle: "Plotting Multidimensional & Polytomous Models"
 author: "David Torres Irribarra"
-date: "25/09/2024"
+date: "09/25/2024"
 toc: true
 format: html
 editor: visual
+lightbox: true
 ---
 
 ```{r, include=FALSE, message=FALSE}
@@ -213,111 +214,4 @@ Additionally, we may want to clearly indicate which item parameters are associat
 wrightMap(rsm.sim.thetas, rsm.sim.thresholds, show.thr.lab = FALSE,
     thr.sym.col.fg = itemlevelcolors, thr.sym.col.bg = itemlevelcolors,
     thr.sym.pch = itemdimsymbols, thr.sym.cex = 2, vertLines = TRUE)
-```
-
-### Changing the item axis
-
-What happens if you have too many items?
-
-```{r}
-rasch2.sim.thresholds <- runif(50, -3, 3)
-```
-
-We use the defaults...
-
-```{r}
-#| label: t02-i09-manyitemsdef
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 8
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rnorm(1000), rasch2.sim.thresholds)
-```
-
-Some options...
-
-You can use the `itemClassic` or `itemHist` options for `item.side`.
-
-
-```{r}
-
-rasch.sim.thetas <- rnorm(1000)
-rasch2.sim.thresholds <- runif(10, -3, 3)
-
-```
-
-```{r}
-#| label: t02-i10-manyitemsclassic
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 6
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rasch.sim.thetas, rasch2.sim.thresholds, item.side = itemClassic,
-    item.prop = .5)
-```
-
-```{r}
-#| label: t02-i11-manyitemhist
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 8
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rasch.sim.thetas, rasch2.sim.thresholds, item.side = itemHist, item.prop = 0.5)
-```
-
-Or you can play with the way labels are presented:
-
-```{r}
-#| label: t02-i12-manyitem45
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 8
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items.srt = 45)
-```
-
-```{r}
-#| label: t02-i13-manyitem2rows
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 8
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE, label.items.rows = 2)
-```
-
-```{r}
-#| label: t02-i14-manyitem3rows
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 8
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.lab = FALSE,
-    label.items = c(1:50), label.items.rows = 3)
-```
-
-Or you can get rid of that axis completely.
-
-```{r}
-#| label: t02-i15-manyitemnoaxis
-#| dev: ["svg", "png"]
-#| fig-cap: ""
-#| results: "hide"
-#| fig-width: 8
-#| fig-height: 5
-#| dpi: 300
-wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.sym = FALSE,
-    thr.lab.text = paste("I", 1:50, sep = ""), label.items = "",
-    label.items.ticks = FALSE)
 ```

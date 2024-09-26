@@ -2,10 +2,11 @@
 title: "WrightMap Tutorial - Part 2"
 subtitle: "Plotting Items in Different Ways"
 author: "David Torres Irribarra"
-date: "25/09/2024"
+date: "09/25/2024"
 toc: true
 format: html
 editor: visual
+lightbox: true
 ---
 
 ```{r, include=FALSE, message=FALSE}
@@ -135,5 +136,5 @@ Or you can get rid of that axis completely.
 #| fig-height: 5
 #| dpi: 300
 wrightMap(rnorm(1000), rasch2.sim.thresholds, show.thr.sym = FALSE,
-    thr.lab.text = paste("I", 1:50, sep = ""), label.items = "", label.items.ticks = FALSE)
+    thr.lab.text = paste("I", 1:10, sep = ""), label.items = "", label.items.ticks = FALSE)
 ```

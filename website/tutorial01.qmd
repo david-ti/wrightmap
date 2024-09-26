@@ -2,12 +2,12 @@
 title: "WrightMap Tutorial - Part 1"
 subtitle: "Plotting Unidimensional/Dichotomous Models"
 author: "David Torres Irribarra"
-date: "25/09/2024"
+date: "09/25/2024"
 toc: true
 format: html
 css: custom.css
 editor: visual
-lang: en
+lightbox: true
 ---
 
 ```{r, include=FALSE, message=FALSE}
@@ -17,6 +17,12 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 # Silently load the WrightMap package
 if (!requireNamespace("WrightMap", quietly = TRUE)) {
   install.packages("WrightMap")
+
+# Silently load the WrightMap package
+if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+  install.packages("RColorBrewer")
+}
+
 }
 library(WrightMap)
 ```
@@ -36,10 +42,9 @@ Let's start by installing the latest version of the package from CRAN.
 library(WrightMap)
 ```
 
-We will also install RColorBrewer to take advantage of its color palettes.
+We will also load RColorBrewer to take advantage of its color palettes.
 
 ```{r}
-install.packages("RColorBrewer")
 library(RColorBrewer)
 ```
 

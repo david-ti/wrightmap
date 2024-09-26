@@ -5,6 +5,7 @@ date: "25/09/2024"
 toc: true
 format: html
 editor: visual
+lightbox: true
 ---
 
 ```{r, include=FALSE, message=FALSE}
@@ -49,9 +50,7 @@ A quick look with `str` confirms that we now have a simulated dataset with respo
 In this example, we will run a Rasch model using the TAM command `tam.mml`, which will estimate the model using a marginal maximum likelihood method.
 
 ```{r}
-#| echo: true
-#| collapse: true
-mod1 <- tam.mml(resp=data.sim.rasch)
+mod1 <- tam.mml(resp=data.sim.rasch, verbose=FALSE)
 ```
 
 The estimation should take very little time, and you should see a summary of the results and the total time it took to run the analysis.

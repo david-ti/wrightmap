@@ -2,10 +2,11 @@
 title: "WrightMap Tutorial - Part 4"
 subtitle: "Using Conquest Output and Making Thresholds"
 author: "David Torres Irribarra"
-date: "25/09/2024"
+date: "09/25/2024"
 toc: true
 format: html
 editor: visual
+lightbox: true
 ---
 
 ```{r, include=FALSE, message=FALSE}
@@ -17,8 +18,9 @@ if (!requireNamespace("WrightMap", quietly = TRUE)) {
 library(WrightMap)
 ```
 
+
 ## Using Conquest Output and Making Thresholds
-###### Updated September 2024 for changes in version 1.4.
+###### Updated March 18, 2016 for changes in version 1.2.
 
 ### Intro
 
@@ -30,8 +32,289 @@ Let's load a model. The first parameter should be the name of the person estimat
 
 We start by defining a path to the WrightMap example files.
 
-```{r}
+```r
 fpath <- system.file("extdata", package="WrightMap")
 ```
 
 And we load the example output.
+
+```r
+model1 <- CQmodel(p.est = file.path(fpath, "ex2.eap"), show = file.path(fpath, "ex2.SHW"))
+```
+
+This (`model1`) is a `CQmodel` object. Enter the name of the object to see the names of all the tables & information stored within this object.
+
+```r
+model1
+```
+
+Type the name of any of these tables to see the information stored there.
+
+```r
+model1$SOE
+model1$equation
+model1$reg.coef
+model1$rel.coef
+model1$variances
+```
+
+The most relevant for our purposes are the `RMP`, `GIN`, and `p.est` tables. The `RMP` tables contain the Response Model Parameters. These are item parameters. Typing `model1$RMP` would display them, but they're a little long, so I'm just going to ask for the names and then show the first few rows of each table.
+
+```r
+names(model1$RMP)
+```
+
+For this model, the RMPs have item and item*step parameters. We could add these to get the deltas. Let's see what the tables look like.
+
+```r
+head(model1$RMP$item)
+head(model1$RMP$"item*step")
+```
+
+Let's look at a more complicated example.
+
+```r
+model2 <- CQmodel(file.path(fpath, "ex4a.mle"), file.path(fpath, "ex4a.shw"))
+model2$equation
+names(model2$RMP)
+head(model2$RMP$"rater*topic*criteria*step")
+```
+
+The GIN tables show the threshold parameters.
+
+```r
+model1$GIN
+model2$GIN
+```
+
+Finally, the `p.est` table shows person parameters.
+
+```r
+head(model1$p.est)  ##EAPs
+head(model2$p.est)  ##MLEs
+```
+
+### CQmodel, meet wrightMap
+
+Ok, we have person parameters and item parameters: Let's make a Wright Map.
+
+```{r}
+#| label: t03-i01-CQexample00
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model1)
+```
+
+The above uses the GIN table as thresholds. But you may want to use RMP tables. For example, if you have an item table and an item*step table, you might want to combine them to make deltas. You could do this yourself, but you could also let the `make.deltas` function do it for you. This function reshapes the item*step parameters, checks the item numbers to see if there are any dichotomous items, and then adds the steps and items. This can be especially useful if you didn't get a GIN table from ConQuest (see below).
+
+```r
+model3 <- CQmodel(file.path(fpath, "ex2a.eap"), file.path(fpath, "ex2a.shw"))
+model3$GIN
+model3$equation
+make.deltas(model3)
+```
+
+When sent a model with no GIN table, `wrightMap` will automatically send it to `make.deltas` without the user having to ask.
+
+```{r}
+#| label: t03-i02-CQexample01
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model3, label.items.row = 2)
+```
+
+The `make.deltas` function can also handle rating scale models.
+
+```r
+model4 <- CQmodel(file.path(fpath, "ex2b.eap"), file.path(fpath, "ex2b-2.shw"))
+model4$GIN
+model4$equation
+make.deltas(model4)
+```
+
+Or let `wrightMap` make them automatically.
+
+```{r}
+#| label: t03-i03-CQexample04
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model4, label.items.row = 2)
+```
+
+### Specifying the tables
+
+In the above examples, we let `wrightMap` decide what parameters to graph. `wrightMap` starts by looking for a GIN table. If it finds that, it assumes they are thresholds and graphs them accordingly. If there is no GIN table, it then sends the function to `make.deltas`, which will examine the model equation to see if it knows how to handle it. `Make.deltas` can handle equations of the form:
+
+```r
+A``` (e.g. `item`)
+A + B (e.g. `item + step` [RSM])
+A + A * B (e.g. `item + item * step` [PCM])
+A + A * B + B (e.g `item + item * gender + gender`)
+```
+
+But sometimes we may want something other than the default. Let's look at `model2` again.
+
+```r
+model2$equation
+```
+
+Here's the default Wright Map, using the GIN table:
+
+```{r}
+#| label: t03-i04-CQexample05
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, min.logit.pad = -29)
+```
+
+This doesn't look great. Instead of showing all these estimates, we can specify a specific RMP table to use using the `item.table` parameter.
+
+```{r}
+#| label: t03-i05-CQexample06
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "rater")
+```
+
+That shows just the rater parameters. Here's just the topics.
+
+```{r}
+#| label: t03-i06-CQexample07
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "topic")
+```
+
+What I really want, though, is to show the rater*topic estimates. For this, we can use the `interactions` and `step.table` parameters.
+
+```{r}
+#| label: t03-i07-CQexample08
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "rater", interactions = "rater*topic",
+    step.table = "topic")
+```
+
+Switch the item and step names to graph it the other way:
+
+```{r}
+#| label: t03-i08-CQexample09
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "topic", interactions = "rater*topic",
+    step.table = "rater")
+```
+
+You can leave out the interactions to have more of a rating scale-type model.
+
+```{r}
+#| label: t03-i09-CQexample10
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "rater", step.table = "topic")
+```
+
+Or leave out the step table:
+
+```{r}
+#| label: t03-i10-CQexample11
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "rater", interactions = "rater*topic")
+```
+
+Again, `make.deltas` is reading the model equation to decide whether to add or subtract. If, for some reason, you want to specify a different sign for one of the tables, you can use `item.sign`, `step.sign`, and `inter.sign` for that.
+
+```{r}
+#| label: t03-i11-CQexample12
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model2, item.table = "rater", interactions = "rater*topic",
+    step.table = "topic", step.sign = -1)
+```
+
+### Making thresholds
+
+So far, we've seen how to use the GIN table to graph thresholds, or the RMP tables to graph deltas. We have one use case left: Making thresholds out of those RMP-generated deltas. The `make.thresholds` function can handle this. The example below uses the `model3` deltas, but you can send it any matrix with items as rows and steps as columns.
+
+```r
+deltas <- make.deltas(model3)
+deltas
+make.thresholds(deltas)
+```
+
+Alternately, we can just send the model object directly:
+
+```r
+make.thresholds(model3)
+```
+
+You don't have to do any of this to make a Wright Map. You can just send the model to `wrightMap`, and use the `type` parameter to ask it to calculate the thresholds for you.
+
+```{r}
+#| label: t03-i12-CQexample13
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(model3, type = "thresholds", label.items.row = 2)
+```
+
+Finally: If all you want is the Wright Maps, you can skip `CQmodel` entirely and just send your files to `wrightMap`.
+
+```{r}
+#| label: t03-i13-CQexample14
+#| dev: ["svg", "png"]
+#| fig-cap: ""
+#| results: "hide"
+#| fig-width: 8
+#| fig-height: 5
+#| dpi: 300
+wrightMap(file.path(fpath,"ex2a.eap"), file.path(fpath,"ex2.shw"), label.items.row = 3)
+```
