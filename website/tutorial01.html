@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="David Torres Irribarra">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2024-09-25">
 
 <title>WrightMap Tutorial - Part 1 – WrightMap</title>
 <style>
@@ -75,6 +75,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -231,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">September 25, 2024</p>
     </div>
   </div>
   
@@ -258,14 +261,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WrightMap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We will also install RColorBrewer to take advantage of its color palettes.</p>
+<p>We will also load RColorBrewer to take advantage of its color palettes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"RColorBrewer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Installing package into '/home/runner/work/_temp/Library'
-(as 'lib' is unspecified)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="a-simple-dichotomous-example" class="level3">
@@ -273,34 +271,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To plot a simple Rasch model, we start by creating mock person and item estimates.</p>
 <p>For the person proficiencies, we create a single vector with 1000 values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2020</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rasch.sim.thetas <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2020</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rasch.sim.thetas <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And for the item difficulties, we create a vector with 10 values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thresholds <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thresholds <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We now have all we need to create a WrightMap with a single line.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i01-first_example-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i01-first_example-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="tutorial01_files/figure-html/t01-i01-first_example-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We can start to customize the Wright Map by simply relabeling its main parts using <code>main.title</code>, <code>axis.logits</code>, <code>axis.persons</code>, and <code>axis.items</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"This is my example Wright Map"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.persons =</span> <span class="st">"This is the person distribution"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.items =</span> <span class="st">"These are my survey questions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"This is my example Wright Map"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.persons =</span> <span class="st">"This is the person distribution"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.items =</span> <span class="st">"These are my survey questions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i02-first_example_relabel-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i02-first_example_relabel-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="tutorial01_files/figure-html/t01-i02-first_example_relabel-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -310,11 +308,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="the-person-side-and-the-item-side">The Person Side and the Item Side</h3>
 <p>If you do not like histograms, WrightMap has the option <code>person.side</code> that allows you to switch between histograms (the default option: <code>personHist</code>) or density using the option <code>personDens</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">person.side =</span> personDens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">person.side =</span> personDens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i03-personDens-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i03-personDens-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="tutorial01_files/figure-html/t01-i03-personDens-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -322,24 +320,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Or, you may want to change the way items are represented by using the option <code>item.side</code>, which offers <code>itemModern</code> (the default representation), <code>itemClassic</code> (for ConQuest-style Wright Maps), and a <code>itemHist</code> for a histogram summary of the items.</p>
 <p>The <code>itemClassic</code> option is well suited for cases where you want to include many items using less space.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thresholds<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">150</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds<span class="fl">.2</span>, <span class="at">item.side =</span> itemClassic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thresholds<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">150</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds<span class="fl">.2</span>, <span class="at">item.side =</span> itemClassic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i04-itemClassic-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i04-itemClassic-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="tutorial01_files/figure-html/t01-i04-itemClassic-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Alternatively, you can represent use a back-to-back histogram representation with <code>itemHist</code> (notice that in the following example we are using the option <code>item.prop</code> to adjust the relative sizes of the person and item side).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thresholds<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">150</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds<span class="fl">.2</span>, <span class="at">item.side =</span> itemHist, <span class="at">item.prop =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thresholds<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">150</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds<span class="fl">.2</span>, <span class="at">item.side =</span> itemHist, <span class="at">item.prop =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i05-itemHist-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i05-itemHist-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="tutorial01_files/figure-html/t01-i05-itemHist-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -350,22 +348,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let us focus on the default item and person side representations to explore their potential customizations.</p>
 <p>You might want to remove the label for the item difficulties by setting <code>show.thr.lab = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i06-nolabels-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i06-nolabels-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="tutorial01_files/figure-html/t01-i06-nolabels-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Or you might want to see just labels, by turning off symbols with <code>show.thr.sym = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i07-justlabels-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i07-justlabels-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="tutorial01_files/figure-html/t01-i07-justlabels-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -375,24 +373,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="customizing-symbols">Customizing Symbols</h3>
 <p>Let’s start by making all the symbols bigger with <code>thr.sym.cex = 2.5</code> (default is 1).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">thr.sym.cex =</span> <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">thr.sym.cex =</span> <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i08-editsymbs-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i08-editsymbs-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="tutorial01_files/figure-html/t01-i08-editsymbs-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>To select what kind of symbols you want to use, you can use the <code>thr.sym.pch</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.sym.cex =</span> <span class="fl">2.5</span>, <span class="at">thr.sym.pch =</span> <span class="dv">17</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.sym.cex =</span> <span class="fl">2.5</span>, <span class="at">thr.sym.pch =</span> <span class="dv">17</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i09-editsymbsPCH-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i09-editsymbsPCH-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="tutorial01_files/figure-html/t01-i09-editsymbsPCH-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -402,24 +400,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="customizing-colors-and-labels">Customizing Colors and Labels</h3>
 <p>We will need some colors for the next examples.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display.brewer.pal</span>(<span class="dv">10</span>, <span class="st">"Paired"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display.brewer.pal</span>(<span class="dv">10</span>, <span class="st">"Paired"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i10-colors-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i10-colors-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="tutorial01_files/figure-html/t01-i10-colors-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>itemcolors <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">10</span>, <span class="st">"Paired"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>itemcolors <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">10</span>, <span class="st">"Paired"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s use those colors in our item difficulty symbols using the <code>thr.sym.col.fg</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.sym.pch =</span> <span class="dv">17</span>, <span class="at">thr.sym.cex =</span> <span class="fl">2.5</span>, <span class="at">thr.sym.col.fg =</span> itemcolors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.sym.pch =</span> <span class="dv">17</span>, <span class="at">thr.sym.cex =</span> <span class="fl">2.5</span>, <span class="at">thr.sym.col.fg =</span> itemcolors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i11-symbcolors-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i11-symbcolors-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="tutorial01_files/figure-html/t01-i11-symbcolors-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -429,54 +427,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="customizing-labels">Customizing Labels</h3>
 <p>Define some item names:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>itemnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dasher"</span>, <span class="st">"Dancer"</span>, <span class="st">"Prancer"</span>, <span class="st">"Vixen"</span>, <span class="st">"Comet"</span>, <span class="st">"Cupid"</span>, <span class="st">"Donner"</span>, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Blitzen"</span>, <span class="st">"Rudolph"</span>, <span class="st">"Olive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>itemnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dasher"</span>, <span class="st">"Dancer"</span>, <span class="st">"Prancer"</span>, <span class="st">"Vixen"</span>, <span class="st">"Comet"</span>, <span class="st">"Cupid"</span>, <span class="st">"Donner"</span>, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Blitzen"</span>, <span class="st">"Rudolph"</span>, <span class="st">"Olive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now assign them to the item difficulties:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i13-custlabels-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i13-custlabels-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="tutorial01_files/figure-html/t01-i13-custlabels-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>You can also control the size of the labels using the <code>thr.lab.cex</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames, <span class="at">thr.lab.cex =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames, <span class="at">thr.lab.cex =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i14-labelsizes-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i14-labelsizes-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="tutorial01_files/figure-html/t01-i14-labelsizes-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And we can of course control the colors using <code>thr.lab.col</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames, <span class="at">thr.lab.col =</span> itemcolors, <span class="at">thr.lab.cex =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames, <span class="at">thr.lab.col =</span> itemcolors, <span class="at">thr.lab.cex =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i15-labelcols-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i15-labelcols-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="tutorial01_files/figure-html/t01-i15-labelcols-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Finally, if you want to go crazy, you can also change the type style using <code>thr.lab.font</code>. This parameter follows the R convention where 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames, <span class="at">thr.lab.col =</span> itemcolors,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.cex =</span> <span class="fl">1.5</span>, <span class="at">thr.lab.font =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> itemnames, <span class="at">thr.lab.col =</span> itemcolors,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.cex =</span> <span class="fl">1.5</span>, <span class="at">thr.lab.font =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="tutorial01_files/figure-html/t01-i16-labelfont-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial01_files/figure-html/t01-i16-labelfont-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="tutorial01_files/figure-html/t01-i16-labelfont-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
@@ -908,6 +906,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

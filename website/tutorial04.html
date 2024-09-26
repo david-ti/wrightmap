@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="David Torres Irribarra">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2024-09-25">
 
 <title>WrightMap Tutorial - Part 4 – WrightMap</title>
 <style>
@@ -75,6 +75,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -197,6 +200,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#intro" id="toc-intro" class="nav-link" data-scroll-target="#intro">Intro</a></li>
   <li><a href="#making-the-model" id="toc-making-the-model" class="nav-link" data-scroll-target="#making-the-model">Making the model</a></li>
+  <li><a href="#cqmodel-meet-wrightmap" id="toc-cqmodel-meet-wrightmap" class="nav-link" data-scroll-target="#cqmodel-meet-wrightmap">CQmodel, meet wrightMap</a></li>
+  <li><a href="#specifying-the-tables" id="toc-specifying-the-tables" class="nav-link" data-scroll-target="#specifying-the-tables">Specifying the tables</a></li>
+  <li><a href="#making-thresholds" id="toc-making-thresholds" class="nav-link" data-scroll-target="#making-thresholds">Making thresholds</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -224,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 9, 2026</p>
+      <p class="date">September 25, 2024</p>
     </div>
   </div>
   
@@ -238,8 +244,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="using-conquest-output-and-making-thresholds" class="level2">
 <h2 class="anchored" data-anchor-id="using-conquest-output-and-making-thresholds">Using Conquest Output and Making Thresholds</h2>
-<section id="updated-september-2024-for-changes-in-version-1.4." class="level6">
-<h6 class="anchored" data-anchor-id="updated-september-2024-for-changes-in-version-1.4.">Updated September 2024 for changes in version 1.4.</h6>
+<section id="updated-march-18-2016-for-changes-in-version-1.2." class="level6">
+<h6 class="anchored" data-anchor-id="updated-march-18-2016-for-changes-in-version-1.2.">Updated March 18, 2016 for changes in version 1.2.</h6>
 </section>
 <section id="intro" class="level3">
 <h3 class="anchored" data-anchor-id="intro">Intro</h3>
@@ -248,11 +254,600 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="making-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="making-the-model">Making the model</h3>
 <p>Let’s load a model. The first parameter should be the name of the person estimates file, while the second should be the name of the show file. Both are necessary for creating Wright maps (although the <code>CQmodel</code> function will run fine with only one or the other, provided that they are properly passed).</p>
-<p>We start by defining a path to the WrightMap example files.</p>
+<p>We start by loading the WrightMap example files.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package=</span><span class="st">"WrightMap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"ex2.SHW"</span>,<span class="at">package=</span><span class="st">"WrightMap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And we load the example output.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="at">p.est =</span> (<span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"ex2.eap"</span>,<span class="at">package=</span><span class="st">"WrightMap"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    , <span class="at">show =</span> (<span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"ex2.SHW"</span>,<span class="at">package=</span><span class="st">"WrightMap"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This (<code>model1</code>) is a <code>CQmodel</code> object. Enter the name of the object to see the names of all the tables &amp; information stored within this object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ConQuest Output Summary:
+========================
+Partial Credit Analysis 
+
+The item model: item+item*step 
+1 dimension 
+582 participants
+Deviance: 9272.597 (21 parameters)
+
+Additional information available:
+Summary of estimation: $SOE
+Response model parameter estimates: $RMP
+Regression coefficients: $reg.coef
+Variances: $variances
+Reliabilities: $rel.coef
+GIN tables (thresholds): $GIN
+EAP table: $p.est
+Additional details: $run.details</code></pre>
+</div>
+</div>
+<p>Type the name of any of these tables to see the information stored there.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model1<span class="sc">$</span>SOE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Summary of estimation
+
+Estimation method: Gauss-Hermite Quadrature with 15 nodes 
+Assumed population distribution: Gaussian 
+Constraint: DEFAULT 
+
+Termination criteria:
+      1000 iterations
+      0.0001 change in parameters
+      0.0001 change in deviance
+      100 iterations without a deviance improvement
+      10 Newton steps in M-step
+Estimation terminated after 27 iterations because the deviance convergence criteria was reached.
+
+Random number generation seed: 1 
+2000 nodes used for drawing 5 plausible values 
+200 nodes used when computing fit 
+Value for obtaining finite MLEs for zero/perfects: 0.3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model1<span class="sc">$</span>equation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "item+item*step"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model1<span class="sc">$</span>reg.coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               CONSTANT
+Main dimension    0.972
+S. errors         0.062</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model1<span class="sc">$</span>rel.coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               MLE Person separation RELIABILITY
+Main dimension NA                               
+               WLE Person separation RELIABILITY EAP/PV RELIABILITY
+Main dimension NA                                0.813             </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model1<span class="sc">$</span>variances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           errors
+[1,] 2.162     NA</code></pre>
+</div>
+</div>
+<p>The most relevant for our purposes are the <code>RMP</code>, <code>GIN</code>, and <code>p.est</code> tables. The <code>RMP</code> tables contain the Response Model Parameters. These are item parameters. Typing <code>model1$RMP</code> would display them, but they’re a little long, so I’m just going to ask for the names and then show the first few rows of each table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(model1<span class="sc">$</span>RMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "item"      "item*step"</code></pre>
+</div>
+</div>
+<p>For this model, the RMPs have item and item*step parameters. We could add these to get the deltas. Let’s see what the tables look like.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(model1<span class="sc">$</span>RMP<span class="sc">$</span>item)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  n_item item    est error U.fit U.Low U.High  U.T W.fit W.Low W.High  W.T
+1      1    1  0.753 0.055  1.11  0.88   1.12  1.8  1.10  0.89   1.11  1.8
+2      2    2  1.068 0.053  1.41  0.88   1.12  6.0  1.37  0.89   1.11  6.0
+3      3    3 -0.524 0.058  0.82  0.88   1.12 -3.2  0.87  0.88   1.12 -2.3
+4      4    4 -1.174 0.060  0.76  0.88   1.12 -4.3  0.85  0.88   1.12 -2.7
+5      5    5 -0.389 0.057  0.95  0.88   1.12 -0.9  0.95  0.89   1.11 -0.9
+6      6    6  0.067 0.055  1.03  0.88   1.12  0.6  1.02  0.89   1.11  0.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(model1<span class="sc">$</span>RMP<span class="sc">$</span><span class="st">"item*step"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  n_item item step    est error U.fit U.Low U.High  U.T W.fit W.Low W.High  W.T
+1      1    1    0     NA    NA  2.03  0.88   1.12 13.3  1.18  0.89   1.11  3.0
+2      1    1    1 -1.129 0.090  0.99  0.88   1.12 -0.1  1.00  0.95   1.05  0.0
+3      1    1    2  1.129    NA  0.80  0.88   1.12 -3.5  0.95  0.89   1.11 -0.9
+4      2    2    0     NA    NA  2.25  0.88   1.12 15.4  1.40  0.90   1.10  7.1
+5      2    2    1 -0.626 0.093  1.04  0.88   1.12  0.7  1.04  0.94   1.06  1.3
+6      2    2    2  0.626    NA  1.08  0.88   1.12  1.2  1.08  0.89   1.11  1.4</code></pre>
+</div>
+</div>
+<p>Let’s look at a more complicated example.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="fu">file.path</span>(fpath, <span class="st">"ex4a.mle"</span>), <span class="fu">file.path</span>(fpath, <span class="st">"ex4a.shw"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model2<span class="sc">$</span>equation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "rater+topic+criteria+rater*topic+rater*criteria+topic*criteria+rater*topic*criteria*step"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(model2<span class="sc">$</span>RMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "rater"                     "topic"                    
+[3] "criteria"                  "rater*topic"              
+[5] "rater*criteria"            "topic*criteria"           
+[7] "rater*topic*criteria*step"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(model2<span class="sc">$</span>RMP<span class="sc">$</span><span class="st">"rater*topic*criteria*step"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  n_rater    rater n_topic topic n_criteria criteria step    est error U.fit
+1       1      Amy       1 Sport          1 spelling    1     NA    NA  0.43
+2       1      Amy       1 Sport          1 spelling    2  0.299 0.398  1.34
+3       1      Amy       1 Sport          1 spelling    3 -0.299    NA  1.28
+4       2 Beverely       1 Sport          1 spelling    0     NA    NA  0.41
+5       2 Beverely       1 Sport          1 spelling    1 -0.184 0.491  3.23
+6       2 Beverely       1 Sport          1 spelling    2  0.051 0.461  0.87
+  U.Low U.High  U.T W.fit W.Low W.High W.T
+1  0.70   1.30 -4.7  0.99  0.00   2.00 0.1
+2  0.70   1.30  2.1  1.05  0.42   1.58 0.3
+3  0.70   1.30  1.7  1.05  0.51   1.49 0.3
+4  0.74   1.26 -5.8  1.47  0.00   2.09 0.9
+5  0.74   1.26 10.9  0.95  0.30   1.70 0.0
+6  0.74   1.26 -1.0  1.30  0.62   1.38 1.5</code></pre>
+</div>
+</div>
+<p>The GIN tables show the threshold parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>model1<span class="sc">$</span>GIN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          [,1]  [,2]
+Item_1  -0.469 1.977
+Item_2   0.234 1.906
+Item_3  -1.789 0.742
+Item_4  -2.688 0.336
+Item_5  -1.656 0.883
+Item_6  -1.063 1.195
+Item_7  -1.969 1.047
+Item_8  -1.617 1.289
+Item_9  -0.957 1.508
+Item_10 -0.992 2.094</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>model2<span class="sc">$</span>GIN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Amy
+$Amy$Sport
+             [,1]   [,2]   [,3]
+spelling  -31.996 -1.976 -1.250
+coherence  -1.447 -1.446 -1.209
+structure  -2.247 -0.911 -0.172
+grammar    -0.885 -0.773 -0.107
+content    -0.486  0.104  0.627
+
+$Amy$Family
+             [,1]   [,2]   [,3]
+spelling  -31.996 -2.516 -0.912
+coherence  -1.401 -1.280 -1.103
+structure  -1.966 -1.260 -0.294
+grammar    -1.069 -0.380 -0.106
+content    -0.728 -0.012  0.950
+
+$Amy$Work
+            [,1]   [,2]   [,3]
+spelling  -2.055 -2.051 -1.128
+coherence -1.515 -1.320 -0.862
+structure -1.402 -1.158 -0.631
+grammar   -0.816 -0.550  0.122
+content   -0.430  0.212  0.762
+
+$Amy$School
+             [,1]   [,2]   [,3]
+spelling  -31.996 -2.059 -0.997
+coherence  -1.403 -1.402 -0.999
+structure  -1.629 -1.148 -0.462
+grammar    -0.967 -0.421  0.070
+content    -0.782 -0.027  1.121
+
+
+$Beverely
+$Beverely$Sport
+            [,1]   [,2]   [,3]
+spelling  -2.054 -1.339 -0.663
+coherence -1.751 -1.129 -0.674
+structure -1.042 -0.437  0.013
+grammar   -0.502 -0.082  0.529
+content   -0.253  0.613  1.184
+
+$Beverely$Family
+             [,1]   [,2]   [,3]
+spelling  -31.996 -2.264 -0.718
+coherence  -1.524 -1.357 -0.684
+structure  -1.326 -0.577  0.164
+grammar    -0.796  0.118  0.599
+content    -0.469  0.690  1.230
+
+$Beverely$Work
+            [,1]   [,2]   [,3]
+spelling  -2.366 -1.465 -0.672
+coherence -1.388 -1.088 -0.925
+structure -1.115 -0.621  0.197
+grammar   -0.345  0.045  0.495
+content   -0.212  0.482  1.282
+
+$Beverely$School
+            [,1]   [,2]   [,3]
+spelling  -1.826 -1.611 -0.873
+coherence -1.632 -1.222 -0.794
+structure -1.270 -0.865  0.321
+grammar   -0.491 -0.037  0.413
+content   -0.361  0.449  1.137
+
+
+$Colin
+$Colin$Sport
+            [,1]   [,2]  [,3]
+spelling  -1.660 -0.685 0.564
+coherence -0.612 -0.168 0.362
+structure -0.485  0.519 1.512
+grammar    0.611  1.275 1.698
+content    1.037  1.853 2.343
+
+$Colin$Family
+            [,1]   [,2]   [,3]
+spelling  -1.477 -0.677 -0.022
+coherence -0.441 -0.277  0.332
+structure -0.318  0.265  1.299
+grammar    0.361  1.252  1.839
+content    1.009  1.683  2.374
+
+$Colin$Work
+            [,1]   [,2]  [,3]
+spelling  -1.697 -1.002 0.089
+coherence -0.654 -0.105 0.192
+structure -0.502  0.502 1.205
+grammar    0.662  1.218 1.573
+content    0.766  1.806 2.357
+
+$Colin$School
+            [,1]   [,2]  [,3]
+spelling  -1.595 -0.788 0.095
+coherence -0.629 -0.389 0.123
+structure -0.470  0.122 1.237
+grammar    0.385  1.010 1.679
+content    0.698  1.520 2.310
+
+
+$David
+$David$Sport
+            [,1]   [,2]  [,3]
+spelling  -1.405 -0.482 0.412
+coherence -0.357  0.136 0.581
+structure  0.023  0.724 1.811
+grammar    0.714  1.454 1.959
+content    1.256  2.031 2.912
+
+$David$Family
+            [,1]   [,2]  [,3]
+spelling  -1.271 -0.404 0.741
+coherence  0.028  0.415 0.977
+structure  0.474  1.069 1.756
+grammar    1.177  1.733 2.085
+content    1.284  2.169 3.596
+
+$David$Work
+            [,1]   [,2]  [,3]
+spelling  -1.378 -0.587 0.498
+coherence -0.119  0.260 0.795
+structure  0.173  1.003 1.885
+grammar    1.199  1.592 2.008
+content    1.437  2.174 3.117
+
+$David$School
+            [,1]   [,2]  [,3]
+spelling  -0.815 -0.330 0.424
+coherence  0.062  0.293 0.805
+structure  0.295  1.012 1.955
+grammar    1.035  1.642 2.260
+content    1.312  2.107 3.407</code></pre>
+</div>
+</div>
+<p>Finally, the <code>p.est</code> table shows person parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(model1<span class="sc">$</span>p.est)  <span class="do">##EAPs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  casenum est (d1) error (d1) pop (d1)
+1       1 -0.08240    0.50495  0.88205
+2       2  1.75925    0.55966  0.85510
+3       3  0.16483    0.49122  0.88838
+4       4  3.57343    0.82692  0.68367
+5       5 -0.62303    0.52908  0.87051
+6       6  0.16483    0.49122  0.88838</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(model2<span class="sc">$</span>p.est)  <span class="do">##MLEs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  casenum sscore (d1) max (d1) est (d1) error (d1)
+1       1          23       60 -0.49687    0.25349
+2       2          36       60  0.69311    0.26051
+3       3          24       60 -0.26371    0.26378
+4       4          52       60  1.85869    0.37825
+5       5          47       60  1.91466    0.28843
+6       6          47       60  0.53122    0.28348</code></pre>
+</div>
+</div>
+</section>
+<section id="cqmodel-meet-wrightmap" class="level3">
+<h3 class="anchored" data-anchor-id="cqmodel-meet-wrightmap">CQmodel, meet wrightMap</h3>
+<p>Ok, we have person parameters and item parameters: Let’s make a Wright Map.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using GIN table for threshold parameters</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i01-CQexample00-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="tutorial04_files/figure-html/t03-i01-CQexample00-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The above uses the GIN table as thresholds. But you may want to use RMP tables. For example, if you have an item table and an item<em>step table, you might want to combine them to make deltas. You could do this yourself, but you could also let the <code>make.deltas</code> function do it for you. This function reshapes the item</em>step parameters, checks the item numbers to see if there are any dichotomous items, and then adds the steps and items. This can be especially useful if you didn’t get a GIN table from ConQuest (see below).</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="fu">file.path</span>(fpath, <span class="st">"ex2a.eap"</span>), <span class="fu">file.path</span>(fpath, <span class="st">"ex2a.shw"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model3<span class="sc">$</span>GIN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>model3<span class="sc">$</span>equation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "item+item*step"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make.deltas</span>(model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   1      2      3
+Earth shape   -0.961 -0.493     NA
+Earth pictu.. -0.650  0.256  2.704
+Falling off   -1.416  1.969  1.265
+What is Sun   -0.959  1.343     NA
+Moonshine      0.157 -0.482 -0.128
+Moon and ni.. -0.635  0.861     NA
+Night and d..  0.157 -0.075 -0.739
+Breathe on ..  0.657  1.152 -3.558</code></pre>
+</div>
+</div>
+<p>When sent a model with no GIN table, <code>wrightMap</code> will automatically send it to <code>make.deltas</code> without the user having to ask.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model3, <span class="at">label.items.row =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i02-CQexample01-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="tutorial04_files/figure-html/t03-i02-CQexample01-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>make.deltas</code> function can also handle rating scale models.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="fu">file.path</span>(fpath, <span class="st">"ex2b.eap"</span>), <span class="fu">file.path</span>(fpath, <span class="st">"ex2b-2.shw"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>model4<span class="sc">$</span>GIN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>model4<span class="sc">$</span>equation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "item+step"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make.deltas</span>(model4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   1     2
+Curriculum .. -0.468 1.900
+Not Until E.. -0.123 2.245
+Financial R.. -1.743 0.625
+Staff Commi.. -2.230 0.138
+Commitment .. -1.609 0.759
+Run for som.. -1.193 1.175
+Achievable .. -1.570 0.798
+Principals .. -1.317 1.051
+Parents sup.. -0.952 1.416
+Student mot.. -0.636 1.732</code></pre>
+</div>
+</div>
+<p>Or let <code>wrightMap</code> make them automatically.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model4, <span class="at">label.items.row =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i03-CQexample04-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="tutorial04_files/figure-html/t03-i03-CQexample04-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="specifying-the-tables" class="level3">
+<h3 class="anchored" data-anchor-id="specifying-the-tables">Specifying the tables</h3>
+<p>In the above examples, we let <code>wrightMap</code> decide what parameters to graph. <code>wrightMap</code> starts by looking for a GIN table. If it finds that, it assumes they are thresholds and graphs them accordingly. If there is no GIN table, it then sends the function to <code>make.deltas</code>, which will examine the model equation to see if it knows how to handle it. <code>Make.deltas</code> can handle equations of the form:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">A</span> (e.g. <span class="st">`</span><span class="at">item</span><span class="st">`</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">B</span> (e.g. <span class="st">`</span><span class="at">item + step</span><span class="st">`</span> [RSM])</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> A <span class="sc">*</span> <span class="fu">B</span> (e.g. <span class="st">`</span><span class="at">item + item * step</span><span class="st">`</span> [PCM])</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> A <span class="sc">*</span> B <span class="sc">+</span> <span class="fu">B</span> (e.g <span class="st">`</span><span class="at">item + item * gender + gender</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But sometimes we may want something other than the default. Let’s look at <code>model2</code> again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>model2<span class="sc">$</span>equation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "rater+topic+criteria+rater*topic+rater*criteria+topic*criteria+rater*topic*criteria*step"</code></pre>
+</div>
+</div>
+<p>Here’s the default Wright Map, using the GIN table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">min.logit.pad =</span> <span class="sc">-</span><span class="dv">29</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using GIN table for threshold parameters</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i04-CQexample05-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="tutorial04_files/figure-html/t03-i04-CQexample05-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This doesn’t look great. Instead of showing all these estimates, we can specify a specific RMP table to use using the <code>item.table</code> parameter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"rater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i05-CQexample06-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="tutorial04_files/figure-html/t03-i05-CQexample06-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>That shows just the rater parameters. Here’s just the topics.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"topic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i06-CQexample07-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="tutorial04_files/figure-html/t03-i06-CQexample07-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What I really want, though, is to show the rater*topic estimates. For this, we can use the <code>interactions</code> and <code>step.table</code> parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"rater"</span>, <span class="at">interactions =</span> <span class="st">"rater*topic"</span>,</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">step.table =</span> <span class="st">"topic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i07-CQexample08-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="tutorial04_files/figure-html/t03-i07-CQexample08-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Switch the item and step names to graph it the other way:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"topic"</span>, <span class="at">interactions =</span> <span class="st">"rater*topic"</span>,</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">step.table =</span> <span class="st">"rater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i08-CQexample09-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="tutorial04_files/figure-html/t03-i08-CQexample09-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can leave out the interactions to have more of a rating scale-type model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"rater"</span>, <span class="at">step.table =</span> <span class="st">"topic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i09-CQexample10-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="tutorial04_files/figure-html/t03-i09-CQexample10-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or leave out the step table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"rater"</span>, <span class="at">interactions =</span> <span class="st">"rater*topic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i10-CQexample11-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="tutorial04_files/figure-html/t03-i10-CQexample11-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Again, <code>make.deltas</code> is reading the model equation to decide whether to add or subtract. If, for some reason, you want to specify a different sign for one of the tables, you can use <code>item.sign</code>, <code>step.sign</code>, and <code>inter.sign</code> for that.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model2, <span class="at">item.table =</span> <span class="st">"rater"</span>, <span class="at">interactions =</span> <span class="st">"rater*topic"</span>,</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">step.table =</span> <span class="st">"topic"</span>, <span class="at">step.sign =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i11-CQexample12-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="tutorial04_files/figure-html/t03-i11-CQexample12-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="making-thresholds" class="level3">
+<h3 class="anchored" data-anchor-id="making-thresholds">Making thresholds</h3>
+<p>So far, we’ve seen how to use the GIN table to graph thresholds, or the RMP tables to graph deltas. We have one use case left: Making thresholds out of those RMP-generated deltas. The <code>make.thresholds</code> function can handle this. The example below uses the <code>model3</code> deltas, but you can send it any matrix with items as rows and steps as columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>deltas <span class="ot">&lt;-</span> <span class="fu">make.deltas</span>(model3)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>deltas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   1      2      3
+Earth shape   -0.961 -0.493     NA
+Earth pictu.. -0.650  0.256  2.704
+Falling off   -1.416  1.969  1.265
+What is Sun   -0.959  1.343     NA
+Moonshine      0.157 -0.482 -0.128
+Moon and ni.. -0.635  0.861     NA
+Night and d..  0.157 -0.075 -0.739
+Breathe on ..  0.657  1.152 -3.558</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make.thresholds</span>(deltas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Assuming partial credit model</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    [,1]       [,2]       [,3]
+Earth shape   -1.3229164 -0.1310804         NA
+Earth pictu.. -0.9241595  0.4451567  2.7832333
+Falling off   -1.4503041  1.3141486  1.9728871
+What is Sun   -1.0466830  1.4306938         NA
+Moonshine     -0.6759150 -0.2252513  0.4156190
+Moon and ni.. -0.8076978  1.0336795         NA
+Night and d.. -0.6343026 -0.1937096  0.1852925
+Breathe on .. -0.7007363 -0.5078997 -0.4741583</code></pre>
+</div>
+</div>
+<p>Alternately, we can just send the model object directly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make.thresholds</span>(model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Assuming partial credit model</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    [,1]       [,2]       [,3]
+Earth shape   -1.3229164 -0.1310804         NA
+Earth pictu.. -0.9241595  0.4451567  2.7832333
+Falling off   -1.4503041  1.3141486  1.9728871
+What is Sun   -1.0466830  1.4306938         NA
+Moonshine     -0.6759150 -0.2252513  0.4156190
+Moon and ni.. -0.8076978  1.0336795         NA
+Night and d.. -0.6343026 -0.1937096  0.1852925
+Breathe on .. -0.7007363 -0.5078997 -0.4741583</code></pre>
+</div>
+</div>
+<p>You don’t have to do any of this to make a Wright Map. You can just send the model to <code>wrightMap</code>, and use the <code>type</code> parameter to ask it to calculate the thresholds for you.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(model3, <span class="at">type =</span> <span class="st">"thresholds"</span>, <span class="at">label.items.row =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i12-CQexample13-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="tutorial04_files/figure-html/t03-i12-CQexample13-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally: If all you want is the Wright Maps, you can skip <code>CQmodel</code> entirely and just send your files to <code>wrightMap</code>.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">file.path</span>(fpath,<span class="st">"ex2a.eap"</span>), <span class="fu">file.path</span>(fpath,<span class="st">"ex2.shw"</span>), <span class="at">label.items.row =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(<span class="st">"https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2a.eap"</span>), </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.path</span>(<span class="st">"https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2a.shw"</span>)</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>        , <span class="at">label.items.row =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial04_files/figure-html/t03-i13-CQexample14-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="tutorial04_files/figure-html/t03-i13-CQexample14-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -680,6 +1275,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
