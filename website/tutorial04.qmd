@@ -42,8 +42,8 @@ fpath <- system.file("extdata", "ex2.SHW",package="WrightMap")
 And we load the example output.
 
 ```{r}
-model1 <- CQmodel(p.est = readLines(system.file("extdata", "ex2.eap",package="WrightMap"))
-    , show = readLines(system.file("extdata", "ex2.SHW",package="WrightMap")))
+model1 <- CQmodel(p.est = (system.file("extdata", "ex2.eap",package="WrightMap"))
+    , show = (system.file("extdata", "ex2.SHW",package="WrightMap")))
 ```
 
 This (`model1`) is a `CQmodel` object. Enter the name of the object to see the names of all the tables & information stored within this object.
