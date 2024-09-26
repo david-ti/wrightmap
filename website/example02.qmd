@@ -1,6 +1,6 @@
 ---
 title: "Using WrightMap with the TAM Package"
-author: "David Torres Irribarra"
+author: "David Torres Irribarra & Rebecca Freund"
 date: "09/25/2024"
 toc: true
 format: html

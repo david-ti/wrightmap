@@ -1,7 +1,7 @@
 ---
 title: "WrightMap Tutorial - Part 1"
 subtitle: "Plotting Unidimensional/Dichotomous Models"
-author: "David Torres Irribarra"
+author: "David Torres Irribarra & Rebecca Freund"
 date: "09/25/2024"
 toc: true
 format: html

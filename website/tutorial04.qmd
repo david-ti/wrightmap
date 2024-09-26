@@ -15,9 +15,6 @@ lightbox: true
 if (!requireNamespace("WrightMap", quietly = TRUE)) {
   install.packages("WrightMap")
 }
-if (!requireNamespace("this.path", quietly = TRUE)) {
-  install.packages("this.path")
-}
 library(WrightMap)
 ```
 
