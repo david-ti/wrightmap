@@ -178,7 +178,7 @@ The `make.deltas` function can also handle rating scale models.
 #| output: false
 
 model4 <- CQmodel(p.est = file.path("https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2b.eap")              
-       , show = file.path("https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2b.shw")
+       , show = file.path("https://raw.githubusercontent.com/david-ti/wrightmap/refs/heads/master/inst/extdata/ex2b-2.shw")
        )
 
 ```
