@@ -5,33 +5,32 @@ website:
   navbar:
     background: primary
     search: true
-    logo-href: "https://wrightmap.org/website/index.html"  # Link to be used when clicking the logo
     left:
-      - file: website/index.qmd
+      - file: index.qmd
         text: Home
-      - file: website/about.qmd
+      - file: about.qmd
         text: About WrightMap
       - text: Tutorials      
         menu:
-          - file: website/tutorial01.qmd
+          - file: tutorial01.qmd
             text: Tutorial 01
-          - file: website/tutorial02.qmd
+          - file: tutorial02.qmd
             text: Tutorial 02
-          - file: website/tutorial03.qmd
+          - file: tutorial03.qmd
             text: Tutorial 03
-          - file: website/tutorial04.qmd
+          - file: tutorial04.qmd
             text: Tutorial 04
-          - file: website/tutorial05.qmd
+          - file: tutorial05.qmd
             text: Tutorial 05                          
           # Add more tutorials here
 
       - text: Examples
         menu:
-          - file: website/example01.qmd
+          - file: example01.qmd
             text: Simulating data
-          - file: website/example02.qmd
+          - file: example02.qmd
             text: Wright Map & TAM
-          - file: website/example03.qmd
+          - file: example03.qmd
             text: Introducing the PP plot           
 format:
   html:
