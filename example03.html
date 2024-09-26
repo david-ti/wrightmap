@@ -9,7 +9,7 @@
 <meta name="author" content="David Torres Irribarra">
 <meta name="dcterms.date" content="2024-09-25">
 
-<title>Simulating Item Responses with the Partial Credit and Rasch Models – WrightMap</title>
+<title>Introducing Person Probability Plots – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,22 +59,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -113,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="https://wrightmap.org/website/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">WrightMap</span>
     </a>
   </div>
@@ -124,11 +127,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../website/index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../website/about.html"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About WrightMap</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -137,23 +140,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
         <li>
-    <a class="dropdown-item" href="../website/tutorial01.html">
+    <a class="dropdown-item" href="./tutorial01.html">
  <span class="dropdown-text">Tutorial 01</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial02.html">
+    <a class="dropdown-item" href="./tutorial02.html">
  <span class="dropdown-text">Tutorial 02</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial03.html">
+    <a class="dropdown-item" href="./tutorial03.html">
  <span class="dropdown-text">Tutorial 03</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial04.html">
+    <a class="dropdown-item" href="./tutorial04.html">
  <span class="dropdown-text">Tutorial 04</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial05.html">
+    <a class="dropdown-item" href="./tutorial05.html">
  <span class="dropdown-text">Tutorial 05</span></a>
   </li>  
     </ul>
@@ -164,15 +167,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-examples">    
         <li>
-    <a class="dropdown-item" href="../website/example01.html">
+    <a class="dropdown-item" href="./example01.html">
  <span class="dropdown-text">Simulating data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example02.html">
+    <a class="dropdown-item" href="./example02.html">
  <span class="dropdown-text">Wright Map &amp; TAM</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example03.html">
+    <a class="dropdown-item" href="./example03.html">
  <span class="dropdown-text">Introducing the PP plot</span></a>
   </li>  
     </ul>
@@ -193,18 +196,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#simulating-item-responses-for-partial-credit-and-rasch-models" id="toc-simulating-item-responses-for-partial-credit-and-rasch-models" class="nav-link active" data-scroll-target="#simulating-item-responses-for-partial-credit-and-rasch-models">Simulating Item Responses for Partial Credit and Rasch Models</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#creating-a-basic-person-probability-plot" id="toc-creating-a-basic-person-probability-plot" class="nav-link" data-scroll-target="#creating-a-basic-person-probability-plot">Creating a Basic Person Probability Plot</a>
   <ul class="collapse">
-  <li><a href="#setting-up-the-simulation" id="toc-setting-up-the-simulation" class="nav-link" data-scroll-target="#setting-up-the-simulation">Setting Up the Simulation</a>
-  <ul class="collapse">
-  <li><a href="#example-1-basic-simulation" id="toc-example-1-basic-simulation" class="nav-link" data-scroll-target="#example-1-basic-simulation">Example 1: Basic Simulation</a></li>
-  <li><a href="#example-2-customizing-item-thresholds" id="toc-example-2-customizing-item-thresholds" class="nav-link" data-scroll-target="#example-2-customizing-item-thresholds">Example 2: Customizing Item Thresholds</a></li>
-  <li><a href="#example-3-simulating-with-custom-person-abilities" id="toc-example-3-simulating-with-custom-person-abilities" class="nav-link" data-scroll-target="#example-3-simulating-with-custom-person-abilities">Example 3: Simulating with Custom Person Abilities</a></li>
-  <li><a href="#example-4-simulating-a-rasch-model" id="toc-example-4-simulating-a-rasch-model" class="nav-link" data-scroll-target="#example-4-simulating-a-rasch-model">Example 4: Simulating a Rasch Model</a></li>
-  <li><a href="#example-5-simulating-items-with-different-numbers-of-levels" id="toc-example-5-simulating-items-with-different-numbers-of-levels" class="nav-link" data-scroll-target="#example-5-simulating-items-with-different-numbers-of-levels">Example 5: Simulating Items with Different Numbers of Levels</a></li>
+  <li><a href="#understanding-the-plot" id="toc-understanding-the-plot" class="nav-link" data-scroll-target="#understanding-the-plot">Understanding the Plot</a></li>
   </ul></li>
-  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
-  </ul></li>
+  <li><a href="#modifying-the-plot-adding-density-and-classic-item-styles" id="toc-modifying-the-plot-adding-density-and-classic-item-styles" class="nav-link" data-scroll-target="#modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -213,8 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Simulating Item Responses with the Partial Credit and Rasch Models</h1>
-<p class="subtitle lead">Using the sim.PCM Function</p>
+<h1 class="title">Introducing Person Probability Plots</h1>
 </div>
 
 
@@ -243,66 +240,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="simulating-item-responses-for-partial-credit-and-rasch-models" class="level1">
-<h1>Simulating Item Responses for Partial Credit and Rasch Models</h1>
-<p>In this tutorial, we’re going to explore how to simulate item responses using the <code>sim.PCM</code> function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.</p>
-<p>What’s great about <code>sim.PCM</code> is its flexibility—it lets you play around with different item levels, thresholds, and person abilities. Whether you want a simple Rasch model or a more complex situation where items have different numbers of categories, this function has you covered!</p>
-<section id="setting-up-the-simulation" class="level2">
-<h2 class="anchored" data-anchor-id="setting-up-the-simulation">Setting Up the Simulation</h2>
-<p>Let’s start by simulating some basic data. We’ll begin with a simple setup: 100 respondents answering 5 items, each with 3 response levels (think of it like a Likert scale with three options).</p>
-<section id="example-1-basic-simulation" class="level3">
-<h3 class="anchored" data-anchor-id="example-1-basic-simulation">Example 1: Basic Simulation</h3>
-<p>Here, we’re simulating responses for 100 people across 5 items, each with 3 response options. It’s as easy as that!</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this tutorial, we’re going to dive into a cool new feature introduced in WrightMap version 1.2: the <strong>Person Probability Plot</strong> (PP plot). This plot is designed to represent model information for specific proficiencies, giving us a neat way to visualize the uncertainty surrounding a person’s estimate and to see the probabilities that the person will answer different items correctly.</p>
+<p>Let’s get started by loading an example ConQuest output:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>simulated_data <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">100</span>, <span class="at">iN =</span> <span class="dv">5</span>, <span class="at">lN =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package=</span><span class="st">"WrightMap"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="at">p.est =</span> <span class="fu">file.path</span>(fpath,<span class="st">"ex2.eap"</span>), <span class="at">show =</span> <span class="fu">file.path</span>(fpath,<span class="st">"ex2.shw"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Just like that, you’ve got your data! This gives you a simple matrix of simulated responses that match our configuration: 100 respondents answering 5 items, each with 3 response levels.</p>
 </section>
-<section id="example-2-customizing-item-thresholds" class="level3">
-<h3 class="anchored" data-anchor-id="example-2-customizing-item-thresholds">Example 2: Customizing Item Thresholds</h3>
-<p>What if you want more control over the item difficulty thresholds? You can pass in your own custom thresholds instead of letting the function generate them for you. Here’s how:</p>
+<section id="creating-a-basic-person-probability-plot" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-basic-person-probability-plot">Creating a Basic Person Probability Plot</h2>
+<p>Now, let’s create the default version of the PP plot. There are three key things we need to provide:</p>
+<ol type="1">
+<li>A <strong>model object</strong> (in this case, <code>model1</code> from ConQuest)</li>
+<li>The <strong>person’s proficiency estimate</strong> (let’s set it at 0 logits)</li>
+<li>The <strong>standard error</strong> associated with the estimate (we’ll use 1 logit as the standard error)</li>
+</ol>
+<p>Here’s the code to generate the plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>custom_delta <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>simulated_data_custom <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">50</span>, <span class="at">iN =</span> <span class="dv">3</span>, <span class="at">lN =</span> <span class="dv">3</span>, <span class="at">delta =</span> custom_delta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppPlot</span>(model1, <span class="at">est =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using GIN table for threshold parameters</code></pre>
 </div>
-<p>In this example, we’re specifying thresholds for 3 items. The <code>custom_delta</code> matrix defines how difficult each threshold is for the respective items. If you look at the output, you’ll see the responses simulated based on these difficulty levels.</p>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="example03_files/figure-html/t06-i01-ppplot01-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Basic Person Probability Plot"><img src="example03_files/figure-html/t06-i01-ppplot01-1.svg" class="img-fluid figure-img" width="2400" alt="Basic Person Probability Plot"></a></p>
+<figcaption>Basic Person Probability Plot</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="understanding-the-plot" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-plot">Understanding the Plot</h3>
+<p>In this basic version, we’re using the ConQuest item and person information stored in <code>model1</code>. The person being represented has a proficiency estimate of 0 logits and a standard error of 1 logit.</p>
+<ul>
+<li><strong>Person Side (Histogram)</strong>: The darkest bar represents the group in which the person’s proficiency estimate falls. The light gray bars on either side show the range of the standard error.</li>
+<li><strong>Item Side (Probability Lines)</strong>: For each item, the lines mark the probabilities that a person with this proficiency would answer correctly. The plot draws lines at 80%, 60%, 50%, 40%, and 20% probability thresholds.</li>
+</ul>
 </section>
-<section id="example-3-simulating-with-custom-person-abilities" class="level3">
-<h3 class="anchored" data-anchor-id="example-3-simulating-with-custom-person-abilities">Example 3: Simulating with Custom Person Abilities</h3>
-<p>What about the people? Maybe you don’t want a standard normal distribution for their abilities. Let’s say you want a little more variety in the abilities of your respondents—no problem! You can also specify your own custom person abilities.</p>
+</section>
+<section id="modifying-the-plot-adding-density-and-classic-item-styles" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</h2>
+<p>What if you want to change things up? Let’s try using a <strong>density plot</strong> on the person side instead of a histogram and switch to a <strong>classic style</strong> for the item side. Here’s how:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>custom_theta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>simulated_data_theta <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">100</span>, <span class="at">iN =</span> <span class="dv">5</span>, <span class="at">lN =</span> <span class="dv">3</span>, <span class="at">theta =</span> custom_theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppPlot</span>(model1, <span class="at">est =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">1</span>, <span class="at">person.side =</span> personDens, <span class="at">item.side =</span> itemClassic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using GIN table for threshold parameters</code></pre>
 </div>
-<p>Here, we’re generating a set of 100 person abilities (<code>custom_theta</code>) with a mean of 0 and a standard deviation of 1.5. This gives you more control over how the simulated people interact with the items in your test.</p>
-</section>
-<section id="example-4-simulating-a-rasch-model" class="level3">
-<h3 class="anchored" data-anchor-id="example-4-simulating-a-rasch-model">Example 4: Simulating a Rasch Model</h3>
-<p>Now let’s move from polytomous items to a Rasch model with dichotomous items. In this case, each item only has two possible responses. We’ll simulate data for 50 people, with abilities ranging from -3 to +3, responding to 10 items.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rasch_theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">50</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rasch_delta <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.5</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="fl">0.5</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="fl">1.5</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="fl">0.8</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="fl">0.8</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>simulated_rasch <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">50</span>, <span class="at">iN =</span> <span class="dv">10</span>, <span class="at">lN =</span> <span class="dv">2</span>, <span class="at">delta =</span> rasch_delta, <span class="at">theta =</span> rasch_theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="example03_files/figure-html/t06-i02-ppplot02-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Person Probability Plot with Density and Classic Item Style"><img src="example03_files/figure-html/t06-i02-ppplot02-1.svg" class="img-fluid figure-img" width="2400" alt="Person Probability Plot with Density and Classic Item Style"></a></p>
+<figcaption>Person Probability Plot with Density and Classic Item Style</figcaption>
+</figure>
 </div>
-<p>In this simulation, we have a Rasch model with 10 items and 50 persons. The <code>rasch_theta</code> values span from -3 to 3, representing a range of person abilities. The <code>rasch_delta</code> matrix specifies the difficulty of each item.</p>
-</section>
-<section id="example-5-simulating-items-with-different-numbers-of-levels" class="level3">
-<h3 class="anchored" data-anchor-id="example-5-simulating-items-with-different-numbers-of-levels">Example 5: Simulating Items with Different Numbers of Levels</h3>
-<p>What if your items don’t all have the same number of response options? That’s where the <code>itemLevels</code> argument comes in handy. For example, let’s simulate a mix of items: some have 5 levels, some are dichotomous, and some have 3 levels.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>simulated_mixed_levels <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">50</span>, <span class="at">iN =</span> <span class="dv">10</span>, <span class="at">lN =</span> <span class="dv">5</span>, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">itemLevels =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here we’re simulating responses for 10 items, with 4 items having 5 levels, 3 items being dichotomous, and 3 items having 3 levels. This kind of flexibility is great for simulating more realistic data, where items can have different response structures.</p>
+</div>
+<p>In this version: - <strong>Person Side (Density)</strong>: We’re using a density curve instead of the histogram to show where the proficiency estimate falls. - <strong>Item Side (Classic)</strong>: We’re switching to a “classic” item representation, giving us a more traditional look for the probability lines.</p>
 </section>
-</section>
-<section id="wrapping-up" class="level2">
-<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
-<p>The <code>sim.PCM</code> function is a powerful tool for simulating item responses for both polytomous and dichotomous items. Whether you’re setting up a simple Rasch model, simulating items with multiple levels, or adding custom thresholds and person abilities, this function gives you the flexibility to generate realistic data tailored to your needs.</p>
-<p>Now that you’ve seen a few examples, you can start experimenting with different configurations to see what works best for your research or testing scenarios. Happy simulating!</p>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>The Person Probability Plot is a great tool for visualizing the relationship between person proficiencies and item difficulties, especially when you want to show how likely it is for a person to answer specific items correctly. You can easily customize these plots by switching between histogram or density views on the person side, and by using different styles for the item side.</p>
+<p>Hopefully, this new addition to WrightMap will make it easier to communicate the results of a model for specific respondents. Play around with the options and see how the PP plot can enhance your analysis!</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -398,7 +401,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/david-ti\.github\.io\/wrightmap\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -727,6 +730,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

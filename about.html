@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="David Torres Irribarra &amp; Rebecca Freund">
+<meta name="author" content="David Torres Irribarra">
 <meta name="dcterms.date" content="2024-09-25">
 
-<title>Using WrightMap with the TAM Package – WrightMap</title>
+<title>About WrightMap – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,62 +22,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,6 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="custom.css">
 </head>
 
 <body class="nav-fixed">
@@ -116,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="https://wrightmap.org/website/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">WrightMap</span>
     </a>
   </div>
@@ -127,11 +91,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../website/index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../website/about.html"> 
+    <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About WrightMap</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -140,23 +104,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
         <li>
-    <a class="dropdown-item" href="../website/tutorial01.html">
+    <a class="dropdown-item" href="./tutorial01.html">
  <span class="dropdown-text">Tutorial 01</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial02.html">
+    <a class="dropdown-item" href="./tutorial02.html">
  <span class="dropdown-text">Tutorial 02</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial03.html">
+    <a class="dropdown-item" href="./tutorial03.html">
  <span class="dropdown-text">Tutorial 03</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial04.html">
+    <a class="dropdown-item" href="./tutorial04.html">
  <span class="dropdown-text">Tutorial 04</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial05.html">
+    <a class="dropdown-item" href="./tutorial05.html">
  <span class="dropdown-text">Tutorial 05</span></a>
   </li>  
     </ul>
@@ -167,15 +131,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-examples">    
         <li>
-    <a class="dropdown-item" href="../website/example01.html">
+    <a class="dropdown-item" href="./example01.html">
  <span class="dropdown-text">Simulating data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example02.html">
+    <a class="dropdown-item" href="./example02.html">
  <span class="dropdown-text">Wright Map &amp; TAM</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example03.html">
+    <a class="dropdown-item" href="./example03.html">
  <span class="dropdown-text">Introducing the PP plot</span></a>
   </li>  
     </ul>
@@ -196,14 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#using-wrightmap-with-the-tam-package" id="toc-using-wrightmap-with-the-tam-package" class="nav-link active" data-scroll-target="#using-wrightmap-with-the-tam-package">Using WrightMap with the TAM Package</a>
-  <ul class="collapse">
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
-  <li><a href="#analysis-with-tam" id="toc-analysis-with-tam" class="nav-link" data-scroll-target="#analysis-with-tam">Analysis with TAM</a></li>
-  <li><a href="#person-estimates" id="toc-person-estimates" class="nav-link" data-scroll-target="#person-estimates">Person Estimates</a></li>
-  <li><a href="#item-parameters" id="toc-item-parameters" class="nav-link" data-scroll-target="#item-parameters">Item Parameters</a></li>
-  <li><a href="#creating-the-wright-map" id="toc-creating-the-wright-map" class="nav-link" data-scroll-target="#creating-the-wright-map">Creating the Wright Map</a></li>
-  </ul></li>
+  <li><a href="#where-does-the-name-wright-map-comes-from" id="toc-where-does-the-name-wright-map-comes-from" class="nav-link active" data-scroll-target="#where-does-the-name-wright-map-comes-from">Where does the name “Wright Map” comes from?</a></li>
+  <li><a href="#where-can-you-get-wrightmap" id="toc-where-can-you-get-wrightmap" class="nav-link" data-scroll-target="#where-can-you-get-wrightmap">Where can you get WrightMap?</a></li>
+  <li><a href="#wrightmap-tutorials" id="toc-wrightmap-tutorials" class="nav-link" data-scroll-target="#wrightmap-tutorials">WrightMap tutorials</a></li>
   </ul>
 </nav>
     </div>
@@ -212,7 +171,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Using WrightMap with the TAM Package</h1>
+<h1 class="title">About WrightMap</h1>
+<p class="subtitle lead">IRT item-person maps with ConQuest integration</p>
 </div>
 
 
@@ -222,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>David Torres Irribarra &amp; Rebecca Freund </p>
+             <p>David Torres Irribarra </p>
           </div>
   </div>
     
@@ -241,138 +201,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="using-wrightmap-with-the-tam-package" class="level1">
-<h1>Using WrightMap with the TAM Package</h1>
-<p>WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.</p>
-<p>This post will show you how you can integrate R with one of these estimation packages, the Test Analysis Module (<code>TAM</code>) package, in just a couple of lines.</p>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>Let’s start by loading TAM.</p>
+<p>A powerful yet simple graphical tool available in the field of psychometrics is the Wright Map, which presents the location of both respondents and items on the same scale.</p>
+<p>Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TAM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: CDM</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: mvtnorm</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>**********************************
-** CDM 8.2-6 (2022-08-25 15:43:23)       
-** Cognitive Diagnostic Models  **
-**********************************</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>* TAM 4.2-21 (2024-02-19 18:52:08)</code></pre>
-</div>
-</div>
-<p>And we can use one of TAM’s simulated datasets (without any missing data in this case) for this example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(data.sim.rasch)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.sim.rasch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> num [1:2000, 1:40] 1 0 1 1 1 1 1 1 1 1 ...
- - attr(*, "dimnames")=List of 2
-  ..$ : NULL
-  ..$ : chr [1:40] "I1" "I2" "I3" "I4" ...</code></pre>
-</div>
-</div>
-<p>A quick look with <code>str</code> confirms that we now have a simulated dataset with responses from 2000 persons (rows) to 40 items (columns). We are ready to go!</p>
-</section>
-<section id="analysis-with-tam" class="level2">
-<h2 class="anchored" data-anchor-id="analysis-with-tam">Analysis with TAM</h2>
-<p>In this example, we will run a Rasch model using the TAM command <code>tam.mml</code>, which will estimate the model using a marginal maximum likelihood method.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">tam.mml</span>(<span class="at">resp=</span>data.sim.rasch, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The estimation should take very little time, and you should see a summary of the results and the total time it took to run the analysis.</p>
-</section>
-<section id="person-estimates" class="level2">
-<h2 class="anchored" data-anchor-id="person-estimates">Person Estimates</h2>
-<p>You can get person estimates in several ways in TAM, but for this example, I will use the <code>tam.wle</code> command, which produces Warm Likelihood Estimates (WLE) for each respondent.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>persons.mod1 <span class="ot">&lt;-</span> <span class="fu">tam.wle</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Iteration in WLE/MLE estimation  1   | Maximal change  0.8281 
-Iteration in WLE/MLE estimation  2   | Maximal change  0.4335 
-Iteration in WLE/MLE estimation  3   | Maximal change  0.0883 
-Iteration in WLE/MLE estimation  4   | Maximal change  7e-04 
-Iteration in WLE/MLE estimation  5   | Maximal change  0 
-----
- WLE Reliability= 0.894 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(persons.mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Classes 'tam.wle' and 'data.frame': 2000 obs. of  7 variables:
- $ pid         : int  1 2 3 4 5 6 7 8 9 10 ...
- $ N.items     : num  40 40 40 40 40 40 40 40 40 40 ...
- $ PersonScores: num  19 14 35 14 27 12 23 17 5 12 ...
- $ PersonMax   : num  40 40 40 40 40 40 40 40 40 40 ...
- $ theta       : num  -0.116 -0.791 2.373 -0.791 0.964 ...
- $ error       : num  0.366 0.377 0.498 0.377 0.382 ...
- $ WLE.rel     : num  0.894 0.894 0.894 0.894 0.894 ...
- - attr(*, "ndim")= int 1
- - attr(*, "nobs")= int 2000
- - attr(*, "M_sq_error")= Named num 0.165
-  ..- attr(*, "names")= chr "Dim1"
- - attr(*, "WLEvar")= Named num 1.55
-  ..- attr(*, "names")= chr "Dim1"
- - attr(*, "WLEM")= Named num 0.000865
-  ..- attr(*, "names")= chr "Dim1"
- - attr(*, "WLE.rel")= num 0.894
- - attr(*, "call")= language tam.wle(tamobj = mod1)</code></pre>
-</div>
-</div>
-<p>If we look at the resulting matrix, we can see that we have several columns, including:</p>
-<ul>
-<li><strong>pid</strong>: the ID of the respondent</li>
-<li><strong>N.items</strong>: the number of items</li>
-<li><strong>PersonScores</strong>: The score of each person</li>
-<li><strong>PersonMax</strong>: The maximum possible score of each person</li>
-<li><strong>theta</strong>: The WLE estimate</li>
-<li><strong>error</strong>: The standard error of the WLE estimate</li>
-<li><strong>WLE.rel</strong>: The WLE reliability</li>
-</ul>
-<p>You can look at the TAM documentation for more details, but for this example, we want to focus on the <code>theta</code> column, which contains the person estimates we need to create our Wright map.</p>
-<p>We can get the data we need by selecting just that column:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>WLEestimates.mod1 <span class="ot">&lt;-</span> persons.mod1<span class="sc">$</span>theta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="item-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="item-parameters">Item Parameters</h2>
-<p>And we can get our item estimates using the <code>tam.threshold</code> command.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>thresholds.mod1 <span class="ot">&lt;-</span> <span class="fu">tam.threshold</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="creating-the-wright-map" class="level2">
-<h2 class="anchored" data-anchor-id="creating-the-wright-map">Creating the Wright Map</h2>
-<p>With these two matrices, we are ready to plot our Wright Map:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(WLEestimates.mod1, thresholds.mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="example02_files/figure-html/basic-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="example02_files/figure-html/basic-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+<p><img src="about_files/figure-html/t02-i06-polymexample-1.svg" class="img-fluid figure-img" width="2400"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>And you can start editing it to make it nicer:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(WLEestimates.mod1, thresholds.mod1, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>), <span class="at">label.items.rows =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="example02_files/figure-html/modified-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="example02_files/figure-html/modified-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
+<p>The plots can represent polytomoys and multidimensional models, are highly customizable, and as any other R plot, they can be exported into multiple image formats. Although the package can be used in conjunction with any software used to estimate the IRT model (e.g.&nbsp;eRm or IRToys in R, or Stata, Mplus, etc.), WrightMap features special integration with ConQuest to facilitate reading and plotting its output directly.</p>
+<p>WrightMap was created by David Torres Irribarra and Rebecca Freund.</p>
+<section id="where-does-the-name-wright-map-comes-from" class="level2">
+<h2 class="anchored" data-anchor-id="where-does-the-name-wright-map-comes-from">Where does the name “Wright Map” comes from?</h2>
+<p>These plots are named after <a href="https://en.wikipedia.org/wiki/Benjamin_Drake_Wright">Ben Wright</a> for his contribution on using item maps to better understand measurement in the social sciences.</p>
+<div class="pullquote">
+<p>“It seemed to me that, in fact, Ben had made his most significant contributions to measurement in the area of conceptualizing measures, and interpreting the results of measurement analyses, and that his central tool in doing so were these (many forms of) items maps.”</p>
+<p>— Mark Wilson on coining the name “Wright Map”</p>
 </div>
-</div>
-</div>
-
-
+<p><a href="https://www.rasch.org/rmt/rmt253b.htm">You can learn more about the origin of the term Wright Map here.</a></p>
 </section>
+<section id="where-can-you-get-wrightmap" class="level2">
+<h2 class="anchored" data-anchor-id="where-can-you-get-wrightmap">Where can you get WrightMap?</h2>
+<p>You can download the package and/or find more information about the package on the WrightMap page on CRAN. Alternatively, you can get the source code on our <a href="https://github.com/david-ti/wrightmap/">GitHub repository</a>.</p>
+</section>
+<section id="wrightmap-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="wrightmap-tutorials">WrightMap tutorials</h2>
+<p>You can learn more about how to use WrightMap in our tutorials page here.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -468,7 +327,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/david-ti\.github\.io\/wrightmap\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -797,38 +656,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 

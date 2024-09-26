@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="David Torres Irribarra">
+<meta name="author" content="David Torres Irribarra &amp; Rebecca Freund">
 <meta name="dcterms.date" content="2024-09-25">
 
-<title>Introducing Person Probability Plots – WrightMap</title>
+<title>Using WrightMap with the TAM Package – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,25 +59,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="https://wrightmap.org/website/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">WrightMap</span>
     </a>
   </div>
@@ -127,11 +127,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../website/index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../website/about.html"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About WrightMap</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -140,23 +140,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
         <li>
-    <a class="dropdown-item" href="../website/tutorial01.html">
+    <a class="dropdown-item" href="./tutorial01.html">
  <span class="dropdown-text">Tutorial 01</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial02.html">
+    <a class="dropdown-item" href="./tutorial02.html">
  <span class="dropdown-text">Tutorial 02</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial03.html">
+    <a class="dropdown-item" href="./tutorial03.html">
  <span class="dropdown-text">Tutorial 03</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial04.html">
+    <a class="dropdown-item" href="./tutorial04.html">
  <span class="dropdown-text">Tutorial 04</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial05.html">
+    <a class="dropdown-item" href="./tutorial05.html">
  <span class="dropdown-text">Tutorial 05</span></a>
   </li>  
     </ul>
@@ -167,15 +167,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-examples">    
         <li>
-    <a class="dropdown-item" href="../website/example01.html">
+    <a class="dropdown-item" href="./example01.html">
  <span class="dropdown-text">Simulating data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example02.html">
+    <a class="dropdown-item" href="./example02.html">
  <span class="dropdown-text">Wright Map &amp; TAM</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example03.html">
+    <a class="dropdown-item" href="./example03.html">
  <span class="dropdown-text">Introducing the PP plot</span></a>
   </li>  
     </ul>
@@ -196,13 +196,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#creating-a-basic-person-probability-plot" id="toc-creating-a-basic-person-probability-plot" class="nav-link" data-scroll-target="#creating-a-basic-person-probability-plot">Creating a Basic Person Probability Plot</a>
+  <li><a href="#using-wrightmap-with-the-tam-package" id="toc-using-wrightmap-with-the-tam-package" class="nav-link active" data-scroll-target="#using-wrightmap-with-the-tam-package">Using WrightMap with the TAM Package</a>
   <ul class="collapse">
-  <li><a href="#understanding-the-plot" id="toc-understanding-the-plot" class="nav-link" data-scroll-target="#understanding-the-plot">Understanding the Plot</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#analysis-with-tam" id="toc-analysis-with-tam" class="nav-link" data-scroll-target="#analysis-with-tam">Analysis with TAM</a></li>
+  <li><a href="#person-estimates" id="toc-person-estimates" class="nav-link" data-scroll-target="#person-estimates">Person Estimates</a></li>
+  <li><a href="#item-parameters" id="toc-item-parameters" class="nav-link" data-scroll-target="#item-parameters">Item Parameters</a></li>
+  <li><a href="#creating-the-wright-map" id="toc-creating-the-wright-map" class="nav-link" data-scroll-target="#creating-the-wright-map">Creating the Wright Map</a></li>
   </ul></li>
-  <li><a href="#modifying-the-plot-adding-density-and-classic-item-styles" id="toc-modifying-the-plot-adding-density-and-classic-item-styles" class="nav-link" data-scroll-target="#modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -211,7 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducing Person Probability Plots</h1>
+<h1 class="title">Using WrightMap with the TAM Package</h1>
 </div>
 
 
@@ -221,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>David Torres Irribarra </p>
+             <p>David Torres Irribarra &amp; Rebecca Freund </p>
           </div>
   </div>
     
@@ -240,72 +241,138 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this tutorial, we’re going to dive into a cool new feature introduced in WrightMap version 1.2: the <strong>Person Probability Plot</strong> (PP plot). This plot is designed to represent model information for specific proficiencies, giving us a neat way to visualize the uncertainty surrounding a person’s estimate and to see the probabilities that the person will answer different items correctly.</p>
-<p>Let’s get started by loading an example ConQuest output:</p>
+<section id="using-wrightmap-with-the-tam-package" class="level1">
+<h1>Using WrightMap with the TAM Package</h1>
+<p>WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.</p>
+<p>This post will show you how you can integrate R with one of these estimation packages, the Test Analysis Module (<code>TAM</code>) package, in just a couple of lines.</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>Let’s start by loading TAM.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package=</span><span class="st">"WrightMap"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="at">p.est =</span> <span class="fu">file.path</span>(fpath,<span class="st">"ex2.eap"</span>), <span class="at">show =</span> <span class="fu">file.path</span>(fpath,<span class="st">"ex2.shw"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="creating-a-basic-person-probability-plot" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-basic-person-probability-plot">Creating a Basic Person Probability Plot</h2>
-<p>Now, let’s create the default version of the PP plot. There are three key things we need to provide:</p>
-<ol type="1">
-<li>A <strong>model object</strong> (in this case, <code>model1</code> from ConQuest)</li>
-<li>The <strong>person’s proficiency estimate</strong> (let’s set it at 0 logits)</li>
-<li>The <strong>standard error</strong> associated with the estimate (we’ll use 1 logit as the standard error)</li>
-</ol>
-<p>Here’s the code to generate the plot:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppPlot</span>(model1, <span class="at">est =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TAM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Using GIN table for threshold parameters</code></pre>
+<pre><code>Loading required package: CDM</code></pre>
 </div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="example03_files/figure-html/t06-i01-ppplot01-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Basic Person Probability Plot"><img src="example03_files/figure-html/t06-i01-ppplot01-1.svg" class="img-fluid figure-img" width="2400" alt="Basic Person Probability Plot"></a></p>
-<figcaption>Basic Person Probability Plot</figcaption>
-</figure>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: mvtnorm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>**********************************
+** CDM 8.2-6 (2022-08-25 15:43:23)       
+** Cognitive Diagnostic Models  **
+**********************************</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>* TAM 4.2-21 (2024-02-19 18:52:08)</code></pre>
 </div>
 </div>
+<p>And we can use one of TAM’s simulated datasets (without any missing data in this case) for this example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(data.sim.rasch)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data.sim.rasch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:2000, 1:40] 1 0 1 1 1 1 1 1 1 1 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : NULL
+  ..$ : chr [1:40] "I1" "I2" "I3" "I4" ...</code></pre>
 </div>
-<section id="understanding-the-plot" class="level3">
-<h3 class="anchored" data-anchor-id="understanding-the-plot">Understanding the Plot</h3>
-<p>In this basic version, we’re using the ConQuest item and person information stored in <code>model1</code>. The person being represented has a proficiency estimate of 0 logits and a standard error of 1 logit.</p>
+</div>
+<p>A quick look with <code>str</code> confirms that we now have a simulated dataset with responses from 2000 persons (rows) to 40 items (columns). We are ready to go!</p>
+</section>
+<section id="analysis-with-tam" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-with-tam">Analysis with TAM</h2>
+<p>In this example, we will run a Rasch model using the TAM command <code>tam.mml</code>, which will estimate the model using a marginal maximum likelihood method.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">tam.mml</span>(<span class="at">resp=</span>data.sim.rasch, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The estimation should take very little time, and you should see a summary of the results and the total time it took to run the analysis.</p>
+</section>
+<section id="person-estimates" class="level2">
+<h2 class="anchored" data-anchor-id="person-estimates">Person Estimates</h2>
+<p>You can get person estimates in several ways in TAM, but for this example, I will use the <code>tam.wle</code> command, which produces Warm Likelihood Estimates (WLE) for each respondent.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>persons.mod1 <span class="ot">&lt;-</span> <span class="fu">tam.wle</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration in WLE/MLE estimation  1   | Maximal change  0.8281 
+Iteration in WLE/MLE estimation  2   | Maximal change  0.4335 
+Iteration in WLE/MLE estimation  3   | Maximal change  0.0883 
+Iteration in WLE/MLE estimation  4   | Maximal change  7e-04 
+Iteration in WLE/MLE estimation  5   | Maximal change  0 
+----
+ WLE Reliability= 0.894 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(persons.mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'tam.wle' and 'data.frame': 2000 obs. of  7 variables:
+ $ pid         : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ N.items     : num  40 40 40 40 40 40 40 40 40 40 ...
+ $ PersonScores: num  19 14 35 14 27 12 23 17 5 12 ...
+ $ PersonMax   : num  40 40 40 40 40 40 40 40 40 40 ...
+ $ theta       : num  -0.116 -0.791 2.373 -0.791 0.964 ...
+ $ error       : num  0.366 0.377 0.498 0.377 0.382 ...
+ $ WLE.rel     : num  0.894 0.894 0.894 0.894 0.894 ...
+ - attr(*, "ndim")= int 1
+ - attr(*, "nobs")= int 2000
+ - attr(*, "M_sq_error")= Named num 0.165
+  ..- attr(*, "names")= chr "Dim1"
+ - attr(*, "WLEvar")= Named num 1.55
+  ..- attr(*, "names")= chr "Dim1"
+ - attr(*, "WLEM")= Named num 0.000865
+  ..- attr(*, "names")= chr "Dim1"
+ - attr(*, "WLE.rel")= num 0.894
+ - attr(*, "call")= language tam.wle(tamobj = mod1)</code></pre>
+</div>
+</div>
+<p>If we look at the resulting matrix, we can see that we have several columns, including:</p>
 <ul>
-<li><strong>Person Side (Histogram)</strong>: The darkest bar represents the group in which the person’s proficiency estimate falls. The light gray bars on either side show the range of the standard error.</li>
-<li><strong>Item Side (Probability Lines)</strong>: For each item, the lines mark the probabilities that a person with this proficiency would answer correctly. The plot draws lines at 80%, 60%, 50%, 40%, and 20% probability thresholds.</li>
+<li><strong>pid</strong>: the ID of the respondent</li>
+<li><strong>N.items</strong>: the number of items</li>
+<li><strong>PersonScores</strong>: The score of each person</li>
+<li><strong>PersonMax</strong>: The maximum possible score of each person</li>
+<li><strong>theta</strong>: The WLE estimate</li>
+<li><strong>error</strong>: The standard error of the WLE estimate</li>
+<li><strong>WLE.rel</strong>: The WLE reliability</li>
 </ul>
-</section>
-</section>
-<section id="modifying-the-plot-adding-density-and-classic-item-styles" class="level2">
-<h2 class="anchored" data-anchor-id="modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</h2>
-<p>What if you want to change things up? Let’s try using a <strong>density plot</strong> on the person side instead of a histogram and switch to a <strong>classic style</strong> for the item side. Here’s how:</p>
+<p>You can look at the TAM documentation for more details, but for this example, we want to focus on the <code>theta</code> column, which contains the person estimates we need to create our Wright map.</p>
+<p>We can get the data we need by selecting just that column:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppPlot</span>(model1, <span class="at">est =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">1</span>, <span class="at">person.side =</span> personDens, <span class="at">item.side =</span> itemClassic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using GIN table for threshold parameters</code></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>WLEestimates.mod1 <span class="ot">&lt;-</span> persons.mod1<span class="sc">$</span>theta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="item-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="item-parameters">Item Parameters</h2>
+<p>And we can get our item estimates using the <code>tam.threshold</code> command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>thresholds.mod1 <span class="ot">&lt;-</span> <span class="fu">tam.threshold</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-the-wright-map" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-wright-map">Creating the Wright Map</h2>
+<p>With these two matrices, we are ready to plot our Wright Map:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(WLEestimates.mod1, thresholds.mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><a href="example03_files/figure-html/t06-i02-ppplot02-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Person Probability Plot with Density and Classic Item Style"><img src="example03_files/figure-html/t06-i02-ppplot02-1.svg" class="img-fluid figure-img" width="2400" alt="Person Probability Plot with Density and Classic Item Style"></a></p>
-<figcaption>Person Probability Plot with Density and Classic Item Style</figcaption>
+<p><a href="example02_files/figure-html/basic-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="example02_files/figure-html/basic-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<p>In this version: - <strong>Person Side (Density)</strong>: We’re using a density curve instead of the histogram to show where the proficiency estimate falls. - <strong>Item Side (Classic)</strong>: We’re switching to a “classic” item representation, giving us a more traditional look for the probability lines.</p>
+<p>And you can start editing it to make it nicer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(WLEestimates.mod1, thresholds.mod1, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>), <span class="at">label.items.rows =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="example02_files/figure-html/modified-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="example02_files/figure-html/modified-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+
+
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The Person Probability Plot is a great tool for visualizing the relationship between person proficiencies and item difficulties, especially when you want to show how likely it is for a person to answer specific items correctly. You can easily customize these plots by switching between histogram or density views on the person side, and by using different styles for the item side.</p>
-<p>Hopefully, this new addition to WrightMap will make it easier to communicate the results of a model for specific respondents. Play around with the options and see how the PP plot can enhance your analysis!</p>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -401,7 +468,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/david-ti\.github\.io\/wrightmap\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -730,7 +797,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="David Torres Irribarra &amp; Rebecca Freund">
+<meta name="dcterms.date" content="2024-09-25">
 
-<title>index – WrightMap</title>
+<title>WrightMap Tutorial - Part 2 – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +22,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -77,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="https://wrightmap.org/website/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">WrightMap</span>
     </a>
   </div>
@@ -88,11 +127,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../website/index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../website/about.html"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About WrightMap</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -101,23 +140,23 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
         <li>
-    <a class="dropdown-item" href="../website/tutorial01.html">
+    <a class="dropdown-item" href="./tutorial01.html">
  <span class="dropdown-text">Tutorial 01</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial02.html">
+    <a class="dropdown-item" href="./tutorial02.html">
  <span class="dropdown-text">Tutorial 02</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial03.html">
+    <a class="dropdown-item" href="./tutorial03.html">
  <span class="dropdown-text">Tutorial 03</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial04.html">
+    <a class="dropdown-item" href="./tutorial04.html">
  <span class="dropdown-text">Tutorial 04</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial05.html">
+    <a class="dropdown-item" href="./tutorial05.html">
  <span class="dropdown-text">Tutorial 05</span></a>
   </li>  
     </ul>
@@ -128,15 +167,15 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-examples">    
         <li>
-    <a class="dropdown-item" href="../website/example01.html">
+    <a class="dropdown-item" href="./example01.html">
  <span class="dropdown-text">Simulating data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example02.html">
+    <a class="dropdown-item" href="./example02.html">
  <span class="dropdown-text">Wright Map &amp; TAM</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example03.html">
+    <a class="dropdown-item" href="./example03.html">
  <span class="dropdown-text">Introducing the PP plot</span></a>
   </li>  
     </ul>
@@ -157,31 +196,153 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-the-official-home-of-the-wrightmap-package" id="toc-welcome-to-the-official-home-of-the-wrightmap-package" class="nav-link active" data-scroll-target="#welcome-to-the-official-home-of-the-wrightmap-package">Welcome to the official home of the WrightMap package</a></li>
+  <li><a href="#plotting-the-items-in-different-ways" id="toc-plotting-the-items-in-different-ways" class="nav-link active" data-scroll-target="#plotting-the-items-in-different-ways">Plotting the Items in Different Ways</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#dealing-with-many-many-items" id="toc-dealing-with-many-many-items" class="nav-link" data-scroll-target="#dealing-with-many-many-items">Dealing with Many, Many Items</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">WrightMap Tutorial - Part 2</h1>
+<p class="subtitle lead">Plotting Items in Different Ways</p>
+</div>
 
 
 
-<section id="welcome-to-the-official-home-of-the-wrightmap-package" class="level2">
-<h2 class="anchored" data-anchor-id="welcome-to-the-official-home-of-the-wrightmap-package">Welcome to the official home of the WrightMap package</h2>
-<p>Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.</p>
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>David Torres Irribarra &amp; Rebecca Freund </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 25, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="plotting-the-items-in-different-ways" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-the-items-in-different-ways">Plotting the Items in Different Ways</h2>
+<section id="updated-september-2024-for-changes-in-version-1.4." class="level6">
+<h6 class="anchored" data-anchor-id="updated-september-2024-for-changes-in-version-1.4.">Updated September 2024 for changes in version 1.4.</h6>
+</section>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<p>We start by creating mock person and item estimates.</p>
+<p>For the person proficiencies, we create a matrix with 1000 values per dimension (5 dimensions in total).</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2020</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mdim.sim.thetas <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">5000</span>), <span class="at">ncol =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dealing-with-many-many-items" class="level3">
+<h3 class="anchored" data-anchor-id="dealing-with-many-many-items">Dealing with Many, Many Items</h3>
+<p>What happens if you have too many items?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rasch2.sim.thresholds <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we use the defaults…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/t02-i06-polymexample-1.svg" class="img-fluid figure-img" width="2400"></p>
+<p><a href="tutorial02_files/figure-html/t02-i09-manyitemsdef-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="tutorial02_files/figure-html/t02-i09-manyitemsdef-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<p>You can read more about WrightMaps, browse our tutorials, or review our examples.</p>
+<p>Things do not look quite right.</p>
+<p>WrightMap offers some options…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thetas <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rasch2.sim.thresholds <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can use the <code>itemClassic</code> or <code>itemHist</code> options for <code>item.side</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch2.sim.thresholds, <span class="at">item.side =</span> itemClassic, <span class="at">item.prop =</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial02_files/figure-html/t02-i10-manyitemsclassic-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="tutorial02_files/figure-html/t02-i10-manyitemsclassic-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch2.sim.thresholds, <span class="at">item.side =</span> itemHist, <span class="at">item.prop =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial02_files/figure-html/t02-i11-manyitemhist-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="tutorial02_files/figure-html/t02-i11-manyitemhist-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or you can play with the way labels are presented:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items.srt =</span> <span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial02_files/figure-html/t02-i12-manyitem45-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="tutorial02_files/figure-html/t02-i12-manyitem45-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items.rows =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial02_files/figure-html/t02-i13-manyitem2rows-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="tutorial02_files/figure-html/t02-i13-manyitem2rows-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">label.items.rows =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial02_files/figure-html/t02-i14-manyitem3rows-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="tutorial02_files/figure-html/t02-i14-manyitem3rows-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or you can get rid of that axis completely.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> <span class="fu">paste</span>(<span class="st">"I"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">sep =</span> <span class="st">""</span>), <span class="at">label.items =</span> <span class="st">""</span>, <span class="at">label.items.ticks =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial02_files/figure-html/t02-i15-manyitemnoaxis-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="tutorial02_files/figure-html/t02-i15-manyitemnoaxis-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -277,7 +438,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/david-ti\.github\.io\/wrightmap\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -606,6 +767,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="David Torres Irribarra &amp; Rebecca Freund">
+<meta name="author" content="David Torres Irribarra">
 <meta name="dcterms.date" content="2024-09-25">
 
-<title>WrightMap Tutorial - Part 2 – WrightMap</title>
+<title>Simulating Item Responses with the Partial Credit and Rasch Models – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,25 +59,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="https://wrightmap.org/website/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">WrightMap</span>
     </a>
   </div>
@@ -127,11 +124,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../website/index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../website/about.html"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About WrightMap</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -140,23 +137,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tutorials">    
         <li>
-    <a class="dropdown-item" href="../website/tutorial01.html">
+    <a class="dropdown-item" href="./tutorial01.html">
  <span class="dropdown-text">Tutorial 01</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial02.html">
+    <a class="dropdown-item" href="./tutorial02.html">
  <span class="dropdown-text">Tutorial 02</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial03.html">
+    <a class="dropdown-item" href="./tutorial03.html">
  <span class="dropdown-text">Tutorial 03</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial04.html">
+    <a class="dropdown-item" href="./tutorial04.html">
  <span class="dropdown-text">Tutorial 04</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/tutorial05.html">
+    <a class="dropdown-item" href="./tutorial05.html">
  <span class="dropdown-text">Tutorial 05</span></a>
   </li>  
     </ul>
@@ -167,15 +164,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-examples">    
         <li>
-    <a class="dropdown-item" href="../website/example01.html">
+    <a class="dropdown-item" href="./example01.html">
  <span class="dropdown-text">Simulating data</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example02.html">
+    <a class="dropdown-item" href="./example02.html">
  <span class="dropdown-text">Wright Map &amp; TAM</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../website/example03.html">
+    <a class="dropdown-item" href="./example03.html">
  <span class="dropdown-text">Introducing the PP plot</span></a>
   </li>  
     </ul>
@@ -196,10 +193,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#plotting-the-items-in-different-ways" id="toc-plotting-the-items-in-different-ways" class="nav-link active" data-scroll-target="#plotting-the-items-in-different-ways">Plotting the Items in Different Ways</a>
+  <li><a href="#simulating-item-responses-for-partial-credit-and-rasch-models" id="toc-simulating-item-responses-for-partial-credit-and-rasch-models" class="nav-link active" data-scroll-target="#simulating-item-responses-for-partial-credit-and-rasch-models">Simulating Item Responses for Partial Credit and Rasch Models</a>
   <ul class="collapse">
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
-  <li><a href="#dealing-with-many-many-items" id="toc-dealing-with-many-many-items" class="nav-link" data-scroll-target="#dealing-with-many-many-items">Dealing with Many, Many Items</a></li>
+  <li><a href="#setting-up-the-simulation" id="toc-setting-up-the-simulation" class="nav-link" data-scroll-target="#setting-up-the-simulation">Setting Up the Simulation</a>
+  <ul class="collapse">
+  <li><a href="#example-1-basic-simulation" id="toc-example-1-basic-simulation" class="nav-link" data-scroll-target="#example-1-basic-simulation">Example 1: Basic Simulation</a></li>
+  <li><a href="#example-2-customizing-item-thresholds" id="toc-example-2-customizing-item-thresholds" class="nav-link" data-scroll-target="#example-2-customizing-item-thresholds">Example 2: Customizing Item Thresholds</a></li>
+  <li><a href="#example-3-simulating-with-custom-person-abilities" id="toc-example-3-simulating-with-custom-person-abilities" class="nav-link" data-scroll-target="#example-3-simulating-with-custom-person-abilities">Example 3: Simulating with Custom Person Abilities</a></li>
+  <li><a href="#example-4-simulating-a-rasch-model" id="toc-example-4-simulating-a-rasch-model" class="nav-link" data-scroll-target="#example-4-simulating-a-rasch-model">Example 4: Simulating a Rasch Model</a></li>
+  <li><a href="#example-5-simulating-items-with-different-numbers-of-levels" id="toc-example-5-simulating-items-with-different-numbers-of-levels" class="nav-link" data-scroll-target="#example-5-simulating-items-with-different-numbers-of-levels">Example 5: Simulating Items with Different Numbers of Levels</a></li>
+  </ul></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -209,8 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">WrightMap Tutorial - Part 2</h1>
-<p class="subtitle lead">Plotting Items in Different Ways</p>
+<h1 class="title">Simulating Item Responses with the Partial Credit and Rasch Models</h1>
+<p class="subtitle lead">Using the sim.PCM Function</p>
 </div>
 
 
@@ -220,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>David Torres Irribarra &amp; Rebecca Freund </p>
+             <p>David Torres Irribarra </p>
           </div>
   </div>
     
@@ -239,107 +243,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="plotting-the-items-in-different-ways" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-the-items-in-different-ways">Plotting the Items in Different Ways</h2>
-<section id="updated-september-2024-for-changes-in-version-1.4." class="level6">
-<h6 class="anchored" data-anchor-id="updated-september-2024-for-changes-in-version-1.4.">Updated September 2024 for changes in version 1.4.</h6>
+<section id="simulating-item-responses-for-partial-credit-and-rasch-models" class="level1">
+<h1>Simulating Item Responses for Partial Credit and Rasch Models</h1>
+<p>In this tutorial, we’re going to explore how to simulate item responses using the <code>sim.PCM</code> function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.</p>
+<p>What’s great about <code>sim.PCM</code> is its flexibility—it lets you play around with different item levels, thresholds, and person abilities. Whether you want a simple Rasch model or a more complex situation where items have different numbers of categories, this function has you covered!</p>
+<section id="setting-up-the-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-the-simulation">Setting Up the Simulation</h2>
+<p>Let’s start by simulating some basic data. We’ll begin with a simple setup: 100 respondents answering 5 items, each with 3 response levels (think of it like a Likert scale with three options).</p>
+<section id="example-1-basic-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-basic-simulation">Example 1: Basic Simulation</h3>
+<p>Here, we’re simulating responses for 100 people across 5 items, each with 3 response options. It’s as easy as that!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>simulated_data <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">100</span>, <span class="at">iN =</span> <span class="dv">5</span>, <span class="at">lN =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Just like that, you’ve got your data! This gives you a simple matrix of simulated responses that match our configuration: 100 respondents answering 5 items, each with 3 response levels.</p>
 </section>
-<section id="setup" class="level3">
-<h3 class="anchored" data-anchor-id="setup">Setup</h3>
-<p>We start by creating mock person and item estimates.</p>
-<p>For the person proficiencies, we create a matrix with 1000 values per dimension (5 dimensions in total).</p>
+<section id="example-2-customizing-item-thresholds" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-customizing-item-thresholds">Example 2: Customizing Item Thresholds</h3>
+<p>What if you want more control over the item difficulty thresholds? You can pass in your own custom thresholds instead of letting the function generate them for you. Here’s how:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2020</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mdim.sim.thetas <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">5000</span>), <span class="at">ncol =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>custom_delta <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>simulated_data_custom <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">50</span>, <span class="at">iN =</span> <span class="dv">3</span>, <span class="at">lN =</span> <span class="dv">3</span>, <span class="at">delta =</span> custom_delta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>In this example, we’re specifying thresholds for 3 items. The <code>custom_delta</code> matrix defines how difficult each threshold is for the respective items. If you look at the output, you’ll see the responses simulated based on these difficulty levels.</p>
 </section>
-<section id="dealing-with-many-many-items" class="level3">
-<h3 class="anchored" data-anchor-id="dealing-with-many-many-items">Dealing with Many, Many Items</h3>
-<p>What happens if you have too many items?</p>
+<section id="example-3-simulating-with-custom-person-abilities" class="level3">
+<h3 class="anchored" data-anchor-id="example-3-simulating-with-custom-person-abilities">Example 3: Simulating with Custom Person Abilities</h3>
+<p>What about the people? Maybe you don’t want a standard normal distribution for their abilities. Let’s say you want a little more variety in the abilities of your respondents—no problem! You can also specify your own custom person abilities.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rasch2.sim.thresholds <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>custom_theta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>simulated_data_theta <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">100</span>, <span class="at">iN =</span> <span class="dv">5</span>, <span class="at">lN =</span> <span class="dv">3</span>, <span class="at">theta =</span> custom_theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If we use the defaults…</p>
+<p>Here, we’re generating a set of 100 person abilities (<code>custom_theta</code>) with a mean of 0 and a standard deviation of 1.5. This gives you more control over how the simulated people interact with the items in your test.</p>
+</section>
+<section id="example-4-simulating-a-rasch-model" class="level3">
+<h3 class="anchored" data-anchor-id="example-4-simulating-a-rasch-model">Example 4: Simulating a Rasch Model</h3>
+<p>Now let’s move from polytomous items to a Rasch model with dichotomous items. In this case, each item only has two possible responses. We’ll simulate data for 50 people, with abilities ranging from -3 to +3, responding to 10 items.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i09-manyitemsdef-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="tutorial02_files/figure-html/t02-i09-manyitemsdef-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rasch_theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">50</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rasch_delta <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">1.5</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="fl">0.5</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="fl">1.5</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="fl">0.8</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="fl">0.8</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>simulated_rasch <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">50</span>, <span class="at">iN =</span> <span class="dv">10</span>, <span class="at">lN =</span> <span class="dv">2</span>, <span class="at">delta =</span> rasch_delta, <span class="at">theta =</span> rasch_theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>Things do not look quite right.</p>
-<p>WrightMap offers some options…</p>
+<p>In this simulation, we have a Rasch model with 10 items and 50 persons. The <code>rasch_theta</code> values span from -3 to 3, representing a range of person abilities. The <code>rasch_delta</code> matrix specifies the difficulty of each item.</p>
+</section>
+<section id="example-5-simulating-items-with-different-numbers-of-levels" class="level3">
+<h3 class="anchored" data-anchor-id="example-5-simulating-items-with-different-numbers-of-levels">Example 5: Simulating Items with Different Numbers of Levels</h3>
+<p>What if your items don’t all have the same number of response options? That’s where the <code>itemLevels</code> argument comes in handy. For example, let’s simulate a mix of items: some have 5 levels, some are dichotomous, and some have 3 levels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rasch.sim.thetas <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rasch2.sim.thresholds <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>simulated_mixed_levels <span class="ot">&lt;-</span> <span class="fu">sim.PCM</span>(<span class="at">pN =</span> <span class="dv">50</span>, <span class="at">iN =</span> <span class="dv">10</span>, <span class="at">lN =</span> <span class="dv">5</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">itemLevels =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can use the <code>itemClassic</code> or <code>itemHist</code> options for <code>item.side</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch2.sim.thresholds, <span class="at">item.side =</span> itemClassic, <span class="at">item.prop =</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i10-manyitemsclassic-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="tutorial02_files/figure-html/t02-i10-manyitemsclassic-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(rasch.sim.thetas, rasch2.sim.thresholds, <span class="at">item.side =</span> itemHist, <span class="at">item.prop =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i11-manyitemhist-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="tutorial02_files/figure-html/t02-i11-manyitemhist-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Or you can play with the way labels are presented:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items.srt =</span> <span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i12-manyitem45-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="tutorial02_files/figure-html/t02-i12-manyitem45-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items.rows =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i13-manyitem2rows-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="tutorial02_files/figure-html/t02-i13-manyitem2rows-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.lab =</span> <span class="cn">FALSE</span>, <span class="at">label.items =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">label.items.rows =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i14-manyitem3rows-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="tutorial02_files/figure-html/t02-i14-manyitem3rows-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Or you can get rid of that axis completely.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrightMap</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>), rasch2.sim.thresholds, <span class="at">show.thr.sym =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">thr.lab.text =</span> <span class="fu">paste</span>(<span class="st">"I"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">sep =</span> <span class="st">""</span>), <span class="at">label.items =</span> <span class="st">""</span>, <span class="at">label.items.ticks =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial02_files/figure-html/t02-i15-manyitemnoaxis-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="tutorial02_files/figure-html/t02-i15-manyitemnoaxis-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
+<p>Here we’re simulating responses for 10 items, with 4 items having 5 levels, 3 items being dichotomous, and 3 items having 3 levels. This kind of flexibility is great for simulating more realistic data, where items can have different response structures.</p>
+</section>
+</section>
+<section id="wrapping-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
+<p>The <code>sim.PCM</code> function is a powerful tool for simulating item responses for both polytomous and dichotomous items. Whether you’re setting up a simple Rasch model, simulating items with multiple levels, or adding custom thresholds and person abilities, this function gives you the flexibility to generate realistic data tailored to your needs.</p>
+<p>Now that you’ve seen a few examples, you can start experimenting with different configurations to see what works best for your research or testing scenarios. Happy simulating!</p>
 
 
 </section>
@@ -438,7 +398,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/david-ti\.github\.io\/wrightmap\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -767,38 +727,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 
