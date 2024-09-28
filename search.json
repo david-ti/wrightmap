@@ -32,7 +32,7 @@
     "href": "rssfeed.html",
     "title": "WrightMap Listing",
     "section": "",
-    "text": "Introducing Person Probability Plots\n\n\n\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra\n\n\n\n\n\n\n\n\n\n\n\n\nSimulating Item Responses with the Partial Credit and Rasch Models\n\n\nUsing the sim.PCM Function\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra\n\n\n\n\n\n\n\n\n\n\n\n\nUsing WrightMap with the TAM Package\n\n\n\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 1\n\n\nPlotting Unidimensional/Dichotomous Models\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 2\n\n\nPlotting Items in Different Ways\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 3\n\n\nPlotting Multidimensional & Polytomous Models\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 4\n\n\nUsing Conquest Output and Making Thresholds\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 5\n\n\nMore Flexibility Using the person and item side functions\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\nNo matching items"
+    "text": "Introducing Person Probability Plots\n\n\nUsing the ppPlot Function\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra\n\n\n\n\n\n\n\n\n\n\n\n\nSimulating Item Responses with the Partial Credit and Rasch Models\n\n\nUsing the sim.PCM Function\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra\n\n\n\n\n\n\n\n\n\n\n\n\nUsing WrightMap with the TAM Package\n\n\n\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 1\n\n\nPlotting Unidimensional/Dichotomous Models\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 2\n\n\nPlotting Items in Different Ways\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 3\n\n\nPlotting Multidimensional & Polytomous Models\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 4\n\n\nUsing Conquest Output and Making Thresholds\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\n\n\n\n\n\n\nWrightMap Tutorial - Part 5\n\n\nMore Flexibility Using the person and item side functions\n\n\n\n\n\n\n\n\nSep 25, 2024\n\n\nDavid Torres Irribarra & Rebecca Freund\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "example02.html",
@@ -130,14 +130,14 @@
     "href": "index.html",
     "title": "WrightMap",
     "section": "",
-    "text": "Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.\n\n\n\n\n\n\n\n\n\nYou can read more about WrightMaps, browse our tutorials, or review our examples."
+    "text": "Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.\n\n\n\n\n\n\n\n\n\nYou can read more about WrightMaps, browse our tutorials, or review our examples.\nTo get updates about the package, tutorials or examples you can also subscribe to the site’s rss feed."
   },
   {
     "objectID": "index.html#welcome-to-the-official-home-of-the-wrightmap-package",
     "href": "index.html#welcome-to-the-official-home-of-the-wrightmap-package",
     "title": "WrightMap",
     "section": "",
-    "text": "Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.\n\n\n\n\n\n\n\n\n\nYou can read more about WrightMaps, browse our tutorials, or review our examples."
+    "text": "Wright Maps are commonly used to present the results of dichotomous or polytomous item response models. The WrightMap package provides functions to easily create these beautiful Wright Maps from item parameters and person estimates stored as R objects.\n\n\n\n\n\n\n\n\n\nYou can read more about WrightMaps, browse our tutorials, or review our examples.\nTo get updates about the package, tutorials or examples you can also subscribe to the site’s rss feed."
   },
   {
     "objectID": "tutorial02.html",
