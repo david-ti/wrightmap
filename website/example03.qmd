@@ -1,5 +1,6 @@
 ---
 title: "Introducing Person Probability Plots"
+subtitle: "Using the ppPlot Function"
 author: "David Torres Irribarra"
 date: "09/25/2024"
 toc: true

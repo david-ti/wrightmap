@@ -40,3 +40,5 @@ wrightMap(rsm.sim.thetas, rsm.sim.thresholds)
 ```
 
 You can read more about WrightMaps, browse our tutorials, or review our examples.
+
+[To get updates about the package, tutorials or examples you can also subscribe to the site's rss feed. {{< fa square-rss >}}](https://wrightmap.org/rssfeed.xml)
