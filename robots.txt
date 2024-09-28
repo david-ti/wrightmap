@@ -1,1 +1,1 @@
-Sitemap: https://wrightmap.org/sitemap.xml
+Sitemap: https://www.wrightmap.org/sitemap.xml
