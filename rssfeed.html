@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="David Torres Irribarra">
-<meta name="dcterms.date" content="2024-09-25">
 
-<title>Introducing Person Probability Plots – WrightMap</title>
+<title>WrightMap Listing – WrightMap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -66,6 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -75,9 +41,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,11 +68,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-</head>
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+    };
 
-<body class="nav-fixed">
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="alternate" type="application/rss+xml" title="WrightMap" href="rssfeed.xml" data-external="1"></head>
+
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -191,46 +212,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#creating-a-basic-person-probability-plot" id="toc-creating-a-basic-person-probability-plot" class="nav-link" data-scroll-target="#creating-a-basic-person-probability-plot">Creating a Basic Person Probability Plot</a>
-  <ul class="collapse">
-  <li><a href="#understanding-the-plot" id="toc-understanding-the-plot" class="nav-link" data-scroll-target="#understanding-the-plot">Understanding the Plot</a></li>
-  </ul></li>
-  <li><a href="#modifying-the-plot-adding-density-and-classic-item-styles" id="toc-modifying-the-plot-adding-density-and-classic-item-styles" class="nav-link" data-scroll-target="#modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducing Person Probability Plots</h1>
+<h1 class="title">WrightMap Listing</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>David Torres Irribarra </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 25, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -240,75 +235,241 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this tutorial, we’re going to dive into a cool new feature introduced in WrightMap version 1.2: the <strong>Person Probability Plot</strong> (PP plot). This plot is designed to represent model information for specific proficiencies, giving us a neat way to visualize the uncertainty surrounding a person’s estimate and to see the probabilities that the person will answer different items correctly.</p>
-<p>Let’s get started by loading an example ConQuest output:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package=</span><span class="st">"WrightMap"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">CQmodel</span>(<span class="at">p.est =</span> <span class="fu">file.path</span>(fpath,<span class="st">"ex2.eap"</span>), <span class="at">show =</span> <span class="fu">file.path</span>(fpath,<span class="st">"ex2.shw"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="creating-a-basic-person-probability-plot" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-basic-person-probability-plot">Creating a Basic Person Probability Plot</h2>
-<p>Now, let’s create the default version of the PP plot. There are three key things we need to provide:</p>
-<ol type="1">
-<li>A <strong>model object</strong> (in this case, <code>model1</code> from ConQuest)</li>
-<li>The <strong>person’s proficiency estimate</strong> (let’s set it at 0 logits)</li>
-<li>The <strong>standard error</strong> associated with the estimate (we’ll use 1 logit as the standard error)</li>
-</ol>
-<p>Here’s the code to generate the plot:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppPlot</span>(model1, <span class="at">est =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using GIN table for threshold parameters</code></pre>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="example03_files/figure-html/t06-i01-ppplot01-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Basic Person Probability Plot"><img src="example03_files/figure-html/t06-i01-ppplot01-1.svg" class="img-fluid figure-img" width="2400" alt="Basic Person Probability Plot"></a></p>
-<figcaption>Basic Person Probability Plot</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="understanding-the-plot" class="level3">
-<h3 class="anchored" data-anchor-id="understanding-the-plot">Understanding the Plot</h3>
-<p>In this basic version, we’re using the ConQuest item and person information stored in <code>model1</code>. The person being represented has a proficiency estimate of 0 logits and a standard error of 1 logit.</p>
-<ul>
-<li><strong>Person Side (Histogram)</strong>: The darkest bar represents the group in which the person’s proficiency estimate falls. The light gray bars on either side show the range of the standard error.</li>
-<li><strong>Item Side (Probability Lines)</strong>: For each item, the lines mark the probabilities that a person with this proficiency would answer correctly. The plot draws lines at 80%, 60%, 50%, 40%, and 20% probability thresholds.</li>
-</ul>
-</section>
-</section>
-<section id="modifying-the-plot-adding-density-and-classic-item-styles" class="level2">
-<h2 class="anchored" data-anchor-id="modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</h2>
-<p>What if you want to change things up? Let’s try using a <strong>density plot</strong> on the person side instead of a histogram and switch to a <strong>classic style</strong> for the item side. Here’s how:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppPlot</span>(model1, <span class="at">est =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">1</span>, <span class="at">person.side =</span> personDens, <span class="at">item.side =</span> itemClassic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using GIN table for threshold parameters</code></pre>
-</div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="example03_files/figure-html/t06-i02-ppplot02-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Person Probability Plot with Density and Classic Item Style"><img src="example03_files/figure-html/t06-i02-ppplot02-1.svg" class="img-fluid figure-img" width="2400" alt="Person Probability Plot with Density and Classic Item Style"></a></p>
-<figcaption>Person Probability Plot with Density and Classic Item Style</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>In this version: - <strong>Person Side (Density)</strong>: We’re using a density curve instead of the histogram to show where the proficiency estimate falls. - <strong>Item Side (Classic)</strong>: We’re switching to a “classic” item representation, giving us a more traditional look for the probability lines.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The Person Probability Plot is a great tool for visualizing the relationship between person proficiencies and item difficulties, especially when you want to show how likely it is for a person to answer specific items correctly. You can easily customize these plots by switching between histogram or density views on the person side, and by using different styles for the item side.</p>
-<p>Hopefully, this new addition to WrightMap will make it easier to communicate the results of a model for specific respondents. Play around with the options and see how the PP plot can enhance your analysis!</p>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216552" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="499">
+<div class="thumbnail">
+<p><a href="./example03.html" class="no-external"></a></p><a href="./example03.html" class="no-external">
+<p class="card-img-top"><img src="example03_files/figure-html/t06-i01-ppplot01-1.svg" alt="Basic Person Probability Plot"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./example03.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./example03.html" class="no-external">Introducing Person Probability Plots</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./example03.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./example03.html" class="no-external">In this tutorial, we’re going to dive into a cool new feature introduced in WrightMap version 1.2: the <strong>Person Probability Plot</strong> (PP plot). This plot is designed to represent…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./example03.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216552" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="859">
+<div class="thumbnail">
+<p><a href="./example01.html" class="no-external"></a></p><a href="./example01.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./example01.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./example01.html" class="no-external">Simulating Item Responses with the Partial Credit and Rasch Models</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./example01.html" class="no-external">Using the sim.PCM Function</a>
+</div>
+<div class="listing-description">
+<a href="./example01.html" class="no-external">In this tutorial, we’re going to explore how to simulate item responses using the <code>sim.PCM</code> function. This function is handy for generating polytomous item responses, allowing…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./example01.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216552" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="470">
+<div class="thumbnail">
+<p><a href="./example02.html" class="no-external"></a></p><a href="./example02.html" class="no-external">
+<p class="card-img-top"><img src="example02_files/figure-html/basic-1.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./example02.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./example02.html" class="no-external">Using WrightMap with the TAM Package</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./example02.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./example02.html" class="no-external">WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./example02.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra &amp; Rebecca Freund
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="926">
+<div class="thumbnail">
+<p><a href="./tutorial01.html" class="no-external"></a></p><a href="./tutorial01.html" class="no-external">
+<p class="card-img-top"><img src="tutorial01_files/figure-html/t01-i01-first_example-1.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./tutorial01.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tutorial01.html" class="no-external">WrightMap Tutorial - Part 1</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tutorial01.html" class="no-external">Plotting Unidimensional/Dichotomous Models</a>
+</div>
+<div class="listing-description">
+<a href="./tutorial01.html" class="no-external">This is an introduction to the <code>wrightMap</code> function in the <code>WrightMap</code> package. The wrightMap function creates Wright Maps based on person estimates and item parameters produced…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tutorial01.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra &amp; Rebecca Freund
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="287">
+<div class="thumbnail">
+<p><a href="./tutorial02.html" class="no-external"></a></p><a href="./tutorial02.html" class="no-external">
+<p class="card-img-top"><img src="tutorial02_files/figure-html/t02-i09-manyitemsdef-1.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./tutorial02.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tutorial02.html" class="no-external">WrightMap Tutorial - Part 2</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tutorial02.html" class="no-external">Plotting Items in Different Ways</a>
+</div>
+<div class="listing-description">
+<a href="./tutorial02.html" class="no-external">We start by creating mock person and item estimates.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tutorial02.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra &amp; Rebecca Freund
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="647">
+<div class="thumbnail">
+<p><a href="./tutorial03.html" class="no-external"></a></p><a href="./tutorial03.html" class="no-external">
+<p class="card-img-top"><img src="tutorial03_files/figure-html/t02-i01-first_mdim_example-1.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./tutorial03.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tutorial03.html" class="no-external">WrightMap Tutorial - Part 3</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tutorial03.html" class="no-external">Plotting Multidimensional &amp; Polytomous Models</a>
+</div>
+<div class="listing-description">
+<a href="./tutorial03.html" class="no-external">In Part 1, we reviewed how to install the package from GitHub and how to customize unidimensional and dichotomous models. Now in Part 2, we’ll look at graphing some more…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tutorial03.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra &amp; Rebecca Freund
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1312">
+<div class="thumbnail">
+<p><a href="./tutorial04.html" class="no-external"></a></p><a href="./tutorial04.html" class="no-external">
+<p class="card-img-top"><img src="tutorial04_files/figure-html/t03-i01-CQexample00-1.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./tutorial04.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tutorial04.html" class="no-external">WrightMap Tutorial - Part 4</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tutorial04.html" class="no-external">Using Conquest Output and Making Thresholds</a>
+</div>
+<div class="listing-description">
+<a href="./tutorial04.html" class="no-external">In this part of the tutorial, we’ll show how to load ConQuest output to make a CQmodel object and then WrightMaps. We’ll also show how to turn deltas into thresholds. All…<code></code><code></code><code></code><code></code></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tutorial04.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra &amp; Rebecca Freund
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1727222400000" data-listing-file-modified-sort="1727527216553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1579">
+<div class="thumbnail">
+<p><a href="./tutorial05.html" class="no-external"></a></p><a href="./tutorial05.html" class="no-external">
+<p class="card-img-top"><img src="tutorial05_files/figure-html/t05-i01-itemModernExample-1.svg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./tutorial05.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tutorial05.html" class="no-external">WrightMap Tutorial - Part 5</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tutorial05.html" class="no-external">More Flexibility Using the person and item side functions</a>
+</div>
+<div class="listing-description">
+<a href="./tutorial05.html" class="no-external">Version 1.2 of the <code>WrightMap</code> package allows you to directly access the functions used for drawing the person and item sides of the map in order to allow more flexible item…<code></code></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tutorial05.html" class="no-external">
+<div class="listing-date">
+Sep 25, 2024
+</div>
+<div class="listing-author">
+David Torres Irribarra &amp; Rebecca Freund
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -730,38 +891,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 

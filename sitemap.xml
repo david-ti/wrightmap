@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.wrightmap.org/tutorial04.html</loc>
-    <lastmod>2024-09-28T12:36:33.432Z</lastmod>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
   </url>
   <url>
     <loc>https://www.wrightmap.org/tutorial03.html</loc>
-    <lastmod>2024-09-28T12:36:33.432Z</lastmod>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
   </url>
   <url>
-    <loc>https://www.wrightmap.org/tutorial05.html</loc>
-    <lastmod>2024-09-28T12:36:33.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.wrightmap.org/tutorial02.html</loc>
-    <lastmod>2024-09-28T12:36:33.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.wrightmap.org/index.html</loc>
-    <lastmod>2024-09-28T12:36:33.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.wrightmap.org/tutorial01.html</loc>
-    <lastmod>2024-09-28T12:36:33.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.wrightmap.org/example03.html</loc>
-    <lastmod>2024-09-28T12:36:33.431Z</lastmod>
+    <loc>https://www.wrightmap.org/rssfeed.html</loc>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
   </url>
   <url>
     <loc>https://www.wrightmap.org/example02.html</loc>
-    <lastmod>2024-09-28T12:36:33.431Z</lastmod>
+    <lastmod>2024-09-28T12:40:16.552Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.wrightmap.org/example03.html</loc>
+    <lastmod>2024-09-28T12:40:16.552Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.wrightmap.org/tutorial01.html</loc>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.wrightmap.org/index.html</loc>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.wrightmap.org/tutorial02.html</loc>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.wrightmap.org/tutorial05.html</loc>
+    <lastmod>2024-09-28T12:40:16.553Z</lastmod>
   </url>
   <url>
     <loc>https://www.wrightmap.org/example01.html</loc>
-    <lastmod>2024-09-28T12:36:33.431Z</lastmod>
+    <lastmod>2024-09-28T12:40:16.552Z</lastmod>
   </url>
   <url>
     <loc>https://www.wrightmap.org/about.html</loc>
-    <lastmod>2024-09-28T12:36:33.431Z</lastmod>
+    <lastmod>2024-09-28T12:40:16.552Z</lastmod>
   </url>
 </urlset>
