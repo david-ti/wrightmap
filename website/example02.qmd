@@ -22,7 +22,7 @@ if (!requireNamespace("TAM", quietly = TRUE)) {
 library(WrightMap)
 ```
 
-# Using WrightMap with the TAM Package
+## Introduction
 
 WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.
 

@@ -20,7 +20,7 @@ if (!requireNamespace("WrightMap", quietly = TRUE)) {
 library(WrightMap)
 ```
 
-# Simulating Item Responses for Partial Credit and Rasch Models
+## Introduction
 
 In this tutorial, we're going to explore how to simulate item responses using the `sim.PCM` function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.
 
