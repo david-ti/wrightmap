@@ -12,15 +12,15 @@ website:
       - text: Tutorials      
         menu:
           - file: tutorial01.qmd
-            text: Tutorial 01
+            text: Plotting Unidimensional/Dichotomous Models
           - file: tutorial02.qmd
-            text: Tutorial 02
+            text: Plotting Items in Different Ways
           - file: tutorial03.qmd
-            text: Tutorial 03
+            text: Plotting Multidimensional & Polytomous Models
           - file: tutorial04.qmd
-            text: Tutorial 04
+            text: Using Conquest Output and Making Thresholds
           - file: tutorial05.qmd
-            text: Tutorial 05                          
+            text: More Flexibility Using the person and item side functions                        
           # Add more tutorials here
 
       - text: Examples
