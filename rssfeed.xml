@@ -151,10 +151,11 @@ font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div>
 
 
 
-<section id="simulating-item-responses-for-partial-credit-and-rasch-models" class="level1">
-<h1>Simulating Item Responses for Partial Credit and Rasch Models</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In this tutorial, we’re going to explore how to simulate item responses using the <code>sim.PCM</code> function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.</p>
 <p>What’s great about <code>sim.PCM</code> is its flexibility—it lets you play around with different item levels, thresholds, and person abilities. Whether you want a simple Rasch model or a more complex situation where items have different numbers of categories, this function has you covered!</p>
+</section>
 <section id="setting-up-the-simulation" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-the-simulation">Setting Up the Simulation</h2>
 <p>Let’s start by simulating some basic data. We’ll begin with a simple setup: 100 respondents answering 5 items, each with 3 response levels (think of it like a Likert scale with three options).</p>
@@ -443,7 +444,6 @@ font-style: inherit;">3</span>))</span></code></pre></div>
 
 
 </section>
-</section>
 
  ]]></description>
   <guid>https://www.wrightmap.org/example01.html</guid>
@@ -458,10 +458,11 @@ font-style: inherit;">3</span>))</span></code></pre></div>
 
 
 
-<section id="using-wrightmap-with-the-tam-package" class="level1">
-<h1>Using WrightMap with the TAM Package</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.</p>
 <p>This post will show you how you can integrate R with one of these estimation packages, the Test Analysis Module (<code>TAM</code>) package, in just a couple of lines.</p>
+</section>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Let’s start by loading TAM.</p>
@@ -641,7 +642,6 @@ font-style: inherit;">3</span>)</span></code></pre></div>
 </div>
 
 
-</section>
 </section>
 
  ]]></description>

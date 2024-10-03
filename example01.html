@@ -189,8 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#simulating-item-responses-for-partial-credit-and-rasch-models" id="toc-simulating-item-responses-for-partial-credit-and-rasch-models" class="nav-link active" data-scroll-target="#simulating-item-responses-for-partial-credit-and-rasch-models">Simulating Item Responses for Partial Credit and Rasch Models</a>
-  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#setting-up-the-simulation" id="toc-setting-up-the-simulation" class="nav-link" data-scroll-target="#setting-up-the-simulation">Setting Up the Simulation</a>
   <ul class="collapse">
   <li><a href="#example-1-basic-simulation" id="toc-example-1-basic-simulation" class="nav-link" data-scroll-target="#example-1-basic-simulation">Example 1: Basic Simulation</a></li>
@@ -200,7 +199,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#example-5-simulating-items-with-different-numbers-of-levels" id="toc-example-5-simulating-items-with-different-numbers-of-levels" class="nav-link" data-scroll-target="#example-5-simulating-items-with-different-numbers-of-levels">Example 5: Simulating Items with Different Numbers of Levels</a></li>
   </ul></li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -239,10 +237,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="simulating-item-responses-for-partial-credit-and-rasch-models" class="level1">
-<h1>Simulating Item Responses for Partial Credit and Rasch Models</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In this tutorial, we’re going to explore how to simulate item responses using the <code>sim.PCM</code> function. This function is handy for generating polytomous item responses, allowing us to simulate responses for models like the Partial Credit Model (PCM) or even a Rasch model when dealing with dichotomous items.</p>
 <p>What’s great about <code>sim.PCM</code> is its flexibility—it lets you play around with different item levels, thresholds, and person abilities. Whether you want a simple Rasch model or a more complex situation where items have different numbers of categories, this function has you covered!</p>
+</section>
 <section id="setting-up-the-simulation" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-the-simulation">Setting Up the Simulation</h2>
 <p>Let’s start by simulating some basic data. We’ll begin with a simple setup: 100 respondents answering 5 items, each with 3 response levels (think of it like a Likert scale with three options).</p>
@@ -298,7 +297,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now that you’ve seen a few examples, you can start experimenting with different configurations to see what works best for your research or testing scenarios. Happy simulating!</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

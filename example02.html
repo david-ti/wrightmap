@@ -192,14 +192,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#using-wrightmap-with-the-tam-package" id="toc-using-wrightmap-with-the-tam-package" class="nav-link active" data-scroll-target="#using-wrightmap-with-the-tam-package">Using WrightMap with the TAM Package</a>
-  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
   <li><a href="#analysis-with-tam" id="toc-analysis-with-tam" class="nav-link" data-scroll-target="#analysis-with-tam">Analysis with TAM</a></li>
   <li><a href="#person-estimates" id="toc-person-estimates" class="nav-link" data-scroll-target="#person-estimates">Person Estimates</a></li>
   <li><a href="#item-parameters" id="toc-item-parameters" class="nav-link" data-scroll-target="#item-parameters">Item Parameters</a></li>
   <li><a href="#creating-the-wright-map" id="toc-creating-the-wright-map" class="nav-link" data-scroll-target="#creating-the-wright-map">Creating the Wright Map</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -237,10 +235,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="using-wrightmap-with-the-tam-package" class="level1">
-<h1>Using WrightMap with the TAM Package</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>WrightMap features close integration with Conquest, allowing you to easily read from its output files. However, this is just a nice convenience for Conquest users, as WrightMap was designed to create beautiful item-person plots simply reading standard R matrices; all you need is a matrix of item parameters and a matrix of person estimates, and you can start creating nice Wright Maps. For this reason, the WrightMap package can be used to plot the results of any IRT software and makes it very easy to integrate with other R packages that estimate IRT models.</p>
 <p>This post will show you how you can integrate R with one of these estimation packages, the Test Analysis Module (<code>TAM</code>) package, in just a couple of lines.</p>
+</section>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Let’s start by loading TAM.</p>
@@ -368,7 +367,6 @@ Iteration in WLE/MLE estimation  5   | Maximal change  0
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -793,7 +791,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
