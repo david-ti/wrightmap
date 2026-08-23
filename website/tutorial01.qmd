@@ -17,12 +17,6 @@ options(repos = c(CRAN = "https://cloud.r-project.org"))
 # Silently load the WrightMap package
 if (!requireNamespace("WrightMap", quietly = TRUE)) {
   install.packages("WrightMap")
-
-# Silently load the WrightMap package
-if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
-  install.packages("RColorBrewer")
-}
-
 }
 library(WrightMap)
 ```

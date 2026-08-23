@@ -36,7 +36,6 @@ In Part 2, we'll look at graphing some more complicated models. First, let's gen
 We will need again to load RColorBrewer for this example.
 
 ```{r}
-install.packages("RColorBrewer")
 library(RColorBrewer)
 ```
 
