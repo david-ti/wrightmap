@@ -44,7 +44,7 @@ fitgraph arguments:
 	number or vector indicating the type of symbols to be used for each item.
 }
   \item{fitColours}{
-	Color that will be used to shade the critical inteval area.
+	Color that will be used to shade the critical interval area.
 }
   \item{xlab}{
 	Label of the x-axis. The default is `items`.

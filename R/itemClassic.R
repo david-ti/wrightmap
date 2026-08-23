@@ -1,10 +1,11 @@
-itemClassic <- function(thr, yRange = NULL, axis.items = "Items", 
-                        axis.logits = "Logits", show.axis.logits = "R", 
-                        axis.logits.cex = 0.7, oma = c(0, 0, 0, 3), 
-                        cutpoints = NULL, cutpoints.par = list(), label.items = NULL, 
-                        label.steps = NULL, label.sep = ".", thr.lab.sep = " | ", 
-                        thr.lab.par = list(), axis.logits.par = list(), 
-                        logits.text.par = list(), pad.char = "_", 
+itemClassic <- function(thr, yRange = NULL, axis.items = "Items",
+                        axis.logits = "Logits", show.axis.logits = "R",
+                        axis.logits.cex = 0.7, oma = c(0, 0, 0, 3),
+                        cutpoints = NULL, cutpoints.par = list(), label.items = NULL,
+                        label.steps = NULL, label.steps.type = NULL,
+                        label.sep = ".", thr.lab.sep = " | ",
+                        thr.lab.par = list(), axis.logits.par = list(),
+                        logits.text.par = list(), pad.char = "_",
                         font.family = "mono", ...) {
   
   # Helper function to generate breaks for the histogram
@@ -107,9 +108,18 @@ itemClassic <- function(thr, yRange = NULL, axis.items = "Items",
   
   # Handle step labels for thresholds
   if (is.null(label.steps)) {
-    label.steps <- 1:nL
+    if (!is.null(label.steps.type) && label.steps.type == "transition") {
+      # Transition labels: 0/1, 1/2, 2/3, etc.
+      label.steps <- paste0((1:nL) - 1, "/", 1:nL)
+    } else {
+      # Default labels: 1, 2, 3, etc.
+      label.steps <- 1:nL
+    }
   } else if (is.logical(label.steps) && label.steps) {
-    label.steps <- if (!is.null(colnames(thr))) colnames(thr) else 1:nL
+    # Use column names if available and all non-empty, otherwise default to numeric
+    cnames <- colnames(thr)
+    has_meaningful_colnames <- !is.null(cnames) && all(nzchar(cnames))
+    label.steps <- if (has_meaningful_colnames) cnames else 1:nL
   }
 
   # Generate item labels if multiple levels

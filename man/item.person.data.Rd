@@ -79,7 +79,7 @@ For the itemData function, note that the \code{item.table}, \code{interactions},
 
 
 \value{
-The itemData functions return a vector of item parameters, or a matrix in which the rows are items and the columns are steps. The personData functions return a vector of person paramenters, or a matrix in which the rows are persons and the columns are dimensions.
+The itemData functions return a vector of item parameters, or a matrix in which the rows are items and the columns are steps. The personData functions return a vector of person parameters, or a matrix in which the rows are persons and the columns are dimensions.
 }
 
 \author{

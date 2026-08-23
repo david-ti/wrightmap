@@ -1,0 +1,14 @@
+
+> library(knitr)
+
+> opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE, 
++     out.width = "80%", fig.align = "center", collapse = TRUE, 
++     comment = "#> ..." ... [TRUNCATED] 
+
+> install.packages("whomds")
+Installing package into ‘/Users/dti/Documents/GitHub/wrightmap/revdep/checks.noindex/whomds/new/whomds.Rcheck’
+(as ‘lib’ is unspecified)
+
+  When sourcing ‘c2_getting_started_EN.R’:
+Error: trying to use CRAN without setting a mirror
+Execution halted

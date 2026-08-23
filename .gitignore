@@ -1,6 +1,7 @@
 
 *.history
 .DS_Store
+/MD5
 
 /.quarto/
 /_site/

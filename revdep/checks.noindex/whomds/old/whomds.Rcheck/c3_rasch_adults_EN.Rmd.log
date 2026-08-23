@@ -1,0 +1,18 @@
+
+> library(knitr)
+
+> opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE, 
++     out.width = "80%", fig.align = "center", collapse = TRUE, 
++     comment = "#> ..." ... [TRUNCATED] 
+
+> `?`(rasch_mds)
+No documentation for ‘rasch_mds’ in specified packages and libraries:
+you could try ‘??rasch_mds’
+
+> rasch_mds(df = df_adults, vars_metric = paste0("EF", 
++     1:12), vars_id = "HHID", vars_DIF = c("sex", "age_cat"), 
++     resp_opts = 1:5, max_NA  .... [TRUNCATED] 
+
+  When sourcing ‘c3_rasch_adults_EN.R’:
+Error: could not find function "rasch_mds"
+Execution halted

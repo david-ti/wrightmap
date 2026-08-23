@@ -14,11 +14,11 @@ Additionally, the package contains the \code{CQmodel} function, which reads outp
 \tabular{ll}{
 Package: \tab WrightMap\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-03-02\cr
-License: \tab BSD_3_clause | LICENSE \cr
+Version: \tab 1.5\cr
+Date: \tab 2026-08-23\cr
+License: \tab BSD_2_clause + file LICENSE \cr
 }
-The wrightMap function relies on two main inputs: (a) \code{thetas}: a vector or matrix of respondent proficiences, and (b) \code{thresholds}: a vector or matrix of item thresholds. In the simplest case, say for a unidimensional Rasch model, \code{thetas} can be a vector of person proficiencies and \code{thresholds} a vector of item difficulties. 
+The wrightMap function relies on two main inputs: (a) \code{thetas}: a vector or matrix of respondent proficiencies, and (b) \code{thresholds}: a vector or matrix of item thresholds. In the simplest case, say for a unidimensional Rasch model, \code{thetas} can be a vector of person proficiencies and \code{thresholds} a vector of item difficulties. 
 
 To plot multiple dimensions of person proficiency, simply provide them as a matrix were the results for each dimension is stored in a different column, such that for a 3-dimensional model with 1,000 persons, \code{theta} is a matrix of 1000 rows and 3 columns. 
 
@@ -30,7 +30,7 @@ Alternatively, wrightMap can read directly the \code{.shw} and \code{.eap/.mle/.
 \author{
 David Torres Irribarra and Rebecca Freund
 
-Maintainer: David Torres Irribarra <dti@berkeley.edu> and Rebecca Freund <rlfreund@berkeley.edu>
+Maintainer: David Torres Irribarra <david@torresirribarra.me>
 }
 \references{
 	Andrich, D. (1978). A rating formulation for ordered response categories. \emph{Psychometrika}, \emph{43}(4), 561--573. 

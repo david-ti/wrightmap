@@ -1,0 +1,4413 @@
+pkgname <- "LSAmitR"
+source(file.path(R.home("share"), "R", "examples-header.R"))
+options(warn = 1)
+library('LSAmitR')
+
+base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+cleanEx()
+nameEx("01_Testkonstruktion__20220517")
+### * 01_Testkonstruktion__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  1
+### Title: Kapitel 1: Testkonstruktion
+### Aliases: 'Kapitel 1'
+
+### ** Examples
+
+## Not run: 
+##D library(TAM)
+##D library(miceadds)
+##D library(irr)
+##D library(gtools)
+##D library(car)
+##D 
+##D set.seed(1337)
+##D data(datenKapitel01)
+##D pilotScored <- datenKapitel01$pilotScored
+##D pilotItems <- datenKapitel01$pilotItems
+##D pilotRoh <- datenKapitel01$pilotRoh
+##D pilotMM <- datenKapitel01$pilotMM
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 1.5.5: Aspekte empirischer Güteüberprüfung 
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 1: Vorbereitung
+##D #
+##D 
+##D # Rekodierter Datensatz pilotScored
+##D dat <- pilotScored
+##D items <- grep("E8R", colnames(dat), value = TRUE)
+##D dat[items] <- recode(dat[items], "9=0;8=0")
+##D # Itembank im Datensatz pilotItems
+##D dat.ib <- pilotItems
+##D items.dich <- dat.ib$item[dat.ib$maxScore == 1]
+##D 
+##D # Berechne erreichbare Punkte je TH
+##D # aus Maximalscore je Item in Itembank
+##D ind <- match(items, dat.ib$item)
+##D testlets.ind <- ! items %in% items.dich
+##D ind[testlets.ind] <- match(items[testlets.ind], dat.ib$testlet)
+##D maxscores <- dat.ib$maxScore[ind]
+##D max.form <- 1 * (!is.na(dat[, items])) %*% maxscores
+##D 
+##D # Erzielter Score ist der Summenscore dividiert durch 
+##D # Maximalscore
+##D sumscore <- rowSums(dat[, items], na.rm = TRUE)
+##D relscore <- sumscore/max.form
+##D mean(relscore)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 2: Omitted Response
+##D #
+##D 
+##D library(TAM)
+##D # Bestimme absolute und relative Häufigkeit der Kategorie 9 (OR)
+##D ctt.omit <- tam.ctt2(pilotScored[, items])
+##D ctt.omit <- ctt.omit[ctt.omit$Categ == 9, ]
+##D # Übersicht der am häufigsten ausgelassenen Items
+##D tail(ctt.omit[order(ctt.omit$RelFreq), -(1:4)])
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 3: Not Reached
+##D #
+##D 
+##D not.reached <- rep(0, length(items))
+##D names(not.reached) <- items
+##D 
+##D # Führe die Bestimmung in jedem Testheft durch
+##D forms <- sort(unique(dat$form))
+##D for(ff in forms){ 
+##D   # (1) Extrahiere Itempositionen
+##D   order.ff <- order(dat.ib[, ff], na.last = NA, 
+##D                     decreasing = TRUE)
+##D   items.ff <- dat.ib$item[order.ff]
+##D   testlets.ff <- dat.ib$testlet[order.ff]
+##D   
+##D   # (2) Sortiere Items und Testlets nach den Positionen
+##D   testlets.ind <- ! items.ff %in% items.dich
+##D   items.ff[testlets.ind] <- testlets.ff[testlets.ind]
+##D   items.order.ff <- unique(items.ff)
+##D   
+##D   # (3) Bringe Testhefte in Reihenfolge und
+##D   #     zähle von hinten aufeinanderfolgende Missings
+##D   ind.ff <- pilotScored$form == ff
+##D   dat.order.ff <- pilotScored[ind.ff, items.order.ff]  
+##D   dat.order.ff <- dat.order.ff == 9
+##D   dat.order.ff <- apply(dat.order.ff, 1, cumsum)
+##D   
+##D   # (4) Vergleiche letzteres mit theoretisch möglichem 
+##D   #     vollständigen NR
+##D   vergleich <- cumsum(rep(1, length(items.order.ff)))
+##D   dat.order.ff[dat.order.ff != vergleich] <- 0
+##D   
+##D   # (5) Erstes NR kann auch OR sein
+##D   erstes.NR <- apply(dat.order.ff, 2, which.max)
+##D   ind <- cbind(erstes.NR, 1:ncol(dat.order.ff))
+##D   dat.order.ff[ind] <- 0
+##D   
+##D   # (6) Zähle, wie oft für ein Item NR gilt
+##D   not.reached.ff <- rowSums(dat.order.ff > 0)
+##D   not.reached[items.order.ff] <- not.reached.ff[items.order.ff] + 
+##D     not.reached[items.order.ff]
+##D }
+##D 
+##D tail(not.reached[order(not.reached)])
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 4: Itemschwierigkeit
+##D #
+##D 
+##D # Statistik der relativen Lösungshäufigkeiten
+##D p <- colMeans(dat[, items], na.rm = TRUE) / maxscores
+##D summary(p)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 5: Trennschärfe
+##D #
+##D 
+##D discrim <- sapply(items, FUN = function(ii){ 
+##D   if(var(dat[, ii], na.rm = TRUE) == 0) 0 else
+##D     cor(dat[, ii], relscore, use = "pairwise.complete.obs") 
+##D }) 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 6: Eindeutigkeit der Lösung
+##D #
+##D 
+##D dat.roh <- pilotRoh
+##D items <- grep("E8R", colnames(dat.roh), value = TRUE)
+##D vars <- c("item", "Categ", "AbsFreq", "RelFreq", "rpb.WLE")
+##D 
+##D # Wähle nur geschlossene Items (d. h., nicht Open gap-fill)
+##D items.ogf <- dat.ib$item[dat.ib$format == "Open gap-fill"]
+##D items <- setdiff(items, items.ogf)
+##D 
+##D # Bestimme absolute und relative Häufigkeit der Antwortoptionen 
+##D # und jeweilige punktbiseriale Korrelationen mit dem Gesamtscore
+##D ctt.roh <- tam.ctt2(dat.roh[, items], wlescore = relscore)
+##D 
+##D # Indikator der richtigen Antwort
+##D match.item <- match(ctt.roh$item, dat.ib$item)
+##D rohscore <- 1 * (ctt.roh$Categ == dat.ib$key[match.item])
+##D 
+##D # Klassifikation der Antwortoptionen 
+##D ist.antwort.option <- (!ctt.roh$Categ %in% c(8,9))
+##D ist.distraktor <- rohscore == 0 & ist.antwort.option
+##D ist.pos.korr <- ctt.roh$rpb.WLE > 0.05
+##D ist.bearb <- ctt.roh$AbsFreq >= 10
+##D 
+##D # Ausgabe
+##D ctt.roh[ist.distraktor & ist.pos.korr & ist.bearb, vars]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 7: Plausible Distraktoren
+##D #
+##D 
+##D # Ausgabe
+##D head(ctt.roh[ist.distraktor & ctt.roh$RelFreq < 0.05, vars],4)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 1.5.5, Listing 8: Kodierbarkeit
+##D #
+##D 
+##D library(irr)
+##D dat.mm <- pilotMM
+##D 
+##D # Bestimme Modus der Berechnung: bei 3 Kodierern
+##D # gibt es 3 paarweise Vergleiche
+##D vars <- grep("Coder", colnames(dat.mm))
+##D n.vergleiche <- choose(length(vars), 2)
+##D ind.vergleiche <- upper.tri(diag(length(vars)))
+##D 
+##D # Berechne Statistik für jedes Item
+##D coder <- NULL
+##D for(ii in unique(dat.mm$item)){
+##D   dat.mm.ii <- dat.mm[dat.mm$item == ii, vars]
+##D   
+##D   # Relative Häufigkeit der paarweisen Übereinstimmung
+##D   agreed <- apply(dat.mm.ii, 1, function(dd){
+##D     sum(outer(dd, dd, "==")[ind.vergleiche]) / n.vergleiche
+##D   })
+##D   
+##D   # Fleiss Kappa
+##D   kappa <- kappam.fleiss(dat.mm.ii)$value
+##D   
+##D   # Ausgabe
+##D   coderII <- data.frame("item" = ii,
+##D                         "p_agreed" = mean(agreed),
+##D                         "kappa" = round(kappa, 4))
+##D   coder <- rbind(coder, coderII)
+##D }
+##D 
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("02_Stichprobenziehung__20220517")
+### * 02_Stichprobenziehung__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  2
+### Title: Kapitel 2: Stichprobenziehung
+### Aliases: 'Kapitel 2'
+
+### ** Examples
+
+## Not run: 
+##D data(datenKapitel02)
+##D schueler <- datenKapitel02$schueler
+##D schule <- datenKapitel02$schule
+##D set.seed(20150506)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.1: Stratifizierung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.1, Listing 1
+##D 
+##D # Information in Strata
+##D strata <- aggregate(schule[,"NSchueler", drop = FALSE],
+##D                     by=schule[,"stratum", drop = FALSE], sum)
+##D colnames(strata)[2] <- "NSchuelerStratum"
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.2: Schulenziehung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 1
+##D 
+##D # Dummyvariable Klassenziehung
+##D schule$Klassenziehung <- 0
+##D schule[which(schule$NKlassen>3), "Klassenziehung"] <- 1
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 2
+##D 
+##D # erwarteter Beitrag zur Stichprobe pro Schule 
+##D schule$NSchueler.erw <- schule$NSchueler
+##D ind <- which(schule$Klassenziehung == 1)
+##D schule[ind, "NSchueler.erw"] <- 
+##D   schule[ind, "NSchueler"]/schule[ind, "NKlassen"]*3
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 3
+##D 
+##D # relativer Anteil Schüler pro Schule
+##D temp <- merge(schule[, c("SKZ","stratum","NSchueler")], 
+##D               strata[, c("stratum","NSchuelerStratum")])
+##D schule$AnteilSchueler <- 
+##D   temp$NSchueler/temp$NSchuelerStratum
+##D # mittlere Anzahl von Schülern pro Schule
+##D strata$"NSchueler/Schule.erw" <- 
+##D   rowsum(apply(schule, 1, function(x)
+##D     x["NSchueler.erw"]*x["AnteilSchueler"]), schule$stratum)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 4
+##D 
+##D # Bestimmung Anzahl zu ziehender Schulen
+##D strata$Schulen.zu.ziehen <- 
+##D   round(2500/strata[,"NSchueler/Schule.erw"])
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 5
+##D 
+##D # Schulenliste nach Stratum und Groesse ordnen
+##D schule <- 
+##D   schule[order(schule$stratum, schule$NSchueler),]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 6
+##D 
+##D # Berechnung Sampling-Intervall
+##D strata$Samp.Int <- 
+##D   strata$NSchuelerStratum/strata$Schulen.zu.ziehen
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 7
+##D 
+##D # Startwerte bestimmen
+##D strata$Startwert <- 
+##D   sapply(ceiling(strata$Samp.Int), sample, size = 1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 8
+##D 
+##D # Schüler-Tickets
+##D tickets <- sapply(1:4, function(x)
+##D   trunc(0:(strata[strata$stratum==x,"Schulen.zu.ziehen"]-1)
+##D   * strata[strata$stratum==x, "Samp.Int"] +
+##D     strata$Startwert[x]))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 9
+##D 
+##D # kummulierte Schüleranzahl pro Stratum berechnen
+##D schule$NSchuelerKum <- 
+##D   unlist(sapply(1:4, function(x)
+##D     cumsum(schule[schule$stratum==x, "NSchueler"])))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 10
+##D 
+##D # Schulen ziehen
+##D schule$SInSamp <- 0 
+##D for(s in 1:4) {
+##D   NSchuelerKumStrat <- 
+##D     schule[schule$stratum==s, "NSchuelerKum"]
+##D   inds <- sapply(tickets[[s]], function(x)
+##D     setdiff(which(NSchuelerKumStrat <= x),
+##D             which(NSchuelerKumStrat[-1] <= x)))
+##D   schule[schule$stratum==s, "SInSamp"][inds] <- 1 }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.2, Listing 11
+##D 
+##D # Berechnung Ziehungswahrscheinlichkeit Schule
+##D temp <- merge(schule[, c("stratum", "AnteilSchueler")],
+##D   strata[, c("stratum", "Schulen.zu.ziehen")])
+##D schule$Z.Wsk.Schule <- 
+##D   temp$AnteilSchueler*temp$Schulen.zu.ziehen
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.3: Klassenziehung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.3, Listing 1
+##D 
+##D ### Klassenziehung (Alternative 2)
+##D schukla <- unique(merge(
+##D   schule[, c("SKZ","NKlassen", "Klassenziehung", 
+##D     "Z.Wsk.Schule", "SInSamp")],
+##D     schueler[, c("SKZ", "idclass")], by="SKZ"))
+##D schukla$KlInSamp <- 0
+##D for(skz in unique(schukla[schukla$SInSamp==1,"SKZ"])) {
+##D   temp <- schukla[schukla$SKZ==skz, "idclass"]
+##D   schukla[schukla$idclass%in%temp[sample.int(
+##D     min(3, length(temp)))], "KlInSamp"] <- 1 }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.3, Listing 2
+##D 
+##D # Ziehungswahrscheinlichkeit Klasse 
+##D schukla$Z.Wsk.Klasse <- ((1 - schukla$Klassenziehung) * 1 + 
+##D      schukla$Klassenziehung * 3 / schukla$NKlassen) 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.4: Gewichtung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4, Listing 1
+##D 
+##D ### Gewichte
+##D schueler <- merge(schueler, schukla[, c("idclass", "KlInSamp", "Z.Wsk.Schule", 
+##D                                         "Z.Wsk.Klasse")],
+##D                   by="idclass", all.x=T)
+##D # Ziehungswahrscheinlichkeiten Schueler 
+##D schueler$Z.Wsk.Schueler <- 
+##D   schueler$Z.Wsk.Schule * schueler$Z.Wsk.Klasse
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4, Listing 2
+##D 
+##D schueler <- schueler[schueler$KlInSamp==1,]
+##D # Nonresponse Adjustment 
+##D temp <- merge(schueler[, c("idclass", "Z.Wsk.Schueler")],
+##D   aggregate(schueler$teilnahme, 
+##D     by=list(schueler$idclass),
+##D     function(x) sum(x)/length(x)), 
+##D   by.x="idclass", by.y="Group.1")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4, Listing 3
+##D 
+##D # Schülergewichte
+##D schueler$studwgt <- 1/temp$x/temp$Z.Wsk.Schueler
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4, Listing 4
+##D 
+##D # Normierung
+##D Normierung <- strata$NSchuelerStratum / 
+##D   rowsum(schueler$studwgt * schueler$teilnahme,
+##D          group = schueler$Stratum)
+##D schueler$NormStudwgt <- 
+##D   schueler$studwgt * Normierung[schueler$Stratum]
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 5.3: Jackknife-Repeated-Replication
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3, Listing 1
+##D 
+##D ### Ergänzung zum Buch: Hilfsfunktion zones.within.stratum
+##D zones.within.stratum <- function(offset,n.str) {
+##D   maxzone <- offset-1+floor(n.str/2)
+##D   zones <- sort(rep(offset:maxzone,2))
+##D   if (n.str %% 2 == 1) zones <- c(zones,maxzone)
+##D   return(zones) }
+##D ### Ende der Ergänzung
+##D 
+##D # Sortieren der Schulliste (explizite und implizite Strata)
+##D schule <- schule[schule$SInSamp==1,]
+##D schule <- schule[order(schule$stratum,-schule$NSchueler),]
+##D 
+##D # Unterteilung in Pseudostrata 
+##D cnt.strata <- length(unique(schule$stratum))
+##D offset <- 1
+##D jkzones.vect <- integer()
+##D for (i in 1:cnt.strata) {
+##D   n.str <- table(schule$stratum)[i]
+##D   jkzones.vect <- 
+##D     c(jkzones.vect,zones.within.stratum(offset,n.str))
+##D   offset <- max(jkzones.vect)+1 }
+##D schule$jkzone <- jkzones.vect
+##D 
+##D # Zufällige Auswahl von Schulen mit Gewicht 0
+##D schule$jkrep <- 1
+##D cnt.zones <- max(schule$jkzone)
+##D jkrep.rows.null <- integer()
+##D for (i in 1:cnt.zones) {
+##D   rows.zone <- which(schule$jkzone==i)
+##D ### Ergänzung zum Buch: Fallunterscheidung je nach Anzahl Schulen in der Zone
+##D   if (length(rows.zone)==2) jkrep.rows.null <- 
+##D     c(jkrep.rows.null,sample(rows.zone,size=1))
+##D   else {
+##D       num.null <- sample(1:2,size=1)
+##D       jkrep.rows.null <- 
+##D         c(jkrep.rows.null,sample(rows.zone,size=num.null)) 
+##D     } }
+##D schule[jkrep.rows.null,]$jkrep <- 0
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3, Listing 2
+##D 
+##D # Übertragung auf Schülerebene
+##D schueler <- 
+##D   merge(schueler,schule[,c("SKZ","jkzone","jkrep")],all.x=TRUE)
+##D # Schleife zur Generierung von Replicate Weights
+##D for (i in 1:cnt.zones) {
+##D   in.zone <- as.numeric(schueler$jkzone==i)
+##D   schueler[paste0("w_fstr",i)] <-   # vgl. Formel 5
+##D     in.zone * schueler$jkrep * schueler$NormStudwgt * 2 +
+##D     (1-in.zone) * schueler$NormStudwgt }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3, Listing 3
+##D 
+##D # Schätzung mittels Gesamtgewicht
+##D n.female <- sum(schueler[schueler$female==1,]$NormStudwgt)
+##D perc.female <- n.female / sum(schueler$NormStudwgt)
+##D # wiederholte Berechnung und Varianz
+##D var.jrr = 0
+##D for (i in 1:cnt.zones) {
+##D   n.female.rep <- 
+##D     sum(schueler[schueler$female==1,paste0("w_fstr",i)])
+##D   perc.female.rep <- 
+##D     n.female.rep / sum(schueler[paste0("w_fstr",i)])
+##D   var.jrr <-   # vgl. Formel 6
+##D     var.jrr + (perc.female.rep - perc.female) ^ 2.0 }
+## End(Not run)
+ 
+
+
+
+cleanEx()
+nameEx("03_StandardSetting__20220517")
+### * 03_StandardSetting__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  3
+### Title: Kapitel 3: Standard-Setting
+### Aliases: 'Kapitel 3'
+
+### ** Examples
+
+## Not run: 
+##D library(car)
+##D library(irr)
+##D library(prettyR)
+##D library(lattice)
+##D library(gridExtra)
+##D 
+##D data(datenKapitel03)
+##D ratings <- datenKapitel03$ratings
+##D bookmarks <- datenKapitel03$bookmarks
+##D sdat <- datenKapitel03$sdat
+##D productive <- datenKapitel03$productive
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 3.2.2: Daten aus der IDM-Methode
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 1: Feedback
+##D #
+##D 
+##D raterID <- grep("R", colnames(ratings), value = TRUE)
+##D nraters <- length(raterID) 
+##D nitems <- nrow(ratings) 
+##D itemID <- ratings[, 1] 
+##D itemdiff <- ratings[, 2]
+##D stufen <- c(1, 2, 3) # Anzahl der Kompetenzstufen
+##D item.freq <- data.frame() 
+##D # Berechne Prozentuelle Zuteilungen auf Stufen pro Item
+##D tabelle.ii <- data.frame()
+##D for(ii in 1:nitems){   
+##D   tabelle.ii <- round(table(factor(as.numeric(ratings[ii, 
+##D     raterID]), levels = stufen)) / nraters * 100, digits = 2)      
+##D   item.freq <- rbind(item.freq, tabelle.ii) }
+##D colnames(item.freq) <- paste0("Level_", stufen)
+##D item.freq <- data.frame(ratings[, 1:2], item.freq)
+##D head(item.freq, 3)
+##D # Anmerkung: Item 3 zu 100% auf Stufe 1, Item 2 aufgeteilt 
+##D # auf Stufe 1 und 2
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 1a: Ergänzung zum Buch
+##D # GRAFIK-Erzeugung
+##D #
+##D 
+##D # Farben für die Grafik definieren
+##D c1 <- rgb(239/255, 214/255, 67/255)  
+##D c2 <- rgb(207/255, 151/255, 49/255)  
+##D c3 <- rgb(207/255, 109/255, 49/255)
+##D 
+##D # Aufbereitung Tabelle für Grafik
+##D freq.dat <- t(as.matrix(item.freq[1:nitems,(3:(2+length(stufen)))]))
+##D barcol <- c("black", "gray", "white") 
+##D 
+##D #Grafik wird erzeugt
+##D par(mfcol=c(3,1), oma=c(0,0,3,0)) # Angeben der Plot-Anzahl      
+##D perplot <- round(nitems/3)    
+##D a <- perplot + 1   
+##D b <- perplot*2  
+##D c <- b + 1     
+##D d <- perplot*3
+##D barplot(freq.dat[,1 : perplot], col = barcol, beside = T, 
+##D         names.arg = seq(1 , perplot), xlab = "Itemnummer (Seitenzahl im OIB)", 
+##D         ylab = "% Zuteilung auf Stufe", horiz = F, ylim = range(1:100))
+##D barplot(freq.dat[, a:b], col = barcol, beside = T, names.arg = seq(a, b), 
+##D         xlab = "Itemnummer (Seitenzahl im OIB)", 
+##D         ylab = "% Zuteilung auf Stufe", 
+##D         horiz = F, ylim = range(1:100))
+##D barplot(freq.dat[, c:d], col = barcol, beside = T, names.arg = seq(c, d), 
+##D         xlab = "Itemnummer (Seitenzahl im OIB)", 
+##D         ylab = "% Zuteilung auf Stufe", 
+##D         horiz = F, ylim = range(1:100))
+##D title("Feedback für das Experten-Panel aus der IDM-Methode", outer = T)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 2: Cut-Score Berechnung
+##D #
+##D 
+##D library(car)
+##D # Rekodieren
+##D rate.i <- ratings[which(ratings$R01 %in% c(2, 3)), 
+##D                   c("Norm_rp23", "R01")] 
+##D rate.i$R01 <-  recode(rate.i$R01, "2=0; 3=1")
+##D coef(cut.i <- glm(rate.i$R01  ~ rate.i$Norm_rp23 , 
+##D                   family = binomial(link="logit")))
+##D # Berechnung des Cut-Scores laut Formel
+##D cut.R01 <- (-cut.i$coefficients[1])/ cut.i$coefficients[2]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 3: Rater-Analysen
+##D # 
+##D 
+##D library(irr)
+##D # Auswahl der Ratings
+##D rater.dat <- ratings[ ,grep("R", colnames(ratings))]
+##D # Berechne Kappa von jeder Person mit allen anderen Personen
+##D kappa.mat <- matrix(NA, nraters, nraters) 
+##D for(ii in 1:nraters){  
+##D   rater.eins <- rater.dat[, ii]      
+##D   for(kk in 1:nraters){    
+##D     rater.zwei <- rater.dat[ ,kk]
+##D     dfr.ii <- cbind(rater.eins, rater.zwei)
+##D     kappa.ik <- kappa2(dfr.ii)       
+##D     kappa.mat[ii, kk] <- kappa.ik$value }} 
+##D diag(kappa.mat) <- NA 
+##D # Berechne Mittleres Kappa für jede Person
+##D MW_Kappa <- round(colMeans(kappa.mat, na.rm=T), digits=2) 
+##D SD_Kappa <- round(apply(kappa.mat, 2, sd, na.rm=T), digits=2) 
+##D (Kappa.Stat <- data.frame("Person"= raterID, MW_Kappa, 
+##D   SD_Kappa))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 4: Berechnung Fleiss' Kappa
+##D # 
+##D 
+##D kappam.fleiss(rater.dat)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 5: Modalwerte
+##D # 
+##D 
+##D library(prettyR)
+##D # Berechne Modalwert
+##D mode <- as.numeric(apply(rater.dat, 1, Mode))
+##D # Korrelation für die Ratings jeder Person im Panel mit den 
+##D # Modalwerten der Items
+##D corr <- data.frame()
+##D for(z in raterID){
+##D   rater.ii <- rater.dat[, (grep(z, colnames(rater.dat)))]
+##D   cor.ii <- round(cor(mode, rater.ii, method = "spearman",
+##D     use = "pairwise.complete.obs"), digits = 2)
+##D   corr <- rbind(corr, cor.ii)
+##D }
+##D corr[, 2] <- raterID
+##D colnames(corr) <- c("Korrelation", "Rater")
+##D # Aufsteigende Reihenfolge 
+##D (corr <- corr[order(corr[, 1]),])
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 5: Ergänzung zum Buch
+##D # GRAFIK-Erzeugung und ICC
+##D #
+##D 
+##D # Grafik
+##D plot(corr$Korrelation, xlab = NA, ylab = "Korrelation",   
+##D      ylim = c(0.5, 1), xaxt = "n", main = "Korrelation zwischen 
+##D      Modalwert und individueller Zuordnung der Items pro Rater/in")
+##D text(seq(1:nraters), corr$Korrelation - 0.02, labels = corr[, 2], 
+##D      offset = 1, cex = 1)
+##D title(xlab = "Raters nach aufsteigender Korrelation gereiht")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.2, Listing 6: ICC
+##D # 
+##D 
+##D library(irr)
+##D (iccdat.agree <- icc(rater.dat, model = "twoway", 
+##D   type = "agreement", unit = "single", r0 = 0, conf.level=0.95))
+##D (iccdat.cons <- icc(rater.dat, model = "twoway", 
+##D   type = "consistency", unit = "single", r0 = 0, conf.level=0.95))
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 3.2.3: Daten aus der Bookmark-Methode
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.3, Listing 1: Feedback
+##D # 
+##D 
+##D head(bookmarks)
+##D statbookm <- data.frame("Stats"=c("Md","Mean","SD"), 
+##D                         "Cut1"=0, "Cut2"=0)
+##D statbookm[1,2] <- round(median(bookmarks$Cut1), digits=2)
+##D statbookm[1,3] <- round(median(bookmarks$Cut2), digits=2)
+##D statbookm[2,2] <- round(mean(bookmarks$Cut1), digits=2)
+##D statbookm[2,3] <- round(mean(bookmarks$Cut2), digits=2)
+##D statbookm[3,2] <- round(sd(bookmarks$Cut1), digits=2)
+##D statbookm[3,3] <- round(sd(bookmarks$Cut2), digits=2)
+##D (statbookm)
+##D table(bookmarks$Cut1)
+##D table(bookmarks$Cut2)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.3, Listing 2: Cut-Score Berechnung
+##D # 
+##D 
+##D bm.cut <- NULL 
+##D bm.cut$cut1 <- mean(ratings$Norm_rp23[bookmarks$Cut1]) 
+##D bm.cut$cut2 <- mean(ratings$Norm_rp23[bookmarks$Cut2]) 
+##D bm.cut$cut1sd <- sd(ratings$Norm_rp23[bookmarks$Cut1]) 
+##D bm.cut$cut2sd <- sd(ratings$Norm_rp23[bookmarks$Cut2]) 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.3, Listing 3: Standardfehler des Cut-Scores
+##D # 
+##D 
+##D se.cut1 <- bm.cut$cut1sd/sqrt(nraters)
+##D se.cut2 <- bm.cut$cut2sd/sqrt(nraters)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.2.3, Listing 4: Impact Data
+##D #
+##D 
+##D Pers.Para <- sdat[, "TPV1"]
+##D cuts <- c(bm.cut$cut1, bm.cut$cut2)
+##D # Definiere Bereiche: Minimaler Personenparameter bis Cut-Score 1, 
+##D #   Cut-Score 1 bis Cut-Score 2, Cut-Score 2 bis maximaler 
+##D #   Personenparameter
+##D Cuts.Vec <- c(min(Pers.Para)-1, cuts, max(Pers.Para)+1)
+##D # Teile Personenparameter in entsprechende Bereiche auf
+##D Kum.Cuts <- cut(Pers.Para, breaks = Cuts.Vec)
+##D # Verteilung auf die einzelnen Bereiche
+##D Freq.Pers.Para <- xtabs(~ Kum.Cuts)
+##D nstud <- nrow(sdat)
+##D # Prozent-Berechnung
+##D prozent <- round(as.numeric(Freq.Pers.Para / nstud * 100), 
+##D                  digits = 2) 
+##D (Impact.Data <- data.frame("Stufe" = c("A1", "A2", "B1"), 
+##D                            "Prozent" = prozent))
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 3.3.2: Daten aus der Contrasting-Groups-Methode
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.3.2, Listing 1: Cut-Scores
+##D #
+##D 
+##D raterID <- grep("R", colnames(productive), value = TRUE) 
+##D nraters <- length(raterID)  
+##D nscripts <- nrow(productive) 
+##D # Berechne Cut-Score für jeden Rater
+##D cutscore <- data.frame("rater"=raterID, "cut1.ges"=NA)
+##D for(ii in 1:length(raterID)){ 
+##D   rater <- raterID[ii]   
+##D   rates.ii <- productive[ ,grep(rater, colnames(productive))]   
+##D   mean0.ii <- mean(productive$Performance[rates.ii == 0], 
+##D     na.rm = TRUE)   
+##D   mean1.ii <- mean(productive$Performance[rates.ii == 1], 
+##D     na.rm = TRUE)   
+##D   mean.ii <- mean(c(mean1.ii, mean0.ii), na.rm = TRUE)   
+##D   cutscore[ii, "cut1.ges"] <- mean.ii }
+##D # Finaler Cut-Score
+##D cut1 <- mean(cutscore$cut1.ges)
+##D sd.cut1 <- sd(cutscore$cut1.ges)
+##D se.cut1 <- sd.cut1/sqrt(nraters)
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Appendix: Abbildungen
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abbildung 3.1
+##D #
+##D 
+##D # 1. Grafik
+##D par(fig=c(0, 1, 0, 0.35), oma=c(0,0,3,0), cex = 0.85) 
+##D boxplot(Kappa.Stat$MW_Kappa, horizontal = T, ylim=c(0.42,0.66), 
+##D         axes = F, xlab = "MW Kappa")
+##D # 2. Grafik wird hinzugefügt
+##D par(fig=c(0, 1, 0.2, 1), new=TRUE)
+##D sd.factor <- 1.5 
+##D mmw <- mean(Kappa.Stat$MW_Kappa)
+##D sdmw <- sd(Kappa.Stat$MW_Kappa)
+##D #Grenzwerte für MW und SD werden festgelegt
+##D mwind <- c(mmw-(sd.factor*sdmw), mmw+(sd.factor*sdmw))
+##D plot(Kappa.Stat$MW_Kappa, Kappa.Stat$SD_Kappa, xlab = "",
+##D      ylab = "SD Kappa", type = "n", xlim = c(0.42, 0.66), 
+##D      ylim = c(0, 0.2))
+##D abline(v = mwind, col="grey", lty = 2)
+##D # Rater mit 1.5 SD Abweichung vom MW werden grau markiert 
+##D abw.rater <- which(Kappa.Stat$MW_Kappa < mwind[1] | 
+##D                      Kappa.Stat$MW_Kappa > mwind[2])
+##D points(Kappa.Stat$MW_Kappa[-abw.rater], 
+##D        Kappa.Stat$SD_Kappa[-abw.rater], 
+##D        pch = 19)
+##D points(Kappa.Stat$MW_Kappa[abw.rater], 
+##D        Kappa.Stat$SD_Kappa[abw.rater], 
+##D        pch = 25, bg = "grey")
+##D text(Kappa.Stat$MW_Kappa[abw.rater], 
+##D      Kappa.Stat$SD_Kappa[abw.rater], 
+##D      Kappa.Stat$Person[abw.rater], 
+##D      pos = 3) 
+##D title("Rater-Analysen: MW und SD Kappa aus der IDM-Methode", 
+##D       outer = TRUE)
+##D 
+##D # -------------------------------------------------------------
+##D # Abbildung 3.2
+##D #
+##D 
+##D nitems <- 60
+##D 
+##D library(lattice)
+##D library(gridExtra)
+##D #Erster Plot mit Mittelwert
+##D plot.Cut1 <- dotplot(bookmarks$Rater ~ bookmarks$Cut1, col = "black", 
+##D                      panel = function(...){
+##D                        panel.dotplot(...)
+##D                        panel.abline(v = mean(bookmarks$Cut1), lty = 5)
+##D                      }, 
+##D                      xlab = "Bookmarks für Cut-Score 1 (Seite im OIB)",
+##D                      ylab = "Raters", cex = 1.3)
+##D #Zweiter Plot mit Mittelwert
+##D plot.Cut2 <- dotplot(bookmarks$Rater ~ bookmarks$Cut2, col = "black", 
+##D                      panel = function(...){
+##D                        panel.dotplot(...)
+##D                        panel.abline(v = mean(bookmarks$Cut2), lty = 5)
+##D                      }, 
+##D                      xlab = "Bookmarks für Cut-Score 2 (Seite im OIB)", 
+##D                      ylab = "Raters", cex = 1.3)
+##D #Plots nebeneinander anordnen
+##D grid.arrange(plot.Cut1, plot.Cut2, nrow = 1, top = "Bookmarks pro Rater/in")
+##D 
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("04_DIF__20220517")
+### * 04_DIF__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  4
+### Title: Kapitel 4: Differenzielles Itemfunktionieren in Subgruppen
+### Aliases: 'Kapitel 4'
+
+### ** Examples
+
+## Not run: 
+##D library(difR)
+##D library(mirt)
+##D library(sirt)
+##D library(TAM)
+##D set.seed(12345)
+##D 
+##D data(datenKapitel04)
+##D dat <- datenKapitel04$dat
+##D dat.th1 <- datenKapitel04$dat.th1
+##D ibank <- datenKapitel04$ibank
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.4.1 DIF-Analysen für vollständige Daten
+##D ## -------------------------------------------------------------
+##D 
+##D items.th1 <- grep("E8R", colnames(dat.th1), value=T)
+##D resp <- dat.th1[, items.th1]
+##D AHS <- dat.th1$AHS
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.1, Listing 1: Mantel-Haenszel
+##D #
+##D 
+##D difMH(Data = resp, group = AHS, correct = F, focal.name = 0)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.1, Listing 2: Standardisierte p-Wert Differenzen
+##D #
+##D 
+##D difStd(Data = resp, group = AHS, focal.name = 0)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.1, Listing 3: SIBTEST
+##D #
+##D 
+##D SIBTEST(dat = resp, group = AHS, focal_name = 0, 
+##D         focal_set = grep("E8RS03131", items.th1))
+##D SIBTEST(dat = resp, group = AHS, focal_name=0,
+##D         focal_set = grep("E8RS15621", items.th1))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.1, Listing 4: Methode nach Lord
+##D #
+##D 
+##D difLord(Data = resp, group = AHS, focal.name = 0,
+##D         model = "1PL")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.1, Listing 5: Zusammenschau
+##D #
+##D 
+##D dichoDif(Data = resp, group = AHS, correct = F, focal.name = 0, 
+##D          method = c("MH", "Std", "Lord"), model = "1PL")
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.4.2 DIF-Analysen für unvollständige Daten
+##D ## -------------------------------------------------------------
+##D 
+##D items <- grep("E8R", colnames(dat), value = T)
+##D resp <- dat[ ,items]
+##D AHS <- dat$AHS
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 1: Matching-Variable setzen
+##D #
+##D 
+##D score <- rowSums(resp, na.rm=T)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 2: Durchführung Logistische Regression
+##D #
+##D 
+##D difLR <- dif.logistic.regression(resp, group = AHS, score = score)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 3: Durchführung Logistische Regression
+##D #                             mit angepasster Referenzgruppe
+##D #
+##D 
+##D difLR <- dif.logistic.regression(resp, AHS==0, score)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 4: Ausgabe erster Teil
+##D #
+##D 
+##D cbind(item = difLR$item, round(difLR[, 4:13], 3))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 5: Ausgabe zweiter Teil
+##D #
+##D 
+##D cbind(difLR[, c(3,14:16)], sign = difLR[, 17], ETS = difLR[, 18]) 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 6: DIF-Größen
+##D #
+##D 
+##D table(difLR[, 17], difLR[, 18])
+##D 
+##D difLR[c(10, 18), c(3, 14, 17:18)]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.2, Listing 7: Ausgabe dritter Teil
+##D #
+##D 
+##D cbind(difLR[, c(3, 21:23)], sign=difLR[, 24])
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 4.4.3 Hypothesenprüfung mit GLMM
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 1: Itemauswahl
+##D #
+##D 
+##D HO.items <- ibank[ibank$format == "ho", "task"]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 2: Facettenidentifikation
+##D #
+##D 
+##D facets <- data.frame(AHS = dat$AHS)
+##D form <- formula( ~ item * AHS)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 3: Initiierung des Designs
+##D #
+##D 
+##D design <- designMatrices.mfr(resp = dat[, items], 
+##D                              formulaA = form, facets = facets)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 4: Übergabe der Designmatrix und des
+##D #                             erweiterten Responsepatterns
+##D #
+##D 
+##D A <- design$A$A.3d[, , 1:(length(items) + 2)]
+##D dimnames(A)[[3]] <- c(items, "AHS", "HO:AHS")
+##D resp <- design$gresp$gresp.noStep
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 5: Ausgabe der ersten Zeilen des 
+##D #                             Responsepatterns
+##D #
+##D 
+##D head(resp)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 6: Identifikation Itemformat X Gruppe
+##D #
+##D 
+##D HO.AHS0 <- paste0(HO.items, "-AHS0")
+##D HO.AHS1 <- paste0(HO.items, "-AHS1")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 7: Spezifizierung des Designs
+##D #
+##D 
+##D A[, , "HO:AHS"] <- 0
+##D A[HO.AHS0, 2, "HO:AHS"] <- -1; A[HO.AHS1, 2, "HO:AHS"] <-  1
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 8: Ausgabe der Designmatrix für 
+##D #                             Itemkategorie 'richtig beantwortet'
+##D #
+##D 
+##D A[,2,c("AHS", "HO:AHS")]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 9: Schätzen des Modells
+##D #
+##D 
+##D mod <- tam.mml(resp = resp, A=A)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 4.4.3, Listing 10: Ausgabe der Parameterschätzer
+##D #
+##D 
+##D summary(mod)
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("05_Testdesign__20220517")
+### * 05_Testdesign__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  5
+### Title: Kapitel 5: Testdesign
+### Aliases: 'Kapitel 5'
+
+### ** Examples
+
+## Not run: 
+##D library(tensor)
+##D set.seed(1337)
+##D 
+##D data(datenKapitel05)
+##D dat.ib <- datenKapitel05$tdItembank
+##D dat.bib <- datenKapitel05$tdBib2d
+##D dat.bibPaare <- datenKapitel05$tdBibPaare
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 5.3.2: ATA Methode für das Blockdesign
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 1: Initialisierung
+##D #
+##D 
+##D library(tensor)
+##D 
+##D nTh <- 30
+##D nPos <- 6
+##D nBl <- 30
+##D inc <- array(0, dim = c(nTh, nPos, nBl))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 2: Startdesign
+##D #
+##D 
+##D for(tt in 1:nTh){
+##D   inc[tt, , sample(1:nBl, nPos)] <- diag(1, nPos)
+##D }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 3: Zielfunktion
+##D #
+##D des <- inc
+##D desAllePos <- tensor(des, rep(1, nPos), 2, 1)
+##D 
+##D blockPaarInd <- upper.tri(diag(nrow = nBl))
+##D blockPaar <- crossprod(desAllePos)[blockPaarInd]
+##D 
+##D err.bb <- blockPaar
+##D err.bb[blockPaar >= 2] <- blockPaar[blockPaar >= 2] - 2
+##D err.bb[blockPaar <= 1] <- 1 - blockPaar[blockPaar <= 1]
+##D 
+##D objective <- sum(err.bb) / length(err.bb)
+##D objWgt <- 2^0
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 4: Studienzuweisung
+##D #
+##D 
+##D blMatching <- seq(6, nBl, 6)
+##D 
+##D nbStatus <- list(
+##D   (desAllePos[1:6, -(1:12)] > 0) / (6 * 18),      # 1
+##D   (desAllePos[25:30, -(19:30)] > 0) / (6 * 18),   # 2
+##D   (rowSums(desAllePos[, blMatching]) != 1) / nTh  # 3
+##D )
+##D nbStatus <- unlist(lapply(nbStatus, sum))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 5: Erweiterung Positionsbalancierung
+##D #
+##D 
+##D # 4
+##D nbPos <- sum((colSums(des) != 1) / (nPos * nBl))
+##D # 5
+##D nbPos.pLSA <- list(
+##D   (colSums(des[1:6, 1:2, 1:12], dims = 2) != 1) / 12,
+##D   (colSums(des[1:6, 3:4, 1:12], dims = 2) != 1) / 12,
+##D   (colSums(des[1:6, 5:6, 1:12], dims = 2) != 1) / 12
+##D )
+##D nbPos.pLSA <- sum(unlist(lapply(nbPos.pLSA, sum)) / 3)
+##D # 6
+##D nbPos.link <- list(
+##D   (colSums(des[25:30, 1:2, 19:30], dims = 2) != 1) / 12,
+##D   (colSums(des[25:30, 3:4, 19:30], dims = 2) != 1) / 12,
+##D   (colSums(des[25:30, 5:6, 19:30], dims = 2) != 1) / 12
+##D )
+##D nbPos.link <- sum(unlist(lapply(nbPos.link, sum)) / 3)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 6: Zusammenfügen
+##D #
+##D 
+##D nb <- c(nbStatus, nbPos, nbPos.pLSA, nbPos.link)
+##D nbWgt <- c(
+##D   rep(2^5, length(nbStatus)),
+##D   rep(2^6, length(nbPos)),
+##D   rep(2^4, length(nbPos.pLSA)),
+##D   rep(2^3, length(nbPos.link))
+##D )
+##D 
+##D nbWgt.norm <- nbWgt / (sum(nbWgt) + objWgt)
+##D objWgt.norm <- objWgt / (sum(nbWgt) + objWgt)
+##D oDes <- objWgt.norm %*% objective + nbWgt.norm %*% nb
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 6a: Ergänzung zum Buch
+##D # 
+##D #
+##D 
+##D fit <- function(des){
+##D   desAllePos <- tensor(des, rep(1, nPos), 2, 1)
+##D   
+##D   #
+##D   blockPaarInd <- upper.tri(diag(nrow = nBl))
+##D   blockPaar <- crossprod(desAllePos)[blockPaarInd]
+##D   
+##D   err.bb <- blockPaar
+##D   err.bb[blockPaar >= 2] <- blockPaar[blockPaar >= 2] - 2
+##D   err.bb[blockPaar <= 1] <- 1 - blockPaar[blockPaar <= 1]
+##D   
+##D   objective <- sum(err.bb) / length(err.bb)
+##D   objWgt <- 2^0
+##D   
+##D   #
+##D   nbStatus <- list(
+##D     (desAllePos[1:6, -(1:12)] > 0) / (6 * 18),      # 1
+##D     (desAllePos[25:30, -(19:30)] > 0) / (6 * 18),   # 2
+##D     (rowSums(desAllePos[, blMatching]) != 1) / nTh  # 3
+##D   )
+##D   nbStatus <- unlist(lapply(nbStatus, sum))
+##D   
+##D   # 4
+##D   nbPos <- sum((colSums(des) != 1) / (nPos * nBl))
+##D   # 5
+##D   nbPos.pLSA <- list(
+##D     (colSums(des[1:6, 1:2, 1:12], dims = 2) != 1) / 12,
+##D     (colSums(des[1:6, 3:4, 1:12], dims = 2) != 1) / 12,
+##D     (colSums(des[1:6, 5:6, 1:12], dims = 2) != 1) / 12
+##D   )
+##D   nbPos.pLSA <- sum(unlist(lapply(nbPos.pLSA, sum)) / 3)
+##D   # 6
+##D   nbPos.link <- list(
+##D     (colSums(des[25:30, 1:2, 19:30], dims = 2) != 1) / 12,
+##D     (colSums(des[25:30, 3:4, 19:30], dims = 2) != 1) / 12,
+##D     (colSums(des[25:30, 5:6, 19:30], dims = 2) != 1) / 12
+##D   )
+##D   nbPos.link <- sum(unlist(lapply(nbPos.link, sum)) / 3)
+##D   
+##D   #
+##D   nb <- c(nbStatus, nbPos, nbPos.pLSA, nbPos.link)
+##D   nbWgt <- c(
+##D     rep(2^5, length(nbStatus)),
+##D     rep(2^6, length(nbPos)),
+##D     rep(2^4, length(nbPos.pLSA)),
+##D     rep(2^3, length(nbPos.link))
+##D   )
+##D   nbWgt.norm <- nbWgt / (sum(nbWgt) + objWgt)
+##D   objWgt.norm <- objWgt / (sum(nbWgt) + objWgt)
+##D   oDes <- objWgt.norm %*% objective + nbWgt.norm %*% nb
+##D   
+##D   return(oDes)
+##D }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 7: Initialisierung des Algorithmus
+##D #
+##D 
+##D # t <- 1; t.min <- 1e-5; c <- 0.7; L <- 10000; l <- 1
+##D t <- 1; tMin <- 1e-5; c <- 0.9; L <- 100000; l <- 1
+##D 
+##D fitInc <- fit(inc)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 8: Störung
+##D #
+##D 
+##D thisTh <- (l - 1) %% nTh + 1
+##D child <- inc
+##D 
+##D bloeckeTh <- which(colSums(child[thisTh, , ]) == 1)
+##D raus <- sample(bloeckeTh, 1)
+##D rein <- sample(setdiff(1:nBl, bloeckeTh), 1)
+##D 
+##D child[thisTh, , rein] <- child[thisTh, , raus]
+##D child[thisTh, , raus] <- 0
+##D 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 9: Survival
+##D #
+##D 
+##D fitChild <- fit(child)
+##D 
+##D behalte <- fitChild < fitInc
+##D if(!behalte){
+##D   pt <- exp(-(fitChild - fitInc) / t)
+##D   behalte <- runif(1) <= pt
+##D }
+##D 
+##D if(behalte){
+##D   inc <- child
+##D   fitInc <- fitChild
+##D }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.2, Listing 9a: Ergänzung zum Buch
+##D # 
+##D 
+##D # Achtung: Algorithmus benötigt einige Zeit.
+##D # Je nach Wahl der Lauf-Parameter in Abschnitt 5.3.2, Listing 7, kann der 
+##D # folgende Prozess bis zu ein paar Stunden dauern.
+##D 
+##D start <- Sys.time()
+##D best <- list(inc, fitInc)
+##D while(t > tMin){
+##D   while(l < L){
+##D     thisTh <- (l - 1) %% nTh + 1
+##D     child <- inc
+##D     
+##D     # Perturbation 
+##D     bloeckeTh <- which(colSums(child[thisTh, , ]) == 1)
+##D     raus <- sample(bloeckeTh, 1)
+##D     rein <- sample(setdiff(1:nBl, bloeckeTh), 1)
+##D     
+##D     child[thisTh, , rein] <- child[thisTh, , raus]
+##D     child[thisTh, , raus] <- 0
+##D     
+##D     # Fit und Survival
+##D     fitChild <- fit(child)
+##D     
+##D     behalte <- fitChild < fitInc
+##D     if(!behalte){
+##D       pt <- exp(-(fitChild - fitInc) / t)
+##D       behalte <- runif(1) <= pt
+##D     }
+##D     
+##D     if(behalte){
+##D       inc <- child
+##D       fitInc <- fitChild
+##D     }
+##D     
+##D     # Kontroll-Ausgaben
+##D     if(fitInc < best[[2]]){
+##D       best <- list(inc, fitInc)
+##D     }    
+##D     
+##D     if (l %% 500 == 0) {
+##D       cat("\r")
+##D       cat(paste("l=", l), 
+##D           paste("t=", as.integer(log(t) / log(c) + 1)),
+##D           paste("fit=", round(fitInc, 4)), 
+##D           paste("pt=", round(pt, 5)),        
+##D           sep=";   ")
+##D       cat("                     ")
+##D       flush.console()
+##D     }
+##D     l <- l + 1
+##D   }
+##D   l <- 1
+##D   t <- t * c
+##D }
+##D end <- Sys.time()
+##D 
+##D tdBib2d <- apply(inc, 1, function(bb){
+##D   this <- which(colSums(bb) > 0)
+##D   this[order((1:nrow(bb) %*% bb)[this])] 
+##D })
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 5.3.3: ATA Methode für die Item-zu-Block-Zuordnung
+##D ## -------------------------------------------------------------
+##D 
+##D set.seed(1338)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 1: Initialisierung
+##D #
+##D 
+##D nTh <- nrow(dat.bib)
+##D nPos <- ncol(dat.bib)
+##D nBl <- length(unique(unlist(dat.bib)))
+##D blMatching <- seq(6, nBl, 6)
+##D 
+##D nI <- nrow(dat.ib)
+##D itemsMatching <- which(dat.ib$format == "Matching")
+##D itemsSonst <- which(dat.ib$format != "Matching")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 3.3, Listing 2: Startdesign
+##D #
+##D 
+##D inc <- array(0, dim = c(nI, nBl))
+##D for(bb in blMatching){
+##D   inc[sample(itemsMatching, 2), bb] <- 1
+##D }
+##D for(bb in setdiff(1:nBl, blMatching)){
+##D   inc[sample(itemsSonst, 7), bb] <- 1
+##D }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 3: Testheftebene
+##D #
+##D 
+##D des <- inc
+##D desTh <- des[, dat.bib[, 1]] + des[, dat.bib[, 2]] + 
+##D   des[, dat.bib[, 3]] + des[, dat.bib[, 4]] + 
+##D   des[, dat.bib[, 5]] + des[, dat.bib[, 6]]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 4: IIF
+##D #
+##D 
+##D theta <- c(380, 580)
+##D InfoItem <- dat.ib[,grep("IIF", colnames(dat.ib))]
+##D TIF <- (t(InfoItem) %*% desTh) / 37
+##D 
+##D objective <- - sum(TIF) / prod(dim(TIF))
+##D objWgt <- 2^0
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 5: KEY
+##D #
+##D 
+##D nbKey <- list(
+##D   (colSums(desTh > 1) > 0) / nTh,              # 7
+##D   ((rowSums(desTh[, 1:6]) > 0) +               # 8
+##D      (rowSums(desTh[, 25:30]) > 0) > 1) / nI  
+##D )
+##D nbKey <- unlist(lapply(nbKey, sum))
+##D nbWgt <- 2^c(7, 6)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 6: Kategorial
+##D #
+##D 
+##D # 9
+##D zFocus.block <- c(0, 1, 1, 1, 1, 2, 0)
+##D gFocus.block <- rowsum(des[, -blMatching], dat.ib$focus) - 
+##D   zFocus.block
+##D # 10
+##D zFocus.form <- c(2, 6, 6, 6, 6, 13, 1)
+##D gFocus.form <- rowsum(desTh, dat.ib$focus) - zFocus.form
+##D # 11
+##D gTopic.form <- rowsum(desTh, dat.ib$topic) - 4
+##D 
+##D nbKonstrukt <- list(
+##D   colSums(gFocus.block < 0) / prod(dim(gFocus.block)), 
+##D   colSums(gFocus.form > 0) / prod(dim(gFocus.form)), 
+##D   colSums(gTopic.form > 0) / 30
+##D )
+##D nbKonstrukt <- unlist(lapply(nbKonstrukt, sum))
+##D nbWgt <- c(nbWgt, 2^c(4, 4, 3))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 7: Stetig
+##D #
+##D 
+##D length.form <- ((dat.ib$audiolength + 13) %*% desTh) / 60
+##D nbStetig <- list(
+##D   (length.form > 32) / length(length.form),
+##D   (length.form < 28) / length(length.form)
+##D )
+##D nbStetig <- unlist(lapply(nbStetig, sum))
+##D nbWgt <- c(nbWgt, 2^c(3, 2))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 8: Perturbation
+##D #
+##D 
+##D thisBl <- 1
+##D child <- inc
+##D 
+##D items.raus <- which(child[, thisBl] == 1)
+##D raus <- sample(items.raus, 1)
+##D 
+##D bibPaar.bl <- dat.bibPaare[thisBl, ] != 0
+##D items.bibPaare <- rowSums(child[, bibPaar.bl]) > 0
+##D rein <- which(!items.bibPaare)
+##D 
+##D if(thisBl %in% blMatching){
+##D   rein <- sample(intersect(rein, itemsMatching), 1)
+##D }else{
+##D   rein <- sample(intersect(rein, itemsSonst), 1)
+##D }  
+##D 
+##D child[c(raus, rein), thisBl] <- c(0, 1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 5.3.3, Listing 8a: Ergänzung zum Buch
+##D #                              Vollständige Umsetzung
+##D # 
+##D 
+##D # Achtung: Algorithmus benötigt einige Zeit.
+##D # Je nach Wahl der Lauf-Parameter im nachfolgenden Abschnitt, kann der 
+##D # Prozess bis zu einigen Stunden dauern.
+##D 
+##D fit <- function(des, dat.ib, dat.bib){
+##D   desTh <- des[, dat.bib[, 1]] + des[, dat.bib[, 2]] + 
+##D     des[, dat.bib[, 3]] + des[, dat.bib[, 4]] + 
+##D     des[, dat.bib[, 5]] + des[, dat.bib[, 6]]
+##D   
+##D   #
+##D   TIF <- (t(InfoItem) %*% desTh) / 37
+##D   
+##D   objective <- - sum(TIF) / prod(dim(TIF))
+##D   objWgt <- 2^0
+##D   
+##D   #
+##D   nbKey <- list(
+##D     (colSums(desTh > 1) > 0) / nTh,              # 7
+##D     ((rowSums(desTh[, 1:6]) > 0) +               # 8
+##D        (rowSums(desTh[, 25:30]) > 0) > 1) / nI  
+##D   )
+##D   nbKey <- unlist(lapply(nbKey, sum))
+##D   nbWgt <- 2^c(7, 6)
+##D   
+##D   # 9
+##D   zFocus.block <- c(0, 1, 1, 1, 1, 2, 0)
+##D   gFocus.block <- rowsum(des[, -blMatching], dat.ib$focus) - 
+##D     zFocus.block
+##D   # 10
+##D   zFocus.form <- c(2, 6, 6, 6, 6, 13, 1)
+##D   gFocus.form <- rowsum(desTh, dat.ib$focus) - zFocus.form
+##D   # 11
+##D   gTopic.form <- rowsum(desTh, dat.ib$topic) - 4
+##D   
+##D   nbKonstrukt <- list(
+##D     colSums(gFocus.block < 0) / prod(dim(gFocus.block)), 
+##D     colSums(gFocus.form > 0) / prod(dim(gFocus.form)), 
+##D     colSums(gTopic.form > 0) / 30
+##D   )
+##D   nbKonstrukt <- unlist(lapply(nbKonstrukt, sum))
+##D   nbWgt <- c(nbWgt, 2^c(4, 4, 3))
+##D   
+##D   #
+##D   length.form <- ((dat.ib$audiolength + 13) %*% desTh) / 60
+##D   nbStetig <- list(
+##D     (length.form > 32) / length(length.form),
+##D     (length.form < 28) / length(length.form)
+##D   )
+##D   nbStetig <- unlist(lapply(nbStetig, sum))
+##D   nbWgt <- c(nbWgt, 2^c(3, 2))
+##D   
+##D   #
+##D   nb <- c(nbKey, nbKonstrukt, nbStetig)
+##D   
+##D   nbWgt.norm <- nbWgt / (sum(nbWgt) + objWgt)
+##D   objWgt.norm <- objWgt / (sum(nbWgt) + objWgt)
+##D   oDes <- objWgt.norm %*% objective + nbWgt.norm %*% nb
+##D   
+##D   return(oDes)
+##D }
+##D 
+##D #
+##D # t <- 1; tMin <- 1e-5; c <- 0.7; L <- 10000; l <- 1
+##D # t <- 1; tMin <- 1e-5; c <- 0.8; L <- 25000; l <- 1
+##D # t <- 1; tMin <- 1e-5; c <- 0.9; L <- 50000; l <- 1
+##D t <- 1; tMin <- 1e-7; c <- 0.9; L <- 100000; l <- 1
+##D 
+##D #
+##D fitInc <- fit(inc, dat.ib, dat.bib)
+##D best <- list(inc, fitInc)
+##D vers <- versBest <- 1
+##D #
+##D start <- Sys.time()
+##D while(t > tMin){
+##D   while(l < L){
+##D     thisBl <- (l - 1) %% nBl + 1
+##D     
+##D     # Perturbation 
+##D     child <- inc
+##D     
+##D     items.raus <- which(child[, thisBl] == 1)
+##D     raus <- sample(items.raus, 1)
+##D     
+##D     bibPaar.bl <- dat.bibPaare[thisBl, ] != 0
+##D     items.bibPaare <- rowSums(child[, bibPaar.bl]) > 0
+##D     rein <- which(!items.bibPaare)
+##D     
+##D     if(thisBl %in% blMatching){
+##D       rein <- sample(intersect(rein, itemsMatching), 1)
+##D     }else{
+##D       rein <- sample(intersect(rein, itemsSonst), 1)
+##D     }  
+##D     
+##D     child[c(raus, rein), thisBl] <- c(0, 1)
+##D     
+##D     # Fit und Survival
+##D     fitChild <- fit(child, dat.ib, dat.bib)
+##D     
+##D     behalte <- fitChild < fitInc
+##D     if(!behalte){
+##D       pt <- exp((fitInc - fitChild) / t)
+##D       behalte <- runif(1) <= pt
+##D     }
+##D     
+##D     if(behalte){
+##D       inc <- child
+##D       fitInc <- fitChild
+##D     }
+##D     
+##D     if(fitInc < best[[2]]){
+##D       best <- list(inc, fitInc)
+##D       versBest <- versBest + 1
+##D     }    
+##D     
+##D     # Kontroll-Ausgaben; ggf. löschen
+##D     if (identical(inc, child)) vers <- vers + 1
+##D     if (l %% 500 == 0) {
+##D       cat("\r")
+##D       cat(paste("l=", l), 
+##D           paste("t=", as.integer(log(t) / log(c) + 1)),
+##D           paste("versionen=", vers), 
+##D           paste("versionenBest=", versBest), 
+##D           paste("fit=", round(fitInc, 4)), 
+##D           paste("fitBest=", round(best[[2]], 4)), 
+##D           paste("pt=", round(pt, 5)),        
+##D           sep=";   ")
+##D       cat("                     ")
+##D       flush.console()
+##D     }
+##D     l <- l + 1
+##D   }
+##D   l <- 1
+##D   t <- t * c
+##D }
+##D end <- Sys.time()
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("06_Skalierung__20220517")
+### * 06_Skalierung__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  6
+### Title: Kapitel 6: Skalierung und Linking
+### Aliases: 'Kapitel 6'
+
+### ** Examples
+
+## Not run: 
+##D library(TAM)
+##D library(sirt)
+##D library(WrightMap)
+##D library(miceadds)
+##D library(plyr)
+##D set.seed(20150528)
+##D 
+##D dat <- data(datenKapitel06)
+##D # Hauptstudie
+##D dat <- datenKapitel06$dat
+##D ue <- datenKapitel06$itembank
+##D items <- grep("I", colnames(dat), value=TRUE)
+##D 
+##D # Nur TH1
+##D datTH1 <- datenKapitel06$datTH1
+##D ueTH1 <- datenKapitel06$itembankTH1
+##D rownames(ueTH1) <- ueTH1$Item
+##D itemsTH1 <- grep("I", colnames(datTH1), value=TRUE)
+##D respTH1 <- datTH1[, -(1:4)]; wTH1 <- datTH1$wgtstud
+##D 
+##D # Normierungsstudie
+##D normdat <- datenKapitel06$normdat
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.3.4 Das Partial Credit Model (PCM)
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.4, Listing 1: Leistungsdaten und Stich-
+##D #                             probengewichte Objekten zuweisen
+##D #
+##D 
+##D resp <- dat[, grep("I", colnames(dat))]; w <- dat$wgtstud
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.4, Listing 2: Anpassen eines PCMs
+##D #
+##D 
+##D mod.1PL <- tam.mml(resp = resp, irtmodel = "1PL", pweights = w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.4, Listing 2a: Ergänzung zum Buch
+##D # Runden zur besseren Darstellung im Buch
+##D #
+##D 
+##D mod.1PL$item$M <- round(mod.1PL$item$M, 2)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.4, Listing 3: Darstellung des letzen Items
+##D #
+##D 
+##D tail(mod.1PL$item, 1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.4, Listing 4: Umparametrisierung
+##D #
+##D 
+##D b_ih <- mod.1PL$item[, grep("AXsi_", colnames(mod.1PL$item))]
+##D delta.tau <- pcm.conversion(b_ih)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.4, Listing 5: Berechnung der Thursonian 
+##D #                             Threshods und Lokations Indizes
+##D #
+##D 
+##D thurst.thres <- IRT.threshold(mod.1PL)
+##D LI <- IRT.threshold(mod.1PL, type="item")
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.3.5 Itemtrennschärfen polytomer Items und
+##D ##                 Rateparameter
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 1: Anpassen eines Generalized
+##D #                             Partial Credit Models
+##D # 
+##D 
+##D mod.GPCM <- tam.mml.2pl(resp, irtmodel = "GPCM", pweights = w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 2: Anpassen eines 
+##D #                             Nominal Item Response Models
+##D # 
+##D 
+##D mod.NIRM <- tam.mml.2pl(resp, irtmodel="2PL", pweights = w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 3: Anpassen eines Generalized 
+##D #                             Partial Credit Models mit festen 
+##D #                             Itemgewichten (Trennschärfen)
+##D # 
+##D 
+##D tammodel <- "
+##D   LAVAAN MODEL:
+##D   F =~ a1__a50*I1__I50;
+##D   # Trait-Varianz auf 1 fixieren
+##D   F ~~ 1*F
+##D   MODEL CONSTRAINT:
+##D   # Gewichtung für die Items festlegen
+##D   a1__a40 == 1*a # dichotome Items
+##D   a41__a44 == .3333*a # T/F Items mit max. Score von 3
+##D   a45__a50 == .25*a # M56 Items mit max. Score von 4
+##D   " 
+##D mod.GPCMr <- tamaan(tammodel, resp, pweights = w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 4: Itemtrennschärfevergleich
+##D # 
+##D 
+##D ## Itemparameter im Vergleich
+##D rbind(GPCM = mod.GPCM$item[50, 9:12], 
+##D       NIRM = mod.NIRM$item[50, 9:12],
+##D       GPCMr = mod.GPCMr$item[50, 10:13]) / rep(c(1:4), each=3)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 5: Itemtrennschärfen eines 
+##D #                             dichotomen und eines polytomen 
+##D #                             Items
+##D 
+##D rbind(I40 = mod.GPCMr$item[40, 10:13],
+##D       I50 = mod.GPCMr$item[50, 10:13])
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 6: Anpassen eines 1PL-G Modells
+##D #
+##D 
+##D 
+##D ## Das 1PL-G Modell
+##D tammodel <- "
+##D   LAVAAN MODEL:
+##D   F =~ 1*I1__I50
+##D   F ~~ F
+##D   # Rateparameter für MC4 Items
+##D   I1__I10 ?= gMC4*g1
+##D   # Rateparameter für MC3 Items
+##D   I11__I20 + I31__I40 ?= gMC3*g1
+##D   "
+##D mod.1PL_G <- tamaan(tammodel, resp, pweights = w, 
+##D                     control = list(Msteps = 15))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.5, Listing 7: Ausgabe geschätzter Rateparameter
+##D #                             für MC3 und MC4 Items
+##D #
+##D 
+##D mod.1PL_G$item[c(10,11), c(1,4,5)]
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.3.6 Bookleteffekte
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.6, Listing 1: Anpassen eines Bookletmodells
+##D # 
+##D 
+##D mod.1PL_Book <- tam.mml.mfr(resp, facets = cbind(th = dat$th), 
+##D                  formulaA= ~ item + item:step + th, pweights = w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.6, Listing 2: Ausgabe der Bookleteffekte der einzelnen
+##D #                             Testhefte
+##D # 
+##D 
+##D rbind((tmp <- mod.1PL_Book$xsi[paste0("thER0", 1:5),]), 
+##D       thER06 = - c(sum(tmp[,1]), NA))
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.3.7 Personenfähigkeitsschätzer
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 1: WLEs
+##D # 
+##D 
+##D WLE.1PL <- as.data.frame(tam.wle(mod.1PL))
+##D round(head(WLE.1PL, 2), 4)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 2: WLE Reliabilität
+##D # 
+##D 
+##D WLErel(WLE.1PL$theta, WLE.1PL$error, w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 3: EAPs
+##D # 
+##D 
+##D round(head(mod.1PL$person, 2), 4)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 4: EAP Reliabilität
+##D # 
+##D 
+##D EAPrel(mod.1PL$person$EAP, mod.1PL$person$SD.EAP, w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 4a: Ergänzung zum Buch
+##D # Alternative Berechnung der EAP-Reliabilität
+##D #
+##D 
+##D 1 - weighted.mean(mod.1PL$person$SD.EAP^2, w)/mod.1PL$variance
+##D 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 5: PVs
+##D # 
+##D 
+##D PV.1PL <- tam.pv(mod.1PL)$pv
+##D round(head(PV.1PL, 2), 4)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.7, Listing 6: Statistische Kennwerte der einzelnen
+##D #                             Personenfähigkeitsschätzer
+##D # 
+##D 
+##D cbind(WLEs = c(M = weighted.mean(WLE.1PL$theta, w),
+##D                SD = weighted_sd(WLE.1PL$theta, w)),
+##D       EAPs = c(M = weighted.mean(mod.1PL$person$EAP, w),
+##D                SD = weighted_sd(mod.1PL$person$EAP, w)),
+##D       PVs = c(M = mean(apply(PV.1PL[, -1], 2, weighted.mean, w)),
+##D               SD=mean(apply(PV.1PL[, -1], 2, weighted_sd, w))))
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.3.8 Mehrdimensionale Modelle
+##D ## -------------------------------------------------------------
+##D 
+##D # Achtung: Algorithmen benötigen einige Zeit
+##D # Zur schnelleren Konvergenz werden nur Daten aus Testheft 1 verwendet
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.8, Listing 1: Verteilung der Items auf Foki 
+##D # 
+##D 
+##D table(paste("Fokus", ue$focus[ue$Item %in% colnames(datTH1)]))
+##D table(paste("Fokus", ueTH1$focus))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.8, Listing 2: Spezifizierung der Q-Matrix und 
+##D #                             Anpassung des Modells
+##D #                             Achtung: Schätzung benötigt > 300 Iterationen
+##D # 
+##D 
+##D Q <- array(0, c(25, 5), list(items[items %in% colnames(datTH1)]))
+##D for(i in 1:25) Q[i, ueTH1$focus[i] + 1] <- 1
+##D mod.1PL_multi <- tam(resp = respTH1, pweights = wTH1,
+##D                      Q = Q, control = list(snodes = 1500))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.8, Listing 3: Anpassen eines Bifaktormodells
+##D #                             Achtung: Schätzung benötigt > 350 Iterationen
+##D # 
+##D 
+##D mod.1PL_bi <- tam.fa(respTH1, irtmodel = "bifactor1", 
+##D                 dims = ueTH1$format, pweights = wTH1, 
+##D                 control = list(snodes = 1500))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.8, Listing 4: Darstellung der Varianzen des 
+##D #                             Hauptfaktors und der Störfaktoren
+##D # 
+##D 
+##D nams <- c("I26", "I45", "I12", "I1", "I41")
+##D dfr <- data.frame(mod.1PL_bi$B.stand[nams,],
+##D                   row.names=ueTH1[nams, "format"])
+##D dfr
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.8, Listing 5: Darstellung der Reliabilitätsschätzer
+##D # 
+##D 
+##D mod.1PL_bi$meas
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.3.9 Modellpassung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.9, Listing 1: Berechnung und Darstellungen von 
+##D #                             Itemfitstatistiken
+##D # 
+##D 
+##D itemfit <- tam.fit(mod.1PL)
+##D summary(itemfit)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.9, Listing 2: Berechnung und Darstellungen von 
+##D #                             Modellfitstatistiken
+##D # 
+##D 
+##D modfit <- tam.modelfit(mod.1PL)
+##D modfit$fitstat
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.3.9, Listing 3: LRT für Modelltestung
+##D # 
+##D 
+##D anova(mod.1PL, mod.GPCM)
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.4.1 Simultane Kalibrierung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.1, Listing 1: Daten vorbereiten
+##D #
+##D 
+##D vars <- c("idstud", "wgtstud", "th")
+##D # Daten der Hauptstudie
+##D tmp1 <- cbind("Hauptstudie" = 1, dat[,c(vars, items)])
+##D # Daten der Normierungsstudie
+##D n.items <- grep("I|J",names(normdat),value=T)
+##D tmp2 <- cbind("Hauptstudie" = 0, normdat[, c(vars, n.items)])
+##D # Schülergewichte der Normierungsstudie sind konstant 1
+##D # Datensätze zusammenfügen
+##D dat.g <- rbind.fill(tmp1,tmp2)
+##D all.items <- grep("I|J",names(dat.g),value=T)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.1, Listing 2: Simultane Kalibrierung
+##D #                             Achtung: Schätzung benötigt > 450 Iterationen
+##D #
+##D 
+##D # 2-Gruppenmodell
+##D linkmod1 <-  tam.mml(resp=dat.g[, all.items], pid=dat.g[, 2], 
+##D               group = dat.g$Hauptstudie, pweights=dat.g$wgtstud)
+##D summary(linkmod1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.1, Listing 2a: Ergänzung zum Buch
+##D # Berechnung von Verteilungsparametern
+##D #
+##D 
+##D set.seed(20160828)
+##D 
+##D # PVs
+##D PV_linkmod1 <- tam.pv(linkmod1, nplausible = 20)
+##D 
+##D # Personendatensatz
+##D dfr_linkmod1 <- linkmod1$person
+##D dfr_linkmod1 <- merge( x = dfr_linkmod1, y = PV_linkmod1$pv, by = "pid" , all=T)
+##D dfr_linkmod1 <- dfr_linkmod1[ order(dfr_linkmod1$case) , ]
+##D 
+##D # Leistungsskala transformieren
+##D vars.pv <- grep("PV",names(dfr_linkmod1),value=T)
+##D # Mittlere Fähigkeit der Normierungsgruppe
+##D p0 <- which(dat.g$Hauptstudie == 0)
+##D M_PV <- mean(apply(dfr_linkmod1[p0,vars.pv],2,Hmisc::wtd.mean,
+##D                    weights = dfr_linkmod1[p0,"pweight"]))
+##D SD_PV <- mean(sqrt(apply(dfr_linkmod1[p0,vars.pv],2,Hmisc::wtd.var,
+##D                          weights = dfr_linkmod1[p0,"pweight"])))
+##D # Tranformationsparameter
+##D a <- 100/SD_PV; b <- 500 - a*M_PV
+##D 
+##D # Verteilungsparameter der Hauptstudie
+##D p1 <- which(dat.g$Hauptstudie == 1)
+##D M1_PV <- mean(apply(dfr_linkmod1[p1,vars.pv],2,Hmisc::wtd.mean,
+##D                     weights = dfr_linkmod1[p1,"pweight"]))
+##D SD1_PV <- mean(sqrt(apply(dfr_linkmod1[p1,vars.pv],2,Hmisc::wtd.var,
+##D                           weights = dfr_linkmod1[p1,"pweight"])))
+##D TM_PV <- M1_PV*a + b; TSD_PV <- SD1_PV*a
+##D 
+##D # Ergebnisse
+##D trafo_linkmod1 <- data.frame(M_Norm = 500, SD_Norm = 100, a = a, b = b,
+##D                              M = TM_PV, SD = TSD_PV)
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.4.2 Separate Kalibrierung mit fixiertem 
+##D ##                 Itemparameter
+##D ## -------------------------------------------------------------
+##D 
+##D 
+##D # Vorgehensweise 1: 
+##D # Daten der Normierungsstudie frei kalibrieren und skalieren
+##D # Skalierung der Hauptstudie-Daten mit fixiertem Itemparameter
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.2, Listing 1: Daten der Normierungsstudie frei 
+##D #                             kalibrieren und skalieren
+##D #
+##D 
+##D normmod <- tam.mml(resp = normdat[, n.items], 
+##D                    pid = normdat[, "idstud"])
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.2, Listing 1a: Ergänzung zum Buch
+##D # Berechnung von Verteilungsparametern
+##D #
+##D 
+##D summary(normmod)
+##D 
+##D set.seed(20160828)
+##D 
+##D # Personenfähigkeitsschätzer
+##D PV_normmod <- tam.pv(normmod, nplausible = 20)
+##D # In Personendatensatz kombinieren
+##D dfr_normmod <- normmod$person
+##D dfr_normmod <- merge( x = dfr_normmod, y = PV_normmod$pv, by = "pid" , all=T)
+##D dfr_normmod <- dfr_normmod[ order(dfr_normmod$case) , ]
+##D 
+##D M_norm <- mean(apply(dfr_normmod[,vars.pv],2,Hmisc::wtd.mean,
+##D                      weights = dfr_normmod[,"pweight"]))
+##D SD_norm <- mean(sqrt(apply(dfr_normmod[,vars.pv],2,Hmisc::wtd.var,
+##D                            weights = dfr_normmod[,"pweight"])))
+##D # Tranformationsparameter
+##D a_norm <- 100/SD_norm; b_norm <- 500 - a_norm*M_norm
+##D 
+##D TM_norm <- M_norm * a_norm + b_norm
+##D TSD_norm <- SD_norm * a_norm
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.2, Listing 2: Parameter aus Normierungsstudie
+##D #                             für die Skalierung der Haupt-
+##D #                             studie bei deren Skalierung 
+##D #                             fixieren
+##D #
+##D 
+##D # Itemschwierigkeit aus der Normierungsstudie
+##D norm.xsi <- normmod$xsi.fixed.estimated
+##D # Hauptstudie: xsi-Matrix aus mod.1PL
+##D xsi.fixed <- mod.1PL$xsi.fixed.estimated
+##D # nur Parameter von Items in Hauptstudie
+##D norm.xsi <- norm.xsi[ 
+##D   rownames(norm.xsi) %in% rownames(xsi.fixed), ]
+##D # Setzen der Parameter in richtiger Reihenfolge
+##D xsi.fixed <- cbind(match(rownames(norm.xsi), 
+##D                          rownames(xsi.fixed)), norm.xsi[, 2])
+##D # Skalierung der Hauptstudie-Daten mit fixierten Itemparameter
+##D mainmod.fixed <- tam.mml(resp = resp, xsi.fixed = xsi.fixed,
+##D                          pid = dat$MB_idstud, pweights = w)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.2, Listing 2a: Ergänzung zum Buch
+##D # Berechnung von Verteilungsparametern
+##D #
+##D 
+##D summary(mainmod.fixed)
+##D 
+##D set.seed(20160828)
+##D 
+##D # Personenfähigkeitsschätzer
+##D WLE_mainmod.fixed <- tam.wle(mainmod.fixed)
+##D PV_mainmod.fixed <- tam.pv(mainmod.fixed, nplausible = 20)
+##D # In Personendatensatz kombinieren
+##D dfr_mainmod.fixed <- mainmod.fixed$person
+##D dfr_mainmod.fixed <- merge( x = dfr_mainmod.fixed, y = WLE_mainmod.fixed, by = "pid" , all=T)
+##D dfr_mainmod.fixed <- merge( x = dfr_mainmod.fixed, y = PV_mainmod.fixed$pv, by = "pid" , all=T)
+##D dfr_mainmod.fixed <- dfr_mainmod.fixed[ order(dfr_mainmod.fixed$case) , ]
+##D 
+##D M_main <- mean(apply(dfr_mainmod.fixed[,vars.pv],2,Hmisc::wtd.mean,
+##D                      weights = dfr_mainmod.fixed[,"pweight"]))
+##D SD_main <- mean(sqrt(apply(dfr_mainmod.fixed[,vars.pv],2,Hmisc::wtd.var,
+##D                            weights = dfr_mainmod.fixed[,"pweight"])))
+##D 
+##D TM_main <- M_main * a_norm + b_norm
+##D TSD_main <- SD_main * a_norm
+##D 
+##D trafo.fixed1 <- data.frame(M_norm = M_norm, SD_norm = SD_norm,
+##D                            a = a_norm, b = b_norm,
+##D                            TM_norm = TM_norm, TSD_norm = TSD_norm,
+##D                            M_PV = M_main, SD_PV = SD_main,
+##D                            M_TPV = TM_main, SD_TPV = TSD_main)
+##D 
+##D # Vorgehensweise 2: 
+##D # Daten der Hauptstudie frei kalibrieren und skalieren
+##D # Skalierung der Hauptstudie-Daten mit fixierten Itemparameter
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.2, Listing 2b: Ergänzung zum Buch
+##D # Analoges Vorgehen mit fixierten Parametern aus der 
+##D # Hauptstudie für die Skalierung der Normierungsstudie
+##D #
+##D 
+##D # Daten der Hauptstudie kalibrieren und skalieren
+##D mainmod <- tam.mml(resp=dat[, items], irtmodel="1PL", 
+##D                    pid=dat$MB_idstud, pweights=dat[,"wgtstud"])
+##D summary(mainmod)
+##D 
+##D set.seed(20160828)
+##D 
+##D # Personenfähigkeitsschätzer
+##D WLE_mainmod <- tam.wle(mainmod)
+##D PV_mainmod <- tam.pv(mainmod, nplausible = 20)
+##D # In Personendatensatz kombinieren
+##D dfr_mainmod <- mainmod$person
+##D dfr_mainmod <- merge( x = dfr_mainmod, y = WLE_mainmod, by = "pid" , all=T)
+##D dfr_mainmod <- merge( x = dfr_mainmod, y = PV_mainmod$pv, by = "pid" , all=T)
+##D dfr_mainmod <- dfr_mainmod[order(dfr_mainmod$case),]
+##D 
+##D M_main <- mean(apply(dfr_mainmod[,vars.pv],2,Hmisc::wtd.mean,
+##D                      weights = dfr_mainmod[,"pweight"]))
+##D SD_main <- mean(sqrt(apply(dfr_mainmod[,vars.pv],2,Hmisc::wtd.var,
+##D                            weights = dfr_mainmod[,"pweight"])))
+##D 
+##D 
+##D # Itemschwierigkeit aus der Hauptstudie
+##D main.xsi <- mod.1PL$xsi.fixed.estimated
+##D # Hauptstudie: xsi-Matrix aus normmod
+##D xsi.fixed <- normmod$xsi.fixed.estimated
+##D # nur Parameter von Items in Hauptstudie
+##D main.xsi <- main.xsi[ 
+##D   rownames(main.xsi) %in% rownames(xsi.fixed), ]
+##D # Setzen der Parameter in richtiger Reihenfolge
+##D xsi.fixed <- cbind(match(rownames(main.xsi), 
+##D                          rownames(xsi.fixed)), main.xsi[, 2])
+##D 
+##D # Skalierung der Hauptstudie-Daten mit fixiertem Itemparameter
+##D normmod.fixed <- tam.mml(resp=normdat[, n.items], irtmodel="1PL", 
+##D                          xsi.fixed = xsi.fixed,
+##D                          pid=normdat$MB_idstud, pweights=normdat[,"wgtstud"])
+##D summary(normmod.fixed)
+##D 
+##D set.seed(20160828)
+##D 
+##D # Personenfähigkeitsschätzer
+##D PV_normmod.fixed <- tam.pv(normmod.fixed, nplausible = 20)
+##D dfr_normmod.fixed <- normmod.fixed$person
+##D dfr_normmod.fixed <- merge( x = dfr_normmod.fixed, y = PV_normmod.fixed$pv, by = "pid" , all=T)
+##D dfr_normmod.fixed <- dfr_normmod.fixed[ order(dfr_normmod.fixed$case) , ]
+##D 
+##D M_norm <- mean(apply(dfr_normmod.fixed[,vars.pv],2,Hmisc::wtd.mean,
+##D                      weights = dfr_normmod.fixed[,"pweight"]))
+##D SD_norm <- mean(sqrt(apply(dfr_normmod.fixed[,vars.pv],2,Hmisc::wtd.var,
+##D                            weights = dfr_normmod.fixed[,"pweight"])))
+##D 
+##D # Tranformationsparameter
+##D a_norm <- 100/SD_norm; b_norm <- 500 - a_norm*M_norm
+##D 
+##D TM_norm <- M_norm * a_norm + b_norm
+##D TSD_norm <- SD_norm * a_norm
+##D 
+##D TM_main <- M_main * a_norm + b_norm
+##D TSD_main <- SD_main * a_norm
+##D 
+##D trafo.fixed2 <- data.frame(M_PV = M_main, SD_PV = SD_main,
+##D                            M_Norm.fixed = M_norm, SD_Norm.fixed = SD_norm,
+##D                            a = a_norm, b = b_norm,
+##D                            TM_norm = TM_norm, TSD_norm = TSD_norm,
+##D                            M_TPV = TM_main, SD_TPV = TSD_main)
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.4.3 Separate Kalibrierung mit Linking durch 
+##D ##                 Transformationsfunktion
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.3, Listing 1: equating.rasch()
+##D #
+##D 
+##D # Freigeschätzte Itemparameter der Normierung- und Hauptstudie
+##D norm.pars <- normmod$item[,c("item","xsi.item")]
+##D main.pars <- mainmod$item[,c("item","xsi.item")]
+##D # Linking mit equating.rasch
+##D mod.equate <- equating.rasch(x = norm.pars, y = main.pars)
+##D mod.equate$B.est
+##D #   Mean.Mean    Haebara Stocking.Lord
+##D #  -0.1798861 -0.1788159    -0.1771145
+##D head(mod.equate$anchor,2)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.3, Listing 1a: Ergänzung zum Buch
+##D # Berechnung Linkingfehler                             
+##D #
+##D linkitems <- intersect(n.items, items)
+##D 
+##D head(mod.equate$transf.par,2)
+##D mod.equate$descriptives
+##D 
+##D # Linkingfehler: Jackknife unit ist Item
+##D pars <- data.frame(unit = linkitems,
+##D                    study1 = normmod$item$xsi.item[match(linkitems, normmod$item$item)],
+##D                    study2 = mainmod$item$xsi.item[match(linkitems, mainmod$item$item)],
+##D                    item = linkitems)
+##D # pars <- as.matrix(pars)
+##D mod.equate.jk <- equating.rasch.jackknife(pars,se.linkerror = T)
+##D mod.equate.jk$descriptives
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.3, Listing 2: Linking nach Haberman
+##D #
+##D 
+##D # Itemparameter der Normierungsstudie
+##D M1 <- mean( apply(dfr_normmod[,vars.pv], 2, mean ) )
+##D SD1 <- mean( apply(dfr_normmod[,vars.pv], 2, sd ) )
+##D a1 <- 1/SD1; b1 <- 0-a1*M1
+##D A <- normmod$item$B.Cat1.Dim1/a1
+##D B <- (normmod$item$xsi.item + b1/a1)
+##D # Itemparameter der Normierungsstudie fuer haberman.linking
+##D tab.norm <- data.frame(Studie = "1_Normierung",
+##D                        item = normmod$item$item,
+##D                        a = A, b = B/A)
+##D # Itemparameter der Hauptstudie
+##D A <- mainmod$item$B.Cat1.Dim1
+##D B <- mainmod$item$xsi.item
+##D tab.main <- data.frame(Studie = "2_Hauptstudie",
+##D                        item = mainmod$item$item,
+##D                        a = A, b = B/A)
+##D # Itemparameter aller Studien
+##D itempars <- rbind(tab.norm, tab.main)
+##D # Personenparameter
+##D personpars <- list(PV_normmod$pv*a1+b1, PV_mainmod$pv)
+##D # Linking nach Habermans Methode
+##D linkhab <- linking.haberman(itempars = itempars, 
+##D                             personpars = personpars)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.3, Listing 2a: Ergänzung zum Buch
+##D # Ergebnisdarstellung, Transformation und Berechnung
+##D # von Verteilungsparametern
+##D #
+##D 
+##D # Ergebnisse
+##D # Transformationsparameter der Itemparameter
+##D linkhab$transf.itempars
+##D # Transformationsparameter der Personenparameter
+##D linkhab$transf.personpars
+##D 
+##D # Itemparameter
+##D dfr.items <- data.frame(linkhab$joint.itempars,
+##D                         linkhab$b.orig, linkhab$b.trans)
+##D names(dfr.items)[-1] <- c("joint_a","joint_b",
+##D                           "orig_b_norm","orig_b_main",
+##D                           "trans_b_norm","trans_b_main")
+##D head(round2(dfr.items[,-1],2),2)
+##D 
+##D # Transformierte Personenparameter der Hauptstudie
+##D dfr_main_transpv <- linkhab$personpars[[2]]
+##D names(dfr_main_transpv)[-1] <- paste0("linkhab_",vars.pv)
+##D dfr_main_transpv <- cbind(dfr_mainmod,dfr_main_transpv[,-1])
+##D round2(head(dfr_main_transpv[,c("PV1.Dim1","linkhab_PV1.Dim1","PV2.Dim1","linkhab_PV2.Dim1")],2),2)
+##D 
+##D # Aufgeklärte und Fehlvarianz des Linkings
+##D linkhab$es.invariance
+##D 
+##D # Transformationsparameter der Normierungsstudie auf Skala 500,100
+##D # trafo.fixed1
+##D a <- 100/mean( apply(dfr_normmod[,vars.pv]*a1+b1, 2, sd ) )
+##D b <- 500 - a*mean( apply(dfr_normmod[,vars.pv]*a1+b1, 2, mean ) )
+##D 
+##D # trafo.fixed2
+##D M_PV <- mean( apply(linkhab$personpars[[2]][vars.pv], 2, 
+##D                     Hmisc::wtd.mean, weights = dfr_mainmod$pweight ) )
+##D SD_PV <- mean( sqrt(apply(linkhab$personpars[[2]][vars.pv], 2, 
+##D                           Hmisc::wtd.var, weights = dfr_mainmod$pweight )) )
+##D M_TPV <- M_PV*a + b
+##D SD_TPV <- SD_PV * a
+##D 
+##D trafo.linkhab <- data.frame(trafo.fixed1[,1:2],
+##D                             a1 = a1, b1 = b1,
+##D                             M_norm_trans = 0,
+##D                             SD_norm_trans = 1,
+##D                             a = 100, b = 500,
+##D                             trafo.fixed2[,1:2],
+##D                             linkhab_M_PV = M_PV, 
+##D                             linkhab_SD_PV = SD_PV,
+##D                             linkhab_M_TPV = M_TPV,
+##D                             linkhab_SD_TPV = SD_TPV)
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 6.4.4 Ergebnisse im Vergleich und Standardfehler
+##D ##                 des Linkings
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 6.4.4, Listing 3a: Ergänzung zum Buch
+##D # Berechnung von Standardfehlern Ergebnisvergleiche
+##D #
+##D 
+##D # Gemeinsame Skalierung mit fixiertem Itemparameter aus Hauptstudie
+##D # Standardfehler bzgl. Itemstichprobenfehler
+##D 
+##D # Matrix für fixerte Itemparameter vorbereiten
+##D xsi.fixed <- normmod.fixed$xsi.fixed.estimated
+##D npar <- length(xsi.fixed[,"xsi"])
+##D mat.xsi.fixed <- cbind(index=1:npar,par = dimnames(xsi.fixed)[[1]])
+##D sequence <- match(mat.xsi.fixed[,"par"],dimnames(main.xsi)[[1]])
+##D mat.xsi.fixed <- cbind(index=as.numeric(mat.xsi.fixed[,1]), 
+##D                        par = mat.xsi.fixed[,2],
+##D                        xsi.fixed = as.numeric(main.xsi[sequence,"xsi"]))
+##D # Nicht fixierte Itemparameter löschen
+##D del <- which(is.na(mat.xsi.fixed[,"xsi.fixed"]))
+##D mat.xsi.fixed <- mat.xsi.fixed[-del,]
+##D head(mat.xsi.fixed,3)
+##D 
+##D dfr <- data.frame(elim = "none",growth=trafo.fixed2$M_TPV-500)
+##D # Jedes Mal ein Ankeritem weniger
+##D # Schleife über alle Ankeritems
+##D 
+##D set.seed(20160828)
+##D 
+##D for(ii in linkitems){
+##D   # ii <- linkitems[1]
+##D   del <- grep(paste0(ii,"_"), mat.xsi.fixed[,2])
+##D   tmp <- mat.xsi.fixed[-del,c(1,3)]
+##D   tmp <- data.frame(index = as.numeric(tmp[,1]),xsi.fixed = as.numeric(tmp[,2]))
+##D   
+##D   # Skalierung der Hauptstudie-Daten mit fixiertem Itemparameter
+##D   normmod.tmp <- tam.mml(resp=normdat[, n.items], irtmodel="1PL", 
+##D                          xsi.fixed = tmp,
+##D                          pid=normdat$MB_idstud, pweights=normdat[,"wgtstud"])
+##D   
+##D   # Personenfähigkeitsschätzer
+##D   # WLE_normmod.tmp <- tam.wle(normmod.tmp)
+##D   PV_normmod.tmp <- tam.pv(normmod.tmp, nplausible = 20)
+##D   # In Personendatensatz kombinieren
+##D   
+##D   M_norm.tmp <- mean(apply(PV_normmod.tmp$pv[,vars.pv],2,mean))
+##D   SD_norm.tmp <- mean(apply(PV_normmod.tmp$pv[,vars.pv],2,sd))
+##D   
+##D   # Tranformationsparameter
+##D   a_norm.tmp <- 100/SD_norm.tmp 
+##D   b_norm.tmp <- 500 - a_norm.tmp*M_norm.tmp
+##D   
+##D   TM_main.tmp <- M_main * a_norm.tmp + b_norm.tmp
+##D   dfr.tmp <- data.frame(elim = ii,growth=TM_main.tmp-500)
+##D   dfr <- rbind(dfr,dfr.tmp)
+##D   
+##D }
+##D 
+##D dfr$diff2 <- (dfr$growth-dfr$growth[1])^2
+##D sum <- sum(dfr$diff2)
+##D Var <- sum*28/29
+##D SE <- sqrt(Var)
+##D 
+##D quant <- 1.96 
+##D low <- trafo.fixed2$M_TPV - quant*SE
+##D upp <- trafo.fixed2$M_TPV + quant*SE
+##D 
+##D dfr$SE <- SE; dfr$quant <- quant
+##D dfr$low <- low; dfr$upp <- upp
+##D 
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("07_ProduktiveKomp__20220517")
+### * 07_ProduktiveKomp__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  7
+### Title: Kapitel 7: Statistische Analysen produktiver Kompetenzen
+### Aliases: 'Kapitel 7'
+
+### ** Examples
+
+## Not run: 
+##D library(irr)
+##D library(TAM)
+##D library(WrightMap)
+##D library(lattice)
+##D library(grid)
+##D library(lme4)
+##D library(lavaan)
+##D library(xtable)
+##D 
+##D summary.VarComp <- function(mod){ 
+##D   var.c <- VarCorr(mod)
+##D   var.c <- c(unlist(var.c) , attr(var.c , "sc")^2)
+##D   names(var.c)[length(var.c)] <- "Residual"
+##D   dfr1 <- data.frame(var.c)
+##D   colnames(dfr1) <- "Varianz"
+##D   dfr1 <- rbind(dfr1, colSums(dfr1))
+##D   rownames(dfr1)[nrow(dfr1)] <- "Total"
+##D   dfr1$prop.Varianz <- 100 * (dfr1$Varianz / dfr1$Varianz[nrow(dfr1)])
+##D   dfr1 <- round(dfr1,2)
+##D   return(dfr1)
+##D }
+##D 
+##D data(datenKapitel07)
+##D prodRat <- datenKapitel07$prodRat
+##D prodRatL <- datenKapitel07$prodRatL
+##D prodPRat <- datenKapitel07$prodPRat 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 7.2: Beurteilerübereinstimmung
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.2, Listing 1: Berechnen der Häufigkeitstabellen
+##D #
+##D 
+##D # Items auswählen
+##D items <- c("TA", "CC", "GR", "VO")
+##D # Tabelle erzeugen
+##D tab <- apply(prodRat[, items], 2,
+##D              FUN=function(x){
+##D                prop.table(table(x))*100})
+##D print(tab, digits = 2)
+##D 
+##D # Mittelwert der Ratings berechnen
+##D round(apply(prodRat[, items], 2, mean), 2)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.2, Listing 2: Beurteilerübereinstimmung berechnen
+##D #
+##D 
+##D items <- c("TA", "CC", "GR", "VO")
+##D dfr <- data.frame(items, agree = NA, 
+##D                   kappa = NA, wkappa = NA, korr = NA)
+##D for(i in 1:length(items)){
+##D   dat.i <- prodPRat[, grep(items[i], colnames(prodPRat))]
+##D   dfr[i, "agree"] <- agree(dat.i, tolerance = 1)["value"]
+##D   dfr[i, "kappa"] <- kappa2(dat.i)["value"]
+##D   dfr[i, "wkappa"] <- kappa2(dat.i, weight = "squared")["value"]
+##D   dfr[i, "korr"] <- cor(dat.i[,1], dat.i[,2])
+##D   dfr[i, "icc"] <- icc(dat.i, model = "twoway")["value"]
+##D }
+##D print(dfr, digits = 3)
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 7.3: Skalierungsmodelle
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 1: Skalierungsmodell mit TAM
+##D #
+##D 
+##D set.seed(1234)
+##D 
+##D # Rater-Facette definieren
+##D facets <- prodRat[, "rater", drop = FALSE] 
+##D # Response Daten definieren
+##D vars <- c("TA", "CC", "GR", "VO")
+##D resp <- prodRat[, vars] 
+##D # Personen-ID definieren
+##D pid <- prodRat$idstud 
+##D 
+##D # Formel für Modell
+##D formulaA <- ~item*step+item*rater
+##D # Modell berechnen
+##D mod <- tam.mml.mfr(resp = resp, facets = facets, formulaA = formulaA,   
+##D                    pid = pid, control=list(xsi.start0 = 1, 
+##D                                            fac.oldxsi = 0.1, 
+##D                                            increment.factor = 1.05))
+##D summary(mod, file="TAM_MFRM")
+##D 
+##D # Personenparameter und Rohscores
+##D persons.mod <- tam.wle(mod)
+##D persons.mod$raw.score <- persons.mod$PersonScores / (persons.mod$N.items) 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 1b: Ergänzung zum Buch
+##D # Modellvergleich aller besprochenen Modelle
+##D #
+##D 
+##D f1 <- ~item * rater * step
+##D mod1 <- tam.mml.mfr(resp = resp, facets = facets, formulaA = f1,   
+##D                     pid = pid, control=list(xsi.start0 = 1, 
+##D                                             fac.oldxsi = 0.1, 
+##D                                             increment.factor = 1.05))
+##D f2 <- ~item*step+item*rater
+##D mod2 <- tam.mml.mfr(resp = resp, facets = facets, formulaA = f2,   
+##D                     pid = pid, control=list(xsi.start0 = 1, 
+##D                                             fac.oldxsi = 0.1, 
+##D                                             increment.factor = 1.05))
+##D f3 <- ~item * step + rater
+##D mod3 <- tam.mml.mfr(resp = resp, facets = facets, formulaA = f3,   
+##D                     pid = pid, control=list(xsi.start0 = 1, 
+##D                                             fac.oldxsi = 0.1, 
+##D                                             increment.factor = 1.05))
+##D f4 <- ~item + step + rater
+##D mod4 <- tam.mml.mfr(resp = resp, facets = facets, formulaA = f4,   
+##D                     pid = pid, control=list(xsi.start0 = 1, 
+##D                                             fac.oldxsi = 0.1, 
+##D                                             increment.factor = 1.05))
+##D mod4$xsi.facets
+##D IRT.compareModels(mod1, mod2, mod3, mod4)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 1c: Ergänzung zum Buch
+##D # Wright-Map: Items und Rater
+##D #
+##D 
+##D item.labs <- vars
+##D rater.labs <- unique(prodRat$rater)
+##D item.labs <- c(item.labs, rep(NA, length(rater.labs) - 
+##D                                 length(item.labs)))
+##D 
+##D pars <- mod$xsi.facets$xsi
+##D facet <- mod$xsi.facets$facet
+##D item.par <- pars[facet == "item"]
+##D rater.par <- pars[facet == "rater"]
+##D item_rat <- pars[facet == "item:rater"]
+##D len <- length(item_rat)
+##D item.long <- c(item.par, rep(NA, len - length(item.par)))
+##D rater.long <- c(rater.par, rep(NA, len - length(rater.par)))
+##D 
+##D wrightMap(persons.mod$theta, rbind(item.long, rater.long), 
+##D           label.items = c("Items",  "Rater"), 
+##D           thr.lab.text = rbind(item.labs, rater.labs), 
+##D           axis.items = "", min.l=-3, max.l=3,
+##D           axis.persons = "Personen")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 2: Fit-Indices berechnen
+##D #
+##D 
+##D # Infit/Outfit berechnen
+##D pseudo_items <- colnames(mod$resp)
+##D pss <- strsplit(pseudo_items , split="-")
+##D item_parm <- unlist(lapply(pss, FUN = function(ll){ll[1]}))
+##D rater_parm <- unlist(lapply(pss, FUN = function(ll){ll[2]}))
+##D 
+##D # Fit Items
+##D res.items <- msq.itemfitWLE(mod, item_parm)
+##D summary(res.items)
+##D 
+##D # Fit Rater
+##D res.rater <- msq.itemfitWLE(mod, rater_parm)
+##D summary(res.rater)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 2a: Ergänzung zum Buch
+##D # Abbildung: Histogramm, Rohscores
+##D #
+##D 
+##D dev.off()
+##D par(mfcol=c(1,2))
+##D 
+##D hist(persons.mod$theta, col="grey", breaks=40, 
+##D      main = "",
+##D      xlab = "Theta (logits)",
+##D      ylab = "Häufigkeit")
+##D with(persons.mod, scatter.smooth(raw.score, theta, 
+##D                                  pch = 1, cex = .6, xlab = "Rohscores",
+##D                                  ylab = "Theta (logits)", 
+##D                                  lpars = list(col = "darkgrey", lwd = 2, 
+##D                                               lty = 1)))
+##D 
+##D # Abbildung: Fit-Statistik
+##D par(mfcol=c(1,2))
+##D fitdat <- res.rater$fit_data
+##D fitdat$var <- factor(substr(fitdat$item, 1, 2))
+##D boxplot(Outfit~var, data=fitdat, 
+##D         ylim=c(0,2), main="Outfit")
+##D boxplot(Infit~var, data=fitdat, 
+##D         ylim=c(0,2), main="Infit")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 2b: Ergänzung zum Buch
+##D # Korrelationen
+##D #
+##D 
+##D korr <- c(with(persons.mod, cor(raw.score, theta, 
+##D                                 method = "pearson")),
+##D           with(persons.mod, cor(raw.score, theta, 
+##D                                 method = "spearman")))
+##D print(korr)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 3: Q3-Statistik berechnen
+##D #
+##D 
+##D # Q3 Statistik
+##D mfit.q3 <- tam.modelfit(mod)
+##D rater.pairs <- mfit.q3$stat.itempair
+##D 
+##D # Nur Paare gleicher Rater wählen
+##D unique.rater <- which(substr(rater.pairs$item1, 4,12) == 
+##D                         substr(rater.pairs$item2, 4,12))
+##D rater.q3 <- rater.pairs[unique.rater, ]
+##D 
+##D # Spalten einfügen: Rater, Kombinationen
+##D rater.q3$rater <- substr(rater.q3$item1, 4, 12)
+##D rater.q3 <- rater.q3[order(rater.q3$rater),]
+##D rater.q3$kombi <- as.factor(paste(substr(rater.q3$item1, 1, 2), 
+##D                                   substr(rater.q3$item2, 1, 2), sep="_"))
+##D 
+##D # Statistiken aggregieren: Rater, Kombinationen
+##D dfr.raterQ3 <- aggregate(rater.q3$aQ3, by = list(rater.q3$rater), mean)
+##D colnames(dfr.raterQ3) <- c("Rater", "Q3")
+##D dfr.itemsQ3 <- aggregate(rater.q3$aQ3, by = list(rater.q3$kombi), mean)
+##D colnames(dfr.itemsQ3) <- c("Items", "Q3")
+##D dfr.itemsQ3
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.3, Listing 3a: Ergänzung zum Buch
+##D # Lattice Dotplot
+##D #
+##D 
+##D # Lattice Dotplot
+##D mean.values <- aggregate(rater.q3$aQ3, list(rater.q3$kombi), mean)[["x"]]
+##D dotplot(aQ3~kombi, data=rater.q3, main="Q3-Statistik", ylab="Q3 (adjustiert)",
+##D         col="darkgrey", 
+##D         panel = function(x,...){
+##D           panel.dotplot(x,...)
+##D           panel.abline(h = 0, col.line = "grey", lty=3)
+##D           grid.points(1:6, mean.values, pch=17)
+##D         })
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 7.4: Generalisierbarkeitstheorie
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.4, Listing 1: Varianzkomponenten mit lme4 berechnen
+##D #
+##D 
+##D # Formel definieren
+##D formula1 <- response ~ (1|idstud) + (1|item) + (1|rater) +
+##D   (1|rater:item) + (1|idstud:rater) + 
+##D   (1|idstud:item)
+##D # Modell mit Interaktionen
+##D mod.vk <- lmer(formula1, data=prodRatL)
+##D 
+##D # Zusammenfassung der Ergebnisse
+##D summary(mod.vk)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.4, Listing 1a: Ergänzung zum Buch
+##D # Helper-Function um die Varianzkomponenten zu extrahieren
+##D #
+##D 
+##D summary.VarComp <- function(mod){ 
+##D   var.c <- VarCorr(mod)
+##D   var.c <- c(unlist(var.c) , attr(var.c , "sc")^2)
+##D   names(var.c)[length(var.c)] <- "Residual"
+##D   dfr1 <- data.frame(var.c)
+##D   colnames(dfr1) <- "Varianz"
+##D   dfr1 <- rbind(dfr1, colSums(dfr1))
+##D   rownames(dfr1)[nrow(dfr1)] <- "Total"
+##D   dfr1$prop.Varianz <- 100 * (dfr1$Varianz / dfr1$Varianz[nrow(dfr1)])
+##D   dfr1 <- round(dfr1,2)
+##D   return(dfr1)
+##D }
+##D summary.VarComp(mod.vk)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.4, Listing 2: Berechnung des G-Koeffizienten
+##D #
+##D 
+##D vk <- summary.VarComp(mod.vk)
+##D n.p <- length(unique(prodRatL$idstud)) # Anzahl Schüler
+##D n.i <- 4  # Anzahl Items
+##D n.r <- c(1,2,5) # Anzahl Rater
+##D 
+##D # Varianzkomponenten extrahieren
+##D sig2.p <- vk["idstud", "Varianz"]
+##D sig2.i <- vk["item", "Varianz"]
+##D sig2.r <- vk["rater", "Varianz"]
+##D sig2.ri <- vk["rater:item", "Varianz"]
+##D sig2.pr <- vk["idstud:rater", "Varianz"]
+##D sig2.pi <- vk["idstud:item", "Varianz"]
+##D sig2.pir <- vk["Residual", "Varianz"]
+##D 
+##D # Fehlervarianz berechnen
+##D sig2.delta <- sig2.pi/n.i + sig2.pr/n.r + sig2.pir/(n.i*n.r) 
+##D 
+##D # G-Koeffizient berechnen
+##D g.koeff <- sig2.p / (sig2.p + sig2.delta)
+##D print(data.frame(n.r, g.koeff), digits = 3)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.4, Listing 2a: Ergänzung zum Buch
+##D # Phi-Koeffizient berechnen
+##D #
+##D 
+##D sig2.D <- sig2.r/n.r + sig2.i/n.i + sig2.pi/n.i + sig2.pr/n.r + 
+##D   sig2.ri/(n.i*n.r) + sig2.pir/(n.i*n.r) 
+##D phi.koeff <- sig2.p / (sig2.p + sig2.D)
+##D print(data.frame(n.r, phi.koeff), digits = 3)
+##D 
+##D # Konfidenzintervalle
+##D 1.96*sqrt(sig2.D)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.4, Listing 2c: Ergänzung zum Buch
+##D # Variable Rateranzahl
+##D #
+##D 
+##D dev.off()
+##D n.i <- 4  # Anzahl Items
+##D dn.r <- seq(1,10)# 1 bis 10 mögliche Rater
+##D delta.i <- sig2.pi/n.i + sig2.pr/dn.r + sig2.pir/(n.i*dn.r)
+##D g.koeff <- sig2.p / (sig2.p + delta.i)
+##D names(g.koeff) <- paste("nR", dn.r, sep="_") 
+##D print(g.koeff[1:4])
+##D 
+##D # Abbildung variable Rateranzahl
+##D plot(g.koeff, type = "b", pch = 19, lwd = 2, bty = "n",
+##D      main = "G-Koeffizient: Raters",
+##D      ylab = "G-Koeffizient",
+##D      xlab = "Anzahl Raters",  xlim = c(0,10))
+##D abline(v=2, col="darkgrey")
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 7.5: Strukturgleichungsmodelle
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.5, Listing 1: SEM
+##D #
+##D 
+##D # SEM Modell definieren
+##D lv.mod <- " 
+##D   # Messmodell
+##D   TA =~ 1*TA_R1 + 1*TA_R2
+##D   CC =~ 1*CC_R1 + 1*CC_R2
+##D   GR =~ 1*GR_R1 + 1*GR_R2
+##D   VO =~ 1*VO_R1 + 1*VO_R2
+##D   
+##D   # Varianz Personen
+##D   TA ~~ Vta * TA
+##D   CC ~~ Vcc * CC
+##D   GR ~~ Vgr * GR
+##D   VO ~~ Vvo * VO
+##D   
+##D   # Varianz Rater X Personen
+##D   TA_R1 ~~ Vta_R12 * TA_R1
+##D   TA_R2 ~~ Vta_R12 * TA_R2
+##D   CC_R1 ~~ Vcc_R12 * CC_R1
+##D   CC_R2 ~~ Vcc_R12 * CC_R2
+##D   GR_R1 ~~ Vgr_R12 * GR_R1
+##D   GR_R2 ~~ Vgr_R12 * GR_R2
+##D   VO_R1 ~~ Vvo_R12 * VO_R1
+##D   VO_R2 ~~ Vvo_R12 * VO_R2
+##D   
+##D   # Kovarianz
+##D   TA_R1 ~~ Kta_cc * CC_R1
+##D   TA_R2 ~~ Kta_cc * CC_R2
+##D   TA_R1 ~~ Kta_gr * GR_R1
+##D   TA_R2 ~~ Kta_gr * GR_R2
+##D   TA_R1 ~~ Kta_vo * VO_R1
+##D   TA_R2 ~~ Kta_vo * VO_R2
+##D   CC_R1 ~~ Kcc_gr * GR_R1
+##D   CC_R2 ~~ Kcc_gr * GR_R2
+##D   CC_R1 ~~ Kcc_vo * VO_R1
+##D   CC_R2 ~~ Kcc_vo * VO_R2
+##D   GR_R1 ~~ Kgr_vo * VO_R1
+##D   GR_R2 ~~ Kgr_vo * VO_R2
+##D   
+##D   # ICC berechnen
+##D   icc_ta := Vta / (Vta + Vta_R12)
+##D   icc_cc := Vcc / (Vcc + Vcc_R12)
+##D   icc_gr := Vgr / (Vgr + Vgr_R12)
+##D   icc_vo := Vvo / (Vvo + Vvo_R12)
+##D   "
+##D # Schätzung des Modells
+##D mod1 <- sem(lv.mod, data = prodPRat)
+##D summary(mod1, standardized = TRUE)
+##D 
+##D # Inspektion der Ergebnisse
+##D show(mod1)
+##D fitted(mod1)
+##D inspect(mod1,"cov.lv")
+##D inspect(mod1, "free")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.5, Listing 2: Kompakte Darstellung der Ergebnisse
+##D #
+##D 
+##D parameterEstimates(mod1, ci = FALSE, 
+##D                    standardized = TRUE)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 7.5, Listing 2a: Ergänzung zum Buch
+##D # Schreibe Ergebnisse in Latex-Tabelle:
+##D #
+##D 
+##D xtable(parameterEstimates(mod1, ci = FALSE, 
+##D                           standardized = TRUE), digits = 3)
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("08_Missings__20220517")
+### * 08_Missings__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  8
+### Title: Kapitel 8: Fehlende Daten und Plausible Values
+### Aliases: 'Kapitel 8'
+
+### ** Examples
+
+## Not run: 
+##D library(TAM)
+##D library(mice)
+##D library(miceadds)
+##D library(pls)
+##D library(combinat)
+##D library(mitml)
+##D 
+##D data(datenKapitel08)
+##D data08H <- datenKapitel08$data08H
+##D data08I <- datenKapitel08$data08I
+##D data08J <- datenKapitel08$data08J
+##D data08K <- datenKapitel08$data08K
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 8.1.1: Konsequenzen fehlender Daten und 
+##D ##                  messfehlerbehafteter Variablen
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.1.1, Listing 1: Deskriptive Statistiken des 
+##D #                             Illustrationsdatensatzes
+##D #
+##D 
+##D data(datenKapitel08)
+##D dat <- datenKapitel08$data08I[,-1]
+##D #*** Missinganteile
+##D round( colMeans( is.na(dat), na.rm=TRUE) , 2 )     
+##D #*** Mittelwerte
+##D round( apply( dat , 2 , mean , na.rm=TRUE ) , 2 )   
+##D #*** Zusammenhang von Missingindikator und Variablen 
+##D round( miceadds::mi_dstat( dat[,c("WLE","X")] ) , 2 )
+##D #*** Varianzen
+##D round( apply( dat , 2 , var , na.rm=TRUE ) , 2 ) 
+##D #*** Korrelationsmatrix
+##D round( cor( dat , use = "pairwise.complete.obs") , 2 )
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 8.2: Multiple Imputation
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 1: Variablenauswahl und leere 
+##D #                             Imputation
+##D #
+##D 
+##D set.seed(56) 
+##D data(datenKapitel08)
+##D dat <- datenKapitel08$data08H
+##D # wähle Variablen aus 
+##D dat1 <- dat[ , c("idschool", "HISEI", "buch", "E8LWLE",
+##D                  "SES_Schule") ]
+##D colMeans(is.na(dat1)) 
+##D # führe leere Imputation durch
+##D imp0 <- mice::mice(dat1, m=0, maxit=0)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 2: Spezifikation der Imputations-
+##D #                             methoden
+##D #
+##D 
+##D impMethod <- imp0$method 
+##D impMethod["HISEI"] <- "2l.continuous" 
+##D # [...]  weitere Spezifikationen
+##D impMethod["SES_Schule"] <- "2lonly.norm" 
+##D impMethod     
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 2b: Ergänzung zum Buch
+##D #
+##D 
+##D # [...]  weitere Spezifikationen
+##D impMethod["buch"]  <- "2l.pmm"
+##D impMethod
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 3: Definition der Prädiktormatrix 
+##D #                             für die Imputation in mice
+##D #
+##D 
+##D predMatrix <- imp0$predictorMatrix 
+##D predMatrix[-1,"idschool"] <- -2 
+##D # [...]
+##D predMatrix    
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 3b: Ergänzung zum Buch
+##D #
+##D 
+##D # [...]
+##D predMatrix[2:4,2:4] <- 3*predMatrix[2:4,2:4]
+##D predMatrix
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 4: Führe Imputation durch
+##D #
+##D 
+##D imp1 <- mice::mice( dat1, imputationMethod=impMethod, 
+##D   predictorMatrix=predMatrix, donors=5, m=10, maxit=7)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.2.5, Listing 4b: Ergänzung zum Buch
+##D #
+##D 
+##D #-- Mittelwert HISEI
+##D wmod1 <- with( imp1 , lm(HISEI ~ 1))
+##D summary( mice::pool( wmod1 ) )
+##D 
+##D #-- lineare Regression HISEI auf Büchervariable
+##D wmod2 <- with( imp1 , lm(E8LWLE ~ HISEI) )
+##D summary( mice::pool( wmod2 ))
+##D 
+##D #-- Inferenz Mehrebenenmodelle mit Paket mitml
+##D imp1b <- mitml::mids2mitml.list(imp1)
+##D wmod3 <- with(imp1b, lme4::lmer( HISEI ~ (1|idschool)) )
+##D mitml::testEstimates(wmod3, var.comp=TRUE)
+##D 
+##D ## ------------------------------------------------------------
+##D ## Abschnitt 8.3.2: Dimensionsreduzierende Verfahren für 
+##D ## Kovariaten im latenten Regressionsmodell
+##D ## ------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.2, Listing 1: Kovariatenauswahl, Interaktions- 
+##D #                         bildung und Bestimmung PLS-Faktoren
+##D #
+##D 
+##D set.seed(56)
+##D data(datenKapitel08)
+##D dat <- datenKapitel08$data08J
+##D 
+##D #*** Kovariatenauswahl
+##D kovariaten <- scan(what="character", nlines=2) 
+##D   female migrant HISEI  eltausb buch  
+##D   SK LF NSchueler NKlassen SES_Schule
+##D 
+##D X <- scale( dat[, kovariaten ] )
+##D V <- ncol(X) 
+##D # bilde alle Zweifachinteraktionen 
+##D c2 <- combinat::combn(V,2) 
+##D X2 <- apply( c2 , 2 , FUN = function(cc){ 
+##D             X[,cc[1]] * X[,cc[2]] } ) 
+##D X0 <- cbind( X , X2 )
+##D # Partial Least Squares Regression
+##D mod1 <- pls::plsr( dat$E8LWLE ~ X0 , ncomp=55  ) 
+##D summary(mod1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.2, Listing 1b: Ergänzung zum Buch
+##D # Abbildung: Aufgeklärter Varianzanteil
+##D #
+##D 
+##D # Principal Component Regression (Extraktion der Hauptkomponenten)
+##D mod2 <- pls::pcr(  dat$E8LWLE ~ X0 , ncomp=55 )
+##D summary(mod2)
+##D 
+##D #*** extrahierte Varianzen mit PLS-Faktoren und PCA-Faktoren
+##D res <- mod1
+##D R2 <- base::cumsum(res$Xvar) / res$Xtotvar
+##D ncomp <- 55
+##D Y <- dat$E8LWLE
+##D R21 <- base::sapply( 1:ncomp , FUN = function(cc){
+##D   1 - stats::var( Y -  res$fitted.values[,1,cc] ) / stats::var( Y )
+##D } )
+##D dfr <- data.frame("comp" = 1:ncomp , "PLS" = R21 )
+##D 
+##D res <- mod2
+##D R2 <- base::cumsum(res$Xvar) / res$Xtotvar
+##D ncomp <- 55
+##D Y <- dat$E8LWLE
+##D R21 <- base::sapply( 1:ncomp , FUN = function(cc){
+##D            1 - stats::var( Y -  res$fitted.values[,1,cc] ) / stats::var( Y )
+##D } )
+##D dfr$PCA <- R21
+##D 
+##D 
+##D plot( dfr$comp , dfr$PLS , type="l" , xlab="Anzahl Faktoren" , 
+##D       ylab="Aufgeklärter Varianzanteil" ,
+##D       ylim=c(0,.3) )
+##D points( dfr$comp , dfr$PLS , pch=16 )        
+##D points( dfr$comp , dfr$PCA , pch=17 )        
+##D lines( dfr$comp , dfr$PCA , lty=2 )        
+##D legend( 45 , .15 , c("PLS" , "PCA") , pch=c(16,17) , lty=c(1,2))
+##D 
+##D ## ------------------------------------------------------------
+##D ## Abschnitt 8.3.3: Ziehung von Plausible Values in R
+##D ## ------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.3, Listing 1: PLS-Faktoren auswählen
+##D #
+##D 
+##D facs <- mod1$scores[,1:10]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.3, Listing 1b: Ergänzung zum Buch
+##D #
+##D set.seed(98766)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.3, Listing 2: Anpassung kognitive Daten
+##D #
+##D 
+##D data(datenKapitel08)
+##D dat2 <- datenKapitel08$data08K
+##D items <- grep("E8L", colnames(dat2), value=TRUE)
+##D # Schätzung des Rasch-Modells in TAM
+##D mod11 <- TAM::tam.mml( resp= dat2[,items ] , 
+##D        pid = dat2$idstud, pweights = dat2$wgtstud ) 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.3, Listing 3: Individuelle Likelihood, latentes 
+##D #                             Regressionsmodell und PV-Ziehung
+##D #
+##D 
+##D #*** extrahiere individuelle Likelihood
+##D lmod11 <- IRT.likelihood(mod11) 
+##D #*** schätze latentes Regressionsmodell
+##D mod12 <- TAM::tam.latreg( like = lmod11 , Y = facs )
+##D #*** ziehe Plausible Values 
+##D pv12 <- TAM::tam.pv(mod12, normal.approx=TRUE, 
+##D                samp.regr=TRUE , ntheta=400)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.3, Listing 4: Plausible Values extrahieren
+##D #
+##D 
+##D #*** Plausible Values für drei verschiedene Schüler
+##D round( pv12$pv[c(2,5,9),] , 3 )
+##D 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 8.3.3, Listing 4b: Ergänzung zum Buch
+##D #
+##D 
+##D hist( pv12$pv$PV1.Dim1 )
+##D 
+##D # Korrelation mit Kovariaten
+##D round( cor( pv12$pv$PV1.Dim1 , dat[,kovariaten] , 
+##D             use="pairwise.complete.obs") , 3 )
+##D round( cor( dat$E8LWLE , dat[,kovariaten] , 
+##D             use="pairwise.complete.obs" ) , 3 )
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("09_FairerVergleich__20220531")
+### * 09_FairerVergleich__20220531
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel  9
+### Title: Kapitel 9: Fairer Vergleich in der Rueckmeldung
+### Aliases: 'Kapitel 9'
+
+### ** Examples
+
+## Not run: 
+##D library(miceadds)
+##D library(glmnet)
+##D library(kerdiest)
+##D 
+##D covainteraction <- function(dat,covas,nchar){
+##D   for(ii in 1:(length(covas))){
+##D     vv1 <- covas[ii]
+##D     # Interaktion von vv1 mit sich selbst
+##D     subname1 <- substr(vv1,1,nchar)
+##D     intvar <- paste0(subname1, subname1)
+##D     if(vv1 == covas[1]){
+##D       dat.int <- dat[,vv1]*dat[,vv1];
+##D       newvars <- intvar } else {
+##D         dat.int <- cbind(dat.int,dat[,vv1]*dat[,vv1]); 
+##D         newvars <- c(newvars,intvar) 
+##D       }
+##D     # Interaktion von vv1 mit restlichen Variablen
+##D     if(ii < length(covas)){
+##D       for(jj in ((ii+1):length(covas))){
+##D         vv2 <- covas[jj]
+##D         subname2 <- substr(vv2,1,nchar)
+##D         intvar <- paste0(subname1, subname2)
+##D         newvars <- c(newvars, intvar)
+##D         dat.int <- cbind(dat.int,dat[,vv1]*dat[,vv2])
+##D       }
+##D     }
+##D     
+##D   }
+##D   dat.int <- data.frame(dat.int)
+##D   names(dat.int) <- newvars
+##D   return(dat.int)
+##D }
+##D 
+##D data(datenKapitel09)
+##D dat <- datenKapitel09
+##D 
+##D # Platzhalter für Leistungsschätzwerte aller Modelle
+##D dat$expTWLE.OLS1 <- NA
+##D dat$expTWLE.OLS2 <- NA
+##D dat$expTWLE.Lasso1 <- NA
+##D dat$expTWLE.Lasso2 <- NA
+##D dat$expTWLE.np <- NA
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 9.2.5, Umsetzung in R
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.1, Listing 1: Kovariatenauswahl und
+##D #                               z-Standardisierung
+##D #
+##D 
+##D vars <- c("groesse","female","mig","sozstat")
+##D zvars <- paste0("z",vars)
+##D dat[,zvars] <- scale(dat[,vars],scale = TRUE)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.1, Listing 2: 
+##D #
+##D 
+##D # Interaktionen bilden, z-standardisieren  
+##D dat1 <- LSAmitR::covainteraction(dat = dat,covas = zvars,nchar = 4)
+##D intvars <- names(dat1) # Interaktionsvariablen
+##D dat1[,intvars] <- scale(dat1[,intvars],scale = TRUE)
+##D dat <- cbind(dat,dat1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.1, Listing 3: Modellprädiktoren: Haupt- und
+##D #                               Interaktionseffekte
+##D #
+##D 
+##D maineff <- zvars # Haupteffekte 
+##D alleff <- c(zvars,intvars) # Haupt- und Interaktionseffekte
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.2, Listing 4: OLS-Regression mit Haupteffekten
+##D # 
+##D 
+##D fm.ols1 <- paste0("TWLE ~ ",paste(maineff,collapse=" + "))
+##D fm.ols1 <- as.formula(fm.ols1) # Modellgleichung
+##D st <- 4
+##D pos <- which(dat$stratum == st) # Schulen im Stratum st
+##D ols.mod1 <- lm(formula = fm.ols1,data = dat[pos,]) # Regression
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.3, Listing 5: Lasso-Regression
+##D # Datenaufbereitung
+##D #
+##D 
+##D library(glmnet)
+##D Z <- as.matrix(dat[pos,alleff]) # Kovariatenmatrix
+##D Y <- dat$TWLE[pos] # Abhängige Variable
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.3, Listing 6: Lasso-Regression
+##D # Bestimmung Teilmengen für Kreuzvalidierung, Lasso-Regression
+##D #
+##D 
+##D nid <- floor(length(pos)/3) # Teilmengen definieren 
+##D foldid <- rep(c(1:nid),3,length.out=length(pos)) # Zuweisung
+##D lasso.mod2 <- glmnet::cv.glmnet(x=Z,y=Y,alpha = 1, foldid = foldid)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.3, Listing 7: Lasso-Regression
+##D # Erwartungswerte der Schulen
+##D #
+##D 
+##D lasso.pred2 <- predict(lasso.mod2,newx = Z,s="lambda.min")
+##D dat$expTWLE.Lasso2[pos] <- as.vector(lasso.pred2)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.3, Listing 8: Lasso-Regression
+##D # Bestimmung R^2
+##D #
+##D 
+##D varY <- var(dat$TWLE[pos])
+##D varY.lasso.mod2 <- var(dat$expTWLE.Lasso2[pos])
+##D R2.lasso.mod2 <- varY.lasso.mod2/varY
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 9: Nichtparametrische Regression
+##D # Distanzberechnung zur Schule i (Stratum st)
+##D #
+##D 
+##D N <- length(pos) # Anzahl Schulen im Stratum
+##D schools <- dat$idschool[pos] # Schulen-ID
+##D i <- 1
+##D # Teildatensatz von Schule i
+##D dat.i <- dat[pos[i],c("idschool","TWLE",maineff)]
+##D names(dat.i) <- paste0(names(dat.i),".i")
+##D # Daten der Vergleichsschulen
+##D dat.vgl <- dat[pos[-i],c("idschool","TWLE",maineff)]
+##D index.vgl <- match(dat.vgl$idschool,schools)
+##D # Daten zusammenfügen
+##D dfr.i <- data.frame("index.i"=i,dat.i,"index.vgl"=index.vgl,
+##D                     dat.vgl, row.names=NULL)
+##D # Distanz zur Schule i
+##D dfr.i$dist <- 0
+##D gi <- c(1,1,1,1)
+##D for(ii in 1:length(maineff)){
+##D   vv <- maineff[ii]
+##D   pair.vv <- grep(vv, names(dfr.i), value=T)
+##D   dist.vv <- gi[ii]*((dfr.i[,pair.vv[1]]-dfr.i[,pair.vv[2]])^2)
+##D   dfr.i$dist <- dfr.i$dist + dist.vv }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 10: Nichtparametrische Regression
+##D #
+##D 
+##D # H initiieren
+##D d.dist <- max(dfr.i$dist)-min(dfr.i$dist)
+##D H <- c(seq(d.dist/100,d.dist,length=30),100000)
+##D V1 <- length(H) 
+##D # Anzahl Vergleichsschulen
+##D n <- nrow(dfr.i) 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 11: Nichtparametrische Regression
+##D # Berechnung der Leave-One-Out-Schätzer der jeweiligen 
+##D # Vergleichsschule k nach h in H
+##D #
+##D 
+##D sumw <- 0*H # Vektor w_{ik} initiieren, h in H
+##D av <- "TWLE"
+##D dfr0.i <- dfr.i[,c("idschool",av)]
+##D # Schleife über alle h-Werte
+##D for (ll in 1:V1 ){
+##D   h <- H[ll]
+##D   # Gewicht w_{ik} bei h
+##D   dfr.i$wgt.h <- dnorm(sqrt(dfr.i$dist), mean=0, sd=sqrt(h))
+##D   # Summe von w_{ik} bei h
+##D   sumw[which(H==h)] <- sum(dfr.i$wgt.h)
+##D   # Leave-one-out-Schätzer von Y_k
+##D   for (k in 1:n){
+##D     # Regressionsformel
+##D     fm <- paste0(av,"~",paste0(maineff,collapse="+"))
+##D     fm <- as.formula(fm)
+##D     # Regressionsanalyse ohne Beitrag von Schule k
+##D     dfr.i0 <- dfr.i[-k,]
+##D     mod.k <- lm(formula=fm,data=dfr.i0,weights=dfr.i0$wgt.h)
+##D     # Erwartungswert anhand Kovariaten der Schule k berechnen
+##D     pred.k <- predict(mod.k, dfr.i)[k]
+##D     dfr0.i[k,paste0( "h_",h) ] <- pred.k
+##D }}
+##D # Erwartungswerte auf Basis verschiedener h-Werte
+##D dfr1 <- data.frame("idschool.i"=dfr.i$idschool.i[1],"h"=H )
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 12: Nichtparametrische Regression
+##D # Berechnung des Kreuzvalidierungskriteriums nach h in H
+##D #
+##D 
+##D library(kerdiest)
+##D hAL <- kerdiest::ALbw("n",dfr.i$dist) # Plug-in Bandweite
+##D dfr.i$cross.h <- hAL
+##D dfr.i$crosswgt <- dnorm( sqrt(dfr.i$dist), mean=0, sd = sqrt(hAL) ) 
+##D # Kreuzvalidierungskriterium CVh
+##D vh <- grep("h_",colnames(dfr0.i),value=TRUE)
+##D for (ll in 1:V1){
+##D   dfr1[ll,"CVh"] <- sum( (dfr0.i[,av] - dfr0.i[,vh[ll]])^2 * 
+##D                            dfr.i$crosswgt) / n}
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 13: Nichtparametrische Regression
+##D # Bestimmung optimales Wertes von h (h.min)
+##D #
+##D 
+##D dfr1$min.h.index <- 0
+##D ind <-  which.min( dfr1$CVh )
+##D dfr1$min.h.index[ind ] <- 1
+##D dfr1$h.min <- dfr1$h[ind]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 14: Nichtparametrische Regression
+##D # Kleinste Quadratsumme der Schätzfehler
+##D #
+##D 
+##D dfr1$CVhmin <- dfr1[ ind , "CVh" ]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 15: Nichtparametrische Regression
+##D # Effizienzsteigerung berechnen
+##D #
+##D 
+##D dfr1$eff_gain <-  100 * ( dfr1[V1,"CVh"] / dfr1$CVhmin[1] - 1 )
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Listing 16: Nichtparametrische Regression
+##D # Durchführung der nichtparametrischen Regression bei h=h.min
+##D #
+##D 
+##D h <- dfr1$h.min[1]  # h.min
+##D dfr.i$wgt.h <- dnorm(sqrt(dfr.i$dist),sd=sqrt(h))/
+##D   dnorm(0,sd= sqrt(h)) # w_{ik} bei h.min      
+##D dfr.i0 <- dfr.i
+##D # Lokale Regression    
+##D mod.ii <- lm(formula=fm,data=dfr.i0,weights=dfr.i0$wgt.h)
+##D # Kovariaten Schule i
+##D predM <- data.frame(dfr.i[1,paste0(maineff,".i")])    
+##D names(predM) <- maineff
+##D pred.ii <- predict(mod.ii, predM) # Schätzwert Schule i
+##D dat[match(dfr1$idschool.i[1],dat$idschool), "expTWLE.np"] <- pred.ii   
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 9.2.5, Umsetzung in R, Ergänzung zum Buch
+##D ## -------------------------------------------------------------
+##D 
+##D # Korrelationen zwischen Haupteffekten
+##D cor(dat[,maineff]) # gesamt
+##D # Pro Stratum
+##D for(s in 1:4) print(cor(dat[which(dat$stratum == s),maineff]))
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.2, Ergänzung zum Buch
+##D # OLS-Regression
+##D #
+##D 
+##D # Modellgleichung nur mit Haupteffekten
+##D fm.ols1 <- paste0("TWLE ~ ",paste(maineff,collapse=" + "))
+##D fm.ols1 <- as.formula(fm.ols1)
+##D 
+##D # Modellgleichung mit Haupteffekten ohne zgroesse
+##D fm.ols1a <- paste0("TWLE ~ ",paste(setdiff(maineff,c("zgroesse")),
+##D                                    collapse=" + "))
+##D fm.ols1a <- as.formula(fm.ols1a)
+##D 
+##D # Modellgleichung mit Haupt- und Interaktionseffekten
+##D fm.ols2 <- paste0("TWLE ~ ",paste(alleff,collapse=" + "))
+##D fm.ols2 <- as.formula(fm.ols2)
+##D 
+##D # Ergebnistabelle über 4 Strata hinweg vorbereiten
+##D tab1 <- data.frame("Variable"=c("(Intercept)",maineff))
+##D tab2 <- data.frame("Variable"=c("(Intercept)",alleff))
+##D 
+##D # Durchführung: Schleife über vier Strata
+##D for(st in 1:4){
+##D   # st <- 4
+##D   # Position Schulen des Stratums st im Datensatz
+##D   pos <- which(dat$stratum == st)
+##D   
+##D   #---------------------------------
+##D   # OLS-Modell 1
+##D   
+##D   # Durchführung
+##D   ols.mod1 <- lm(formula = fm.ols1,data = dat[pos,])
+##D   ols.mod1a <- lm(formula = fm.ols1a,data = dat[pos,])
+##D   
+##D   # Modellergebnisse anzeigen
+##D   summary(ols.mod1)
+##D   summary(ols.mod1a)
+##D   
+##D   # Erwartungswerte der Schulen 
+##D   dat$expTWLE.OLS1[pos] <- fitted(ols.mod1)
+##D   
+##D   # Ergebnisse in Tabelle speichern
+##D   par <- summary(ols.mod1)
+##D   tab.s <- data.frame(par$coef,R2=par$r.squared,R2.adj=par$adj.r.squared)
+##D   names(tab.s) <- paste0("stratum",st,
+##D                          c("_coef","_SE","_t","_p","_R2","_R2.adj"))
+##D   tab1 <- cbind(tab1, tab.s)
+##D   
+##D   # Durchführung OLS-Modell 2
+##D   ols.mod2 <- lm(formula = fm.ols2,data = dat[pos,])
+##D   
+##D   # Modellergebnisse anzeigen
+##D   summary(ols.mod2)
+##D   
+##D   # Erwartungswerte der Schulen
+##D   dat$expTWLE.OLS2[pos] <- fitted(ols.mod2)
+##D   
+##D   # Ergebnisse in Tabelle speichern
+##D   par <- summary(ols.mod2)
+##D   tab.s <- data.frame(par$coef,R2=par$r.squared,R2.adj=par$adj.r.squared)
+##D   names(tab.s) <- paste0("stratum",st,
+##D                          c("_coef","_SE","_t","_p","_R2","_R2.adj"))
+##D   tab2 <- cbind(tab2, tab.s) 
+##D   
+##D }
+##D 
+##D # Daten Schule 1196 ansehen
+##D dat[which(dat$idschool == 1196),]
+##D 
+##D # Schätzwerte nach ols.mod1 und ols.mod2 vergleichen
+##D summary(abs(dat$expTWLE.OLS1 - dat$expTWLE.OLS2))
+##D cor.test(dat$expTWLE.OLS1,dat$expTWLE.OLS2)
+##D 
+##D # Grafische Darstellung des Vergleich (Schule 1196 rot markiert)
+##D plot(dat$expTWLE.OLS1,dat$expTWLE.OLS2,xlim=c(380,650),ylim=c(380,650),
+##D      col=1*(dat$idschool == 1196)+1,pch=15*(dat$idschool == 1196)+1)
+##D abline(a=0,b=1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.3, Ergänzung zum Buch
+##D # Lasso-Regression
+##D #
+##D 
+##D library(glmnet)
+##D 
+##D # Variablen für Erwartungswerte
+##D dat$expTWLE.Lasso2 <- dat$expTWLE.Lasso1 <- NA
+##D 
+##D # Tabelle für Modellergebnisse
+##D tab3 <- data.frame("Variable"=c("(Intercept)",maineff))
+##D tab4 <- data.frame("Variable"=c("(Intercept)",alleff))
+##D 
+##D for(st in 1:4){
+##D   # st <- 4
+##D   
+##D   # Position Schulen des Stratums st im Datensatz
+##D   pos <- which(dat$stratum == st)
+##D   
+##D   #------------------------------------------------------------#
+##D   # Lasso-Regression mit den Haupteffekten
+##D   
+##D   # Kovariatenmatrix
+##D   Z <- as.matrix(dat[pos,maineff])
+##D   # Abhängige Variable
+##D   Y <- dat$TWLE[pos]
+##D   
+##D   # Kreuzvalidierung: Teilmengen definieren
+##D   nid <- floor(length(pos)/3)
+##D   # Schulen zu Teilmengen zuordnen
+##D   foldid <- rep(c(1:nid),3,length.out=length(pos))
+##D   
+##D   # Regression
+##D   lasso.mod1 <- cv.glmnet(x=Z,y=Y,alpha = 1, foldid = foldid)
+##D   
+##D   # Ergebnisse ansehen
+##D   print(lasso.mod1)
+##D   
+##D   # Lasso-Koeffizienten bei lambda.min
+##D   print(lasso.beta <- coef(lasso.mod1,s="lambda.min"))
+##D   
+##D   # Erwartungswerte der Schulen
+##D   lasso.pred1 <- predict(lasso.mod1,newx = Z,s="lambda.min")
+##D   dat$expTWLE.Lasso1[pos] <- as.vector(lasso.pred1)
+##D   
+##D   # R2 bestimmen
+##D   varY <- var(dat$TWLE[pos])
+##D   varY.lasso.mod1 <- var(dat$expTWLE.Lasso1[pos])
+##D   print(R2.lasso.mod1 <- varY.lasso.mod1/varY)
+##D   
+##D   # Ergebnistabelle
+##D   vv <- paste0("coef.stratum",st); tab3[,vv] <- NA
+##D   tab3[lasso.beta@i+1,vv] <- lasso.beta@x
+##D   vv <- paste0("lambda.stratum",st); tab3[,vv] <- lasso.mod1$lambda.min
+##D   vv <- paste0("R2.stratum",st); tab3[,vv] <- R2.lasso.mod1
+##D   
+##D   #------------------------------------------------------------#
+##D   # Lasso-Regression mit Haupt- und Interaktionseffekten
+##D   
+##D   # Kovariatenmatrix
+##D   Z <- as.matrix(dat[pos,alleff])
+##D   
+##D   # Regression
+##D   lasso.mod2 <- cv.glmnet(x=Z,y=Y,alpha = 1, foldid = foldid)
+##D   
+##D   # Ergebnisausdruck
+##D   print(lasso.mod2)
+##D   
+##D   # Lasso-Koeffizienten bei lambda.min
+##D   print(lasso.beta <- coef(lasso.mod2,s="lambda.min"))
+##D   
+##D   # Erwartungswerte der Schulen
+##D   lasso.pred2 <- predict(lasso.mod2,newx = Z,s="lambda.min")
+##D   dat$expTWLE.Lasso2[pos] <- as.vector(lasso.pred2)
+##D   
+##D   # R2 bestimmen
+##D   varY.lasso.mod2 <- var(dat$expTWLE.Lasso2[pos])
+##D   R2.lasso.mod2 <- varY.lasso.mod2/varY
+##D   R2.lasso.mod2
+##D   
+##D   # Ergebnistabelle
+##D   vv <- paste0("coef.stratum",st); tab4[,vv] <- NA
+##D   tab4[lasso.beta@i+1,vv] <- lasso.beta@x
+##D   vv <- paste0("lambda.stratum",st); tab4[,vv] <- lasso.mod2$lambda.min
+##D   vv <- paste0("R2.stratum",st); tab4[,vv] <- R2.lasso.mod2
+##D   
+##D   
+##D }
+##D 
+##D # Regressionresiduen = Schätzung von SChul- und Unterrichtseffekt
+##D dat$resTWLE.Lasso1 <- dat$TWLE - dat$expTWLE.Lasso1
+##D dat$resTWLE.Lasso2 <- dat$TWLE - dat$expTWLE.Lasso2
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.5.4, Ergänzung zum Buch
+##D # Nichtparametrische Regression
+##D #
+##D 
+##D #
+##D # Achtung: Der nachfolgende Algorithmus benötigt viel Zeit!
+##D # 
+##D 
+##D av <- "TWLE" # Abhängige Variable
+##D dfr3 <- NULL # Ergebnistabelle
+##D 
+##D # Variable für Leistungsschätzwerte
+##D 
+##D # Schleife über 4 Strata
+##D for(st in 1:4){
+##D   # st <- 1
+##D   pos <- which(dat$stratum == st)
+##D   N <- length(pos)
+##D   schools <- dat$idschool[pos]
+##D   
+##D   ###
+##D   # Distanzmatrix dfr für alle Schulen im Stratum erstellen
+##D   dfr <- NULL
+##D   
+##D   for (i in 1:N){
+##D     # i <- 1
+##D     # Teildatensatz von Schule i
+##D     dat.i <- dat[pos[i],c("idschool","TWLE",maineff)]
+##D     # Daten der Vergleichsgruppe
+##D     dat.vgl <- dat[pos[-i],c("idschool","TWLE",maineff)]
+##D     # Variablennamen von dat.vgl umbenennen
+##D     # names(dat.vgl) <- paste0("vgl.",names(dat.vgl))
+##D     # Variablennamen von dat.i umbenennen
+##D     names(dat.i) <- paste0(names(dat.i),".i")
+##D     
+##D     # Daten zusammenfügen
+##D     index.vgl <- match(dat.vgl$idschool,schools)
+##D     dfr.i <- data.frame("index.i"=i,dat.i,
+##D                         "index.vgl"=index.vgl,dat.vgl,
+##D                         row.names=NULL)
+##D     
+##D     # Distanz zur i
+##D     dfr.i$dist <- 0
+##D     gi <- c(1,1,1,1)
+##D     for(ii in 1:length(maineff)){
+##D       vv <- maineff[ii]
+##D       pair.vv <- grep(vv, names(dfr.i), value=T)
+##D       dist.vv <- gi[ii]*((dfr.i[,pair.vv[1]]-dfr.i[,pair.vv[2]])^2)
+##D       dfr.i$dist <- dfr.i$dist + dist.vv
+##D     }
+##D     
+##D     print(i) ; flush.console()
+##D     dfr <- rbind( dfr , dfr.i )
+##D   }
+##D   
+##D   dfr1 <- index.dataframe( dfr , systime=TRUE )
+##D   
+##D   ###
+##D   # h-Auswahl und Nichtparametrische Regression pro Schule i
+##D   dfr1.list <- list()
+##D   for (i in 1:N){
+##D     # i <- 1
+##D     dfr.i <- dfr[ dfr$index.i == i , ]
+##D     n <- nrow(dfr.i)
+##D     
+##D     # Startwertliste für h initiieren
+##D     d.dist <- max(dfr.i$dist)-min(dfr.i$dist)
+##D     H <- c(seq(d.dist/100,d.dist,length=30),100000)
+##D     V1 <- length(H) # Anzahl der Startwerte in H
+##D     
+##D     # Startwerte: Summe von w_ik
+##D     sumw <- 0*H
+##D     dfr0.i <- dfr.i[,c("idschool",av)]
+##D     # Schleife über alle h-Werte
+##D     for (ll in 1:V1 ){
+##D       h <- H[ll]
+##D       # Gewicht w_ik bei h
+##D       dfr.i$wgt.h <- dnorm(sqrt(dfr.i$dist), mean=0, sd=sqrt(h))
+##D       # Summe von w_ik bei h
+##D       sumw[which(H==h)] <- sum(dfr.i$wgt.h)
+##D       # Leave-one-out-Schätzer von Y_k
+##D       for (k in 1:n){
+##D         # Regressionsformel
+##D         fm <- paste0(av,"~",paste0(maineff,collapse="+"))
+##D         fm <- as.formula(fm)
+##D         # Regressionsanalyse ohne Beitrag von Schule k
+##D         dfr.i0 <- dfr.i[-k,]
+##D         mod.k <- lm(formula=fm,data=dfr.i0,weights=dfr.i0$wgt.h)
+##D         # Erwartungswert anhand Kovariaten der Schule k berechnen
+##D         pred.k <- predict(mod.k, dfr.i)[k]
+##D         dfr0.i[k,paste0( "h_",h) ] <- pred.k
+##D       }
+##D       print(paste0("i=",i,", h_",ll))
+##D     }
+##D     # Erwartungswerte auf Basis verschiedener h-Werte
+##D     dfr1 <- data.frame("idschool.i"=dfr.i$idschool.i[1],"h"=H )
+##D     
+##D     # Berechnung des Kreuzvalidierungskriteriums
+##D     library(kerdiest)
+##D     hAL <- kerdiest::ALbw("n",dfr.i$dist) # Plug-in Bandbreite nach Altman und 
+##D                                           # Leger
+##D     name <- paste0( "bandwidth_choice_school" , dfr.i$idschool.i[1] ,  
+##D                      "_cross.h_" , round2(hAL,1) )
+##D     # Regressionsgewichte auf Basis cross.h
+##D     dfr.i$cross.h <- hAL
+##D     dfr.i$crosswgt <- dnorm( sqrt(dfr.i$dist), mean=0, sd = sqrt(hAL) ) 
+##D     
+##D     dfr.i <- index.dataframe( dfr.i , systime=TRUE )
+##D 
+##D     # Kreuzvalidierungskriterium CVh
+##D     vh <- grep("h_",colnames(dfr0.i),value=TRUE)
+##D     for (ll in 1:V1){
+##D       # ll <- 5
+##D       dfr1[ll,"CVh"] <- sum( (dfr0.i[,av] - dfr0.i[,vh[ll]])^2 * 
+##D                                dfr.i$crosswgt) / n
+##D       print(ll)
+##D     }
+##D     
+##D     # Bestimmung h.min
+##D     dfr1$min.h.index <- 0
+##D     ind <-  which.min( dfr1$CVh )
+##D     dfr1$min.h.index[ind ] <- 1
+##D     dfr1$h.min <- dfr1$h[ind]
+##D     # Kleinste Quadratsumme der Schätzfehler
+##D     dfr1$CVhmin <- dfr1[ ind , "CVh" ]
+##D     
+##D     # Effizienzsteigerung berechnen
+##D     dfr1$eff_gain <-  100 * ( dfr1[V1,"CVh"] / dfr1$CVhmin[1] - 1 )
+##D     
+##D     # h auswählen
+##D     h <- dfr1$h.min[1]
+##D     
+##D     # Gewichte anhand h berechnen
+##D     dfr.i$wgt.h <- dnorm( sqrt( dfr.i$dist ) , sd = sqrt( h) ) / 
+##D                    dnorm( 0 , sd = sqrt( h) )     
+##D     dfr.i0 <- dfr.i
+##D     mod.ii <- lm(formula = fm,data = dfr.i0,weights = dfr.i0$wgt.h)
+##D     
+##D     # Leistungsschätzwerte berechnen
+##D     predM <- data.frame(dfr.i[1,paste0(maineff,".i")])
+##D     names(predM) <- maineff
+##D     
+##D     pred.ii <- predict( mod.ii ,  predM )
+##D     dfr1$fitted_np <- pred.ii  
+##D     dfr1$h.min_sumwgt <- sum( dfr.i0$wgt.h )
+##D     dfr1$h_sumwgt  <- sumw
+##D     
+##D     # Leistungsschätzwerte zum Datensatz hinzufügen
+##D     dat$expTWLE.np[match(dfr1$idschool.i[1],dat$idschool)] <- pred.ii
+##D     dfr1.list[[i]] <- dfr1
+##D   }
+##D   
+##D   ###
+##D   # Ergebnisse im Stratum st zusammenfassen
+##D   dfr2 <- NULL
+##D 
+##D   for(i in 1:length(dfr1.list)){
+##D     dat.ff <- dfr1.list[[i]]
+##D     dfr2.ff <- dat.ff[1,c("idschool.i","h.min","fitted_np","h.min_sumwgt",
+##D                           "CVhmin","eff_gain")]
+##D     dfr2.ff$CVlinreg <- dat.ff[V1,"CVh"]
+##D     names(dfr2.ff) <- c("idschool","h.min","fitted_np","h.min_sumwgt",
+##D                         "CVhmin","eff_gain","CVlinreg")
+##D     dfr2 <- rbind(dfr2, dfr2.ff)
+##D     print(i)
+##D   }
+##D   
+##D   #---------------------------------------------------##
+##D   # R2 berechnen
+##D   varY <- var(dat$TWLE[pos])
+##D   varY.np <- var(dat$expTWLE.np[pos])
+##D   dfr2$R2.np <- varY.np/varY
+##D   
+##D   #---------------------------------------------------##
+##D   # Zur Gesamtergebnistabelle
+##D   dfr3 <- rbind(dfr3,cbind("Stratum"=st,dfr2))
+##D   
+##D }
+##D 
+##D # Effizienz der NP-Regression gegenüber OLS-Regression
+##D summary(dfr3$eff_gain)
+##D table(dfr3$eff_gain > 5)
+##D table(dfr3$eff_gain > 10)
+##D table(dfr3$eff_gain > 20)
+##D 
+##D # Regressionsresiduen
+##D dat$resTWLE.np <- dat$TWLE - dat$expTWLE.np
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 9.2.6, Ergänzung zum Buch
+##D ## Ergebnisse im Vergleich
+##D ## -------------------------------------------------------------
+##D 
+##D # Output-Variablen
+##D out <- grep("expTWLE",names(dat),value=T)
+##D lt <- length(out)
+##D 
+##D # Korrelationsmatrix
+##D tab <- tab1 <- as.matrix(round2(cor(dat[,out]),3))
+##D 
+##D # Varianzmatrix
+##D tab2 <- as.matrix(round2(sqrt(var(dat[,out])),1))
+##D 
+##D tab3 <- matrix(NA,lt,lt)
+##D # Differenzmatrix
+##D for(ii in 1:(lt-1))
+##D   for(jj in (ii+1):lt) tab3[ii,jj] <- round2(mean(abs(dat[,out[jj]] - 
+##D                                                       dat[,out[ii]])),1)
+##D 
+##D tab4 <- matrix(NA,lt,lt)
+##D # Differenzmatrix
+##D for(ii in 1:(lt-1))
+##D   for(jj in (ii+1):lt) tab4[ii,jj] <- round2(sd(abs(dat[,out[jj]] - 
+##D                                                     dat[,out[ii]])),1)
+##D 
+##D # Ergebnistabelle
+##D diag(tab) <- diag(tab2)
+##D tab[upper.tri(tab)] <- tab3[upper.tri(tab3)]
+##D 
+##D # R2 Gesamt
+##D varY <- var(dat$TWLE)
+##D varexp.OLS1 <- var(dat$expTWLE.OLS1); R2.OLS1 <- varexp.OLS1/varY
+##D varexp.OLS2 <- var(dat$expTWLE.OLS2); R2.OLS2 <- varexp.OLS2/varY
+##D varexp.Lasso1 <- var(dat$expTWLE.Lasso1); R2.Lasso1 <- varexp.Lasso1/varY
+##D varexp.Lasso2 <- var(dat$expTWLE.Lasso2); R2.Lasso2 <- varexp.Lasso2/varY
+##D varexp.np <- var(dat$expTWLE.np); R2.np <- varexp.np/varY
+##D R2 <- c(R2.OLS1,R2.OLS2,R2.Lasso1,R2.Lasso2,R2.np)
+##D tab <- cbind(tab,R2)
+##D 
+##D # R2 pro Stratum
+##D dat0 <- dat
+##D for(st in 1:4){
+##D   # st <- 1
+##D   dat <- dat0[which(dat0$stratum == st),]
+##D   varY <- var(dat$TWLE)
+##D   varexp.OLS1 <- var(dat$expTWLE.OLS1); R2.OLS1 <- varexp.OLS1/varY
+##D   varexp.OLS2 <- var(dat$expTWLE.OLS2); R2.OLS2 <- varexp.OLS2/varY
+##D   varexp.Lasso1 <- var(dat$expTWLE.Lasso1); R2.Lasso1 <- varexp.Lasso1/varY
+##D   varexp.Lasso2 <- var(dat$expTWLE.Lasso2); R2.Lasso2 <- varexp.Lasso2/varY
+##D   varexp.np <- var(dat$expTWLE.np); R2.np <- varexp.np/varY
+##D   R2 <- c(R2.OLS1,R2.OLS2,R2.Lasso1,R2.Lasso2,R2.np)
+##D   tab <- cbind(tab,R2)
+##D }
+##D 
+##D colnames(tab)[7:10] <- paste0("R2_stratum",1:4)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 9.2.7, Berücksichtigung der Schätzfehler
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.7, Listing 17: Bestimmung des Erwartungsbereichs
+##D #
+##D 
+##D vv <- "expTWLE.OLS1" # Variablenname
+##D mm <- "OLS1" # Kurzname des Modells
+##D dfr <- NULL # Ergebnistabelle
+##D # Schleife über alle möglichen Breite von 10 bis 60
+##D for(w in 10:60){
+##D   # Variablen für Ergebnisse pro w
+##D   var <- paste0(mm,".pos.eb",w) # Position der Schule
+##D   var.low <- paste0(mm,".eblow",w) # Untere Grenze des EBs
+##D   var.upp <- paste0(mm,".ebupp",w) # Obere Grenze des EBs
+##D   # Berechnen
+##D   dat[,var.low] <- dat[,vv]-w/2 # Untere Grenze des EBs
+##D   dat[,var.upp] <- dat[,vv]+w/2 # Obere Grenze des EBs 
+##D   # Position: -1=unterhalb, 0=innerhalb, 1=oberhalb des EBs 
+##D   dat[,var] <- -1*(dat$TWLE < dat[,var.low]) + 1*(dat$TWLE > dat[,var.upp])
+##D   # Verteilung der Schulpositionen
+##D   tmp <- data.frame(t(matrix(prop.table(table(dat[,var])))))
+##D   names(tmp) <- c("unterhalb","innerhalb","oberhalb")
+##D   tmp <- data.frame("ModellxBereich"=var,tmp); dfr <- rbind(dfr,tmp) }
+##D 
+##D # Abweichung zur Wunschverteilung 25-50-25 
+##D dfr1 <- dfr 
+##D dfr1[,c(2,4)] <- (dfr1[,c(2,4)] - .25)^2 
+##D dfr1[,3] <- (dfr1[,3] - .5)^2 
+##D dfr1$sumquare <- rowSums(dfr1[,-1]) 
+##D # Auswahl markieren 
+##D dfr$Auswahl <- 1*(dfr1$sumquare == min(dfr1$sumquare) )
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 9.2.7, Ergänzung zum Buch
+##D # Bestimmung des Erwartungsbereichs
+##D # 
+##D 
+##D # Ergebnisse aller Schulen werden aus Ursprungsdatensatz geladen.
+##D dat <- datenKapitel09 
+##D 
+##D # Liste der Erwartungswerte-Variablen
+##D exp.vars <- grep("expTWLE",names(dat),value=T)
+##D # Modellnamen
+##D m.vars <- gsub("expTWLE.","",exp.vars, fixed = TRUE)
+##D 
+##D # Liste der Ergebnistabelle
+##D list0 <- list()
+##D 
+##D # Ergebnisse
+##D tab.erg <- NULL
+##D 
+##D # Schleife über alle Erwartungswerte aller Modelle
+##D for(ii in 1:length(exp.vars)){
+##D   # ii <- 1
+##D   vv <- exp.vars[ii]
+##D   mm <- m.vars[ii]
+##D   
+##D   # Ergebnistabelle
+##D   dfr <- NULL
+##D   
+##D   # Schleife über alle möglichen Breite von 10 bis 60
+##D   for(w in 10:60){
+##D     # eb <- 10
+##D     var <- paste0(mm,".pos.eb",w) # Position der Schule
+##D     var.low <- paste0(mm,".eblow",w) # Untere Grenze des EBs
+##D     var.upp <- paste0(mm,".ebupp",w) # Obere Grenze des EBs
+##D     # Untere Grenze des EBs = Erwartungswert - w/2
+##D     dat[,var.low] <- dat[,vv]-w/2
+##D     # Obere Grenze des EBs = Erwartungswert + w/2
+##D     dat[,var.upp] <- dat[,vv]+w/2
+##D     # Position der Schule bestimmen
+##D     # -1 = unterhalb, 0 = innterhalb, 1 = oberhalb des EBs
+##D     dat[,var] <- -1*(dat$TWLE < dat[,var.low]) + 1*(dat$TWLE > dat[,var.upp])
+##D     # Verteilung der Positionen
+##D     tmp <- data.frame(t(matrix(prop.table(table(dat[,var])))))
+##D     names(tmp) <- c("unterhalb","innerhalb","oberhalb")
+##D     tmp <- data.frame("ModellxBereich"=var,tmp)
+##D     dfr <- rbind(dfr,tmp)
+##D   }
+##D   
+##D   # Vergleich mit Wunschverteilung 25-50-25
+##D   dfr1 <- dfr
+##D   dfr1[,c(2,4)] <- (dfr1[,c(2,4)] - .25)^2
+##D   dfr1[,3] <- (dfr1[,3] - .5)^2
+##D   dfr1$sumquare <- rowSums(dfr1[,-1])
+##D   # Auswahl markieren
+##D   dfr$Auswahl <- 1*(dfr1$sumquare == min(dfr1$sumquare) )
+##D   
+##D   # Zum Liste hinzufügen
+##D   list0[[ii]] <- dfr
+##D   print(dfr[which(dfr$Auswahl == 1),])
+##D   tab.erg <- rbind(tab.erg, dfr[which(dfr$Auswahl == 1),])
+##D   
+##D }
+##D 
+##D # Nur gewählte Ergebnisse im Datensatz beibehalten
+##D all.vars <- grep("eb",names(dat),value=T)
+##D # Untere und Obere Grenze mit speichern
+##D eb.vars <- tab.erg[,1]
+##D low.vars <- gsub("pos.eb","eblow",eb.vars)
+##D upp.vars <- gsub("pos.eb","ebupp",eb.vars)
+##D del.vars <- setdiff(all.vars, c(eb.vars,low.vars,upp.vars))
+##D dat <- dat[,-match(del.vars,names(dat))]
+##D 
+##D 
+##D ## -------------------------------------------------------------
+##D ## Appendix: Abbildungen
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abbildung 9.4
+##D #
+##D 
+##D # Koeffizienten bei der ersten 50 lambdas ausdrucken
+##D # Stratum 4
+##D 
+##D lambda <- lasso.mod2$lambda[1:50]
+##D a <- round2(lambda,2)
+##D a1 <- a[order(a)]
+##D L <- length(a)
+##D 
+##D dfr <- NULL
+##D 
+##D for(ll in 1:L){
+##D   dfr.ll <- as.matrix(coef(lasso.mod2,newx = Z,s=a[ll] ))
+##D   colnames(dfr.ll) <- paste0("a_",ll)
+##D   dfr.ll <- data.frame("coef"=rownames(dfr.ll),dfr.ll)
+##D   rownames(dfr.ll) <- NULL
+##D   if(ll == 1) dfr <- dfr.ll else dfr <- merge(dfr, dfr.ll)
+##D }
+##D 
+##D # Ohne Intercept
+##D dfr <- dfr[-1,]
+##D rownames(dfr) <- 1:nrow(dfr)
+##D 
+##D cl <- colors()
+##D cl <- grep("grey",cl,value=T)
+##D 
+##D # Umgekehrte Reihenfolge
+##D dfr1 <- dfr
+##D for(x in 2:(L+1)) {dfr1[,x] <- dfr[,(L+3)-x]; 
+##D names(dfr1)[x] <- names(dfr)[(L+3)-x]}
+##D 
+##D ###
+##D plot(x = log(a), y = rep(0,L), xlim = rev(range(log(a))), ylim=c(-20,22), 
+##D      type = "l", xaxt ="n", xlab = expression(paste(lambda)), 
+##D      ylab="Geschätzte Regressionskoeffizienten")
+##D axis(1, at=log(a), labels=a,cex=1)
+##D 
+##D tmp <- nrow(dfr)
+##D for(ll in 1:tmp){
+##D   # ll <- 1
+##D   lines(x=log(a),y=dfr[ll,2:(L+1)],type="l",pch=15-ll,col=cl[15-ll])
+##D   points(x=log(a),y=dfr[ll,2:(L+1)],type="p",pch=15-ll)
+##D   legend(x=2.8-0.7*(ll>tmp/2),y=25-2*(ifelse(ll>7,ll-7,ll)),
+##D          legend =dfr$coef[ll],pch=15-ll,bty="n",cex=0.9)
+##D }
+##D 
+##D # Kennzeichung der gewählten lambda
+##D v <- log(lasso.mod2$lambda.min)
+##D lab2 <- expression(paste("ausgewähltes ",lambda," = .43"))
+##D text(x=v+0.6,y=-8,labels=lab2)
+##D 
+##D abline(v = v,lty=2,cex=1.2)
+##D 
+##D # -------------------------------------------------------------
+##D # Abbildung 9.5
+##D # Auswahl Lambda anhand min(cvm)
+##D #
+##D 
+##D xlab <- expression(paste(lambda))
+##D plot(lasso.mod2, xlim = rev(range(log(lambda))), 
+##D      ylim=c(550,1300),xlab=xlab,xaxt ="n",
+##D      ylab = "Mittleres Fehlerquadrat der Kreuzvalidierung (cvm)",
+##D      font.main=1,cex.main=1)
+##D axis(1, at=log(a), labels=a,cex=1)
+##D 
+##D lab1 <- expression(paste(lambda," bei min(cvm)"))
+##D text(x=log(lasso.mod2$lambda.min)+0.5,y=max(lasso.mod2$cvm)-50,
+##D      labels=lab1,cex=1)
+##D 
+##D lab2 <- expression(paste("(ausgewähltes ",lambda," = .43)"))
+##D text(x=log(lasso.mod2$lambda.min)+0.6,y=max(lasso.mod2$cvm)-100,
+##D      labels=lab2,cex=1)
+##D 
+##D abline(v = log(lasso.mod2$lambda.min),lty=2)
+##D 
+##D text(x=log(lasso.mod2$lambda.min)-0.3,y = min(lasso.mod2$cvm)-30,
+##D      labels="min(cvm)",cex=1 )
+##D abline(h = min(lasso.mod2$cvm),lty=2)
+##D 
+##D text <- expression(paste("Anzahl der Nicht-null-Koeffizienten (",
+##D                          lambda," entsprechend)"))
+##D mtext(text=text,side=3,line=3)
+##D 
+##D 
+##D # -------------------------------------------------------------
+##D # Abbildung 9.6
+##D # Rohwert-Schätzwert Schule 1196 & 1217 im Vergleich
+##D #
+##D 
+##D id <- c(1196, 1217)
+##D par(mai=c(1.2,3,1,.5))
+##D plot(x=rep(NA,2),y=c(1:2),xlim=c(470,610),yaxt ="n",type="l",
+##D      xlab="Erwartungswerte je nach Modell und Schulleistung",ylab="")
+##D legend <- c("Schulleistung (TWLE)",paste0("", c("OLS1","OLS2","Lasso1",
+##D                                                 "Lasso2","NP"),
+##D                                           "-Modell"))
+##D axis(2, at=c(seq(1,1.4,0.08),seq(1.6,2,0.08)), las=1,cex=0.7,
+##D      labels=rep(legend,2))
+##D text <- paste0("Schule ",id)
+##D mtext(text=text,side=2,at = c(1.2,1.8),line = 10)
+##D 
+##D exp.vars <- c("TWLE", 
+##D               paste0("expTWLE.", c("OLS1","OLS2","Lasso1","Lasso2","np")))
+##D 
+##D pch = c(19, 0,3,2,4,5)
+##D ii <- 1
+##D col = c("grey", rep("lightgrey",5))
+##D for(vv in exp.vars){
+##D   # vv <- "TWLE"
+##D   x <- dat0[which(dat0$idschool %in% id),vv]
+##D   abline(h = c(0.92+ii*0.08,1.52+ii*0.08), lty=1+1*(ii>1),col=col[ii])
+##D   points(x=x,y=c(0.92+ii*0.08,1.52+ii*0.08),type="p",pch=pch[ii])
+##D   ii <- ii + 1
+##D }
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("10_Reporting__20220517")
+### * 10_Reporting__20220517
+
+flush(stderr()); flush(stdout())
+
+### Encoding: UTF-8
+### Name: Kapitel 10
+### Title: Kapitel 10: Reporting und Analysen
+### Aliases: 'Kapitel 10'
+
+### ** Examples
+
+## Not run: 
+##D library(BIFIEsurvey)
+##D library(matrixStats)
+##D 
+##D data(datenKapitel10)
+##D dat <- datenKapitel10$dat
+##D dat.roh <- datenKapitel10$dat.roh
+##D dat.schule <- datenKapitel10$dat.schule
+##D dat.schule.roh <- datenKapitel10$dat.schule.roh
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.4.1: Datenbasis
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.1 a, Ergänzung zum Buch
+##D # Herunterladen, entpacken und setzen des Arbeitsspeichers
+##D # 
+##D 
+##D # setwd(dir = ".../DatenKapitel10")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.1, Listing 1: Einlesen der Schülerdaten
+##D #
+##D 
+##D # Anlegen eines leeren Listenobjektes für Schülerdaten
+##D dat <- list()
+##D 
+##D # Vektor mit Liste der Dateinamen für Schülerdaten
+##D dateinamen <- paste0("e8pv__schueler_imp_",1:10,".csv")
+##D # Schleife zum Einlesen der Daten, die in die Listenobjekte 
+##D # abgelegt werden
+##D for (ii in 1:10) {
+##D   schueler_dfr<-read.csv2(file = dateinamen[[ii]])
+##D   dat[[ii]] <- schueler_dfr
+##D }
+##D # Überprüfen des Listenobjektes und der eingelesenen Daten
+##D str(dat)
+##D 
+##D # Rohdaten als Datenmatrix einlesen
+##D dat.roh <- read.csv2(file = "e8pv__schueler_raw.csv")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.1, Listing 1a: Ergänzung zum Buch
+##D # Einlesen der Schulendaten
+##D #
+##D 
+##D # Anlegen eines leeren Listenobjektes für Schuldaten
+##D dat.schule <- list()
+##D 
+##D # Vektor mit Liste der Dateinamen für Schuldaten
+##D dateinamen <- paste0("e8pv__schule_imp_",1:10,".csv")
+##D # Schleife zum Einlesen der Daten, die in die Listenobjekte 
+##D # abgelegt werden
+##D for (ii in 1:10) {
+##D   schule_dfr<-read.csv2(file = dateinamen[[ii]])
+##D   dat.schule[[ii]] <- schule_dfr
+##D }
+##D # Überprüfen des Listenobjektes und der eingelesenen Daten
+##D str(dat.schule)
+##D 
+##D #Rohdaten als Datenmatrix einlesen
+##D dat.schule.roh <- read.csv2(file = "e8pv__schule_raw.csv")
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.4.2: Merging verschiedener Ebenen
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.2, Listing 1
+##D #
+##D 
+##D for (i in 1:10) {
+##D    dat[[i]] <- merge(dat[[i]],dat.schule[[i]],
+##D                       by = "idschool",all.x = TRUE)
+##D }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.2, Listing 2
+##D 
+##D for (i in 1:10) {
+##D    dat.agg <- aggregate(dat[[i]][,c("HISEI","E8RPV")],
+##D                         by = list(idschool = dat[[i]]$idschool),
+##D                         FUN = mean,na.rm = TRUE)
+##D    dat.schule[[i]] <- merge(dat.schule[[i]],dat.agg,
+##D                             by="idschool",all.x = TRUE)
+##D }
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.4.3: Erzeugen von BIFIEdata-Objekten
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.3, a: Ergänzung zum Buch
+##D # Einlesen der Replikationsgewichte
+##D #
+##D 
+##D # Zwischenspeichern des Schülerdatensatzes
+##D dat.tmp <- dat
+##D 
+##D # Daten aus Large-Scale Assessments können mit replicate weights 
+##D #  abgespeichert werden (z.B. PISA) oder mit Informationen zu den 
+##D #  Jackknifezonen und -gewichten (z.B. PIRLS). In diesem Beispiel 
+##D #  werden beide Methoden vorgestellt, daher wird die Gewichtungs-
+##D #  information in beiden Formen eingelesen: mit replicate weights
+##D #  im Datensatz dat1; mit Replikationsdesign im Datensatz dat2.
+##D 
+##D # replicate weights für Schüler/innen als Datenmatrix einlesen 
+##D dat.repwgts <- read.csv2(file = "e8__schueler_repwgts.csv")
+##D # replicate weights an Schülerdaten mergen
+##D for (ii in 1:10) {
+##D   dat[[ii]]<-merge(x = dat[[ii]],y = dat.repwgts,
+##D                     by = c("idschool","idstud"))
+##D }
+##D 
+##D # Jackknifezonen und -gewichte für Schulen als Datenmatrix einlesen 
+##D dat2 <- list()
+##D dat.schule.jk <- read.csv2(file = "e8__schule_jkzones.csv")
+##D # Jackknifezonen und -gewichte an schülerdaten mergen
+##D for (ii in 1:10) {
+##D   dat2[[ii]]<-merge(x = dat.tmp[[ii]],y = dat.schule.jk,
+##D                     by = "idschool")
+##D }
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.3, b: Ergänzung zum Buch
+##D # Kontrolle der Sortierung
+##D #
+##D 
+##D # Die Observationen in den 10 Imputationen muessen gleich sortiert 
+##D # sein. Dies wir zur Sicherheit getestet. 
+##D for (i in 2:10) {
+##D   if (sum(dat[[1]]$idstud!=dat[[i]]$idstud )>0) 
+##D       stop("Imputationsdatensätze nicht gleich sortiert!")  
+##D }
+##D   
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.3, c: Ergänzung zum Buch
+##D # Verwendung des R-Datenobjekts
+##D #
+##D 
+##D dat <- datenKapitel10$dat
+##D   
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.3, Listing 1: Übernahme der Gewichte aus 
+##D # Datenmatrix
+##D #
+##D 
+##D wgtstud <- dat[[1]]$wgtstud
+##D repwgtsvar <- grep("^w_fstr",colnames(dat[[1]]))
+##D repwgts <- dat[[1]][,repwgtsvar]
+##D dat <- BIFIE.data(data.list = dat,wgt = wgtstud,
+##D                   wgtrep = repwgts,fayfac = 1,
+##D                   cdata = TRUE)
+##D summary(dat)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.3, Listing 2: Erzeugung der Gewichte aus 
+##D # Replikationsdesign
+##D #         
+##D 
+##D dat2 <- BIFIE.data.jack(data = dat2,wgt = "wgtstud",
+##D                         jktype = "JK_GROUP",
+##D                         jkzone = "jkzone",
+##D                         jkrep = "jkrep",
+##D                         fayfac = 1)
+##D summary(dat2)
+##D 
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.3, Listing 3: Univariate Statistik Reading
+##D #
+##D 
+##D res.univar <- BIFIE.univar(BIFIEobj = dat,
+##D                           vars = c("E8RPV"),
+##D                           group = "Strata")
+##D summary(res.univar)
+##D res2.univar <- BIFIE.univar(BIFIEobj = dat2,
+##D                           vars = c("E8RPV"),
+##D                           group = "Strata")
+##D summary(res2.univar)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.4.4: Rekodierung und Transformation von 
+##D ##                   Variablen
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.4, Listing 1: Neue Variable GERSER mit 
+##D # BIFIE.data.transform
+##D #
+##D 
+##D transform.formula <- as.formula(
+##D    "~ 0 + I(cut(E8RPV,breaks = c(0,406,575,1000),labels = FALSE))"
+##D    )
+##D dat <- BIFIE.data.transform(dat,transform.formula,
+##D                             varnames.new = "GERSER")
+##D res.freq <- BIFIE.freq(BIFIEobj = dat,vars = c("GERSER"))
+##D summary(res.freq)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.4, Listing 2: Zwei neue Variablen PVERfit und 
+##D # PVERres mit BIFIE.data.transform
+##D #
+##D 
+##D transform.formula <- as.formula(
+##D    "~ 0 + I(fitted(lm(E8RPV ~ HISEI + female))) +
+##D           I(residuals(lm(E8RPV ~ HISEI + female)))"
+##D    )
+##D dat <- BIFIE.data.transform(dat,transform.formula,
+##D                             varnames.new = c("PVERfit","PVERres"))
+##D res.univar <- BIFIE.univar(BIFIEobj = dat,
+##D                           vars = c("PVERfit","PVERres"))
+##D summary(res.univar)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.4.5: Berechnung von Kenngroessen und deren 
+##D ##                   Standardfehlern
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.4.5, Listing 1: Anwenderfunktion
+##D #
+##D library(matrixStats)
+##D 
+##D anwenderfct.weightedMad <- function(X,w)
+##D {
+##D   # Die Funktion weightedMad wird auf jede Spalte der 
+##D   # übergebenen Matrix X angewendet.
+##D   Wmad<-apply(X = X, MARGIN = 2,FUN = matrixStats::weightedMad, 
+##D               w = w, na.rm = T)
+##D }
+##D 
+##D wgt.Mad <- BIFIE.by(BIFIEobj = dat,
+##D                      vars =  c("HISEI", "E8RPV"),
+##D                      userfct = anwenderfct.weightedMad,
+##D                      userparnames = c("wMadHISEI", "wMadE8RPV"))
+##D summary(wgt.Mad)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.6.1: Datenexploration
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.1, Listing 1: Ungewichtete univariate 
+##D # Statistiken
+##D #
+##D 
+##D # Ungewichtete univariate Statistiken
+##D # Häufigkeitstabelle zu 'eltausb' und 'migrant' (Kreuztabelle)
+##D tab1 <- table(dat.roh[,c("eltausb","migrant")],useNA = "always")
+##D # Ausgabe der Tabelle, ergänzt um Randsummen
+##D addmargins(tab1, FUN = list(Total = sum), quiet = TRUE)
+##D 
+##D # Ausgabe der Tabelle als Prozentverteilungen 
+##D # (in Prozent, gerundet)
+##D round(addmargins(prop.table(x = tab1), FUN = list(Total = sum), 
+##D   quiet = TRUE)*100,2)
+##D 
+##D # Ausgabe mit Prozentverteilungen der Spalten bzw. Zeilen 
+##D # (in Prozent, gerundet)
+##D round(prop.table(x = tab1,margin = 2)*100,2)
+##D round(prop.table(x = tab1,margin = 1)*100,2)
+##D # Ausgabe nicht wiedergegeben
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.1, Listing 2: Gewichtete univariate 
+##D # Statistiken an imputierten Daten
+##D 
+##D 
+##D # Gewichtete univariate Statistiken an imputierten Daten
+##D # Häufigkeitstabelle zu 'eltausb' und 'migrant'
+##D res1 <- BIFIE.freq(BIFIEobj = dat,vars = c("eltausb","migrant"))
+##D summary(res1)
+##D # Häufigkeitstabelle zu 'eltausb' gruppiert nach 'migrant'
+##D res2 <- BIFIE.freq(BIFIEobj = dat,vars = "eltausb",
+##D                    group = "migrant")
+##D summary(res2)
+##D # Kreuztabelle mit zwei Variablen
+##D res3 <- BIFIE.crosstab(BIFIEobj = dat,vars1 = "eltausb",
+##D                       vars2 = "migrant")
+##D summary(res3)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.1, Listing 3: Export der Tabelle
+##D #
+##D 
+##D res_export <- res1$stat[,c("var","varval","Ncases","Nweight", 
+##D   "perc","perc_SE")]
+##D colnames(res_export) <- c("Variable","Wert","N (ungewichtet)",
+##D  "N gewichtet)","Prozent","Standardfehler")
+##D write.table(x = res_export,file = "res_export.dat", sep = ";",
+##D             dec = ",", row.names = FALSE)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.6.2: Analyse fehlender Werte
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.2, Listing 1: Fehlende Werte
+##D #
+##D 
+##D res1 <- BIFIE.mva(dat, missvars = c("eltausb","migrant"), 
+##D                   se = TRUE)
+##D summary(res1)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.2, Listing 2: Fehlende Werte unter Kovariaten
+##D #
+##D 
+##D res2 <- BIFIE.mva(dat,missvars = c("eltausb","migrant"), 
+##D   covariates = c("E8RTWLE","eltausb", "migrant"), se = TRUE)   
+##D summary(res2)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.6.3: Mittelwerte, Perzentilbaender und Quantile
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.3, Listing 1: Hilfsvariable
+##D #
+##D 
+##D # Hilfsvariable zur Gruppierung anlegen
+##D transform.formula <- as.formula("~ 0 + I(migrant*10+female)")
+##D dat <- BIFIE.data.transform(dat,transform.formula,
+##D                   varnames.new="migrant_female")
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.3, Listing 2: Statistiken an Hilfsvariablen
+##D #
+##D 
+##D # Univariate Statistiken mit Mittelwerten und Standardfehlern
+##D res1 <- BIFIE.univar(BIFIEobj = dat,vars = "E8RPV",
+##D                     group = "migrant_female")
+##D # summary(res1)
+##D mittelwerte<-res1$stat[,c("groupval","M","M_SE")]
+##D 
+##D # Berechne Quantile
+##D probs<-c(.05,.25,.75,.95)
+##D res2 <- BIFIE.ecdf(BIFIEobj = dat,breaks = probs,
+##D                    quanttype = 1, vars = "E8RPV", 
+##D                    group = "migrant_female")
+##D # summary(res2)
+##D quantile<-data.frame(t(matrix(res2$output$ecdf,nrow = 4)))
+##D colnames(quantile)<-probs
+##D # Führe Ergebnisse zusammen
+##D res3<-cbind(mittelwerte,quantile)
+##D print(res3)
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.3, Listing 3: IQA
+##D #
+##D 
+##D # Berechne Interquartilabstand (IQA)
+##D res3$IQA<-res3$"0.75"-res3$"0.25"
+##D # Berechne Grenzen des Vertrauensintervals
+##D res3$VIunten<-res3$M-2*res3$M_SE
+##D res3$VIoben<-res3$M+2*res3$M_SE
+##D round(res3,1)
+##D 
+##D ## -------------------------------------------------------------
+##D ## Abschnitt 10.6.4: Gruppenvergleiche mit Regressionen
+##D ## -------------------------------------------------------------
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.4, Listing 1: Gruppenvergleich Geschlecht
+##D #
+##D 
+##D # Gruppenvergleich Geschlecht, gesamte Population
+##D res1 <- BIFIE.linreg(BIFIEobj = dat, formula = E8RPV ~ female)
+##D # Alternativer Aufruf mit identischem Resultat
+##D res1 <- BIFIE.linreg(BIFIEobj = dat,dep = "E8RPV", 
+##D                      pre = c("one","female"))
+##D                      
+##D # Vollständige Ausgabe
+##D summary(res1)
+##D 
+##D # Reduzierte Ausgabe der Ergebnisse
+##D res1_short <- res1$stat[res1$stat$parameter == "b" &
+##D             res1$stat$var == "female",c("est","SE")]
+##D colnames(res1_short) <- c("Geschlechterunterschied","SE")
+##D res1_short
+##D 
+##D # Gruppenvergleich Geschlecht getrennt nach 'migrant'
+##D res2 <- BIFIE.linreg(BIFIEobj = dat,
+##D                     formula = E8RPV ~ female,
+##D                     group = "migrant")
+##D # Vollständige Ausgabe
+##D summary(res2)
+##D 
+##D # Reduzierte Ausgabe der Ergebnisse
+##D res2_short <- res2$stat[res2$stat$parameter == "b" &
+##D                         res2$stat$var == "female",
+##D                       c("groupval","est","SE")]
+##D colnames(res2_short) <- c("Migrant","Geschlechterunterschied",
+##D                           "SE")
+##D res2_short
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.4, Listing 2: Wald-Test
+##D #
+##D 
+##D res3 <- BIFIE.univar(vars = "E8RPV",BIFIEobj = dat, 
+##D                      group = c("migrant","female"))
+##D res3_wald <- BIFIE.univar.test(BIFIE.method = res3)
+##D 
+##D # summary(res3_wald)
+##D res3_wald$stat.dstat[,c("group","groupval1","groupval2",
+##D                         "M1","M2","d","d_SE","d_t","d_p")]
+##D 
+##D # -------------------------------------------------------------
+##D # Abschnitt 10.6.4, Listing 3: Kontrolle um soziale Herkunft
+##D #
+##D 
+##D # Gruppenvergleich ohne Berücksichtigung der sozialen Herkunft
+##D res1 <- BIFIE.linreg(BIFIEobj = dat, formula = E8RPV ~ migrant)
+##D # summary(res1)
+##D res1$stat[res1$stat$parameter == "b" & res1$stat$var == "migrant",
+##D          c("groupval","est","SE")]
+##D 
+##D # Gruppenvergleich mit Berücksichtigung der sozialen Herkunft
+##D res2 <- BIFIE.linreg(BIFIEobj = dat,
+##D                     formula = E8RPV ~ migrant+HISEI+eltausb+buch)
+##D # summary(res2)
+##D res2$stat[res2$stat$parameter == "b" & res2$stat$var == "migrant",
+##D          c("groupval","est","SE")]
+##D 
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("LSAmitR-package_20220531")
+### * LSAmitR-package_20220531
+
+flush(stderr()); flush(stdout())
+
+### Name: LSAmitR-package
+### Title: Daten, Beispiele und Funktionen zu 'Large-Scale Assessment mit
+###   R'
+### Aliases: LSAmitR-package LSAmitR
+### Keywords: package
+
+### ** Examples
+
+## Not run: 
+##D install.packages("LSAmitR", dependencies = TRUE)
+##D library(LSAmitR)
+##D package?LSAmitR
+##D ?"Kapitel 7"
+##D 
+##D data(datenKapitel07)
+##D names(datenKapitel07)
+##D dat <- datenKapitel07$prodRat
+## End(Not run)
+
+
+### * <FOOTER>
+###
+cleanEx()
+options(digits = 7L)
+base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+grDevices::dev.off()
+###
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "\\(> \\)?### [*]+" ***
+### End: ***
+quit('no')

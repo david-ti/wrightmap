@@ -1,10 +1,11 @@
-itemModern <- function(thr, yRange = NULL, axis.items = "Items", 
-                       show.thr.sym = TRUE, thr.sym.cex = .8, 
-                       thr.sym.lwd = 1, thr.sym.pch = 23, 
-                       thr.sym.col.fg = rgb(0, 0, 0, 0.3), 
-                       thr.sym.col.bg = rgb(0, 0, 0, 0.3), 
-                       show.thr.lab = TRUE, thr.lab.pos = c(2, 4), 
-                       thr.lab.text = NULL, thr.lab.col = "black", 
+itemModern <- function(thr, yRange = NULL, axis.items = "Items",
+                       show.thr.sym = TRUE, thr.sym.cex = .8,
+                       thr.sym.lwd = 1, thr.sym.pch = 23,
+                       thr.sym.col.fg = rgb(0, 0, 0, 0.3),
+                       thr.sym.col.bg = rgb(0, 0, 0, 0.3),
+                       show.thr.lab = TRUE, thr.lab.pos = c(2, 4),
+                       thr.lab.text = NULL, thr.lab.type = NULL,
+                       thr.lab.col = "black",
                        thr.lab.cex = .5, thr.lab.font = 2,
                        label.items.rows = 1, label.items.srt = 0, 
                        label.items = NULL, label.items.cex = 0.6, 
@@ -28,9 +29,20 @@ itemModern <- function(thr, yRange = NULL, axis.items = "Items",
     
     # Set default threshold labels if not provided
     if (is.null(thr.lab.text)) {
-        if (!is.null(colnames(thr))) {
-            thr.lab.text <- matrix(rep(colnames(thr), each = nI), nrow = nI)
+        # Check if column names exist and are all non-empty (meaningful)
+        cnames <- colnames(thr)
+        has_meaningful_colnames <- !is.null(cnames) && all(nzchar(cnames))
+
+        if (has_meaningful_colnames) {
+            # Use column names if they all exist and are non-empty
+            thr.lab.text <- matrix(rep(cnames, each = nI), nrow = nI)
+        } else if (!is.null(thr.lab.type) && thr.lab.type == "transition") {
+            # Transition labels: 0/1, 1/2, 2/3, etc.
+            nL <- ncol(thr)
+            transition.labs <- paste0(seq_len(nL) - 1, "/", seq_len(nL))
+            thr.lab.text <- matrix(rep(transition.labs, each = nI), nrow = nI)
         } else {
+            # Default labels: 1, 2, 3, etc.
             thr.lab.text <- matrix(rep(seq_len(ncol(thr)), each = nI), nrow = nI)
         }
     }

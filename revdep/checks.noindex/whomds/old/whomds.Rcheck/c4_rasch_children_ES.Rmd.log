@@ -1,0 +1,18 @@
+
+> library(knitr)
+
+> opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE, 
++     out.width = "80%", fig.align = "center", collapse = TRUE, 
++     comment = "#> ..." ... [TRUNCATED] 
+
+> `?`(rasch_mds_children)
+No documentation for ‘rasch_mds_children’ in specified packages and libraries:
+you could try ‘??rasch_mds_children’
+
+> rasch_mds_children(df = df_children, vars_id = "HHID", 
++     vars_group = "age_cat", vars_metric_common = paste0("child", 
++         c(1:10)), vars .... [TRUNCATED] 
+
+  When sourcing ‘c4_rasch_children_ES.R’:
+Error: could not find function "rasch_mds_children"
+Execution halted

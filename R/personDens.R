@@ -62,7 +62,11 @@ function(thetas, yRange = NULL, dim.lab.cex = 0.6, dim.lab.side = 3, dim.lab.adj
 	if (is.null(dim.names)) {
 		if (!is.null(names(thetas))) {
 			dim.names <- names(thetas)
-		} else dim.names <- c(paste("Dim", seq(1:nD), sep = ""))
+		} else if (nD == 1) {
+			dim.names <- ""
+		} else {
+			dim.names <- c(paste("Dim", seq(1:nD), sep = ""))
+		}
 	}
 	
 	if (ncol(thetas) > 1 & length(dim.color) == 1) {

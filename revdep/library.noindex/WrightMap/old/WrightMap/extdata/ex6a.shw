@@ -1,0 +1,57 @@
+================================================================================
+TIMSS Mathematics--First Six Items--Gender Differences     Sat Apr 12 13:34 2008
+TABLES OF RESPONSE MODEL PARAMETER ESTIMATES
+================================================================================
+TERM 1: item
+------------------------------------------------------------------------------------------
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+     item           ESTIMATE  ERROR    MNSQ       CI        T    MNSQ       CI        T
+------------------------------------------------------------------------------------------
+ 1   BSMMA01          0.048   0.026                                                       
+ 2   BSMMA02         -0.663   0.029                                                       
+ 3   BSMMA03         -0.368   0.027                                                       
+ 4   BSMMA04          0.562   0.026                                                       
+ 5   BSMMA05          0.918   0.025                                                       
+ 6   BSMMA06         -0.498*                                                              
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.998
+Chi-square test of parameter equality =    2511.21,  df = 5,  Sig Level = 0.000
+================================================================================
+TERM 2: (-)gender
+------------------------------------------------------------------------------------------
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+    gender          ESTIMATE  ERROR    MNSQ       CI        T    MNSQ       CI        T
+------------------------------------------------------------------------------------------
+ 1   male            -0.057   0.018                                                       
+ 2   female           0.057*                                                              
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability Not Applicable
+Chi-square test of parameter equality =       9.63,  df = 1
+================================================================================
+TERM 3: item*gender
+--------------------------------------------------------------------------------------------------------
+          VARIABLES                                       UNWEIGHTED FIT             WEIGHTED FIT
+------------------------------                        -----------------------   -----------------------
+     item          gender          ESTIMATE  ERROR    MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------
+ 1   BSMMA01    1   male             0.060   0.026                                                      
+ 2   BSMMA02    1   male             0.029   0.029                                                      
+ 3   BSMMA03    1   male            -0.100   0.027                                                      
+ 4   BSMMA04    1   male             0.291   0.026                                                      
+ 5   BSMMA05    1   male            -0.062   0.025                                                      
+ 6   BSMMA06    1   male            -0.218*                                                             
+ 1   BSMMA01    2   female          -0.060*                                                             
+ 2   BSMMA02    2   female          -0.029*                                                             
+ 3   BSMMA03    2   female           0.100*                                                             
+ 4   BSMMA04    2   female          -0.291*                                                             
+ 5   BSMMA05    2   female           0.062*                                                             
+ 6   BSMMA06    2   female           0.218*                                                             
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.970
+Chi-square test of parameter equality =     155.00,  df = 5,  Sig Level = 0.000
+================================================================================

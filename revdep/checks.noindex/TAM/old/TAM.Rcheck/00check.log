@@ -1,0 +1,27 @@
+* using log directory ‘/Users/dti/Documents/GitHub/wrightmap/revdep/checks.noindex/TAM/old/TAM.Rcheck’
+* using R version 4.6.1 (2026-06-24)
+* using platform: aarch64-apple-darwin23
+* R was compiled by
+    Apple clang version 17.0.0 (clang-1700.3.19.1)
+    GNU Fortran (GCC) 14.2.0
+* running under: macOS Sequoia 15.7.7
+* using session charset: UTF-8
+* current time: 2026-08-23 11:33:39 UTC
+* using options ‘--no-manual --no-build-vignettes’
+* checking for file ‘TAM/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘TAM’ version ‘4.3-25’
+* checking package namespace information ... OK
+* checking package dependencies ... INFO
+Package which this enhances but not available for checking: ‘LSAmitR’
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘TAM’ can be installed ... ERROR
+Installation failed.
+See ‘/Users/dti/Documents/GitHub/wrightmap/revdep/checks.noindex/TAM/old/TAM.Rcheck/00install.out’ for details.
+* DONE
+Status: 1 ERROR

@@ -1,0 +1,334 @@
+
+R version 4.6.1 (2026-06-24) -- "Happy Hop"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin23
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "whomds"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('whomds')
+Loading required package: psych
+Thank you for using whomds. To learn more about the WHO Model Disability Survey (MDS) and for contact information, go to https://www.who.int/health-topics/disability
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("fig_density")
+> ### * fig_density
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fig_density
+> ### Title: Plot a density of a score
+> ### Aliases: fig_density
+> 
+> ### ** Examples
+> 
+> fig_density(df_adults, score = "disability_score", cutoffs = c(19.1, 34.4, 49.6), 
++ x_lab = "Disability score")
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the whomds package.
+  Please report the issue at
+  <https://github.com/lindsayevanslee/whomds/issues>.
+Warning: Removed 307 rows containing non-finite outside the scale range
+(`stat_density()`).
+> fig_density(df_adults, score = "disability_score", var_color = "sex", 
++ cutoffs = c(19.1, 34.4, 49.6), x_lab = "Disability score")
+Warning: Removed 307 rows containing non-finite outside the scale range
+(`stat_density()`).
+> fig_density(df_adults, score = "disability_score", var_color = "sex", 
++ var_facet = "age_cat",  cutoffs = c(19.1, 34.4, 49.6), x_lab = "Disability score")
+Warning: Removed 307 rows containing non-finite outside the scale range
+(`stat_density()`).
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fig_dist")
+> ### * fig_dist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fig_dist
+> ### Title: Plot a distribution of a score
+> ### Aliases: fig_dist
+> 
+> ### ** Examples
+> 
+> fig_dist(df_adults, score = "disability_score", score_cat = "disability_cat", 
++ cutoffs = c(19.1, 34.4, 49.6), x_lab = "Disability score")
+Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the whomds package.
+  Please report the issue at
+  <https://github.com/lindsayevanslee/whomds/issues>.
+Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead.
+ℹ The deprecated feature was likely used in the whomds package.
+  Please report the issue at
+  <https://github.com/lindsayevanslee/whomds/issues>.
+Warning: Removed 307 rows containing non-finite outside the scale range (`stat_bin()`).
+> fig_dist(df_adults, score = "disability_score", score_cat = "disability_cat", 
++ cutoffs = c(19.1, 34.4, 49.6), x_lab = "Disability score", y_max = 2000)
+Warning: Removed 307 rows containing non-finite outside the scale range (`stat_bin()`).
+> fig_dist(df_adults, score = "disability_score", score_cat = "disability_cat", 
++ cutoffs = c(19.1, 34.4, 49.6), x_lab = "Disability score", y_max = 0.2, pcent=TRUE)
+Warning: Removed 307 rows containing non-finite outside the scale range (`stat_bin()`).
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fig_poppyramid")
+> ### * fig_poppyramid
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fig_poppyramid
+> ### Title: Print a population pyramid
+> ### Aliases: fig_poppyramid
+> 
+> ### ** Examples
+> 
+> fig_poppyramid(df_adults, "age", "sex")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("helper_indicator")
+> ### * helper_indicator
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: helper_indicator
+> ### Title: Create indicators from data frame
+> ### Aliases: helper_indicator
+> 
+> ### ** Examples
+> 
+> helper_indicator(df = df_adults, 
++ vars_indicators = c("EF1", "EF2", "EF3"), 
++ mapvalues_from = 1:5, 
++ mapvalues_to = c(0,0,0,1,1))
+# A tibble: 2,500 × 93
+    HHID strata   PSU weight sex      age age_cat edu_cat    work_cat
+   <dbl> <chr>  <int>  <dbl> <fct>  <int> <ord>   <ord>      <fct>   
+ 1     1 B         19   1000 Female    37 25-39   Elementary Y       
+ 2     2 C         11    800 Male      39 25-39   None       Y       
+ 3     3 C         14   1150 Female    67 64-100  Elementary Y       
+ 4     4 B         11    900 Male      57 40-64   None       Y       
+ 5     5 B          4    850 Female    20 18-24   None       N       
+ 6     6 C          7   1200 Male      67 64-100  Elementary Y       
+ 7     7 A          1    800 Male      37 25-39   Elementary Y       
+ 8     8 B         20   1000 Male      44 40-64   None       N       
+ 9     9 B         18   1000 Male      89 64-100  Secondary  N       
+10    10 C         20   1100 Male      76 64-100  Elementary Y       
+# ℹ 2,490 more rows
+# ℹ 84 more variables: disability_score <dbl>, disability_cat <ord>, F1 <dbl>,
+#   F2 <dbl>, F3 <dbl>, F4 <dbl>, F5 <dbl>, F6 <dbl>, F7 <dbl>, F8 <dbl>,
+#   F9 <dbl>, F10 <dbl>, F11 <dbl>, F12 <dbl>, F13 <dbl>, F14 <dbl>, F15 <dbl>,
+#   F16 <dbl>, F17 <dbl>, F18 <dbl>, F19 <dbl>, F20 <dbl>, F21 <dbl>,
+#   F22 <dbl>, F23 <dbl>, F24 <dbl>, F25 <dbl>, F26 <dbl>, F27 <dbl>,
+#   F28 <dbl>, F29 <dbl>, F30 <dbl>, F31 <dbl>, F32 <dbl>, F33 <dbl>, …
+> 
+> 
+> 
+> cleanEx()
+> nameEx("helper_rowSums")
+> ### * helper_rowSums
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: helper_rowSums
+> ### Title: Perform row sum
+> ### Aliases: helper_rowSums
+> 
+> ### ** Examples
+> 
+> x <- data.frame(v1 = c(NA,1:4), v2 = c(NA, 2:5), v3 = c(NA, 1:2, NA, 3))
+> helper_rowSums(x, na.rm = TRUE, allNA0 = TRUE)
+[1] NA  4  7  7 12
+> helper_rowSums(x, na.rm = TRUE, allNA0 = FALSE)
+[1]  0  4  7  7 12
+> 
+> 
+> 
+> cleanEx()
+> nameEx("table_basicstats")
+> ### * table_basicstats
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: table_basicstats
+> ### Title: Compute basic statistics of the number of members per group per
+> ###   household
+> ### Aliases: table_basicstats
+> 
+> ### ** Examples
+> 
+> #create dummy table of household data, where each row represents one member
+> df_hh <- data.frame(HHID = sample(
++   x = 1:300,
++   size = 1000,
++   replace = TRUE
++ ),
++ age_cat = ordered(sample(
++   x = c("18-24", "25-39", "40-64", "64-100"),
++   size = 1000,
++   replace = TRUE
++ )))
+>                 
+> table_basicstats(df_hh, "HHID", "age_cat")
+# A tibble: 5 × 4
+  age_cat mean_sd   median range
+  <chr>   <chr>      <dbl> <chr>
+1 18-24   0.8 (0.9)      1 0 - 4
+2 25-39   0.9 (0.9)      1 0 - 5
+3 40-64   0.8 (0.9)      1 0 - 5
+4 64-100  0.9 (0.9)      1 0 - 4
+5 Total   3.4 (1.7)      3 1 - 8
+> 
+> 
+> 
+> cleanEx()
+> nameEx("table_unweightedpctn")
+> ### * table_unweightedpctn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: table_unweightedpctn
+> ### Title: Compute unweighted percent and N for multiple variables,
+> ###   disaggregated
+> ### Aliases: table_unweightedpctn
+> 
+> ### ** Examples
+> 
+> table_unweightedpctn(df_adults, vars_demo = c("sex", "age_cat", "work_cat", "edu_cat"))
+# A tibble: 12 × 4
+   item     demo         pct     n
+   <chr>    <ord>      <dbl> <dbl>
+ 1 sex      Female      50.6  1265
+ 2 sex      Male        49.4  1235
+ 3 age_cat  18-24        7.6   191
+ 4 age_cat  25-39       18     449
+ 5 age_cat  40-64       31.7   792
+ 6 age_cat  64-100      42.7  1068
+ 7 work_cat N           41.8  1045
+ 8 work_cat Y           58.2  1455
+ 9 edu_cat  None        20.2   504
+10 edu_cat  Elementary  39.8   996
+11 edu_cat  Secondary   25.2   629
+12 edu_cat  University  14.8   371
+> table_unweightedpctn(df_adults, vars_demo = c("sex", "age_cat", "work_cat", "edu_cat"), 
++ group_by_var = "disability_cat")
+# A tibble: 48 × 5
+   item    demo   disability_cat   pct     n
+   <chr>   <ord>  <ord>          <dbl> <dbl>
+ 1 sex     Female No              52.5   287
+ 2 sex     Male   No              47.5   260
+ 3 sex     Female Mild            53.5   250
+ 4 sex     Male   Mild            46.5   217
+ 5 sex     Female Moderate        49.9   376
+ 6 sex     Male   Moderate        50.1   377
+ 7 sex     Female Severe          49.1   209
+ 8 sex     Male   Severe          50.9   217
+ 9 age_cat 18-24  No               6.9    38
+10 age_cat 25-39  No              19.7   108
+# ℹ 38 more rows
+> table_unweightedpctn(df_adults, vars_demo = c("sex", "age_cat", "work_cat", "edu_cat"), 
++ group_by_var = "disability_cat", spread_by_group_by_var = TRUE)
+# A tibble: 12 × 10
+   item    demo  No_pct  No_n Mild_pct Mild_n Moderate_pct Moderate_n Severe_pct
+   <chr>   <ord>  <dbl> <dbl>    <dbl>  <dbl>        <dbl>      <dbl>      <dbl>
+ 1 sex     Fema…   52.5   287     53.5    250         49.9        376       49.1
+ 2 sex     Male    47.5   260     46.5    217         50.1        377       50.9
+ 3 age_cat 18-24    6.9    38      7.3     34          8.8         66        7.7
+ 4 age_cat 25-39   19.7   108     16.1     75         19.7        148       16.4
+ 5 age_cat 40-64   32.4   177     33.2    155         29.3        221       32.6
+ 6 age_cat 64-1…   41     224     43.5    203         42.2        318       43.2
+ 7 work_c… N       41.7   228     40.5    189         42          316       42.3
+ 8 work_c… Y       58.3   319     59.5    278         58          437       57.7
+ 9 edu_cat None    21.8   119     16.7     78         21.4        161       19  
+10 edu_cat Elem…   37.8   207     38.8    181         39.7        299       41.3
+11 edu_cat Seco…   25     137     28.7    134         23.2        175       25.1
+12 edu_cat Univ…   15.4    84     15.8     74         15.7        118       14.6
+# ℹ 1 more variable: Severe_n <dbl>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("table_weightedpct")
+> ### * table_weightedpct
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: table_weightedpct
+> ### Title: Calculate table of percentages or N of response distribution for
+> ###   survey items, survey weighted, disaggregated
+> ### Aliases: table_weightedpct
+> 
+> ### ** Examples
+> 
+> table_weightedpct(df_adults, 
++     vars_ids = c("HHID", "PSU"),
++     vars_strata = "strata",
++     vars_weights = "weight",
++     formula_vars = paste0("EF",1:10),
++     formula_vars_levels = 1:5,
++     by_vars = "sex")
+Warning in table_weightedpct(df_adults, vars_ids = c("HHID", "PSU"), vars_strata = "strata",  :
+  You may have issues with lonely PSUs if you have not set: options(survey.lonely.psu = "adjust")
+Warning: There was 1 warning in `dplyr::summarise()`.
+ℹ In argument: `prop = survey_mean(na.rm = TRUE)`.
+ℹ In group 1: `sex = Female`, `item = EF1`, `resp = 1`.
+Caused by warning:
+! na.rm argument has no effect on survey_mean when calculating grouped proportions. 
+This warning is displayed once per session.
+# A tibble: 100 × 4
+# Groups:   sex, item [20]
+   sex    item  resp   prop
+   <fct>  <ord> <fct> <dbl>
+ 1 Female EF1   1     44.6 
+ 2 Female EF1   2     15.3 
+ 3 Female EF1   3     15.4 
+ 4 Female EF1   4     10.5 
+ 5 Female EF1   5     14.1 
+ 6 Female EF10  1     47.2 
+ 7 Female EF10  2     10.7 
+ 8 Female EF10  3     20.6 
+ 9 Female EF10  4     11.8 
+10 Female EF10  5      9.81
+# ℹ 90 more rows
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.901 0.123 3.035 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

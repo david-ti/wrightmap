@@ -41,7 +41,7 @@ An integer specifying which side to plot the dimension names. Values of 1, 2, 3 
 A numerical value adjusting the position of the dimension names.
 }
   \item{dim.names}{
-A string or a vector of strings containing the names of each dimension.
+A string or a vector of strings containing the names of each dimension. When there is only one dimension and \code{dim.names} is not specified, no dimension label is shown. For multiple dimensions, defaults to "Dim1", "Dim2", etc.
 }
   \item{dim.color}{
 A numerical value or vector indicating the colors to be used for representing each dimension.

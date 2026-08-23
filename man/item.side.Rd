@@ -11,7 +11,8 @@ itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE
 , thr.sym.cex = 0.8, thr.sym.lwd = 1, thr.sym.pch = 23
 , thr.sym.col.fg = rgb(0, 0, 0, 0.3), thr.sym.col.bg = rgb(0, 0, 0, 0.3)
 , show.thr.lab = TRUE, thr.lab.pos = c(2, 4), thr.lab.text = NULL
-, thr.lab.col = "black", thr.lab.cex = 0.5, thr.lab.font = 2, label.items.rows = 1
+, thr.lab.type = NULL, thr.lab.col = "black", thr.lab.cex = 0.5
+, thr.lab.font = 2, label.items.rows = 1
 , label.items.srt = 0, label.items = NULL, label.items.cex = 0.6
 , label.items.ticks = TRUE, axis.logits = "Logits", show.axis.logits = "R"
 , axis.logits.cex = 0.7, oma = c(0, 0, 0, 3), cutpoints = NULL
@@ -22,7 +23,8 @@ itemModern(thr, yRange = NULL, axis.items = "Items", show.thr.sym = TRUE
 itemClassic(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits"
 , show.axis.logits = "R", axis.logits.cex = 0.7, oma = c(0, 0, 0, 3)
 , cutpoints = NULL, cutpoints.par = list(), label.items = NULL, label.steps = NULL
-, label.sep = ".", thr.lab.sep = " | ", thr.lab.par = list(), axis.logits.par = list()
+, label.steps.type = NULL, label.sep = ".", thr.lab.sep = " | "
+, thr.lab.par = list(), axis.logits.par = list()
 , logits.text.par = list(), pad.char = "_", font.family = "mono", ...)
 
 itemHist(thr, yRange = NULL, axis.items = "Items", axis.logits = "Logits"
@@ -55,7 +57,8 @@ Specific to \code{itemModern}:
   \item{thr.sym.col.bg}{An integer, vector, or matrix of numerical values indicating the background color for the threshold symbols.}
   \item{show.thr.lab}{Logical. If \code{TRUE} (default), the plot will show labels for the item thresholds.}
   \item{thr.lab.pos}{An integer, vector, or matrix indicating the position for displaying the threshold labels. Values 1, 2, 3, and 4 indicate below, left, above, and right, respectively.}
-  \item{thr.lab.text}{A matrix containing the text labels for the item thresholds, where each row represents an item, and each column represents a level.}
+  \item{thr.lab.text}{A matrix containing the text labels for the item thresholds, where each row represents an item, and each column represents a level. If not provided, defaults to the column names of \code{thr} if they exist, or simple numeric labels (1, 2, 3, etc.) otherwise. Use \code{thr.lab.type = "transition"} for category transition labels when no column names exist.}
+  \item{thr.lab.type}{Optional string to control default threshold label format when \code{thr.lab.text} is not provided and the threshold matrix has no column names. Set to \code{"transition"} to use category transition labels (0/1, 1/2, 2/3, etc.). Default is \code{NULL} which uses simple numeric labels (1, 2, 3, etc.). Note: Column names take precedence over \code{thr.lab.type}.}
   \item{thr.lab.col}{A matrix specifying the color for each threshold label.}
   \item{thr.lab.cex}{A numerical value indicating the magnification factor for the threshold labels.}
   \item{thr.lab.font}{An integer or matrix specifying the font type for the threshold labels. 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.}
@@ -72,7 +75,8 @@ Specific to \code{itemModern}:
 
 Specific to \code{itemClassic}:
 
-  \item{label.steps}{A vector specifying the labels for the threshold steps.}
+  \item{label.steps}{A vector specifying the labels for the threshold steps. If not provided, defaults to simple numeric labels (1, 2, 3, etc.). Set to \code{TRUE} to use column names from \code{thr} if available. Use \code{label.steps.type = "transition"} for category transition labels.}
+  \item{label.steps.type}{Optional string to control default step label format when \code{label.steps} is not provided. Set to \code{"transition"} to use category transition labels (0/1, 1/2, 2/3, etc.). Default is \code{NULL} which uses simple numeric labels (1, 2, 3, etc.).}
   \item{label.sep}{A string indicating the separator used between item labels and step labels.}
   \item{thr.lab.sep}{A string indicating the separator used between threshold labels for different items.}
   \item{pad.char}{A character used to pad item labels to a fixed width.}
@@ -143,15 +147,21 @@ wrightMap(uni.proficiency, thresholds,
 # Direct call:
 
 ## Plotting results of a unidimensional Rating Scale Model
+## Default labels are 1, 2, 3, etc.
 items.loc <- sort(rnorm(20))
-thresholds <- data.frame(
-  l1 = items.loc - 0.5,
-  l2 = items.loc - 0.25,
-  l3 = items.loc + 0.25,
-  l4 = items.loc + 0.5
+thresholds <- cbind(
+  items.loc - 0.5,
+  items.loc - 0.25,
+  items.loc + 0.25,
+  items.loc + 0.5
 )
+rownames(thresholds) <- paste0("Item", 1:20)
 
-itemModern(thresholds)
-itemClassic(thresholds)
+itemModern(thresholds)  # Default: 1, 2, 3, 4
+itemModern(thresholds, thr.lab.type = "transition")  # Transition: 0/1, 1/2, 2/3, 3/4
+
+itemClassic(thresholds)  # Default: 1, 2, 3, 4
+itemClassic(thresholds, label.steps.type = "transition")  # Transition: 0/1, 1/2, 2/3, 3/4
+
 itemHist(thresholds)
 }

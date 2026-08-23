@@ -1,0 +1,255 @@
+================================================================================
+Rating Scale Analysis                                      Tue Mar 04 23:42 2014
+SUMMARY OF THE ESTIMATION
+===========================================================Build: Mar 23 2012===
+
+Estimation method was: Gauss-Hermite Quadrature with 15 nodes
+Assumed population distribution was: Gaussian
+Constraint was: DEFAULT
+The Data File: ex2b.dat
+The format:  responses 9-15,17-19
+No case weights
+The regression model:
+Grouping Variables:
+The item model: item+step
+Slopes are fixed
+Sample size: 582
+Final Deviance:     9340.18030
+Total number of estimated parameters: 12
+The number of iterations: 23
+Termination criteria:  Max iterations=1000, Parameter Change= 0.00010
+                       Deviance Change= 0.00010
+Iterations terminated because the deviance convergence criteria was reached
+Random number generation seed:    1.00000
+Number of nodes used when drawing PVs: 2000
+Number of nodes used when computing fit: 200
+Number of plausible values to draw: 5
+Maximum number of iterations without a deviance improvement: 100
+Maximum number of Newton steps in M-step: 10
+Value for obtaining finite MLEs for zero/perfects:    0.30000
+
+================================================================================
+================================================================================
+Rating Scale Analysis                                      Tue Mar 04 23:42 2014
+TABLES OF RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+TERM 1: item
+--------------------------------------------------------------------------------------------------------------
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+     item           ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------------
+ 1   Curriculum ..    0.716   0.074    1.12 ( 0.88, 1.12)  1.9   1.12 ( 0.89, 1.11)  2.1                      
+ 2   Not Until E..    1.061   0.075    1.47 ( 0.88, 1.12)  6.8   1.51 ( 0.89, 1.11)  8.2                      
+ 3   Financial R..   -0.559   0.079    0.83 ( 0.88, 1.12) -3.1   0.88 ( 0.88, 1.12) -2.1                      
+ 4   Staff Commi..   -1.046   0.084    0.73 ( 0.88, 1.12) -5.0   0.79 ( 0.88, 1.12) -3.7                      
+ 5   Commitment ..   -0.425   0.077    0.94 ( 0.88, 1.12) -1.0   0.94 ( 0.89, 1.11) -1.1                      
+ 6   Run for som..   -0.009   0.074    1.05 ( 0.88, 1.12)  0.9   1.06 ( 0.89, 1.11)  1.1                      
+ 7   Achievable ..   -0.386   0.077    0.80 ( 0.88, 1.12) -3.6   0.78 ( 0.89, 1.11) -4.0                      
+ 8   Principals ..   -0.133   0.075    0.87 ( 0.88, 1.12) -2.2   0.87 ( 0.89, 1.11) -2.3                      
+ 9   Parents sup..    0.232   0.074    1.06 ( 0.88, 1.12)  1.1   1.07 ( 0.89, 1.11)  1.3                      
+ 10  Student mot..    0.548*  0.074    1.00 ( 0.88, 1.12)  0.1   0.98 ( 0.89, 1.11) -0.4                      
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.986
+Chi-square test of parameter equality =     566.71,  df = 9,  Sig Level = 0.000
+^ Empirical standard errors have been used
+================================================================================
+TERM 2: step
+--------------------------------------------------------------------------------------------------------------
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+   category         ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------------
+       0                               2.59 ( 0.88, 1.12) 18.8   1.75 ( 0.85, 1.15)  8.0                      
+       1             -1.184   0.039    2.39 ( 0.88, 1.12) 17.0   2.55 ( 0.88, 1.12) 18.7                      
+       2              1.184*           1.51 ( 0.88, 1.12)  7.4   1.58 ( 0.88, 1.12)  7.9                      
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+================================================================================
+================================================================================
+Rating Scale Analysis                                      Tue Mar 04 23:42 2014
+TABLES OF POPULATION MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+REGRESSION COEFFICIENTS
+
+
+
+Regression Variable
+
+CONSTANT                   0.939 ( 0.070)      
+-----------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+===============================================
+CONDITIONAL COVARIANCE/CORRELATION MATRIX
+
+
+
+Dimension
+
+Dimension_1                                
+-------------------------------------------
+Variance                   2.156  ( 0.180) 
+-------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+
+===========================================
+                        
+RELIABILITY COEFFICIENTS
+------------------------
+                        
+Dimension: (Dimension_1)                                                        
+-----------------------
+ MLE Person separation RELIABILITY:   0.788                                     
+ WLE Person separation RELIABILITY:   0.793                                     
+ EAP/PV RELIABILITY:                  0.812                                     
+------------------------
+================================================================================
+Rating Scale Analysis                                      Tue Mar 04 23:42 2014
+MAP OF LATENT DISTRIBUTIONS AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Mar 23 2012===
+             Terms in the Model (excl Step terms)
+
+                               +item
+----------------------------------------------------
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+   6            |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+   5            |                                  |
+                |                                  |
+                |                                  |
+               X|                                  |
+                |                                  |
+   4          XX|                                  |
+               X|                                  |
+               X|                                  |
+              XX|                                  |
+              XX|                                  |
+   3         XXX|                                  |
+             XXX|                                  |
+            XXXX|                                  |
+          XXXXXX|                                  |
+            XXXX|                                  |
+   2       XXXXX|                                  |
+           XXXXX|                                  |
+         XXXXXXX|                                  |
+          XXXXXX|                                  |
+         XXXXXXX|                                  |
+   1     XXXXXXX|2                                 |
+         XXXXXXX|                                  |
+         XXXXXXX|1 10                              |
+       XXXXXXXXX|                                  |
+      XXXXXXXXXX|9                                 |
+   0    XXXXXXXX|6                                 |
+         XXXXXXX|8                                 |
+         XXXXXXX|5 7                               |
+            XXXX|3                                 |
+            XXXX|                                  |
+  -1        XXXX|                                  |
+              XX|4                                 |
+              XX|                                  |
+              XX|                                  |
+               X|                                  |
+                |                                  |
+  -2            |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+  -3            |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+  -4            |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+====================================================
+Each 'X' represents 4.1 cases
+
+====================================================
+================================================================================
+Rating Scale Analysis                                      Tue Mar 04 23:42 2014
+MAP OF LATENT DISTRIBUTIONS AND THRESHOLDS
+===========================================================Build: Mar 23 2012===
+                               Generalised-Item Thresholds
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                |
+                |
+                |
+                |
+   6            |
+                |
+                |
+                |
+                |
+   5            |
+                |
+                |
+               X|
+                |
+   4          XX|
+               X|
+               X|
+              XX|
+              XX|
+   3         XXX|
+             XXX|
+            XXXX|
+          XXXXXX|2.2
+            XXXX|
+   2       XXXXX|1.2
+           XXXXX|10.2
+         XXXXXXX|
+          XXXXXX|9.2
+         XXXXXXX|6.2
+   1     XXXXXXX|8.2
+         XXXXXXX|5.2 7.2
+         XXXXXXX|3.2
+       XXXXXXXXX|
+      XXXXXXXXXX|4.2
+   0    XXXXXXXX|
+         XXXXXXX|2.1
+         XXXXXXX|
+            XXXX|1.1
+            XXXX|10.1
+  -1        XXXX|
+              XX|9.1
+              XX|6.1 8.1
+              XX|
+               X|5.1 7.1
+                |3.1
+  -2            |
+                |4.1
+                |
+                |
+                |
+  -3            |
+                |
+                |
+                |
+                |
+  -4            |
+                |
+                |
+                |
+                |
+============================================================================================================================================================================================================================================================================================================
+Each 'X' represents 4.1 cases
+The labels for thresholds show the levels of
+    item, and category, respectively
+
+============================================================================================================================================================================================================================================================================================================
+================================================================================
+
+================================================================================

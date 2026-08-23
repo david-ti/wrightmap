@@ -11,7 +11,7 @@ This function allows the easy generation of `Wright Maps' (named after Ben Wrigh
 wrightMap(thetas, thresholds = NULL, item.side = itemModern, person.side = personHist
 ,  main.title = "Wright Map", min.logit.pad = 0.25, max.logit.pad = 0.25, min.l = NULL
 , max.l = NULL, item.prop = 0.8, return.thresholds = TRUE, new.quartz = FALSE
-, use.hist = NULL,...) 
+, use.hist = NULL, item.groups = NULL, item.group.cex = 0.6, axis.items.cex = 0.7, ...)
 \method{plot}{CQmodel}(x, \dots)
 }
 
@@ -36,7 +36,7 @@ wrightMap parameters:
 }
 
   \item{main.title}{
-  title of the Wright Map.
+  title of the Wright Map. Set to \code{NULL} or \code{""} to remove the title entirely and reclaim the space at the top of the plot.
 }
   \item{min.logit.pad}{
   numeric value indicating how much of the lower end of the logit scale should be included in the plot.
@@ -61,6 +61,15 @@ wrightMap parameters:
 }
   \item{use.hist}{
     deprecated. Use the \code{\link{person.side}} parameter instead
+}
+  \item{item.groups}{
+    optional vector or factor specifying group membership for each item (e.g., content strands like "Algebra", "Probability", "Calculus"). When provided, the item side of the Wright Map is split into multiple panels, one for each unique group. Each panel displays the group name as its x-axis label, with a shared "Items" label below all panels. The length of this vector must match the number of rows in \code{thresholds}. If a factor is provided, the order of levels determines the order of panels; otherwise, panels appear in the order groups first appear in the vector. Items do not need to be contiguous in the dataset; they will be correctly assigned to their respective panels based on group membership while preserving their original names. When using \code{item.groups}, the \code{cutpoints} parameter can accept either a numeric vector (applied to all panels) or a named list to specify different cutpoints for each panel (e.g., \code{cutpoints = list(Algebra = c(-1, 0), Probability = c(0, 1))}). Groups not included in the list will have no cutpoints.
+}
+  \item{item.group.cex}{
+    numeric value specifying the font size magnification for the item group names when using \code{item.groups}. Default is 0.6.
+}
+  \item{axis.items.cex}{
+    numeric value specifying the font size magnification for the shared "Items" label when using \code{item.groups}. Default is 0.7.
 }
   \item{\dots}{
   Additional arguments to pass to \code{\link{personData}}, \code{\link{itemData}}, \code{\link{person.side}}, or \code{\link{item.side}}
@@ -117,21 +126,60 @@ dev.new(width=10, height=10)
 wrightMap( multi.proficiency, difficulties)
 
 # Plotting results of a unidimensional Rating Scale Model
+# Thresholds without column names will use default labels: 1, 2, 3, etc.
 
 ## Mock results
   uni.proficiency <- rnorm(1000, mean =  -0.5, sd = 1)
 
   items.loc <- sort( rnorm( 20))
-  thresholds <- data.frame(
-    l1 = items.loc - 0.5 ,
-    l2 = items.loc - 0.25,
-    l3 = items.loc + 0.25,
-    l4 = items.loc + 0.5)
+  thresholds <- cbind(
+    items.loc - 0.5,
+    items.loc - 0.25,
+    items.loc + 0.25,
+    items.loc + 0.5)
+  rownames(thresholds) <- paste0("Item", 1:20)
 
 wrightMap( uni.proficiency, thresholds)
 
+## With transition labels (0/1, 1/2, 2/3, etc.)
+wrightMap( uni.proficiency, thresholds, thr.lab.type = "transition")
 
-  
+# Plotting with item groups (multiple item panels by content strand)
+
+## Mock results with content strands
+  uni.proficiency <- rnorm(1000, mean = -0.5, sd = 1)
+
+  # Create items with different strands (matrix without column names for default 1, 2, 3 labels)
+  n.items <- 15
+  items.loc <- sort(rnorm(n.items))
+  thresholds <- cbind(
+    items.loc - 0.5,
+    items.loc,
+    items.loc + 0.5)
+  rownames(thresholds) <- paste0("Item", 1:n.items)
+
+  # Assign items to content strands
+  strands <- c(rep("Algebra", 5), rep("Probability", 5), rep("Calculus", 5))
+
+## Wright Map with multiple item panels
+wrightMap(uni.proficiency, thresholds, item.groups = strands)
+
+## Wright Map with no title (reclaims space at top)
+wrightMap(uni.proficiency, thresholds, item.groups = strands, main.title = NULL)
+
+## Wright Map with adjusted font sizes for group labels
+wrightMap(uni.proficiency, thresholds, item.groups = strands,
+          item.group.cex = 0.8, axis.items.cex = 0.9)
+
+## Wright Map with different cutpoints per panel
+wrightMap(uni.proficiency, thresholds, item.groups = strands,
+          cutpoints = list(
+            Algebra = c(-1, 0),
+            Probability = c(0, 1),
+            Calculus = c(-0.5, 0.5)
+          ))
+
+
     ####ConQuest integration###
   
   	fpath <- system.file("extdata", package="WrightMap")

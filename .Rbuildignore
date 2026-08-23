@@ -1,0 +1,5 @@
+^website$
+^\.github$
+^\.gitignore$
+^\.DS_Store$
+^\.git$
