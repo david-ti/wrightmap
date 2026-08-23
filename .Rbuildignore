@@ -3,3 +3,5 @@
 ^\.gitignore$
 ^\.DS_Store$
 ^\.git$
+^^revdep$$
+^cran-comments\.md$
