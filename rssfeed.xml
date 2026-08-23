@@ -9,7 +9,7 @@
 <link>https://www.wrightmap.org/rssfeed.html</link>
 <atom:link href="https://www.wrightmap.org/rssfeed.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.5.57</generator>
+<generator>quarto-1.10.18</generator>
 <lastBuildDate>Wed, 25 Sep 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Introducing Person Probability Plots</title>
@@ -25,7 +25,7 @@
 <p>In this tutorial, we’re going to dive into a cool new feature introduced in WrightMap version 1.2: the <strong>Person Probability Plot</strong> (PP plot). This plot is designed to represent model information for specific proficiencies, giving us a neat way to visualize the uncertainty surrounding a person’s estimate and to see the probabilities that the person will answer different items correctly.</p>
 <p>Let’s get started by loading an example ConQuest output:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">fpath <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">fpath <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -52,7 +52,7 @@ font-style: inherit;">show =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">file.path</span>(fpath,<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"ex2.shw"</span>))</span></code></pre></div>
+font-style: inherit;">"ex2.shw"</span>))</span></code></pre></div></div>
 </div>
 </section>
 <section id="creating-a-basic-person-probability-plot" class="level2">
@@ -65,7 +65,7 @@ font-style: inherit;">"ex2.shw"</span>))</span></code></pre></div>
 </ol>
 <p>Here’s the code to generate the plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ppPlot</span>(model1, <span class="at" style="color: #657422;
 background-color: null;
@@ -75,7 +75,7 @@ font-style: inherit;">0</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">SE =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>)</span></code></pre></div>
+font-style: inherit;">1</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using GIN table for threshold parameters</code></pre>
 </div>
@@ -101,7 +101,7 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="modifying-the-plot-adding-density-and-classic-item-styles">Modifying the Plot: Adding Density and Classic Item Styles</h2>
 <p>What if you want to change things up? Let’s try using a <strong>density plot</strong> on the person side instead of a histogram and switch to a <strong>classic style</strong> for the item side. Here’s how:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ppPlot</span>(model1, <span class="at" style="color: #657422;
 background-color: null;
@@ -115,7 +115,7 @@ font-style: inherit;">1</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">person.side =</span> personDens, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div>
+font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using GIN table for threshold parameters</code></pre>
 </div>
@@ -163,7 +163,7 @@ font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="example-1-basic-simulation">Example 1: Basic Simulation</h3>
 <p>Here, we’re simulating responses for 100 people across 5 items, each with 3 response options. It’s as easy as that!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">simulated_data <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">simulated_data <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -179,7 +179,7 @@ font-style: inherit;">5</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">lN =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 </div>
 <p>Just like that, you’ve got your data! This gives you a simple matrix of simulated responses that match our configuration: 100 respondents answering 5 items, each with 3 response levels.</p>
 </section>
@@ -187,7 +187,7 @@ font-style: inherit;">3</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="example-2-customizing-item-thresholds">Example 2: Customizing Item Thresholds</h3>
 <p>What if you want more control over the item difficulty thresholds? You can pass in your own custom thresholds instead of letting the function generate them for you. Here’s how:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">custom_delta <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">custom_delta <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -234,7 +234,7 @@ font-style: inherit;">lN =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">delta =</span> custom_delta)</span></code></pre></div>
+font-style: inherit;">delta =</span> custom_delta)</span></code></pre></div></div>
 </div>
 <p>In this example, we’re specifying thresholds for 3 items. The <code>custom_delta</code> matrix defines how difficult each threshold is for the respective items. If you look at the output, you’ll see the responses simulated based on these difficulty levels.</p>
 </section>
@@ -242,7 +242,7 @@ font-style: inherit;">delta =</span> custom_delta)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="example-3-simulating-with-custom-person-abilities">Example 3: Simulating with Custom Person Abilities</h3>
 <p>What about the people? Maybe you don’t want a standard normal distribution for their abilities. Let’s say you want a little more variety in the abilities of your respondents—no problem! You can also specify your own custom person abilities.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">custom_theta <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">custom_theta <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -275,7 +275,7 @@ font-style: inherit;">lN =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">theta =</span> custom_theta)</span></code></pre></div>
+font-style: inherit;">theta =</span> custom_theta)</span></code></pre></div></div>
 </div>
 <p>Here, we’re generating a set of 100 person abilities (<code>custom_theta</code>) with a mean of 0 and a standard deviation of 1.5. This gives you more control over how the simulated people interact with the items in your test.</p>
 </section>
@@ -283,7 +283,7 @@ font-style: inherit;">theta =</span> custom_theta)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="example-4-simulating-a-rasch-model">Example 4: Simulating a Rasch Model</h3>
 <p>Now let’s move from polytomous items to a Rasch model with dichotomous items. In this case, each item only has two possible responses. We’ll simulate data for 50 people, with abilities ranging from -3 to +3, responding to 10 items.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">rasch_theta <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">rasch_theta <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -383,7 +383,7 @@ font-style: inherit;">2</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">delta =</span> rasch_delta, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">theta =</span> rasch_theta)</span></code></pre></div>
+font-style: inherit;">theta =</span> rasch_theta)</span></code></pre></div></div>
 </div>
 <p>In this simulation, we have a Rasch model with 10 items and 50 persons. The <code>rasch_theta</code> values span from -3 to 3, representing a range of person abilities. The <code>rasch_delta</code> matrix specifies the difficulty of each item.</p>
 </section>
@@ -391,7 +391,7 @@ font-style: inherit;">theta =</span> rasch_theta)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="example-5-simulating-items-with-different-numbers-of-levels">Example 5: Simulating Items with Different Numbers of Levels</h3>
 <p>What if your items don’t all have the same number of response options? That’s where the <code>itemLevels</code> argument comes in handy. For example, let’s simulate a mix of items: some have 5 levels, some are dichotomous, and some have 3 levels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">simulated_mixed_levels <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">simulated_mixed_levels <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -432,7 +432,7 @@ font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>))</span></code></pre></div>
+font-style: inherit;">3</span>))</span></code></pre></div></div>
 </div>
 <p>Here we’re simulating responses for 10 items, with 4 items having 5 levels, 3 items being dichotomous, and 3 items having 3 levels. This kind of flexibility is great for simulating more realistic data, where items can have different response structures.</p>
 </section>
@@ -467,9 +467,9 @@ font-style: inherit;">3</span>))</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>Let’s start by loading TAM.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library</span>(TAM)</span></code></pre></div>
+font-style: inherit;">library</span>(TAM)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: CDM</code></pre>
 </div>
@@ -478,22 +478,22 @@ font-style: inherit;">library</span>(TAM)</span></code></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**********************************
-** CDM 8.2-6 (2022-08-25 15:43:23)       
+** CDM 8.3-14 (2025-07-13 14:03:01)      
 ** Cognitive Diagnostic Models  **
 **********************************</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>* TAM 4.2-21 (2024-02-19 18:52:08)</code></pre>
+<pre><code>* TAM 4.3-25 (2025-08-28 18:03:24)</code></pre>
 </div>
 </div>
 <p>And we can use one of TAM’s simulated datasets (without any missing data in this case) for this example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">data</span>(data.sim.rasch)</span>
 <span id="cb6-2"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">str</span>(data.sim.rasch)</span></code></pre></div>
+font-style: inherit;">str</span>(data.sim.rasch)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> num [1:2000, 1:40] 1 0 1 1 1 1 1 1 1 1 ...
  - attr(*, "dimnames")=List of 2
@@ -507,7 +507,7 @@ font-style: inherit;">str</span>(data.sim.rasch)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="analysis-with-tam">Analysis with TAM</h2>
 <p>In this example, we will run a Rasch model using the TAM command <code>tam.mml</code>, which will estimate the model using a marginal maximum likelihood method.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">mod1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">mod1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -517,7 +517,7 @@ font-style: inherit;">resp=</span>data.sim.rasch, <span class="at" style="color:
 background-color: null;
 font-style: inherit;">verbose=</span><span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
 </div>
 <p>The estimation should take very little time, and you should see a summary of the results and the total time it took to run the analysis.</p>
 </section>
@@ -525,11 +525,11 @@ font-style: inherit;">FALSE</span>)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="person-estimates">Person Estimates</h2>
 <p>You can get person estimates in several ways in TAM, but for this example, I will use the <code>tam.wle</code> command, which produces Warm Likelihood Estimates (WLE) for each respondent.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">persons.mod1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">persons.mod1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">tam.wle</span>(mod1)</span></code></pre></div>
+font-style: inherit;">tam.wle</span>(mod1)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Iteration in WLE/MLE estimation  1   | Maximal change  0.8281 
 Iteration in WLE/MLE estimation  2   | Maximal change  0.4335 
@@ -539,9 +539,9 @@ Iteration in WLE/MLE estimation  5   | Maximal change  0
 ----
  WLE Reliability= 0.894 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">str</span>(persons.mod1)</span></code></pre></div>
+font-style: inherit;">str</span>(persons.mod1)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classes 'tam.wle' and 'data.frame': 2000 obs. of  7 variables:
  $ pid         : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -576,31 +576,31 @@ font-style: inherit;">str</span>(persons.mod1)</span></code></pre></div>
 <p>You can look at the TAM documentation for more details, but for this example, we want to focus on the <code>theta</code> column, which contains the person estimates we need to create our Wright map.</p>
 <p>We can get the data we need by selecting just that column:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">WLEestimates.mod1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">WLEestimates.mod1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> persons.mod1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>theta</span></code></pre></div>
+font-style: inherit;">$</span>theta</span></code></pre></div></div>
 </div>
 </section>
 <section id="item-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="item-parameters">Item Parameters</h2>
 <p>And we can get our item estimates using the <code>tam.threshold</code> command.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">thresholds.mod1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">thresholds.mod1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">tam.threshold</span>(mod1)</span></code></pre></div>
+font-style: inherit;">tam.threshold</span>(mod1)</span></code></pre></div></div>
 </div>
 </section>
 <section id="creating-the-wright-map" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-wright-map">Creating the Wright Map</h2>
 <p>With these two matrices, we are ready to plot our Wright Map:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">wrightMap</span>(WLEestimates.mod1, thresholds.mod1)</span></code></pre></div>
+font-style: inherit;">wrightMap</span>(WLEestimates.mod1, thresholds.mod1)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -611,7 +611,7 @@ font-style: inherit;">wrightMap</span>(WLEestimates.mod1, thresholds.mod1)</span
 </div>
 <p>And you can start editing it to make it nicer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(WLEestimates.mod1, thresholds.mod1, <span class="at" style="color: #657422;
 background-color: null;
@@ -631,7 +631,7 @@ font-style: inherit;">40</span>), <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.rows =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -670,15 +670,15 @@ font-style: inherit;">3</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="setup">Setup</h3>
 <p>Let’s start by installing the latest version of the package from CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library</span>(WrightMap)</span></code></pre></div>
+font-style: inherit;">library</span>(WrightMap)</span></code></pre></div></div>
 </div>
 <p>We will also load RColorBrewer to take advantage of its color palettes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library</span>(RColorBrewer)</span></code></pre></div>
+font-style: inherit;">library</span>(RColorBrewer)</span></code></pre></div></div>
 </div>
 </section>
 <section id="a-simple-dichotomous-example" class="level3">
@@ -686,7 +686,7 @@ font-style: inherit;">library</span>(RColorBrewer)</span></code></pre></div>
 <p>To plot a simple Rasch model, we start by creating mock person and item estimates.</p>
 <p>For the person proficiencies, we create a single vector with 1000 values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -697,11 +697,11 @@ font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1000</span>)</span></code></pre></div>
+font-style: inherit;">1000</span>)</span></code></pre></div></div>
 </div>
 <p>And for the item difficulties, we create a vector with 10 values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">rasch.sim.thresholds <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">rasch.sim.thresholds <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -713,13 +713,13 @@ font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 </div>
 <p>We now have all we need to create a WrightMap with a single line.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds)</span></code></pre></div>
+font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -730,7 +730,7 @@ font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds)</
 </div>
 <p>We can start to customize the Wright Map by simply relabeling its main parts using <code>main.title</code>, <code>axis.logits</code>, <code>axis.persons</code>, and <code>axis.items</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds,</span>
 <span id="cb6-2">    <span class="at" style="color: #657422;
@@ -747,7 +747,7 @@ font-style: inherit;">"This is the person distribution"</span>,</span>
 background-color: null;
 font-style: inherit;">axis.items =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"These are my survey questions"</span>)</span></code></pre></div>
+font-style: inherit;">"These are my survey questions"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -761,11 +761,11 @@ font-style: inherit;">"These are my survey questions"</span>)</span></code></pre
 <h3 class="anchored" data-anchor-id="the-person-side-and-the-item-side">The Person Side and the Item Side</h3>
 <p>If you do not like histograms, WrightMap has the option <code>person.side</code> that allows you to switch between histograms (the default option: <code>personHist</code>) or density using the option <code>personDens</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">person.side =</span> personDens)</span></code></pre></div>
+font-style: inherit;">person.side =</span> personDens)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -777,7 +777,7 @@ font-style: inherit;">person.side =</span> personDens)</span></code></pre></div>
 <p>Or, you may want to change the way items are represented by using the option <code>item.side</code>, which offers <code>itemModern</code> (the default representation), <code>itemClassic</code> (for ConQuest-style Wright Maps), and a <code>itemHist</code> for a histogram summary of the items.</p>
 <p>The <code>itemClassic</code> option is well suited for cases where you want to include many items using less space.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">rasch.sim.thresholds<span class="fl" style="color: #AD0000;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">rasch.sim.thresholds<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">.2</span> <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -798,7 +798,7 @@ font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds<sp
 background-color: null;
 font-style: inherit;">.2</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div>
+font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -809,7 +809,7 @@ font-style: inherit;">item.side =</span> itemClassic)</span></code></pre></div>
 </div>
 <p>Alternatively, you can represent use a back-to-back histogram representation with <code>itemHist</code> (notice that in the following example we are using the option <code>item.prop</code> to adjust the relative sizes of the person and item side).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">rasch.sim.thresholds<span class="fl" style="color: #AD0000;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">rasch.sim.thresholds<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">.3</span> <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -828,7 +828,7 @@ font-style: inherit;">item.side =</span> itemHist, <span class="at" style="color
 background-color: null;
 font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0.5</span>)</span></code></pre></div>
+font-style: inherit;">0.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -843,13 +843,13 @@ font-style: inherit;">0.5</span>)</span></code></pre></div>
 <p>Let us focus on the default item and person side representations to explore their potential customizations.</p>
 <p>You might want to remove the label for the item difficulties by setting <code>show.thr.lab = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">show.thr.lab =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -860,13 +860,13 @@ font-style: inherit;">FALSE</span>)</span></code></pre></div>
 </div>
 <p>Or you might want to see just labels, by turning off symbols with <code>show.thr.sym = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">show.thr.sym =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -880,7 +880,7 @@ font-style: inherit;">FALSE</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="customizing-symbols">Customizing Symbols</h3>
 <p>Let’s start by making all the symbols bigger with <code>thr.sym.cex = 2.5</code> (default is 1).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds,</span>
 <span id="cb12-2">    <span class="at" style="color: #657422;
@@ -891,7 +891,7 @@ font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.cex =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2.5</span>)</span></code></pre></div>
+font-style: inherit;">2.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -902,7 +902,7 @@ font-style: inherit;">2.5</span>)</span></code></pre></div>
 </div>
 <p>To select what kind of symbols you want to use, you can use the <code>thr.sym.pch</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -917,7 +917,7 @@ font-style: inherit;">2.5</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.pch =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">17</span>)</span></code></pre></div>
+font-style: inherit;">17</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -931,13 +931,13 @@ font-style: inherit;">17</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="customizing-colors-and-labels">Customizing Colors and Labels</h3>
 <p>We will need some colors for the next examples.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">display.brewer.pal</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Paired"</span>)</span></code></pre></div>
+font-style: inherit;">"Paired"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -945,7 +945,7 @@ font-style: inherit;">"Paired"</span>)</span></code></pre></div>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">itemcolors <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">itemcolors <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -953,11 +953,11 @@ font-style: inherit;">brewer.pal</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Paired"</span>)</span></code></pre></div>
+font-style: inherit;">"Paired"</span>)</span></code></pre></div></div>
 </div>
 <p>Now, let’s use those colors in our item difficulty symbols using the <code>thr.sym.col.fg</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -974,7 +974,7 @@ font-style: inherit;">thr.sym.cex =</span> <span class="fl" style="color: #AD000
 background-color: null;
 font-style: inherit;">2.5</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">thr.sym.col.fg =</span> itemcolors)</span></code></pre></div>
+font-style: inherit;">thr.sym.col.fg =</span> itemcolors)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -988,7 +988,7 @@ font-style: inherit;">thr.sym.col.fg =</span> itemcolors)</span></code></pre></d
 <h3 class="anchored" data-anchor-id="customizing-labels">Customizing Labels</h3>
 <p>Define some item names:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">itemnames <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">itemnames <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1013,11 +1013,11 @@ font-style: inherit;">"Blitzen"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Rudolph"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Olive"</span>)</span></code></pre></div>
+font-style: inherit;">"Olive"</span>)</span></code></pre></div></div>
 </div>
 <p>Now assign them to the item difficulties:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1026,7 +1026,7 @@ background-color: null;
 font-style: inherit;">FALSE</span>,</span>
 <span id="cb18-2">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">thr.lab.text =</span> itemnames)</span></code></pre></div>
+font-style: inherit;">thr.lab.text =</span> itemnames)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1037,7 +1037,7 @@ font-style: inherit;">thr.lab.text =</span> itemnames)</span></code></pre></div>
 </div>
 <p>You can also control the size of the labels using the <code>thr.lab.cex</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1050,7 +1050,7 @@ font-style: inherit;">thr.lab.text =</span> itemnames, <span class="at" style="c
 background-color: null;
 font-style: inherit;">thr.lab.cex =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1.5</span>)</span></code></pre></div>
+font-style: inherit;">1.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1061,7 +1061,7 @@ font-style: inherit;">1.5</span>)</span></code></pre></div>
 </div>
 <p>And we can of course control the colors using <code>thr.lab.col</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1076,7 +1076,7 @@ font-style: inherit;">thr.lab.col =</span> itemcolors, <span class="at" style="c
 background-color: null;
 font-style: inherit;">thr.lab.cex =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1.5</span>)</span></code></pre></div>
+font-style: inherit;">1.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1087,7 +1087,7 @@ font-style: inherit;">1.5</span>)</span></code></pre></div>
 </div>
 <p>Finally, if you want to go crazy, you can also change the type style using <code>thr.lab.font</code>. This parameter follows the R convention where 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1113,7 +1113,7 @@ font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">4</span>))</span></code></pre></div>
+font-style: inherit;">4</span>))</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1150,7 +1150,7 @@ font-style: inherit;">4</span>))</span></code></pre></div>
 <p>We start by creating mock person and item estimates.</p>
 <p>For the person proficiencies, we create a matrix with 1000 values per dimension (5 dimensions in total).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1167,14 +1167,14 @@ font-style: inherit;">5000</span>), <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 </div>
 </section>
 <section id="dealing-with-many-many-items" class="level3">
 <h3 class="anchored" data-anchor-id="dealing-with-many-many-items">Dealing with Many, Many Items</h3>
 <p>What happens if you have too many items?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">rasch2.sim.thresholds <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">rasch2.sim.thresholds <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1186,17 +1186,17 @@ font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 </div>
 <p>If we use the defaults…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1000</span>), rasch2.sim.thresholds)</span></code></pre></div>
+font-style: inherit;">1000</span>), rasch2.sim.thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1208,7 +1208,7 @@ font-style: inherit;">1000</span>), rasch2.sim.thresholds)</span></code></pre></
 <p>Things do not look quite right.</p>
 <p>WrightMap offers some options…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">rasch.sim.thetas <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">rasch.sim.thetas <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1227,11 +1227,11 @@ font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 </div>
 <p>You can use the <code>itemClassic</code> or <code>itemHist</code> options for <code>item.side</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch2.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1239,7 +1239,7 @@ font-style: inherit;">item.side =</span> itemClassic, <span class="at" style="co
 background-color: null;
 font-style: inherit;">item.prop =</span> .<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1249,7 +1249,7 @@ font-style: inherit;">5</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rasch.sim.thetas, rasch2.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1257,7 +1257,7 @@ font-style: inherit;">item.side =</span> itemHist, <span class="at" style="color
 background-color: null;
 font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0.5</span>)</span></code></pre></div>
+font-style: inherit;">0.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1268,7 +1268,7 @@ font-style: inherit;">0.5</span>)</span></code></pre></div>
 </div>
 <p>Or you can play with the way labels are presented:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1282,7 +1282,7 @@ font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.srt =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">45</span>)</span></code></pre></div>
+font-style: inherit;">45</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1292,7 +1292,7 @@ font-style: inherit;">45</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1306,7 +1306,7 @@ font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.rows =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1316,7 +1316,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1340,7 +1340,7 @@ font-style: inherit;">50</span>), <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.rows =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1351,7 +1351,7 @@ font-style: inherit;">3</span>)</span></code></pre></div>
 </div>
 <p>Or you can get rid of that axis completely.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1386,7 +1386,7 @@ font-style: inherit;">""</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.ticks =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1428,26 +1428,17 @@ font-style: inherit;">FALSE</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="multidimensional-models">Multidimensional models</h3>
 <p>We will need again to load RColorBrewer for this example.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"RColorBrewer"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Installing package into '/home/runner/work/_temp/Library'
-(as 'lib' is unspecified)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(RColorBrewer)</span></code></pre></div>
+font-style: inherit;">library</span>(RColorBrewer)</span></code></pre></div></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2020</span>)</span>
-<span id="cb4-2">mdim.sim.thetas <span class="ot" style="color: #003B4F;
+<span id="cb2-2">mdim.sim.thetas <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1459,11 +1450,11 @@ font-style: inherit;">5000</span>), <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 </div>
 <p>Since this will be a dichotomous model, we’ll generate a single column for thresholds.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">mdim.sim.thresholds <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">mdim.sim.thresholds <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1475,13 +1466,13 @@ font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 </div>
 <p>Okay, let’s see what the Wright Map looks like for this.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds)</span></code></pre></div>
+font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1492,13 +1483,13 @@ font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds)</sp
 </div>
 <p>That doesn’t look right. Let’s adjust the proportion of the map’s parts.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0.5</span>)</span></code></pre></div>
+font-style: inherit;">0.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1509,7 +1500,80 @@ font-style: inherit;">0.5</span>)</span></code></pre></div>
 </div>
 <p>Let’s change the dimensions names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb6-2">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dim.names =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Algebra"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Calculus"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Trig"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Stats"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Arithmetic"</span>))</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial03_files/figure-html/t02-i03-dimnames-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://www.wrightmap.org/tutorial03_files/figure-html/t02-i03-dimnames-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And let’s give them some color.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb7-2">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dim.names =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Algebra"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Calculus"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Trig"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Stats"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Arithmetic"</span>),</span>
+<span id="cb7-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dim.color =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">brewer.pal</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Set1"</span>))</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="tutorial03_files/figure-html/t02-i04-dimcolors-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://www.wrightmap.org/tutorial03_files/figure-html/t02-i04-dimcolors-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And let’s associate the items with each dimension.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -1530,81 +1594,8 @@ font-style: inherit;">"Trig"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Stats"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Arithmetic"</span>))</span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial03_files/figure-html/t02-i03-dimnames-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://www.wrightmap.org/tutorial03_files/figure-html/t02-i03-dimnames-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>And let’s give them some color.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb9-2">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">dim.names =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Algebra"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Calculus"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Trig"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Stats"</span>, <span class="st" style="color: #20794D;
-background-color: null;
 font-style: inherit;">"Arithmetic"</span>),</span>
-<span id="cb9-3">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">dim.color =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">brewer.pal</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Set1"</span>))</span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="tutorial03_files/figure-html/t02-i04-dimcolors-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://www.wrightmap.org/tutorial03_files/figure-html/t02-i04-dimcolors-1.svg" class="img-fluid figure-img" width="2400"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>And let’s associate the items with each dimension.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wrightMap</span>(mdim.sim.thetas, mdim.sim.thresholds, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb10-2">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">dim.names =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Algebra"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Calculus"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Trig"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Stats"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Arithmetic"</span>),</span>
-<span id="cb10-3">    <span class="at" style="color: #657422;
+<span id="cb8-3">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">dim.color =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1617,7 +1608,7 @@ background-color: null;
 font-style: inherit;">show.thr.lab =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>,</span>
-<span id="cb10-4">    <span class="at" style="color: #657422;
+<span id="cb8-4">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.fg =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1632,7 +1623,7 @@ background-color: null;
 font-style: inherit;">each =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>),</span>
-<span id="cb10-5">    <span class="at" style="color: #657422;
+<span id="cb8-5">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.bg =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1647,7 +1638,7 @@ background-color: null;
 font-style: inherit;">each =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>),</span>
-<span id="cb10-6">    <span class="at" style="color: #657422;
+<span id="cb8-6">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.cex =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1655,7 +1646,7 @@ font-style: inherit;">2</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">use.hist =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Parameter 'use.hist' is deprecated. Please use 'person.side' parameter instead.</code></pre>
 </div>
@@ -1672,7 +1663,7 @@ font-style: inherit;">FALSE</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="polytomous-models">Polytomous models</h3>
 <p>All right, let’s look at a Rating Scale Model. First, let’s generate three dimensions of person estimates.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">rsm.sim.thetas <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">rsm.sim.thetas <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1699,7 +1690,7 @@ background-color: null;
 font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1000</span>, </span>
-<span id="cb12-2">    <span class="at" style="color: #657422;
+<span id="cb10-2">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">mean =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1723,11 +1714,11 @@ font-style: inherit;">0.5</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sd =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>))</span></code></pre></div>
+font-style: inherit;">1</span>))</span></code></pre></div></div>
 </div>
 <p>Now let’s generate the thresholds for the polytomous items. We’ll make them a matrix where each row is an item and each column a level.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">items.loc <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">items.loc <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1736,8 +1727,8 @@ background-color: null;
 font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span>))</span>
-<span id="cb13-2"></span>
-<span id="cb13-3">rsm.sim.thresholds <span class="ot" style="color: #003B4F;
+<span id="cb11-2"></span>
+<span id="cb11-3">rsm.sim.thresholds <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1754,7 +1745,7 @@ background-color: null;
 font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.5</span>,</span>
-<span id="cb13-4">    <span class="at" style="color: #657422;
+<span id="cb11-4">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">l3 =</span> items.loc <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1767,8 +1758,8 @@ background-color: null;
 font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>)</span>
-<span id="cb13-5"></span>
-<span id="cb13-6">rsm.sim.thresholds</span></code></pre></div>
+<span id="cb11-5"></span>
+<span id="cb11-6">rsm.sim.thresholds</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           l1          l2          l3         l4
 1  -3.2296856 -2.72968555 -1.72968555 -1.2296856
@@ -1785,9 +1776,9 @@ font-style: inherit;">1</span>)</span>
 </div>
 <p>Let’s look at the Wright Map!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">wrightMap</span>(rsm.sim.thetas, rsm.sim.thresholds)</span></code></pre></div>
+font-style: inherit;">wrightMap</span>(rsm.sim.thetas, rsm.sim.thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1798,7 +1789,7 @@ font-style: inherit;">wrightMap</span>(rsm.sim.thetas, rsm.sim.thresholds)</span
 </div>
 <p>Let’s assign a color for each level.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">itemlevelcolors <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">itemlevelcolors <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1821,8 +1812,8 @@ background-color: null;
 font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">4</span>)</span>
-<span id="cb16-2"></span>
-<span id="cb16-3">itemlevelcolors</span></code></pre></div>
+<span id="cb14-2"></span>
+<span id="cb14-3">itemlevelcolors</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1]      [,2]      [,3]      [,4]     
  [1,] "#E41A1C" "#377EB8" "#4DAF4A" "#984EA3"
@@ -1839,14 +1830,14 @@ font-style: inherit;">4</span>)</span>
 </div>
 <p>And now make a Wright Map with them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rsm.sim.thetas, rsm.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.fg =</span> itemlevelcolors,</span>
-<span id="cb18-2">    <span class="at" style="color: #657422;
+<span id="cb16-2">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">thr.sym.col.bg =</span> itemlevelcolors)</span></code></pre></div>
+font-style: inherit;">thr.sym.col.bg =</span> itemlevelcolors)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1857,7 +1848,7 @@ font-style: inherit;">thr.sym.col.bg =</span> itemlevelcolors)</span></code></pr
 </div>
 <p>But we also want to indicate which dimension they belong to… with symbols.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">itemdimsymbols <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">itemdimsymbols <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1882,7 +1873,7 @@ background-color: null;
 font-style: inherit;">18</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">16</span>)),</span>
-<span id="cb19-2">    <span class="at" style="color: #657422;
+<span id="cb17-2">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
@@ -1891,8 +1882,8 @@ background-color: null;
 font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">4</span>)</span>
-<span id="cb19-3"></span>
-<span id="cb19-4">itemdimsymbols</span></code></pre></div>
+<span id="cb17-3"></span>
+<span id="cb17-4">itemdimsymbols</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1] [,2] [,3] [,4]
  [1,]   16   16   16   16
@@ -1908,25 +1899,25 @@ font-style: inherit;">4</span>)</span>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rsm.sim.thetas, rsm.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">show.thr.lab =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>,</span>
-<span id="cb21-2">    <span class="at" style="color: #657422;
+<span id="cb19-2">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.fg =</span> itemlevelcolors, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.bg =</span> itemlevelcolors,</span>
-<span id="cb21-3">    <span class="at" style="color: #657422;
+<span id="cb19-3">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.pch =</span> itemdimsymbols, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.cex =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1937,19 +1928,19 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 </div>
 <p>Additionally, we may want to clearly indicate which item parameters are associated with each item. We can draw lines that connect all parameters connected to an item using the <code>vertLines</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(rsm.sim.thetas, rsm.sim.thresholds, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">show.thr.lab =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>,</span>
-<span id="cb22-2">    <span class="at" style="color: #657422;
+<span id="cb20-2">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.fg =</span> itemlevelcolors, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.col.bg =</span> itemlevelcolors,</span>
-<span id="cb22-3">    <span class="at" style="color: #657422;
+<span id="cb20-3">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">thr.sym.pch =</span> itemdimsymbols, <span class="at" style="color: #657422;
 background-color: null;
@@ -1959,7 +1950,7 @@ font-style: inherit;">2</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">vertLines =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2000,7 +1991,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 <p>Let’s load a model. The first parameter should be the name of the person estimates file, while the second should be the name of the show file. Both are necessary for creating Wright maps (although the <code>CQmodel</code> function will run fine with only one or the other, provided that they are properly passed).</p>
 <p>We start by loading the WrightMap example files.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">fpath <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">fpath <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2012,10 +2003,10 @@ font-style: inherit;">"ex2.SHW"</span>,<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">package=</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"WrightMap"</span>)</span></code></pre></div>
+font-style: inherit;">"WrightMap"</span>)</span></code></pre></div></div>
 </div>
 <p>And we load the example output.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">model1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">model1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2044,10 +2035,10 @@ font-style: inherit;">"ex2.SHW"</span>,<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">package=</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"WrightMap"</span>)))</span></code></pre></div>
+font-style: inherit;">"WrightMap"</span>)))</span></code></pre></div></div>
 <p>This (<code>model1</code>) is a <code>CQmodel</code> object. Enter the name of the object to see the names of all the tables &amp; information stored within this object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">model1</span></code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">model1</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ConQuest Output Summary:
@@ -2072,9 +2063,9 @@ Additional details: $run.details</code></pre>
 </div>
 <p>Type the name of any of these tables to see the information stored there.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">model1<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>SOE</span></code></pre></div>
+font-style: inherit;">$</span>SOE</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Summary of estimation
@@ -2096,32 +2087,32 @@ Random number generation seed: 1
 200 nodes used when computing fit 
 Value for obtaining finite MLEs for zero/perfects: 0.3 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">model1<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>equation</span></code></pre></div>
+font-style: inherit;">$</span>equation</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "item+item*step"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">model1<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>reg.coef</span></code></pre></div>
+font-style: inherit;">$</span>reg.coef</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               CONSTANT
 Main dimension    0.972
 S. errors         0.062</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">model1<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>rel.coef</span></code></pre></div>
+font-style: inherit;">$</span>rel.coef</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               MLE Person separation RELIABILITY
 Main dimension NA                               
                WLE Person separation RELIABILITY EAP/PV RELIABILITY
 Main dimension NA                                0.813             </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">model1<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>variances</span></code></pre></div>
+font-style: inherit;">$</span>variances</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           errors
 [1,] 2.162     NA</code></pre>
@@ -2129,24 +2120,24 @@ font-style: inherit;">$</span>variances</span></code></pre></div>
 </div>
 <p>The most relevant for our purposes are the <code>RMP</code>, <code>GIN</code>, and <code>p.est</code> tables. The <code>RMP</code> tables contain the Response Model Parameters. These are item parameters. Typing <code>model1$RMP</code> would display them, but they’re a little long, so I’m just going to ask for the names and then show the first few rows of each table.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">names</span>(model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>RMP)</span></code></pre></div>
+font-style: inherit;">$</span>RMP)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "item"      "item*step"</code></pre>
 </div>
 </div>
 <p>For this model, the RMPs have item and item*step parameters. We could add these to get the deltas. Let’s see what the tables look like.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>RMP<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>item)</span></code></pre></div>
+font-style: inherit;">$</span>item)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_item item    est error U.fit U.Low U.High  U.T W.fit W.Low W.High  W.T
 1      1    1  0.753 0.055  1.11  0.88   1.12  1.8  1.10  0.89   1.11  1.8
@@ -2156,7 +2147,7 @@ font-style: inherit;">$</span>item)</span></code></pre></div>
 5      5    5 -0.389 0.057  0.95  0.88   1.12 -0.9  0.95  0.89   1.11 -0.9
 6      6    6  0.067 0.055  1.03  0.88   1.12  0.6  1.02  0.89   1.11  0.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -2164,7 +2155,7 @@ font-style: inherit;">$</span>RMP<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"item*step"</span>)</span></code></pre></div>
+font-style: inherit;">"item*step"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_item item step    est error U.fit U.Low U.High  U.T W.fit W.Low W.High  W.T
 1      1    1    0     NA    NA  2.03  0.88   1.12 13.3  1.18  0.89   1.11  3.0
@@ -2176,7 +2167,7 @@ font-style: inherit;">"item*step"</span>)</span></code></pre></div>
 </div>
 </div>
 <p>Let’s look at a more complicated example.</p>
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">model2 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">model2 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2188,26 +2179,26 @@ font-style: inherit;">"ex4a.mle"</span>), <span class="fu" style="color: #4758AB
 background-color: null;
 font-style: inherit;">file.path</span>(fpath, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"ex4a.shw"</span>))</span></code></pre></div>
+font-style: inherit;">"ex4a.shw"</span>))</span></code></pre></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">model2<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">model2<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>equation</span></code></pre></div>
+font-style: inherit;">$</span>equation</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "rater+topic+criteria+rater*topic+rater*criteria+topic*criteria+rater*topic*criteria*step"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">names</span>(model2<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>RMP)</span></code></pre></div>
+font-style: inherit;">$</span>RMP)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "rater"                     "topic"                    
 [3] "criteria"                  "rater*topic"              
 [5] "rater*criteria"            "topic*criteria"           
 [7] "rater*topic*criteria*step"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(model2<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -2215,7 +2206,7 @@ font-style: inherit;">$</span>RMP<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"rater*topic*criteria*step"</span>)</span></code></pre></div>
+font-style: inherit;">"rater*topic*criteria*step"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  n_rater    rater n_topic topic n_criteria criteria step    est error U.fit
 1       1      Amy       1 Sport          1 spelling    1     NA    NA  0.43
@@ -2235,9 +2226,9 @@ font-style: inherit;">"rater*topic*criteria*step"</span>)</span></code></pre></d
 </div>
 <p>The GIN tables show the threshold parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">model1<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1">model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>GIN</span></code></pre></div>
+font-style: inherit;">$</span>GIN</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]  [,2]
 Item_1  -0.469 1.977
@@ -2251,9 +2242,9 @@ Item_8  -1.617 1.289
 Item_9  -0.957 1.508
 Item_10 -0.992 2.094</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">model2<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">model2<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>GIN</span></code></pre></div>
+font-style: inherit;">$</span>GIN</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Amy
 $Amy$Sport
@@ -2393,13 +2384,13 @@ content    1.312  2.107 3.407</code></pre>
 </div>
 <p>Finally, the <code>p.est</code> table shows person parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(model1<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>p.est)  <span class="do" style="color: #5E5E5E;
 background-color: null;
-font-style: italic;">##EAPs</span></span></code></pre></div>
+font-style: italic;">##EAPs</span></span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  casenum est (d1) error (d1) pop (d1)
 1       1 -0.08240    0.50495  0.88205
@@ -2409,13 +2400,13 @@ font-style: italic;">##EAPs</span></span></code></pre></div>
 5       5 -0.62303    0.52908  0.87051
 6       6  0.16483    0.49122  0.88838</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">head</span>(model2<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>p.est)  <span class="do" style="color: #5E5E5E;
 background-color: null;
-font-style: italic;">##MLEs</span></span></code></pre></div>
+font-style: italic;">##MLEs</span></span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  casenum sscore (d1) max (d1) est (d1) error (d1)
 1       1          23       60 -0.49687    0.25349
@@ -2431,9 +2422,9 @@ font-style: italic;">##MLEs</span></span></code></pre></div>
 <h3 class="anchored" data-anchor-id="cqmodel-meet-wrightmap">CQmodel, meet wrightMap</h3>
 <p>Ok, we have person parameters and item parameters: Let’s make a Wright Map.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">wrightMap</span>(model1)</span></code></pre></div>
+font-style: inherit;">wrightMap</span>(model1)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using GIN table for threshold parameters</code></pre>
 </div>
@@ -2446,7 +2437,7 @@ font-style: inherit;">wrightMap</span>(model1)</span></code></pre></div>
 </div>
 </div>
 <p>The above uses the GIN table as thresholds. But you may want to use RMP tables. For example, if you have an item table and an item<em>step table, you might want to combine them to make deltas. You could do this yourself, but you could also let the <code>make.deltas</code> function do it for you. This function reshapes the item</em>step parameters, checks the item numbers to see if there are any dichotomous items, and then adds the steps and items. This can be especially useful if you didn’t get a GIN table from ConQuest (see below).</p>
-<div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1">model3 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1">model3 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2458,23 +2449,23 @@ font-style: inherit;">"ex2a.eap"</span>), <span class="fu" style="color: #4758AB
 background-color: null;
 font-style: inherit;">file.path</span>(fpath, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"ex2a.shw"</span>))</span></code></pre></div>
+font-style: inherit;">"ex2a.shw"</span>))</span></code></pre></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1">model3<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1">model3<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>GIN</span></code></pre></div>
+font-style: inherit;">$</span>GIN</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1">model3<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1">model3<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>equation</span></code></pre></div>
+font-style: inherit;">$</span>equation</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "item+item*step"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">make.deltas</span>(model3)</span></code></pre></div>
+font-style: inherit;">make.deltas</span>(model3)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   1      2      3
 Earth shape   -0.961 -0.493     NA
@@ -2489,13 +2480,13 @@ Breathe on ..  0.657  1.152 -3.558</code></pre>
 </div>
 <p>When sent a model with no GIN table, <code>wrightMap</code> will automatically send it to <code>make.deltas</code> without the user having to ask.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model3, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.row =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2505,7 +2496,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 </div>
 </div>
 <p>The <code>make.deltas</code> function can also handle rating scale models.</p>
-<div class="sourceCode" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1">model4 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1">model4 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2517,23 +2508,23 @@ font-style: inherit;">"ex2b.eap"</span>), <span class="fu" style="color: #4758AB
 background-color: null;
 font-style: inherit;">file.path</span>(fpath, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"ex2b-2.shw"</span>))</span></code></pre></div>
+font-style: inherit;">"ex2b-2.shw"</span>))</span></code></pre></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1">model4<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1">model4<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>GIN</span></code></pre></div>
+font-style: inherit;">$</span>GIN</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1">model4<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1">model4<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>equation</span></code></pre></div>
+font-style: inherit;">$</span>equation</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "item+step"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">make.deltas</span>(model4)</span></code></pre></div>
+font-style: inherit;">make.deltas</span>(model4)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   1     2
 Curriculum .. -0.468 1.900
@@ -2550,13 +2541,13 @@ Student mot.. -0.636 1.732</code></pre>
 </div>
 <p>Or let <code>wrightMap</code> make them automatically.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model4, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.row =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2569,7 +2560,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <section id="specifying-the-tables" class="level3">
 <h3 class="anchored" data-anchor-id="specifying-the-tables">Specifying the tables</h3>
 <p>In the above examples, we let <code>wrightMap</code> decide what parameters to graph. <code>wrightMap</code> starts by looking for a GIN table. If it finds that, it assumes they are thresholds and graphs them accordingly. If there is no GIN table, it then sends the function to <code>make.deltas</code>, which will examine the model equation to see if it knows how to handle it. <code>Make.deltas</code> can handle equations of the form:</p>
-<div class="sourceCode" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">A</span> (e.g. <span class="st" style="color: #20794D;
 background-color: null;
@@ -2616,19 +2607,19 @@ font-style: inherit;">`</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">item + item * gender + gender</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">`</span>)</span></code></pre></div>
+font-style: inherit;">`</span>)</span></code></pre></div></div>
 <p>But sometimes we may want something other than the default. Let’s look at <code>model2</code> again.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">model2<span class="sc" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">model2<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>equation</span></code></pre></div>
+font-style: inherit;">$</span>equation</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "rater+topic+criteria+rater*topic+rater*criteria+topic*criteria+rater*topic*criteria*step"</code></pre>
 </div>
 </div>
 <p>Here’s the default Wright Map, using the GIN table:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
@@ -2636,7 +2627,7 @@ font-style: inherit;">min.logit.pad =</span> <span class="sc" style="color: #5E5
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">29</span>)</span></code></pre></div>
+font-style: inherit;">29</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using GIN table for threshold parameters</code></pre>
 </div>
@@ -2650,13 +2641,13 @@ font-style: inherit;">29</span>)</span></code></pre></div>
 </div>
 <p>This doesn’t look great. Instead of showing all these estimates, we can specify a specific RMP table to use using the <code>item.table</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">item.table =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"rater"</span>)</span></code></pre></div>
+font-style: inherit;">"rater"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2667,13 +2658,13 @@ font-style: inherit;">"rater"</span>)</span></code></pre></div>
 </div>
 <p>That shows just the rater parameters. Here’s just the topics.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">item.table =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"topic"</span>)</span></code></pre></div>
+font-style: inherit;">"topic"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2684,7 +2675,7 @@ font-style: inherit;">"topic"</span>)</span></code></pre></div>
 </div>
 <p>What I really want, though, is to show the rater*topic estimates. For this, we can use the <code>interactions</code> and <code>step.table</code> parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
@@ -2699,7 +2690,7 @@ font-style: inherit;">"rater*topic"</span>,</span>
 background-color: null;
 font-style: inherit;">step.table =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"topic"</span>)</span></code></pre></div>
+font-style: inherit;">"topic"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2710,7 +2701,7 @@ font-style: inherit;">"topic"</span>)</span></code></pre></div>
 </div>
 <p>Switch the item and step names to graph it the other way:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
@@ -2725,7 +2716,7 @@ font-style: inherit;">"rater*topic"</span>,</span>
 background-color: null;
 font-style: inherit;">step.table =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"rater"</span>)</span></code></pre></div>
+font-style: inherit;">"rater"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2736,7 +2727,7 @@ font-style: inherit;">"rater"</span>)</span></code></pre></div>
 </div>
 <p>You can leave out the interactions to have more of a rating scale-type model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
@@ -2746,7 +2737,7 @@ font-style: inherit;">"rater"</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">step.table =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"topic"</span>)</span></code></pre></div>
+font-style: inherit;">"topic"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2757,7 +2748,7 @@ font-style: inherit;">"topic"</span>)</span></code></pre></div>
 </div>
 <p>Or leave out the step table:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
@@ -2767,7 +2758,7 @@ font-style: inherit;">"rater"</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">interactions =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"rater*topic"</span>)</span></code></pre></div>
+font-style: inherit;">"rater*topic"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2778,7 +2769,7 @@ font-style: inherit;">"rater*topic"</span>)</span></code></pre></div>
 </div>
 <p>Again, <code>make.deltas</code> is reading the model equation to decide whether to add or subtract. If, for some reason, you want to specify a different sign for one of the tables, you can use <code>item.sign</code>, <code>step.sign</code>, and <code>inter.sign</code> for that.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model2, <span class="at" style="color: #657422;
 background-color: null;
@@ -2799,7 +2790,7 @@ font-style: inherit;">step.sign =</span> <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>)</span></code></pre></div>
+font-style: inherit;">1</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2813,12 +2804,12 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="making-thresholds">Making thresholds</h3>
 <p>So far, we’ve seen how to use the GIN table to graph thresholds, or the RMP tables to graph deltas. We have one use case left: Making thresholds out of those RMP-generated deltas. The <code>make.thresholds</code> function can handle this. The example below uses the <code>model3</code> deltas, but you can send it any matrix with items as rows and steps as columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1">deltas <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1">deltas <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">make.deltas</span>(model3)</span>
-<span id="cb66-2">deltas</span></code></pre></div>
+<span id="cb66-2">deltas</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   1      2      3
 Earth shape   -0.961 -0.493     NA
@@ -2830,9 +2821,9 @@ Moon and ni.. -0.635  0.861     NA
 Night and d..  0.157 -0.075 -0.739
 Breathe on ..  0.657  1.152 -3.558</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">make.thresholds</span>(deltas)</span></code></pre></div>
+font-style: inherit;">make.thresholds</span>(deltas)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Assuming partial credit model</code></pre>
 </div>
@@ -2850,9 +2841,9 @@ Breathe on .. -0.7007363 -0.5078997 -0.4741583</code></pre>
 </div>
 <p>Alternately, we can just send the model object directly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">make.thresholds</span>(model3)</span></code></pre></div>
+font-style: inherit;">make.thresholds</span>(model3)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Assuming partial credit model</code></pre>
 </div>
@@ -2870,7 +2861,7 @@ Breathe on .. -0.7007363 -0.5078997 -0.4741583</code></pre>
 </div>
 <p>You don’t have to do any of this to make a Wright Map. You can just send the model to <code>wrightMap</code>, and use the <code>type</code> parameter to ask it to calculate the thresholds for you.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(model3, <span class="at" style="color: #657422;
 background-color: null;
@@ -2880,7 +2871,7 @@ font-style: inherit;">"thresholds"</span>, <span class="at" style="color: #65742
 background-color: null;
 font-style: inherit;">label.items.row =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2890,7 +2881,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 </div>
 </div>
 <p>Finally: If all you want is the Wright Maps, you can skip <code>CQmodel</code> entirely and just send your files to <code>wrightMap</code>.</p>
-<div class="sourceCode" id="cb75" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2904,9 +2895,9 @@ font-style: inherit;">"ex2.shw"</span>), <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">label.items.row =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(</span>
 <span id="cb76-2">    <span class="fu" style="color: #4758AB;
@@ -2923,7 +2914,7 @@ font-style: inherit;">"https://raw.githubusercontent.com/david-ti/wrightmap/refs
 background-color: null;
 font-style: inherit;">label.items.row =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>)</span></code></pre></div>
+font-style: inherit;">3</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2963,22 +2954,22 @@ font-style: inherit;">3</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="calling-the-functions">Calling the functions</h3>
 <p>Let’s start by installing the latest version of the package from CRAN.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'WrightMap'</span>)</span></code></pre></div>
+font-style: inherit;">'WrightMap'</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Installing package into '/home/runner/work/_temp/Library'
 (as 'lib' is unspecified)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library</span>(WrightMap)</span></code></pre></div>
+font-style: inherit;">library</span>(WrightMap)</span></code></pre></div></div>
 </div>
 <p>And set up some item data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -3024,14 +3015,14 @@ font-style: inherit;">l4 =</span> items.loc <span class="sc" style="color: #5E5E
 background-color: null;
 font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">0.5</span>)</span></code></pre></div>
+font-style: inherit;">0.5</span>)</span></code></pre></div></div>
 </div>
 <p>We can draw a simple item map by calling one of the item side functions. Currently there are three: <code>itemModern</code>, <code>itemClassic</code>, and <code>itemHist</code>.</p>
 <p>The <code>itemModern</code> function is the default called by <code>wrightMap</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">itemModern</span>(thresholds)</span></code></pre></div>
+font-style: inherit;">itemModern</span>(thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3042,9 +3033,9 @@ font-style: inherit;">itemModern</span>(thresholds)</span></code></pre></div>
 </div>
 <p>The <code>itemClassic</code> function creates item sides inspired by text-based Wright Maps.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">itemClassic</span>(thresholds)</span></code></pre></div>
+font-style: inherit;">itemClassic</span>(thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3055,9 +3046,9 @@ font-style: inherit;">itemClassic</span>(thresholds)</span></code></pre></div>
 </div>
 <p>Finally, the <code>itemHist</code> function plots the items as a histogram.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">itemHist</span>(thresholds)</span></code></pre></div>
+font-style: inherit;">itemHist</span>(thresholds)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3068,7 +3059,7 @@ font-style: inherit;">itemHist</span>(thresholds)</span></code></pre></div>
 </div>
 <p>Similarly, the person side functions allow you to graph the person parameters. There are two: <code>personHist</code> and <code>personDens</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="do" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## Mock results</span></span>
 <span id="cb8-2">multi.proficiency <span class="ot" style="color: #003B4F;
@@ -3156,12 +3147,12 @@ font-style: inherit;">0.5</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sd =</span> .<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">75</span>))</span></code></pre></div>
+font-style: inherit;">75</span>))</span></code></pre></div></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">personHist</span>(multi.proficiency)</span></code></pre></div>
+font-style: inherit;">personHist</span>(multi.proficiency)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3171,9 +3162,9 @@ font-style: inherit;">personHist</span>(multi.proficiency)</span></code></pre></
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">personDens</span>(multi.proficiency)</span></code></pre></div>
+font-style: inherit;">personDens</span>(multi.proficiency)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3184,7 +3175,7 @@ font-style: inherit;">personDens</span>(multi.proficiency)</span></code></pre></
 </div>
 <p>To use these plots in a Wright Map, use the <code>item.side</code> and <code>person.side</code> parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wrightMap</span>(multi.proficiency, thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -3194,7 +3185,7 @@ font-style: inherit;">item.prop =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.5</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">person.side =</span> personDens)</span></code></pre></div>
+font-style: inherit;">person.side =</span> personDens)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3209,7 +3200,7 @@ font-style: inherit;">person.side =</span> personDens)</span></code></pre></div>
 <p>The person side and item side functions expect data in the form of matrices. They do not recognize CQmodel objects. When a CQModel object is sent to <code>wrightMap</code>, it first extracts the necessary data, and then sends the data to the plotting functions. In version 1.2, the data processing functions have also been made directly accessible to users in the form of the <code>personData</code> and <code>itemData</code> functions. These are fast ways to pull the data out of a CQmodel object in such a way that it is ready to be sent to <code>wrightMap</code> or any of the item and person plotting functions.</p>
 <p>The <code>personData</code> function is very simple. It can take either a CQmodel object or a string containing the name of a ConQuest person parameter file. It extracts the person estimates as a matrix.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">fpath <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">fpath <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3238,16 +3229,16 @@ font-style: inherit;">"ex7a.shw"</span>))</span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">personData</span>(model1)</span></code></pre></div>
+font-style: inherit;">personData</span>(model1)</span></code></pre></div></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">personHist</span>(m1.person, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">dim.lab.side =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>)</span></code></pre></div>
+font-style: inherit;">1</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3258,7 +3249,7 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 </div>
 <p>The <code>itemData</code> function uses the GIN table (Thurstonian thresholds) if it is present, and otherwise tries to create delta parameters out of the RMP tables. You can also specify tables to use as items, steps, and interactions, and it will add them together appropriately to create delta parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">model2 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">model2 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3287,12 +3278,12 @@ font-style: inherit;">"rater*topic"</span>, <span class="at" style="color: #6574
 background-color: null;
 font-style: inherit;">step.table =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"rater"</span>)</span></code></pre></div>
+font-style: inherit;">"rater"</span>)</span></code></pre></div></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">itemModern</span>(m2.item)</span></code></pre></div>
+font-style: inherit;">itemModern</span>(m2.item)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3303,9 +3294,9 @@ font-style: inherit;">itemModern</span>(m2.item)</span></code></pre></div>
 </div>
 <p>Having these data functions pulled out also makes it easier to combine parameters from different models onto a single plot (when appropriate).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">wrightMap</span>(m1.person, m2.item)</span></code></pre></div>
+font-style: inherit;">wrightMap</span>(m1.person, m2.item)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3321,7 +3312,7 @@ font-style: inherit;">wrightMap</span>(m1.person, m2.item)</span></code></pre></
 <p>The first step of combining these functions is to set up the screens. Details for screen functions are in the documentation for <code>split.screen</code>. The function takes as a parameter a 4-column matrix, in which each row is a screen, and the columns represent the left, bottom, right, and top of the screens respectively. Each value is expressed as a number from 0 to 1, where 0 is the left/bottom of the current device and 1 is the right/top.</p>
 <p>To make a Wright Map with the items on the left and the persons on the right, we will set up two screens, with 80% of the width on the left and 20% on the right.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">split.screen</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3353,11 +3344,11 @@ font-style: inherit;">4</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>))</span></code></pre></div>
+font-style: inherit;">TRUE</span>))</span></code></pre></div></div>
 </div>
 <p>Next, we’ll draw the item side. <strong>IMPORTANT NOTE:</strong> Make sure to explicitly set the <code>yRange</code> variable when combining plots to ensure they are on the same scale. We can also adjust some of the other parameters to work better with a left-side item plot. We’ll move the logit axis to the left with the <code>show.axis.logit</code> parameter, and set the righthand outer margin to 2 to give us a space between the plots.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">itemModern</span>(thresholds, <span class="at" style="color: #657422;
 background-color: null;
@@ -3403,17 +3394,17 @@ font-style: inherit;">2</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">line =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>)</span></code></pre></div>
+font-style: inherit;">1</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="tutorial05_files/figure-html/unnamed-chunk-17-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="https://www.wrightmap.org/tutorial05_files/figure-html/unnamed-chunk-17-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+<p><a href="tutorial05_files/figure-html/unnamed-chunk-8-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="https://www.wrightmap.org/tutorial05_files/figure-html/unnamed-chunk-8-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Finally, we will move to screen 2 and draw the person side. This plot will be adjusted to move the persons label and remove the axis.</p>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">screen</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -3442,29 +3433,29 @@ font-style: inherit;">"Persons"</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">show.axis.logits =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="tutorial05_files/figure-html/unnamed-chunk-18-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="https://www.wrightmap.org/tutorial05_files/figure-html/unnamed-chunk-18-1.svg" class="img-fluid figure-img" width="2400"></a></p>
+<p><a href="tutorial05_files/figure-html/unnamed-chunk-9-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="https://www.wrightmap.org/tutorial05_files/figure-html/unnamed-chunk-9-1.svg" class="img-fluid figure-img" width="2400"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The last thing to do is to close all the screens to prevent them from getting in the way of any future plotting.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">close.screen</span>(<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">all.screens =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 </div>
 <p>Here is the complete plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">split.screen</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3582,7 +3573,7 @@ font-style: inherit;">close.screen</span>(<span class="at" style="color: #657422
 background-color: null;
 font-style: inherit;">all.screens =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3594,7 +3585,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 <p>Countless arrangements are possible. As one last example, here are two ways to put two dimensions side by side in separate Wright Maps.</p>
 <p>Explicitly splitting the device into four screens:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">d1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">d1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3825,7 +3816,7 @@ font-style: inherit;">6</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">10</span>))</span></code></pre></div>
+font-style: inherit;">10</span>))</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3833,17 +3824,17 @@ font-style: inherit;">10</span>))</span></code></pre></div>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">close.screen</span>(<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">all.screens =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 </div>
 <p>Splitting the device into two screens with a Wright Map on each:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">split.screen</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3909,7 +3900,7 @@ font-style: inherit;">close.screen</span>(<span class="at" style="color: #657422
 background-color: null;
 font-style: inherit;">all.screens =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
